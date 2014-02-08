@@ -4,4 +4,7 @@
 (when (window-system)
   (set-variable 'magit-emacsclient-executable "/usr/local/bin/emacsclient"))
 
+;; magit status
+(global-set-key (kbd "C-c gs") 'magit-status)
+
 (provide 'setup-magit)
