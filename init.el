@@ -10,13 +10,20 @@
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("org" . "http://orgmode.org/elpa/")))
 (package-initialize)
-(defun require-package (pkg)
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+(defun load-package (pkg)
   "Install a package only if it's not already installed"
   (when (not (package-installed-p pkg))
     (package-install pkg))
-  (require pkg))
+  pkg)
+
+(defun require-package (pkg)
+  (require (load-package pkg)))
 
 ;; Subpackages
 (setq setup-pkg-full
@@ -34,8 +41,10 @@
         setup-hippie-expand-slime
         setup-multiple-cursors
         setup-web-mode
-        setup-smart-tab))
+        setup-smart-tab
+        setup-org-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
   (require file))
+
