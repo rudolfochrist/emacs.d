@@ -5,6 +5,7 @@
 
 (add-hook 'markdown-mode-hook
           (lambda ()
-            (visual-line-mode t)))
+            (visual-line-mode t)
+            (set-input-method 'german-prefix)))
 
 (provide 'setup-markdown)
