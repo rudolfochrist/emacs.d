@@ -8,4 +8,8 @@
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
+(add-hook 'org-mode
+          (lambda ()
+            (visual-line-mode t)))
+
 (provide 'setup-org-mode)
