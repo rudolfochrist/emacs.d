@@ -1,0 +1,11 @@
+(defun format-json ()
+  (interactive)
+  (shell-command-on-region
+   (mark) (point) "python -m json.tool" (buffer-name) t))
+
+(defun format-xml ()
+  (interactive)
+  (shell-command-on-region
+   (mark) (point) "xmllint --format -" (buffer-name) t))
+
+(provide 'setup-defuns)

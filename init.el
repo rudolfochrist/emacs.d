@@ -23,12 +23,14 @@
   pkg)
 
 (defun require-package (pkg)
-  (require (load-package pkg)))
+  (require (load-package pkg
+)))
 
 ;; Subpackages
 (setq setup-pkg-full
       '(setup-better-defaults
         setup-basics
+        setup-defuns
         setup-color
         setup-keybindings
         setup-javascript
