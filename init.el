@@ -33,6 +33,7 @@
         setup-defuns
         setup-color
         setup-keybindings
+        setup-spelling
         setup-javascript
         setup-markdown
         setup-paredit
