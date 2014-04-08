@@ -45,7 +45,8 @@
         setup-multiple-cursors
         setup-web-mode
         setup-smart-tab
-        setup-org-mode))
+        setup-org-mode
+        setup-erlang))
 
 ;; load them
 (dolist (file setup-pkg-full)
