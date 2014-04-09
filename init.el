@@ -47,7 +47,8 @@
         setup-smart-tab
         setup-org-mode
         setup-erlang
-        setup-skewer-mode))
+        setup-skewer-mode
+        setup-smex))
 
 ;; load them
 (dolist (file setup-pkg-full)
