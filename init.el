@@ -46,7 +46,8 @@
         setup-web-mode
         setup-smart-tab
         setup-org-mode
-        setup-erlang))
+        setup-erlang
+        setup-skewer-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
