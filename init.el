@@ -47,7 +47,6 @@
         setup-smart-tab
         setup-org-mode
         setup-erlang
-        setup-skewer-mode
         setup-smex
         setup-evil))
 
