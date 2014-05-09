@@ -48,7 +48,8 @@
         setup-org-mode
         setup-erlang
         setup-smex
-        setup-evil))
+        setup-evil
+        setup-geiser))
 
 ;; load them
 (dolist (file setup-pkg-full)
