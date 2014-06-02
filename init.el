@@ -45,13 +45,13 @@
         setup-hippie-expand-slime
         setup-multiple-cursors
         setup-web-mode
-        setup-smart-tab
         setup-org-mode
         setup-erlang
         setup-smex
         setup-evil
         setup-geiser
-        setup-projectile))
+        setup-projectile
+        setup-company))
 
 ;; load them
 (dolist (file setup-pkg-full)
