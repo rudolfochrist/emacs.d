@@ -32,6 +32,7 @@
         setup-basics
         setup-defuns
         setup-color
+        setup-linum
         setup-keybindings
         setup-spelling
         setup-javascript

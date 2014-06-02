@@ -1,7 +1,8 @@
 (require-package 'tangotango-theme)
 (require-package 'ample-theme)
+(require-package 'sublime-themes)
 
-(load-theme 'tangotango t)
+(load-theme 'spolsky t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
