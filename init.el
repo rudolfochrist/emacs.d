@@ -50,7 +50,8 @@
         setup-erlang
         setup-smex
         setup-evil
-        setup-geiser))
+        setup-geiser
+        setup-projectile))
 
 ;; load them
 (dolist (file setup-pkg-full)
