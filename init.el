@@ -50,8 +50,7 @@
         setup-smex
         setup-evil
         setup-geiser
-        setup-projectile
-        setup-company))
+        setup-projectile))
 
 ;; load them
 (dolist (file setup-pkg-full)
