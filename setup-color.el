@@ -24,8 +24,4 @@
 ;; make the cursor red
 (set-cursor-color "#cd0000")            ; works only in GUI emacs
 
-;; underline current line
-(global-hl-line-mode 1)
-(set-face-attribute hl-line-face nil :underline t)
-
 (provide 'setup-color)
