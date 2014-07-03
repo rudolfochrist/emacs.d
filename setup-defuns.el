@@ -8,4 +8,4 @@
   (shell-command-on-region
    (mark) (point) "xmllint --format -" (buffer-name) t))
 
-s(provide 'setup-defuns)
+(provide 'setup-defuns)
