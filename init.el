@@ -1,4 +1,4 @@
-`;;; My emacs config. Inspired by https://github.com/bodil/emacs.d
+;;; My emacs config. Inspired by https://github.com/bodil/emacs.d
 
 ;; use CL features
 (require 'cl)
