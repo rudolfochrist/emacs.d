@@ -49,7 +49,8 @@
         setup-erlang
         setup-smex
         setup-geiser
-        setup-projectile))
+        setup-projectile
+        setup-yasnippet))
 
 ;; load them
 (dolist (file setup-pkg-full)
