@@ -48,7 +48,6 @@
         setup-org-mode
         setup-erlang
         setup-smex
-        setup-evil
         setup-geiser
         setup-projectile))
 
