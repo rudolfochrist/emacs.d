@@ -50,7 +50,8 @@
         setup-smex
         setup-geiser
         setup-projectile
-        setup-yasnippet))
+        setup-yasnippet
+        setup-ag))
 
 ;; load them
 (dolist (file setup-pkg-full)
