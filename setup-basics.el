@@ -32,4 +32,9 @@
 ;; don't ring the bell
 (setq ring-bell-function 'ignore)
 
+;;; user vertical ido
+(require-package 'ido-vertical-mode)
+(ido-mode 1)
+(ido-vertical-mode 1)
+
 (provide 'setup-basics)
