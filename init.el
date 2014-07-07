@@ -48,7 +48,6 @@
         setup-org-mode
         setup-erlang
         setup-smex
-        setup-geiser
         setup-projectile
         setup-yasnippet
         setup-ag
