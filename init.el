@@ -51,7 +51,9 @@
         setup-geiser
         setup-projectile
         setup-yasnippet
-        setup-ag))
+        setup-ag
+        setup-clojure
+        setup-undo-tree))
 
 ;; load them
 (dolist (file setup-pkg-full)
