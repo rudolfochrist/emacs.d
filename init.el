@@ -52,7 +52,8 @@
         setup-yasnippet
         setup-ag
         setup-clojure
-        setup-undo-tree))
+        setup-undo-tree
+        setup-prolog))
 
 ;; load them
 (dolist (file setup-pkg-full)
