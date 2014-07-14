@@ -15,6 +15,8 @@
             (visual-line-mode t)
             (set-input-method 'german-prefix)))
 
+(setq org-agenda-files '("~/Documents"))
+
 (defun add-zettle ()
   (interactive)
   (org-insert-heading)
@@ -24,7 +26,7 @@
   (format-time-string "%Y%m%d-%4N"))
 
 (defun fyi/org-mode-keybindings ()
-  (local-set-key (kbd "C-c z") 'add-zettle))
+  (local-set-key (kbd "C-c C-n") 'add-zettle))
 
 (add-hook 'org-mode-hook 'fyi/org-mode-keybindings)
 
