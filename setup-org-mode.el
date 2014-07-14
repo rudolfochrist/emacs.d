@@ -1,4 +1,5 @@
 (require-package 'org)
+(require-package 'typopunct)
 
 (setq org-todo-keywords
       '((sequence "TODO" "HOLD" "DONE")))
@@ -10,10 +11,9 @@
 
 (add-hook 'org-mode-hook
           (lambda ()
+            (typopunct-mode 1)
             (visual-line-mode t)
             (set-input-method 'german-prefix)))
-(setq org-agenda-files '("~/Documents/todo.org"
-                         "~/Documents/calendar.org"))
 
 (defun add-zettle ()
   (interactive)
