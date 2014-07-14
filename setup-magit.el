@@ -5,6 +5,6 @@
   (set-variable 'magit-emacsclient-executable "/usr/local/bin/emacsclient"))
 
 ;; magit status
-(global-set-key (kbd "C-c C-s") 'magit-status)
+(global-set-key (kbd "C-c C-c s") 'magit-status)
 
 (provide 'setup-magit)
