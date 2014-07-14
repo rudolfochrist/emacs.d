@@ -54,7 +54,9 @@
         setup-clojure
         setup-undo-tree
         setup-prolog
-        setup-eval-sexp-fu))
+        setup-eval-sexp-fu
+        setup-org-babel
+        ))
 
 ;; load them
 (dolist (file setup-pkg-full)
