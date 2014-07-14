@@ -21,17 +21,7 @@
   (insert (generate-zettel-id) " "))
 
 (defun generate-zettel-id ()
-  (time-fragments->string (extract-time-fragments (decode-time))))
-
-(defun time-fragments->string (time-fragments)
-  (reduce (lambda (m o)
-            (concat m (number-to-string o)))
-          time-fragments :initial-value ""))
-
-(defun extract-time-fragments (decoded-time)
-  (reverse (mapcar (lambda (idx)
-             (nth idx decoded-time))
-           '(1 2 3 4 5))))
+  (format-time-string "%Y%m%d-%4N"))
 
 (defun fyi/org-mode-keybindings ()
   (local-set-key (kbd "C-c z") 'add-zettle))
