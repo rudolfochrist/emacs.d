@@ -53,7 +53,8 @@
         setup-ag
         setup-clojure
         setup-undo-tree
-        setup-prolog))
+        setup-prolog
+        setup-eval-sexp-fu))
 
 ;; load them
 (dolist (file setup-pkg-full)
