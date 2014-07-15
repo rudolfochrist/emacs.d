@@ -56,6 +56,7 @@
         setup-prolog
         setup-eval-sexp-fu
         setup-org-babel
+        setup-ace-jump
         ))
 
 ;; load them
