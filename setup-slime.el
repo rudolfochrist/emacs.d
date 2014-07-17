@@ -4,4 +4,6 @@
 (add-hook 'lisp-mode-hook #'slime-mode)
 (add-hook 'lisp-interaction-mode-hook #'slime-mode)
 
+(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbols)
+
 (provide 'setup-slime)
