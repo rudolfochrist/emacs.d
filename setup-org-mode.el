@@ -15,4 +15,6 @@
 
 (setq org-agenda-files '("~/Documents"))
 
+(setq org-startup-indented t)           ; Use clean view
+
 (provide 'setup-org-mode)
