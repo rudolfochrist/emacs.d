@@ -15,17 +15,4 @@
 
 (setq org-agenda-files '("~/Documents"))
 
-(defun add-zettle ()
-  (interactive)
-  (org-insert-heading)
-  (insert (generate-zettel-id) " "))
-
-(defun generate-zettel-id ()
-  (format-time-string "%Y%m%d-%4N"))
-
-(defun fyi/org-mode-keybindings ()
-  (local-set-key (kbd "C-c C-n") 'add-zettle))
-
-(add-hook 'org-mode-hook 'fyi/org-mode-keybindings)
-
 (provide 'setup-org-mode)
