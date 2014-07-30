@@ -1,0 +1,11 @@
+-*- mode: snippet -*-
+# name: literate
+# key: lit
+# --
+#+TITLE: ${1:title}
+#+AUTHOR: Sebastian Christ
+#+EMAIL: rudolfo.christ@gmail.com
+#+DATE: ${2:date}
+#+STARTUP: overview indent align
+#+BABEL: :session *coding-$1* :cache yes :results output :exports: both :tangle yes
+$0
