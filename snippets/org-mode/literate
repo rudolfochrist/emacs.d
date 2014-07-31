@@ -7,5 +7,5 @@
 #+EMAIL: rudolfo.christ@gmail.com
 #+DATE: ${2:date}
 #+STARTUP: overview indent align
-#+BABEL: :session *coding-$1* :cache yes :results output :exports: both :tangle yes
+#+BABEL: :session *coding* :cache yes :results silent :exports: code :tangle yes
 $0
