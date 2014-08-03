@@ -1,8 +1,7 @@
 (require-package 'erlang)
 
-(setq erlang-root-dir "/usr/local/Cellar/erlang/R16B03-1")
-(setq exec-path (cons "/usr/local/Cellar/erlang/R16B03-1/bin"
- exec-path))
+(setq erlang-root-dir "/usr/local/Cellar/erlang/17.1")
+(setq exec-path (cons "/usr/local/Cellar/erlang/17.1/bin" exec-path))
 (require 'erlang-start)
 
 (defvar inferior-erlang-prompt-timeout t)
