@@ -57,6 +57,7 @@
         setup-eval-sexp-fu
         setup-org-babel
         setup-ace-jump
+        setup-geiser
         ))
 
 ;; load them
