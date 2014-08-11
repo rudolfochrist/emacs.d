@@ -7,6 +7,10 @@
 
 ;; magit status
 (global-set-key (kbd "C-c g s") 'magit-status)
+
+;;; magit-log
+(global-set-key (kbd "C-c g l") 'magit-log)
+
 ;;; git-timemachine
 (global-set-key (kbd "C-c g h") 'git-timemachine)
 
