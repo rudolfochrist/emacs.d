@@ -5,3 +5,4 @@ places
 url/
 eshell/
 projectile.cache
+.DS_Store
