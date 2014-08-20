@@ -58,6 +58,7 @@
         setup-org-babel
         setup-ace-jump
         setup-geiser
+        setup-deft
         ))
 
 ;; load them
