@@ -6,6 +6,9 @@
 ;; add emacs.d to load path
 (add-to-list 'load-path "~/.emacs.d/")
 
+;; homebrew executables
+(add-to-list 'load-path "/usr/local/bin")
+
 ;; Packages
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
