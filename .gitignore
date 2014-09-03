@@ -3,6 +3,7 @@ auto-save-list/
 elpa/
 places
 url/
-eshell/
+eshell/history
+eshell/lastdir
 projectile.cache
 .DS_Store
