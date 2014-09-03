@@ -10,6 +10,9 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+;; Use Emacs terminfo, not system terminfo
+(setq system-uses-terminfo nil)
+
 ;; disable backups and auto-save
 (setq backup-inhibited t)
 (setq auto-save-default nil)
