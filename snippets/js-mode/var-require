@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: var-require
+# key: vreq
+# --
+var $1 = require('${1:name}');$0

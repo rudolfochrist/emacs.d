@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: exported-function
+# key: fe
+# --
+var $1 = module.exports.${1:fname} = function(${2:args}) {
+    $0
+};
