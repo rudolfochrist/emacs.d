@@ -1,10 +1,15 @@
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
 
 (add-hook 'lisp-mode-hook #'slime-mode)
 (setq slime-complete-symbol-function #'slime-fuzzy-complete-symbol)
 
 ;;; use UTF-8
 (setq slime-net-coding-system 'utf-8-unix)
+
+;;; Multiple Lisps
+(setq slime-lisp-implementations
+      '((sbcl ("/usr/local/bin/sbcl"))
+        (ccl ("/usr/local/bin/ccl"))
+        (abcl ("/usr/local/bin/abcl") :env ("PATH=/usr/local/bin:/usr/bin:$PATH"))))
 
 (provide 'setup-slime)
