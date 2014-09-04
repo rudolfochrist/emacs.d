@@ -12,4 +12,8 @@
         (ccl ("/usr/local/bin/ccl"))
         (abcl ("/usr/local/bin/abcl") :env ("PATH=/usr/local/bin:/usr/bin:$PATH"))))
 
+;;; getting contrib fancy
+(setq slime-contribs '(slime-fancy))
+
+
 (provide 'setup-slime)
