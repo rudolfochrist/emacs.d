@@ -1,3 +1,6 @@
+(let ((org-dir (file-name-directory (locate-library "org"))))
+  (unless (string-match "\.emacs\.d\/elpa\/org.*" org-dir)
+    (package-install 'org)))
 (require-package 'org)
 
 (setq org-todo-keywords
@@ -16,5 +19,6 @@
 (setq org-agenda-files '("~/Documents"))
 
 (setq org-startup-indented t)           ; Use clean view
+(setq org-startup-with-latex-preview t) ; Preview Latex Inline
 
 (provide 'setup-org-mode)
