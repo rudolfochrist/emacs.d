@@ -7,7 +7,10 @@
 (add-to-list 'load-path "~/.emacs.d/")
 
 ;; homebrew executables
-(add-to-list 'load-path "/usr/local/bin")
+(add-to-list 'exec-path "/usr/local/bin/")
+
+;; Latex
+(add-to-list 'exec-path "/usr/texbin/")
 
 ;; Packages
 (require 'package)
