@@ -65,6 +65,7 @@
         setup-ace-jump
         setup-geiser
         setup-deft
+        setup-shen
         ))
 
 ;; load them
