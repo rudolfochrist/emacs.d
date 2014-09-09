@@ -16,6 +16,6 @@
   (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
   (local-set-key (kbd "C-c C-l") 'js-load-file-and-go))
 
-(add-hook 'js3-mode-hook 'fyi/js-key-bindings)
+(add-hook 'js2-mode-hook 'fyi/js-key-bindings)
 
 (provide 'setup-javascript)
