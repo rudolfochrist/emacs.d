@@ -34,8 +34,7 @@
 
 ;; Subpackages
 (setq setup-pkg-full
-      '(setup-better-defaults
-        setup-basics
+      '(setup-basics
         setup-defuns
         setup-color
         setup-linum
