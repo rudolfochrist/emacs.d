@@ -8,8 +8,8 @@
 
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
-      '((sbcl ("/usr/local/bin/sbcl"))
-        (ccl ("/usr/local/bin/ccl"))
+      '((ccl ("/usr/local/bin/ccl"))
+        (sbcl ("/usr/local/bin/sbcl"))
         (abcl ("/usr/local/bin/abcl") :env ("PATH=/usr/local/bin:/usr/bin:$PATH"))))
 
 ;;; getting contrib fancy
