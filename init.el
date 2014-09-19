@@ -3,8 +3,8 @@
 ;; use CL features
 (require 'cl)
 
-;; add emacs.d to load path
-(add-to-list 'load-path "~/.emacs.d/")
+;;; customization
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;; homebrew executables
 (add-to-list 'exec-path "/usr/local/bin/")
