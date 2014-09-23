@@ -65,6 +65,7 @@
         setup-geiser
         setup-deft
         setup-shen
+        setup-w3m
         ))
 
 ;; load them
