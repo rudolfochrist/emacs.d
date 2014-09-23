@@ -1,5 +1,9 @@
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 
+;;; setup local hyperspec
+;;; see (ql:quickload "clhs") for more information
+(load (expand-file-name "~/quicklisp/clhs-use-local.el"))
+
 (add-hook 'lisp-mode-hook #'slime-mode)
 (setq slime-complete-symbol-function #'slime-fuzzy-complete-symbol)
 
