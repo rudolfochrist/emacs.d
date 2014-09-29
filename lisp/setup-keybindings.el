@@ -11,4 +11,10 @@
 (require 'ehelp)
 (global-set-key (kbd "C-h") 'ehelp-command)
 
+;;; always use hippie expand
+(global-set-key (kbd "M-/") 'hippie-expand)
+
+;;; always use ibuffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 (provide 'setup-keybindings)
