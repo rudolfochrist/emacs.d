@@ -19,5 +19,8 @@
 ;;; getting contrib fancy
 (setq slime-contribs '(slime-fancy))
 
+;;; but disable autodoc
+(setq slime-use-autodoc-mode nil)
+
 
 (provide 'setup-slime)
