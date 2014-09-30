@@ -86,3 +86,4 @@
  '(default ((t (:inherit nil :stipple nil :background "gray13" :foreground "#bdbdb3" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :foundry "apple" :family "PT_Mono"))))
  '(org-level-1 ((t (:foreground "dodger blue" :weight bold :height 1.0))))
  '(org-level-2 ((t (:foreground "#edd400" :weight bold :height 1.0)))))
+(put 'dired-find-alternate-file 'disabled nil)
