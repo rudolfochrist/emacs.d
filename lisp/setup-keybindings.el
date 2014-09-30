@@ -17,4 +17,7 @@
 ;;; always use ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;;; dired jump to directory
+(global-set-key (kbd "C-x C-j") 'dired-jump)
+
 (provide 'setup-keybindings)
