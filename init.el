@@ -17,7 +17,8 @@
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")
-                         ("org" . "http://orgmode.org/elpa/")))
+                         ("org" . "http://orgmode.org/elpa/")
+                         ("sunrise-commander" . "http://joseito.republika.pl/sunrise-commander/")))
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -66,6 +67,7 @@
         setup-deft
         setup-shen
         setup-w3m
+        setup-sunrise-commander
         ))
 
 ;; load them
