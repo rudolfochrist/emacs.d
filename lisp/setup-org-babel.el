@@ -10,6 +10,7 @@
                                                          (ruby . t)
                                                          (scheme . t)
                                                          (sh . t)
+                                                         (dot . t)
                                                          ))
 
 (setq org-confirm-babel-evaluate nil)   ; Don't ask for permission
