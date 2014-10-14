@@ -42,4 +42,8 @@
 (ido-mode 1)
 (ido-vertical-mode 1)
 
+;;; delete trailing whitespace before save
+(add-hook 'before-save-hook (lambda ()
+                              (delete-trailing-whitespace)))
+
 (provide 'setup-basics)
