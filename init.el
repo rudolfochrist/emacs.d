@@ -69,6 +69,7 @@
         setup-w3m
         setup-sunrise-commander
         setup-eshell
+        setup-mu4e
         ))
 
 ;; load them
