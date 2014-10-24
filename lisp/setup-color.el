@@ -1,8 +1,9 @@
 (require-package 'tangotango-theme)
 (require-package 'ample-theme)
 (require-package 'sublime-themes)
+(require-package 'moe-theme)
 
-(load-theme 'spolsky t)
+(require 'moe-theme-switcher)
 
 ;; when in GUI emacs set size of frame
 (when window-system
