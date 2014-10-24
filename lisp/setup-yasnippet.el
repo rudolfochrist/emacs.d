@@ -15,6 +15,7 @@
   (let ((yas/fallback-behavior 'return-nil))
     (yas/expand)))
 (add-hook 'org-mode-hook (lambda ()
+                           (yas-minor-mode)
                            (make-variable-buffer-local 'yas/trigger-key)
                            (setq yas/trigger-key [tab}])
                            (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
