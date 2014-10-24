@@ -10,7 +10,16 @@
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAITING(w)" "DEFERRED(f)" "|" "DONE(d)")))
 (setq org-log-done 'time)
+(setq org-agenda-ndays 10)
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-start-on-weekday nil)
 
+;;; org-capture
+(global-set-key (kbd "C-M-/") 'org-capture)
+(setq org-capture-templates
+      '(("t" "todo" entry (file+headline "~/org/todo.org" "Tasks")
+         "* TODO %?\n")))
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
