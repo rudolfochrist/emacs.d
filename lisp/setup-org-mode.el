@@ -6,10 +6,11 @@
 (setq org-directory "~/org/")
 (setq org-agenda-files '("~/org/todo.org" "~/org/cal.org"))
 
+;;; todos setup
 (setq org-todo-keywords
-      '((sequence "TODO" "HOLD" "DONE")))
-
+      '((sequence "TODO(t)" "WAITING(w)" "DEFERRED(f)" "|" "DONE(d)")))
 (setq org-log-done 'time)
+
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
