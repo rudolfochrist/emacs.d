@@ -47,4 +47,8 @@
 (add-hook 'before-save-hook (lambda ()
                               (delete-trailing-whitespace)))
 
+;;; globally enable winner mode
+(when (fboundp 'winnder-mode)
+  (winner-mode 1))
+
 (provide 'setup-basics)
