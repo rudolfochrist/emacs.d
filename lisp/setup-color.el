@@ -3,6 +3,7 @@
 (require-package 'sublime-themes)
 (require-package 'moe-theme)
 
+(moe-dark)
 (require 'moe-theme-switcher)
 
 ;; when in GUI emacs set size of frame
