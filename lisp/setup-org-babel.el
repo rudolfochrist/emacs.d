@@ -11,6 +11,8 @@
                                                          (scheme . t)
                                                          (sh . t)
                                                          (dot . t)
+                                                         (gnuplot . t)
+                                                         (ditaa . t)
                                                          ))
 
 (setq org-confirm-babel-evaluate nil)   ; Don't ask for permission
