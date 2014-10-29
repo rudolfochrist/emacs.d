@@ -4,7 +4,7 @@
 (require-package 'org)
 
 (setq org-directory "~/org/")
-(setq org-agenda-files '("~/org/todo.org" "~/org/cal.org"))
+(setq org-agenda-files '("~/org/todo.org"))
 
 ;;; todos setup
 (setq org-todo-keywords
@@ -16,10 +16,14 @@
 (setq org-agenda-start-on-weekday nil)
 
 ;;; org-capture
-(global-set-key (kbd "C-M-/") 'org-capture)
+(global-set-key (kbd "C-c c") 'org-capture)
 (setq org-capture-templates
       '(("t" "todo" entry (file+headline "~/org/todo.org" "Tasks")
-         "* TODO %?\n")))
+         "* TODO %?\n %u")))
+
+;;; setup diary
+(setq diary-file (expand-file-name "~/org/diary"))
+(setq org-agenda-include-diary t)
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -36,5 +40,9 @@
 ;;; display inline images on startup
 (setq org-image-actual-width '(450))
 (setq org-startup-with-inline-images t)
+
+;;; plotting with gnuplot
+(require 'org-plot)
+(local-set-key (kbd "C-M-g") 'org-plot/gnuplot)
 
 (provide 'setup-org-mode)
