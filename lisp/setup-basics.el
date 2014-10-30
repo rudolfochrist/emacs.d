@@ -38,10 +38,13 @@
 ;; don't ring the bell
 (setq ring-bell-function 'ignore)
 
-;;; user vertical ido
+;;; user vertical ido and better flex matching
 (require-package 'ido-vertical-mode)
+(require-package 'ido-better-flex)
 (ido-mode 1)
 (ido-vertical-mode 1)
+
+
 
 ;;; delete trailing whitespace before save
 (add-hook 'before-save-hook (lambda ()
