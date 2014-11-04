@@ -13,6 +13,7 @@
                                                          (dot . t)
                                                          (gnuplot . t)
                                                          (ditaa . t)
+                                                         (java . t)
                                                          ))
 
 (setq org-confirm-babel-evaluate nil)   ; Don't ask for permission
