@@ -40,9 +40,9 @@
 
 ;;; user vertical ido and better flex matching
 (require-package 'ido-vertical-mode)
-(require-package 'ido-better-flex)
 (ido-mode 1)
 (ido-vertical-mode 1)
+(setq ido-enable-flex-matching t)
 
 
 
