@@ -35,8 +35,8 @@
             (set-input-method 'german-prefix)))
 
 ;;; latex export customization
-(add-to-list 'org-latex-classes '("fyi-article"
-                                  "\\documentclass[11pt,a4paper]{article}
+(setq org-latex-classes '(("fyi-article"
+                           "\\documentclass[11pt,a4paper]{article}
                                   [DEFAULT-PACKAGES]
                                   [PACKAGES]
                                   \\usepackage{titling}
@@ -46,11 +46,11 @@
                                   \\lhead{\\thetitle}
                                   \\rhead{\\theauthor}
                                   \\renewcommand{\\headrulewidth}{0.0}"
-                                  ("\\section{%s}" . "\\section*{%s}")
-                                  ("\\subsection{%s}" . "\\subsection*{%s}")
-                                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                           ("\\section{%s}" . "\\section*{%s}")
+                           ("\\subsection{%s}" . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                           ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                           ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 
 (setq org-startup-indented t)           ; Use clean view
