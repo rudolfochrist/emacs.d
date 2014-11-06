@@ -13,8 +13,9 @@
 ;;; some handy shortcuts
 (setq mu4e-maildir-shortcuts
       '(("/Gmail/INBOX" . ?i)
-        ("/Gmail/[Google Mail].Starred" . ?s)
-        ("/Gmail/[Google Mail].All Mail" . ?a)))
+        ("/Gmail/[Google Mail].All Mail" . ?a)
+        ("/Gmail/on-hold" . ?h)
+        ("/Gmail/follow-up" . ?f)))
 
 ;;; allow for updating mail using `U' in the main view
 (setq mu4e-get-mail-command "offlineimap")
