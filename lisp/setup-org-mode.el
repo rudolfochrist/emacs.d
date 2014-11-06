@@ -27,6 +27,11 @@
 (setq diary-file (expand-file-name "~/org/diary"))
 (setq org-agenda-include-diary t)
 
+;;; custom agenda views
+(setq org-agenda-custom-commands '(("d" "Today"
+                                    ((agenda "" ((org-agenda-ndays 1)))
+                                     (todo "TODAY")))))
+
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
