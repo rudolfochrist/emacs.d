@@ -66,7 +66,6 @@
         setup-geiser
         setup-deft
         setup-shen
-        setup-w3m
         setup-sunrise-commander
         setup-eshell
         setup-mu4e
