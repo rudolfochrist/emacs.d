@@ -9,7 +9,7 @@
 
 ;;; todos setup
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "WAITING(w)" "DEFERRED(f)" "|" "DONE(d)")
+      '((sequence "TODO(t)" "TODAY(o)" "WAITING(w)" "DEFERRED(f)" "|" "DONE(d)")
         (sequence "CANCELLED(c)")))
 (setq org-log-done 'time)
 (setq org-agenda-ndays 10)
@@ -21,7 +21,7 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-capture-templates
       '(("t" "todo" entry (file+headline "~/org/todo.org" "Tasks")
-         "* TODO %?\n %t\n")))
+         "* TODO %?\n")))
 
 ;;; setup diary
 (setq diary-file (expand-file-name "~/org/diary"))
