@@ -27,6 +27,9 @@
 ;;; skip duplicates
 (setq mu4e-headers-skip-duplicates t)
 
+;;; view HTML emails in the browser
+(add-to-list 'mu4e-view-actions '("browser email" . mu4e-action-view-in-browser) t)
+
 ;;; sending mail
 ;;; this need gnutls to be installed
 (require 'smtpmail)
@@ -44,4 +47,3 @@
 (setq message-kill-buffer-on-exit t)
 
 (provide 'setup-mu4e)
-
