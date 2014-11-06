@@ -2,6 +2,7 @@
   (unless (string-match "\.emacs\.d\/elpa\/org.*" org-dir)
     (package-install 'org-plus-contrib)))
 (require-package 'org)
+(require 'ox-latex)
 
 (setq org-directory "~/org/")
 (setq org-agenda-files '("~/org/todo.org"))
@@ -35,8 +36,8 @@
             (set-input-method 'german-prefix)))
 
 ;;; latex export customization
-(setq org-latex-classes '(("fyi-article"
-                           "\\documentclass[11pt,a4paper]{article}
+(add-to-list 'org-latex-classes '("fyi-article"
+                                  "\\documentclass[11pt,a4paper]{article}
                                   [DEFAULT-PACKAGES]
                                   [PACKAGES]
                                   \\usepackage{titling}
@@ -46,11 +47,11 @@
                                   \\lhead{\\thetitle}
                                   \\rhead{\\theauthor}
                                   \\renewcommand{\\headrulewidth}{0.0}"
-                           ("\\section{%s}" . "\\section*{%s}")
-                           ("\\subsection{%s}" . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                           ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                           ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                                  ("\\section{%s}" . "\\section*{%s}")
+                                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 
 (setq org-startup-indented t)           ; Use clean view
