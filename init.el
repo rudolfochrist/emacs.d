@@ -69,6 +69,7 @@
         setup-sunrise-commander
         setup-eshell
         setup-mu4e
+        setup-company-mode
         ))
 
 ;; load them
