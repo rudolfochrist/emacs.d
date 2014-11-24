@@ -15,7 +15,7 @@
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
       '((sbcl ("/usr/local/bin/sbcl"))
-        (ccl ("/usr/local/bin/ccl"))1
+        (ccl ("/usr/local/bin/ccl"))
         (allegro ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))
         (abcl ("/usr/local/bin/abcl") :env ("PATH=/usr/local/bin:/usr/bin:$PATH"))))
 
