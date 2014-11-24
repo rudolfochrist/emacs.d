@@ -59,6 +59,8 @@
                                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
                                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+(add-to-list 'org-latex-packages-alist '("" "color" nil))
+
 
 (setq org-startup-indented t)           ; Use clean view
 (setq org-startup-with-latex-preview t) ; Preview Latex Inline
@@ -70,5 +72,27 @@
 ;;; plotting with gnuplot
 (require 'org-plot)
 (local-set-key (kbd "C-M-g") 'org-plot/gnuplot)
+
+;;; colorize/highlight text
+;;; see: https://www.mail-archive.com/emacs-orgmode@gnu.org/msg29988.html
+;; org-mode color
+(org-add-link-type
+ "color" nil
+ (lambda (path desc format)
+  (cond
+   ((eq format 'html)
+    (format "<span style=\"color:%s;\">%s</span>" path desc))
+   ((eq format 'latex)
+    (format "{\\color{%s}%s}" path desc)))))
+;; org-mode highlight
+(org-add-link-type
+ "hl" nil
+ (lambda (path desc format)
+  (cond
+   ((eq format 'html)
+    (format "<font style=\"background-color:%s;\">%s</font>" path desc))
+   ((eq format 'latex)
+    (format "\\colorbox{%s}{%s}" path desc))))) ;; require \usepackage{color}
+
 
 (provide 'setup-org-mode)
