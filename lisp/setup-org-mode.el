@@ -63,7 +63,6 @@
 
 
 (setq org-startup-indented t)           ; Use clean view
-(setq org-startup-with-latex-preview t) ; Preview Latex Inline
 
 ;;; display inline images on startup
 (setq org-image-actual-width '(450))
