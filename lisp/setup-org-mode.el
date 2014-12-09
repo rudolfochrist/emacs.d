@@ -41,6 +41,13 @@
             (visual-line-mode t)
             (set-input-method 'german-prefix)))
 
+;;; Enable yasnippets in org
+;;; from Richard Riley in org-mode mailing list
+(add-hook 'org-mode-hook '(lambda ()
+                            (make-variable-buffer-local 'yas/trigger-key)
+                            (setq yas/trigger-key [tab])
+                            (define-key yas/keymap [tab] 'yas/next-field-group)))
+
 ;;; latex export customization
 (add-to-list 'org-latex-classes '("fyi-article"
                                   "\\documentclass[11pt,a4paper]{article}
