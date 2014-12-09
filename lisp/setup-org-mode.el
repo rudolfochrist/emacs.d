@@ -16,6 +16,7 @@
 (setq org-agenda-skip-deadline-if-done t)
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-todo-ignore-scheduled t)
+(setq org-agenda-todo-ignore-deadlines 'near)
 (setq org-agenda-start-on-weekday nil)
 
 ;;; org-capture
