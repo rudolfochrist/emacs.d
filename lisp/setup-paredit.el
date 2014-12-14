@@ -13,8 +13,15 @@
 (defun override-slime-repl-bindings-with-paredit ()
   (define-key slime-repl-mode-map
     (read-kbd-macro paredit-backward-delete-key) nil))
-(add-hook 'slime-repl-mode-hook (lambda () 
+(add-hook 'slime-repl-mode-hook (lambda ()
                                   (override-slime-repl-bindings-with-paredit)
                                   (paredit-mode +1)))
+
+;;; make parentheses unshifted in lisp mode
+(unless (null paredit-mode-map)
+  (define-key paredit-mode-map (kbd "[") 'paredit-open-round)
+  (define-key paredit-mode-map (kbd "]") 'paredit-close-round)
+  (define-key paredit-mode-map (kbd "(") 'paredit-open-bracket)
+  (define-key paredit-mode-map (kbd ")") 'paredit-close-bracket))
 
 (provide 'setup-paredit)
