@@ -101,5 +101,13 @@
    ((eq format 'latex)
     (format "\\colorbox{%s}{%s}" path desc))))) ;; require \usepackage{color}
 
+;;; needed for bibtex
+(setq org-latex-pdf-process '("pdflatex -interaction nonstopmode %f"
+                              "bibtex %b"
+                              "pdflatex -interaction nonstopmode %f"
+                              "pdflatex -interaction nonstopmode %f"))
+
+;;; use Skim to open PDFs
+(add-to-list 'org-file-apps '("\\.pdf\\'" . "/Applications/Skim.app/Contents/SharedSupport/displayline 1 %s"))
 
 (provide 'setup-org-mode)

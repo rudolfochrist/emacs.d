@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: org-bib
+# key: #+bib
+# binding: direct-keybinding
+# --
+#+bibliography: /Users/fyi/Documents/mendeley-bibtex/library

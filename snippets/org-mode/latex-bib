@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: latex-bib
+# key: \bib
+# binding: direct-keybinding
+# --
+\bibliography{/Users/fyi/Documents/mendeley-bibtex/library}
+\bibliographystyle{plain}
