@@ -20,6 +20,9 @@
 ;; disable splash screen
 (setq inhibit-startup-message t)
 
+;;; remove scratch buffer message
+(setq initial-scratch-message nil)
+
 ;; make y and n sufficient
 (defalias 'yes-or-no-p 'y-or-n-p)
 
