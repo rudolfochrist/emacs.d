@@ -47,14 +47,13 @@
 (ido-vertical-mode 1)
 (setq ido-enable-flex-matching t)
 
-
-
 ;;; delete trailing whitespace before save
 (add-hook 'before-save-hook (lambda ()
                               (delete-trailing-whitespace)))
 
-;;; globally enable winner mode
-(when (fboundp 'winnder-mode)
-  (winner-mode 1))
+;;; put time and battery in status line
+(setq display-time-24hr-format t)
+(display-time-mode 1)
+(display-battery-mode 1)
 
 (provide 'setup-basics)
