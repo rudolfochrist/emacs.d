@@ -14,6 +14,7 @@
 (setq mu4e-maildir-shortcuts
       '(("/Gmail/INBOX" . ?i)
         ("/Gmail/[Google Mail].All Mail" . ?a)
+        ("/Gmail/[Google Mail].Sent Mail" . ?s)
         ("/Gmail/on-hold" . ?h)
         ("/Gmail/follow-up" . ?f)))
 
