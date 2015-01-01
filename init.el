@@ -75,21 +75,3 @@
 ;; load them
 (dolist (file setup-pkg-full)
   (require file))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("5d9351cd410bff7119978f8e69e4315fd1339aa7b3af6d398c5ca6fac7fd53c7" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "gray13" :foreground "#bdbdb3" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :foundry "apple" :family "PT_Mono"))))
- '(org-level-1 ((t (:foreground "dodger blue" :weight bold :height 1.0))))
- '(org-level-2 ((t (:foreground "#edd400" :weight bold :height 1.0)))))
-(put 'dired-find-alternate-file 'disabled nil)

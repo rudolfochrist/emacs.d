@@ -1,9 +1,14 @@
-(require-package 'tangotango-theme)
-(require-package 'ample-theme)
 (require-package 'sublime-themes)
 (require-package 'moe-theme)
+(require-package 'minimal-theme)
 
-(moe-dark)
+(load-theme 'minimal-light t)
+
+;;; customize mode-line
+(set-face-background 'mode-line "black")
+(set-face-foreground 'mode-line "white")
+(set-face-foreground 'mode-line-highlight "red")
+
 
 ;; when in GUI emacs set size of frame
 (when window-system
