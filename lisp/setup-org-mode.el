@@ -18,6 +18,7 @@
 (setq org-agenda-todo-ignore-scheduled t)
 (setq org-agenda-todo-ignore-deadlines 'near)
 (setq org-agenda-start-on-weekday nil)
+(setq org-agenda-skip-scheduled-if-deadline-is-shown t) ;http://superuser.com/questions/501440/emacs-org-mode-how-to-avoid-duplicate-lines-in-agenda-when-items-is-scheduled
 
 ;;; org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
