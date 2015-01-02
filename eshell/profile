@@ -1,4 +1,4 @@
 
 # add homebrew path
-addpath /usr/local/bin
-
+addpath -b /usr/texbin
+addpath -b /usr/local/bin
