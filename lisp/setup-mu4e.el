@@ -21,9 +21,23 @@
 ;;; allow for updating mail using `U' in the main view
 (setq mu4e-get-mail-command "offlineimap")
 
+;;; some useful settings
+(setq mu4e-attachment-dir "~/Downloads/")
+(setq mu4e-confirm-quit nil)
+
+;; show full addresses in view message (instead of just names)
+;; toggle per name with M-RET
+(setq mu4e-view-show-addresses t)
+
+;;; refiling
+(setq mu4e-refile-folder "/Gmail/[Google Mail].All Mail")
+
 ;;; me
 (setq user-mail-address "rudolfo.christ@gmail.com"
       user-full-name "Sebastian Christ")
+(setq mu4e-user-mail-address-list '("rudolfo.christ@gmail.com"
+                                    "sebastian@macrudy.com"
+                                    "sebastian.christ@stud.hs-mannheim.de"))
 
 ;;; skip duplicates
 (setq mu4e-headers-skip-duplicates t)
@@ -46,5 +60,13 @@
 
 ;;; don't keep message buffers araound
 (setq message-kill-buffer-on-exit t)
+
+;;; flyspell and german input in compose
+(defun fyi/compose-settings ()
+  (ispell-change-dictionary "german")
+  (set-input-method "german-prefix")
+  (flyspell-mode 1))
+
+(add-hook 'mu4e-compose-mode-hook 'fyi/compose-settings)
 
 (provide 'setup-mu4e)
