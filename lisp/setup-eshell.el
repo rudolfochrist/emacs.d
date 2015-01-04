@@ -6,5 +6,6 @@
 (setq eshell-review-quick-commands nil)
 (setq eshell-smart-space-goes-to-end t)
 
-(provide 'setup-eshell)
+(global-set-key (kbd "<f1>") 'eshell)
 
+(provide 'setup-eshell)

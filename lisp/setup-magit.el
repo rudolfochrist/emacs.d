@@ -6,12 +6,9 @@
   (set-variable 'magit-emacsclient-executable "/usr/local/bin/emacsclient"))
 
 ;; magit status
-(global-set-key (kbd "C-c g s") 'magit-status)
-
-;;; magit-log
-(global-set-key (kbd "C-c g l") 'magit-log)
+(global-set-key (kbd "<f9>") 'magit-status)
 
 ;;; git-timemachine
-(global-set-key (kbd "C-c g h") 'git-timemachine)
+(global-set-key (kbd "<f10>") 'git-timemachine)
 
 (provide 'setup-magit)
