@@ -4,6 +4,7 @@
 (require 'cl)
 
 ;;; customization
+(add-to-list 'load-path "~/.emacs.d/vendor")
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;; homebrew executables
