@@ -1,0 +1,3 @@
+[submodule "vendor/epresent"]
+	path = vendor/epresent
+	url = https://github.com/eschulte/epresent.git
