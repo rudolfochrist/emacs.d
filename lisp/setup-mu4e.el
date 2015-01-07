@@ -42,8 +42,21 @@
 ;;; skip duplicates
 (setq mu4e-headers-skip-duplicates t)
 
+;;; Archiving
+(defun fyi/mu4e-archive-message (msg)
+  "Looks up the message in `All Mail' and marks it as read. Then deletes it from the `INBOX'"
+  (let ((archive-maildir "/Gmail/[Google Mail].All Mail"))
+    (unless (equal archive-maildir (mu4e-message-field msg :maildir))
+      (let ((msg-id (mu4e-message-field msg :message-id)))
+        (mu4e~proc-move msg-id archive-maildir '(seen))
+        (mu4e~view-in-headers-context (mu4e-mark-set 'delete))
+        (mu4e-view-headers-nexts)))))
+(add-to-list 'mu4e-view-actions '("archive message" . fyi/mu4e-archive-message))
+(add-to-list 'mu4e-headers-actions '("archive message" . fyi/mu4e-archive-message))
+
 ;;; view HTML emails in the browser
 (add-to-list 'mu4e-view-actions '("browser email" . mu4e-action-view-in-browser) t)
+
 
 ;;; sending mail
 ;;; this need gnutls to be installed
