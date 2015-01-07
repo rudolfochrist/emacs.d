@@ -1,8 +1,9 @@
-(require-package 'sublime-themes)
-(require-package 'moe-theme)
-(require-package 'minimal-theme)
+;(require-package 'sublime-themes)
+;(require-package 'moe-theme)
+;(require-package 'minimal-theme)
+(load "heroku-theme/heroku-theme")
 
-(load-theme 'minimal-light t)
+;(load-theme 'minimal-light t)
 
 ;;; customize mode-line
 (set-face-background 'mode-line "black")

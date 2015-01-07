@@ -1,3 +1,6 @@
 [submodule "vendor/epresent"]
 	path = vendor/epresent
 	url = https://github.com/eschulte/epresent.git
+[submodule "vendor/heroku-theme"]
+	path = vendor/heroku-theme
+	url = https://github.com/jonathanchu/heroku-theme.git
