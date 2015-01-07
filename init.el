@@ -71,8 +71,10 @@
         setup-eshell
         setup-mu4e
         setup-company-mode
+        setup-occur
         ))
 
 ;; load them
 (dolist (file setup-pkg-full)
   (require file))
+(put 'erase-buffer 'disabled nil)
