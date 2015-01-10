@@ -9,6 +9,6 @@
 (global-set-key (kbd "<f9>") 'magit-status)
 
 ;;; git-timemachine
-(global-set-key (kbd "<f10>") 'git-timemachine)
+(global-set-key (kbd "C-<f9>") 'git-timemachine)
 
 (provide 'setup-magit)
