@@ -25,6 +25,9 @@
 (setq mu4e-attachment-dir "~/Downloads/")
 (setq mu4e-confirm-quit nil)
 
+;;; automatically apply marks when leaveing headers view
+(setq mu4e-headers-leave-behavior 'apply)
+
 ;; show full addresses in view message (instead of just names)
 ;; toggle per name with M-RET
 (setq mu4e-view-show-addresses t)
@@ -50,7 +53,7 @@
       (let ((msg-id (mu4e-message-field msg :message-id)))
         (mu4e~proc-move msg-id archive-maildir '(seen))
         (mu4e~view-in-headers-context (mu4e-mark-set 'delete))
-        (mu4e-view-headers-nexts)))))
+        (mu4e-view-headers-next)))))
 (add-to-list 'mu4e-view-actions '("archive message" . fyi/mu4e-archive-message))
 (add-to-list 'mu4e-headers-actions '("archive message" . fyi/mu4e-archive-message))
 
@@ -81,5 +84,8 @@
   (flyspell-mode 1))
 
 (add-hook 'mu4e-compose-mode-hook 'fyi/compose-settings)
+
+;;; hotkey
+(global-set-key (kbd "<f11>") 'mu4e)
 
 (provide 'setup-mu4e)
