@@ -29,6 +29,7 @@
 ;;; setup diary
 (setq diary-file (expand-file-name "~/org/diary"))
 (setq org-agenda-include-diary t)
+(calendar-set-date-style 'iso)
 
 ;;; custom agenda views
 (setq org-agenda-custom-commands '(("d" "Today"
