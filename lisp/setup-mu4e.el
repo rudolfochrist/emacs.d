@@ -22,7 +22,7 @@
 (setq mu4e-get-mail-command "offlineimap")
 
 ;;; some useful settings
-(setq mu4e-attachment-dir "~/Downloads/")
+(setq mu4e-attachment-dir "~/Downloads")
 (setq mu4e-confirm-quit nil)
 
 ;;; automatically apply marks when leaveing headers view
