@@ -18,8 +18,7 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
-                         ("org" . "http://orgmode.org/elpa/")
-                         ("sunrise-commander" . "http://joseito.republika.pl/sunrise-commander/")))
+                         ("org" . "http://orgmode.org/elpa/")))
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -65,9 +64,7 @@
         setup-org-babel
         setup-ace-jump
         setup-geiser
-        setup-deft
         setup-shen
-        setup-sunrise-commander
         setup-eshell
         setup-mu4e
         setup-company-mode
