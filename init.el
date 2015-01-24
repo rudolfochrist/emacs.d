@@ -69,9 +69,13 @@
         setup-mu4e
         setup-company-mode
         setup-occur
+        setup-info
+        setup-ediff
+        setup-dired
         ))
 
 ;; load them
 (dolist (file setup-pkg-full)
   (require file))
 (put 'erase-buffer 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
