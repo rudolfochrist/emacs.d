@@ -17,6 +17,6 @@
    (fyi/buffers-matching-mode major-mode)
    (car (occur-read-primary-args))))
 
-(global-set-key (kbd "C-<f2>") 'fyi/multi-occur-in-this-mode)
+(global-set-key (kbd "<M-f2>") 'fyi/multi-occur-in-this-mode)
 
 (provide 'setup-occur)

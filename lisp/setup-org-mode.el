@@ -25,7 +25,7 @@
 (setq org-agenda-skip-scheduled-if-deadline-is-shown t) ;http://superuser.com/questions/501440/emacs-org-mode-how-to-avoid-duplicate-lines-in-agenda-when-items-is-scheduled
 
 ;;; org-capture
-(global-set-key (kbd "C-<f12>") 'org-capture)
+(global-set-key (kbd "<M-f12>") 'org-capture)
 (setq org-capture-templates
       '(("t" "todo" entry (file+headline "~/org/todo.org" "Tasks")
          "* TODO %?\n")))

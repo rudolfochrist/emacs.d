@@ -56,4 +56,8 @@
 (display-time-mode 1)
 (display-battery-mode 1)
 
+;;; make script executable if it contains shebang
+(add-hook 'after-save-hook
+  'executable-make-buffer-file-executable-if-script-p)
+
 (provide 'setup-basics)
