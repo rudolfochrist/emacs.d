@@ -7,6 +7,7 @@
     (package-install 'org-plus-contrib)))
 (require-package 'org)
 (require 'ox-latex)
+(require 'org-checklist)
 
 (setq org-directory "~/org/")
 (setq org-agenda-files '("~/org/todo.org"))

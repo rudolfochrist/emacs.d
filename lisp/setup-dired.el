@@ -25,4 +25,7 @@
     (interactive)
     (find-alternate-file "..")))
 
+;;; mc style move/rename in dired
+(setq dired-dwim-target t)
+
 (provide 'setup-dired)
