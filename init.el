@@ -47,14 +47,11 @@
         setup-slime
         setup-expand-region
         setup-magit
-        setup-switch-window
         setup-hippie-expand-slime
         setup-multiple-cursors
-        setup-web-mode
         setup-org-mode
         setup-erlang
         setup-smex
-        setup-projectile
         setup-yasnippet
         setup-ag
         setup-clojure
@@ -67,7 +64,6 @@
         setup-shen
         setup-eshell
         setup-mu4e
-        setup-company-mode
         setup-occur
         setup-info
         setup-ediff
