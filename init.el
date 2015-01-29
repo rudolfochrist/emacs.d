@@ -68,6 +68,7 @@
         init-info
         init-ediff
         init-dired
+        init-iedit
         ))
 
 ;; load them
