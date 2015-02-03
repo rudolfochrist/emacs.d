@@ -54,7 +54,6 @@
         init-smex
         init-yasnippet
         init-ag
-        init-clojure
         init-undo-tree
         init-prolog
         init-eval-sexp-fu

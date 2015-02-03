@@ -1,7 +1,7 @@
 (require-package 'geiser)
 
-(setq geiser-active-implementations '(racket))
-(setq geiser-racket-binary "/usr/local/bin/racket")
+(setq geiser-active-implementations '(guile))
+(setq geiser-racket-binary "/usr/local/bin/guile")
 
 (add-hook 'geiser-repl-mode-hook (lambda ()
                                    (paredit-mode 1)))
