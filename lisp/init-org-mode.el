@@ -2,10 +2,9 @@
 ;;; apperently this has to be set BEFORE org.el is loaded!
 (setq org-export-backends '(ascii html latex texinfo))
 
-(let ((org-dir (file-name-directory (locate-library "org"))))
-  (unless (string-match "\.emacs\.d\/elpa\/org.*" org-dir)
-    (package-install 'org-plus-contrib)))
-(require-package 'org)
+(unless (package-installed-p 'org-plus-contrib)
+  (package-initialize 'org-plus-contrib))
+(require 'org)
 (require 'ox-latex)
 (require 'org-checklist)
 
