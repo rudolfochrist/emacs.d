@@ -15,7 +15,7 @@
 
 ;; Packages
 (require 'package)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
@@ -30,8 +30,7 @@
   pkg)
 
 (defun require-package (pkg)
-  (require (load-package pkg
-)))
+  (require (load-package pkg)))
 
 ;; Subpackages
 (setq setup-pkg-full
@@ -63,7 +62,6 @@
         init-shen
         init-eshell
         init-mu4e
-        init-occur
         init-info
         init-ediff
         init-dired
