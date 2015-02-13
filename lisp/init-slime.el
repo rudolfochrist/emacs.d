@@ -17,6 +17,7 @@
       '((sbcl ("/usr/local/bin/sbcl"))
         (ccl ("/usr/local/bin/ccl"))
         (allegro ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))
+        (clisp ("/usr/local/bin/clisp"))
         (abcl ("/usr/local/bin/abcl") :env ("PATH=/usr/local/bin:/usr/bin:$PATH"))))
 
 ;;; getting contrib fancy
