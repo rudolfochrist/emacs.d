@@ -24,6 +24,10 @@
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
 ;;; ansi-term
-(global-set-key (kbd "<M-f1>") 'ansi-term)
+(defun fyi/ansi-term-zsh ()
+  "Runs ansi-term with zsh"
+  (interactive)
+  (ansi-term "/bin/zsh"))
+(global-set-key (kbd "<M-f1>") 'fyi/ansi-term-zsh)
 
 (provide 'init-keybindings)
