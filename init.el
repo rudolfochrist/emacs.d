@@ -66,6 +66,9 @@
         init-ediff
         init-dired
         init-iedit
+        init-sotlisp
+        init-swoop
+        init-erc
         ))
 
 ;; load them
