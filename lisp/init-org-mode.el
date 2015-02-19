@@ -8,6 +8,10 @@
 (require 'ox-latex)
 (require 'org-checklist)
 
+;;; enable org-protocol
+(server-start)
+(require 'org-protocol)
+
 (setq org-directory "~/org/")
 (setq org-agenda-files '("~/org/todo.org"))
 
@@ -42,6 +46,13 @@
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "<f12>") 'org-agenda)
+
+;;; open read-later.org
+(defun fyi/open-read-later ()
+  (interactive)
+  "Opens the ~/org/read-later.org file"
+  (find-file (expand-file-name "~/org/read-later.org")))
+(global-set-key (kbd "C-c C-r") 'fyi/open-read-later)
 
 (add-hook 'org-mode-hook
           (lambda ()
