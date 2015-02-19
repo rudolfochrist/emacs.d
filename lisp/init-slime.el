@@ -3,11 +3,14 @@
 
 ;;; setup local hyperspec
 ;;; see (ql:quickload "clhs") for more information
-(load (expand-file-name "~/quicklisp/clhs-use-local.el"))
+(load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
 
 (add-hook 'lisp-mode-hook #'slime-mode)
+(add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
+
 (setq slime-complete-symbol*-fancy t)
 (setq slime-complete-symbol-function #'slime-fuzzy-complete-symbol)
+(setq slime-startup-animation t)
 
 ;;; use UTF-8
 (setq slime-net-coding-system 'utf-8-unix)
@@ -21,13 +24,50 @@
         (abcl ("/usr/local/bin/abcl") :env ("PATH=/usr/local/bin:/usr/bin:$PATH"))))
 
 ;;; getting contrib fancy
-(setq slime-contribs '(slime-fancy slime-banner))
+(setq slime-contribs '(slime-fancy slime-banner slime-asdf))
 
 ;;; but disable autodoc
 (setq slime-use-autodoc-mode nil)
 
 ;;; use slime-mode on asd files
 (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
+
+;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
+(define-key slime-mode-map (kbd "C-c /") 'slime-selector)
+(define-key slime-repl-mode-map (kbd "C-c /") 'slime-selector)
+
+;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
+(defun dmd/dump-slime ()
+  "Dump current SLIME instance to PWD/slime.img"
+  (interactive)
+  (save-excursion
+    (switch-to-buffer-other-window "*inferior-lisp*")
+    (goto-char (point-min))
+    (insert (format "(trivial-dump-core::sbcl-dump-image-slime %S)" (expand-file-name "slime.img")))
+    (inferior-slime-return)))
+
+;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
+(defun dmd/load-slime ()
+  "Load a previously saved SLIME image (see `dmd/dump-slime') named PWD/slime.img."
+  (interactive)
+  (slime-start :program "/usr/local/bin/sbcl"
+               :program-args '("--core" "slime.img")
+               :directory default-directory))
+
+;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
+;; Add a directory to asdf:*central-registry*
+(defslime-repl-shortcut slime-repl-add-to-central-registry
+  ("add-to-central-registry" "+a" "add")
+  (:handler (lambda (directory)
+              (interactive
+               (list (expand-file-name (file-name-as-directory
+                                        (read-directory-name
+                                         "Add directory: "
+                                         (slime-eval '(swank:default-directory))
+                                         nil nil "")))))
+              (insert "(cl:pushnew (cl:truename #P\"" directory "\") asdf:*central-registry* :test #'equal)")
+              (slime-repl-send-input t)))
+  (:one-liner "Add a directory to asdf:*central-registry*"))
 
 
 (provide 'init-slime)
