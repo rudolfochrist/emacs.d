@@ -1,5 +1,4 @@
 ;;; See gist for more information: https://gist.github.com/areina/3879626
-<<<<<<< HEAD
 (when (require 'mu4e nil t)
   ;;; directories
   (setq mu4e-maildir (expand-file-name "~/Maildir"))
@@ -59,70 +58,6 @@
 
   ;;; view HTML emails in the browser
   (add-to-list 'mu4e-view-actions '("browser email" . mu4e-action-view-in-browser) t))
-
-=======
-(require 'mu4e nil t)
-
-;;; directories
-(setq mu4e-maildir (expand-file-name "~/Maildir"))
-(setq mu4e-drafts-folder "/Gmail/[Google Mail].Drafts")
-(setq mu4e-sent-folder "/Gmail/[Google Mail].Sent Mail")
-(setq mu4e-trash-folder "/Gmail/[Google Mail].Trash")
-
-;;; don't save messages to Sent Messages, Gmail/IMAP will take care of this
-(setq mu4e-sent-messages-behavior 'delete)
-
-;;; some handy shortcuts
-(setq mu4e-maildir-shortcuts
-      '(("/Gmail/INBOX" . ?i)
-        ("/Gmail/[Google Mail].All Mail" . ?a)
-        ("/Gmail/[Google Mail].Sent Mail" . ?s)
-        ("/Gmail/on-hold" . ?h)
-        ("/Gmail/follow-up" . ?f)))
-
-;;; allow for updating mail using `U' in the main view
-(setq mu4e-get-mail-command "offlineimap")
-
-;;; some useful settings
-(setq mu4e-attachment-dir "~/Downloads")
-(setq mu4e-confirm-quit nil)
-
-;;; automatically apply marks when leaveing headers view
-(setq mu4e-headers-leave-behavior 'apply)
-
-;; show full addresses in view message (instead of just names)
-;; toggle per name with M-RET
-(setq mu4e-view-show-addresses t)
-
-;;; refiling
-(setq mu4e-refile-folder "/Gmail/[Google Mail].All Mail")
-
-;;; me
-(setq user-mail-address "rudolfo.christ@gmail.com"
-      user-full-name "Sebastian Christ")
-(setq mu4e-user-mail-address-list '("rudolfo.christ@gmail.com"
-                                    "sebastian@macrudy.com"
-                                    "sebastian.christ@stud.hs-mannheim.de"))
-
-;;; skip duplicates
-(setq mu4e-headers-skip-duplicates t)
-
-;;; Archiving
-(defun fyi/mu4e-archive-message (msg)
-  "Looks up the message in `All Mail' and marks it as read. Then deletes it from the `INBOX'"
-  (let ((archive-maildir "/Gmail/[Google Mail].All Mail"))
-    (unless (equal archive-maildir (mu4e-message-field msg :maildir))
-      (let ((msg-id (mu4e-message-field msg :message-id)))
-        (mu4e~proc-move msg-id archive-maildir '(seen))
-        (mu4e~view-in-headers-context (mu4e-mark-set 'delete))
-        (mu4e-view-headers-next)))))
-(add-to-list 'mu4e-view-actions '("archive message" . fyi/mu4e-archive-message))
-(add-to-list 'mu4e-headers-actions '("archive message" . fyi/mu4e-archive-message))
-
-;;; view HTML emails in the browser
-(add-to-list 'mu4e-view-actions '("browser email" . mu4e-action-view-in-browser) t)
->>>>>>> 92a3ea02b620117d715bee86fcca261edbec10c9
-
 
 ;;; sending mail
 ;;; this need gnutls to be installed
