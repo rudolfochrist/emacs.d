@@ -1,5 +1,5 @@
 ;;; See gist for more information: https://gist.github.com/areina/3879626
-(require 'mu4e)
+(require 'mu4e nil t)
 
 ;;; directories
 (setq mu4e-maildir (expand-file-name "~/Maildir"))
