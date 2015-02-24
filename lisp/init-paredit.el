@@ -24,4 +24,7 @@
   (define-key paredit-mode-map (kbd "(") 'paredit-open-bracket)
   (define-key paredit-mode-map (kbd ")") 'paredit-close-bracket))
 
+;;; use `common-lisp-indent-function'
+(setq lisp-indent-function #'common-lisp-indent-function)
+
 (provide 'init-paredit)
