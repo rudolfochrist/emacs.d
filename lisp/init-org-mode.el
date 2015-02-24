@@ -28,11 +28,33 @@
 (setq org-agenda-start-on-weekday nil)
 (setq org-agenda-skip-scheduled-if-deadline-is-shown t) ;http://superuser.com/questions/501440/emacs-org-mode-how-to-avoid-duplicate-lines-in-agenda-when-items-is-scheduled
 
+(defun fyi/summarize-captured-url ()
+  "Summarizes the website for the given URL using sumy (https://github.com/miso-belica/sumy)."
+  (let ((url (plist-get org-store-link-plist :link)))
+    (with-temp-buffer
+      (call-process "sumy" nil t nil "text-rank" (format "--url=%s" url))
+      (buffer-string))))
+
 ;;; org-capture
 (global-set-key (kbd "<M-f12>") 'org-capture)
 (setq org-capture-templates
-      '(("t" "todo" entry (file+headline "~/org/todo.org" "Tasks")
-         "* TODO %?\n")))
+      '(("t"
+         "todo"
+         entry
+         (file+headline "~/org/todo.org" "Tasks")
+         "* TODO %?\n")
+        ("r"
+         "Add link to ~/org/read-later.org via org-protocol"
+         item
+         (file "~/org/read-later.org")
+         "- [[%:link][%:description]] --- (%u)"
+         :prepend t :immediate-finish t)
+        ("b"
+         "Add bookmark via org-protocol"
+         entry
+         (file "~/org/kb.org")
+         "* [[%:link][%:description]] :bookmark:\n\nSaved: %u\n\n%?\n\n** Website Summary:\n\n%(fyi/summarize-captured-url)\n\n"
+         :prepend t :empty-lines 1)))
 
 ;;; setup diary
 (setq diary-file (expand-file-name "~/org/diary"))
