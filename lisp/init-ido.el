@@ -38,3 +38,5 @@ With prefix argument FILES-TOO also offer to find files."
      (ido-completing-read "Open directory: "
                           completions 'ignored nil ""))))
 (global-set-key (kbd "C-x d") #'fyi/visit-favorite-dir)
+
+(provide 'init-ido)
