@@ -8,7 +8,8 @@
 (require 'org-checklist)
 
 ;;; enable org-protocol
-(server-start)
+(unless (server-running-p)
+  (server-start))
 (require 'org-protocol)
 
 (setq org-directory "~/org/")
