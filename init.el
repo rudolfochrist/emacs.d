@@ -1,7 +1,7 @@
 ;;; My emacs config. Inspired by https://github.com/bodil/emacs.d
 
 ;; use CL features
-(require 'cl)
+(require 'cl-lib)
 
 ;;; customization
 (add-to-list 'load-path "~/.emacs.d/vendor")
