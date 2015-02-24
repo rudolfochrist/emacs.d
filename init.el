@@ -69,6 +69,7 @@
         init-sotlisp
         init-swoop
         init-erc
+        init-ido
         ))
 
 ;; load them
