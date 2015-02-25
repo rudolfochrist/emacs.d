@@ -4,3 +4,6 @@
 [submodule "vendor/heroku-theme"]
 	path = vendor/heroku-theme
 	url = https://github.com/jonathanchu/heroku-theme.git
+[submodule "vendor/org-download"]
+	path = vendor/org-download
+	url = https://github.com/abo-abo/org-download.git
