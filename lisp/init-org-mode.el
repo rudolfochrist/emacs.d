@@ -53,7 +53,13 @@
          "Add bookmark via org-protocol"
          entry
          (file "~/org/kb.org")
-         "* [[%:link][%:description]] :bookmark:\n\nSaved: %u\n\n%?\n\n** Website Summary:\n\n%(fyi/summarize-captured-url)\n\n"
+         "* %a :bookmark:\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%?\n\n** Website Summary:\n\n%(fyi/summarize-captured-url)\n\n"
+         :prepend t :empty-lines 1)
+        ("v"
+         "Add bookmark via org-protocol but omit summary"
+         entry
+         (file "~/org/kb.org")
+         "* %a :bookmark:\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%?"
          :prepend t :empty-lines 1)))
 
 ;;; setup diary
