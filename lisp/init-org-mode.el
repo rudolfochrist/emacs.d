@@ -155,4 +155,15 @@
 ;;; use Skim to open PDFs
 (add-to-list 'org-file-apps '("\\.pdf\\'" . "/Applications/Skim.app/Contents/SharedSupport/displayline 1 %s"))
 
+;;; org-download
+(load "org-download/org-download")
+
+(defun fyi/configure-org-download ()
+  "Configures `org-download'."
+  (setq org-download-image-dir "~/org/org-download-images/"
+        org-download-heading-lvl nil
+        org-download-image-width 200))
+
+(add-hook 'org-mode-hook #'fyi/configure-org-download)
+
 (provide 'init-org-mode)
