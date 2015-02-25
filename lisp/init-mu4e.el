@@ -1,5 +1,7 @@
 ;;; See gist for more information: https://gist.github.com/areina/3879626
 (when (require 'mu4e nil t)
+  (require 'org-mu4e)
+
   ;;; directories
   (setq mu4e-maildir (expand-file-name "~/Maildir"))
   (setq mu4e-drafts-folder "/Gmail/[Google Mail].Drafts")
