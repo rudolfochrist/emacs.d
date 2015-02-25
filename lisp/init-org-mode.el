@@ -32,7 +32,7 @@
   "Summarizes the website for the given URL using sumy (https://github.com/miso-belica/sumy)."
   (let ((url (plist-get org-store-link-plist :link)))
     (with-temp-buffer
-      (call-process "sumy" nil t nil "text-rank" (format "--url=%s" url))
+      (call-process "sumy" nil t nil "text-rank" (format "--url=%s" url) "--length=10%")
       (buffer-string))))
 
 ;;; org-capture
