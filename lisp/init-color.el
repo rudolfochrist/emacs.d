@@ -18,4 +18,7 @@
 ;; make the cursor red
 (set-cursor-color "#cd0000")            ; works only in GUI emacs
 
+;;; pretty symbols
+(global-prettify-symbols-mode 1)
+
 (provide 'init-color)
