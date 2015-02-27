@@ -12,21 +12,23 @@
   (server-start))
 (require 'org-protocol)
 
-(setq org-directory "~/org/")
-(setq org-agenda-files '("~/org/todo.org"))
+(setq org-directory "~/org/"
+      org-agenda-files '("~/org/todo.org" "~/org/read-later.org" "~/org/kb.org"))
 
 ;;; todos setup
 (setq org-todo-keywords
       '((sequence "TODO(t)" "TODAY(o)" "WAITING(w)" "DEFERRED(f)" "|" "DONE(d)")
         (sequence "CANCELLED(c)")))
-(setq org-log-done 'time)
-(setq org-agenda-ndays 10)
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-agenda-skip-scheduled-if-done t)
-(setq org-agenda-todo-ignore-scheduled t)
-(setq org-agenda-todo-ignore-deadlines 'near)
-(setq org-agenda-start-on-weekday nil)
-(setq org-agenda-skip-scheduled-if-deadline-is-shown t) ;http://superuser.com/questions/501440/emacs-org-mode-how-to-avoid-duplicate-lines-in-agenda-when-items-is-scheduled
+
+;;; agenda
+(setq org-log-done 'time
+      org-agenda-ndays 10
+      org-agenda-skip-deadline-if-done t
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-todo-ignore-scheduled t
+      org-agenda-todo-ignore-deadlines 'near
+      org-agenda-start-on-weekday nil
+      org-agenda-skip-scheduled-if-deadline-is-shown t)
 
 (defun fyi/summarize-captured-url ()
   "Summarizes the website for the given URL using sumy (https://github.com/miso-belica/sumy)."
@@ -43,6 +45,12 @@
          entry
          (file+headline "~/org/todo.org" "Tasks")
          "* TODO %?\n")
+        ("n"
+         "Add note to kb"
+         entry
+         (file "~/org/kb.org")
+         "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n"
+         :prepend t :empty-lines 1)
         ("r"
          "Add link to ~/org/read-later.org via org-protocol"
          item
@@ -63,8 +71,8 @@
          :prepend t :empty-lines 1)))
 
 ;;; setup diary
-(setq diary-file (expand-file-name "~/org/diary"))
-(setq org-agenda-include-diary t)
+(setq diary-file (expand-file-name "~/org/diary")
+      org-agenda-include-diary t)
 (calendar-set-date-style 'iso)
 
 ;;; custom agenda views
@@ -75,12 +83,13 @@
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "<f12>") 'org-agenda)
 
-;;; open read-later.org
-(defun fyi/open-read-later ()
-  (interactive)
-  "Opens the ~/org/read-later.org file"
-  (find-file (expand-file-name "~/org/read-later.org")))
-(global-set-key (kbd "C-c C-r") 'fyi/open-read-later)
+;;; open key files
+(global-set-key (kbd "C-c o") #'(lambda ()
+                                  (interactive)
+                                  (find-file (expand-file-name "~/org/read-later.org"))))
+(global-set-key (kbd "C-c p") #'(lambda ()
+                                  (interactive)
+                                  (find-file (expand-file-name "~/org/kb.org"))))
 
 (add-hook 'org-mode-hook
           (lambda ()
