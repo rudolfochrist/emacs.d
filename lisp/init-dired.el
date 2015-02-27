@@ -5,7 +5,7 @@
 
 ;;; open eshell from dired
 ;;; http://oremacs.com/2015/01/10/dired-ansi-term/
-(define-key dired-mode-map (kbd "`") 'eshell)
+(define-key dired-mode-map (kbd "`") 'fyi/ansi-term-zsh)
 
 ;;; ediff selected files
 (define-key dired-mode-map (kbd "e") 'ediff-files)
