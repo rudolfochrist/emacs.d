@@ -72,6 +72,7 @@
         init-swoop
         init-erc
         init-ido
+        init-org-page
         ))
 
 ;; load them
