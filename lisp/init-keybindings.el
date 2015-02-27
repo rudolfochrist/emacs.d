@@ -6,11 +6,6 @@
 ;; revert buffer
 (global-set-key (kbd "C-c r") 'revert-buffer)
 
-;;; use ElectricHelp as default
-;;; see: http://www.emacswiki.org/emacs/ElectricHelp
-(require 'ehelp)
-(global-set-key (kbd "C-h") 'ehelp-command)
-
 ;;; always use hippie expand
 (global-set-key (kbd "M-/") 'hippie-expand)
 
