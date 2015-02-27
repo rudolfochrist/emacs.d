@@ -25,6 +25,12 @@
     (interactive)
     (find-alternate-file "..")))
 
+;;; open with default/system app
+(defun fyi/system-open-file ()
+  (interactive)
+  (shell-command-to-string (format "open %s" (shell-quote-argument (dired-get-file-for-visit)))))
+(define-key dired-mode-map (kbd "M-RET") 'fyi/system-open-file)
+
 ;;; mc style move/rename in dired
 (setq dired-dwim-target t)
 
