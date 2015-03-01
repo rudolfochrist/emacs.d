@@ -89,13 +89,8 @@
 ;;; don't keep message buffers araound
 (setq message-kill-buffer-on-exit t)
 
-;;; flyspell and german input in compose
-(defun fyi/compose-settings ()
-  (ispell-change-dictionary "german")
-  (set-input-method "german-prefix")
-  (flyspell-mode 1))
-
-(add-hook 'mu4e-compose-mode-hook 'fyi/compose-settings)
+;;; check spelling
+(add-hook 'mu4e-compose-mode-hook (apply-partially 'fyi/configure-flyspell "german"))
 
 ;;; hotkey
 (global-set-key (kbd "<f11>") 'mu4e)

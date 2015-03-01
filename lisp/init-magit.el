@@ -12,6 +12,6 @@
 (global-set-key (kbd "<M-f9>") 'git-timemachine)
 
 ;;; use spelling in commit buffer
-(add-hook 'git-commit-mode-hook 'fyi/compose-settings)
+(add-hook 'git-commit-mode-hook (apply-partially 'fyi/configure-flyspell "en_US"))
 
 (provide 'init-magit)
