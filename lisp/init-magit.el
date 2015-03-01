@@ -11,5 +11,7 @@
 ;;; git-timemachine
 (global-set-key (kbd "<M-f9>") 'git-timemachine)
 
+;;; use spelling in commit buffer
+(add-hook 'git-commit-mode-hook 'fyi/compose-settings)
 
 (provide 'init-magit)
