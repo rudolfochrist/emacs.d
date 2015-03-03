@@ -3,6 +3,11 @@
 ;(require-package 'minimal-theme)
 (load "heroku-theme/heroku-theme")
 
+;;; heroku theme terminal adjustments
+(add-hook 'term-mode-hook #'(lambda ()
+                              (set-face-attribute 'term-color-blue nil
+                                                  :foreground "DeepSkyBlue1")))
+
 ;(load-theme 'minimal-light t)
 
 ;;; customize mode-line
