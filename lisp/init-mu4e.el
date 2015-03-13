@@ -37,8 +37,6 @@
   (setq mu4e-refile-folder "/Gmail/[Google Mail].All Mail")
 
   ;;; me
-  (setq user-mail-address "rudolfo.christ@gmail.com"
-        user-full-name "Sebastian Christ")
   (setq mu4e-user-mail-address-list '("rudolfo.christ@gmail.com"
                                       "sebastian@macrudy.com"
                                       "sebastian.christ@stud.hs-mannheim.de"))
@@ -73,11 +71,16 @@
 
   (advice-add 'mu4e~headers-search-execute :before #'fyi/descend-order-inbox))
 
+;;; me
+(setq user-mail-address "rudolfo.christ@gmail.com"
+        user-full-name "Sebastian Christ")
+
 ;;; sending mail
 ;;; this need gnutls to be installed
 (require 'smtpmail)
 
-(setq message-send-mail-function 'smtpmail-send-it
+(setq send-mail-function 'smtpmail-send-it
+      message-send-mail-function 'smtpmail-send-it
       starttls-use-gnytls t
       smptmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
       smtp-auth-crednetials (expand-file-name "~/.authinfo.gpg")
