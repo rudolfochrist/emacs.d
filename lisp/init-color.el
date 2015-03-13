@@ -6,7 +6,9 @@
 ;;; heroku theme terminal adjustments
 (add-hook 'term-mode-hook #'(lambda ()
                               (set-face-attribute 'term-color-blue nil
-                                                  :foreground "DeepSkyBlue1")))
+                                                  :foreground "DeepSkyBlue1")
+                              (set-face-attribute 'term-color-green nil
+                                                  :background "green4")))
 
 ;(load-theme 'minimal-light t)
 
