@@ -7,7 +7,10 @@
                                       (nntp "news.eternal-september.org"
                                        (nntp-open-connection-function nntp-open-tls-stream)
                                        (nntp-port-number 563)
-                                       (nntp-address "news.eternal-september.org"))))
+                                       (nntp-address "news.eternal-september.org")))
+      message-directory (expand-file-name "~/gnus/mail/")
+      gnus-directory (expand-file-name "~/gnus/news/")
+      nnfolder-directory (expand-file-name "~/gnus/mail/archive"))
 
 (global-set-key (kbd "<M-f11>") 'gnus)
 
