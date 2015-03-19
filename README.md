@@ -14,3 +14,4 @@ My Emacs configuration files
 
     $ cd $HOME
     $ git clone https://github.com/rudolfochrist/emacs.d.git .emacs.d
+    $ emacs
