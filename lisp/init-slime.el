@@ -69,5 +69,11 @@
               (slime-repl-send-input t)))
   (:one-liner "Add a directory to asdf:*central-registry*"))
 
+(defun fyi/slime-save-before-compile (&rest args)
+  "Save the current buffer before compilation."
+  (interactive)
+  (save-buffer))
+
+(add-to-list 'slime-before-compile-functions 'fyi/slime-save-before-compile)
 
 (provide 'init-slime)
