@@ -34,4 +34,10 @@
 ;;; mc style move/rename in dired
 (setq dired-dwim-target t)
 
+;;; Copy file path to kill-ring
+(defun fyi/file-path-to-kill ()
+  (interactive)
+  (kill-new (dired-get-file-for-visit)))
+(define-key dired-mode-map (kbd "C-c c") 'fyi/file-path-to-kill)
+
 (provide 'init-dired)
