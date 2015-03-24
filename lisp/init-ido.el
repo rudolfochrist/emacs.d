@@ -9,7 +9,7 @@
 
 ;;; [[http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html][Visit Directory inside a Set of Directories with Emacs]]
 (defcustom fyi/favorite-directories
-  '("~/dev/" "~/org/" "~/Documents/Archive/" "~/.emacs.d/lisp/")
+  '("~/dev/" "~/current/" "~/Documents/Archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
   "List of favorite directories.
 Used in `fyi/visit-favorite-dir'. The order here
 affects the order that completions will be offered."
