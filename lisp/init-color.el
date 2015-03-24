@@ -1,22 +1,4 @@
-;(require-package 'sublime-themes)
-;(require-package 'moe-theme)
-;(require-package 'minimal-theme)
-(load "heroku-theme/heroku-theme")
-
-;;; heroku theme terminal adjustments
-(add-hook 'term-mode-hook #'(lambda ()
-                              (set-face-attribute 'term-color-blue nil
-                                                  :foreground "DeepSkyBlue1")
-                              (set-face-attribute 'term-color-green nil
-                                                  :background "green4")))
-
-;(load-theme 'minimal-light t)
-
-;;; customize mode-line
-(set-face-background 'mode-line "black")
-(set-face-foreground 'mode-line "white")
-(set-face-foreground 'mode-line-highlight "red")
-
+(load-theme 'leuven t)
 
 ;; when in GUI emacs set size of frame
 (when window-system
