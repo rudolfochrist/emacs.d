@@ -18,10 +18,13 @@
 (defun fyi/add-PR-fetch ()
   "If refs/pull is not defined on a GH repo, define it."
   (let ((fetch-address
-         "+refs/pull/*/head:refs/pull/origin/*"))
-    (unless (member
-             fetch-address
-             (magit-get-all "remote" "origin" "fetch"))
+         "+refs/pull/*/head:refs/pull/origin/*")
+        (magit-remote-config
+         (magit-get-all "remote" "origin" "fetch")))
+    (unless (or (null magit-remote-config)
+                (member
+                    fetch-address
+                    magit-remote-config))
       (when (string-match
              "github" (magit-get "remote" "origin" "url"))
         (magit-git-string

@@ -17,7 +17,7 @@
 
 ;;; todos setup
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "TODAY(o)" "WAITING(w)" "DEFERRED(f)" "|" "DONE(d)")
+      '((sequence "TODO(t)" "TODAY(o)" "|" "DONE(d)")
         (sequence "CANCELLED(c)")))
 
 ;;; agenda
@@ -74,6 +74,9 @@
 (setq diary-file (expand-file-name "~/org/diary")
       org-agenda-include-diary t)
 (calendar-set-date-style 'iso)
+
+(require-package 'german-holidays)
+(setq holiday-other-holidays holiday-german-holidays)
 
 ;;; custom agenda views
 (setq org-agenda-custom-commands '(("d" "Today"
@@ -174,5 +177,9 @@
         org-download-image-width 200))
 
 (add-hook 'org-mode-hook #'fyi/configure-org-download)
+
+;;; custom easy templates
+(add-to-list 'org-structure-template-alist
+             '("x" "#+BEGIN_EXAM\n?\n#+END_EXAM" ""))
 
 (provide 'init-org-mode)
