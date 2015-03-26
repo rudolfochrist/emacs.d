@@ -31,7 +31,7 @@
 (setq tab-width 2)
 (setq require-final-newline t)
 (show-paren-mode 1)
-(setq show-paren-style 'expression)
+(setq show-paren-style 'mixed)
 
 ;; Whenever an external process changes a file underneath emacs, and there
 ;; was no unsaved changes int the corresponding buffer, just revert its

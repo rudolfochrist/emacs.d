@@ -45,7 +45,6 @@
         init-markdown
         init-paredit
         init-slime
-        init-expand-region
         init-magit
         init-hippie-expand-slime
         init-multiple-cursors
@@ -54,7 +53,6 @@
         init-smex
         init-yasnippet
         init-ag
-        init-undo-tree
         init-prolog
         init-eval-sexp-fu
         init-org-babel
@@ -68,7 +66,6 @@
         init-dired
         init-iedit
         init-sotlisp
-        init-swoop
         init-erc
         init-ido
         init-org-page

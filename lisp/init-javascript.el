@@ -1,5 +1,4 @@
 (require-package 'js2-mode)
-(require-package 'moz)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))

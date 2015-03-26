@@ -6,8 +6,6 @@
   (yas-minor-mode))
 
 (add-hook 'prog-mode-hook 'enable-yas-minor-mode)
-(add-hook 'html-mode-hook 'enable-yas-minor-mode)
-(add-hook 'web-mode-hook 'enable-yas-minor-mode)
 
 ;;; fix org-mode + yasnippet conflicts:
 ;;; http://stackoverflow.com/questions/9418148/conflicts-between-org-mode-and-yasnippet
