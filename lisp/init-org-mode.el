@@ -182,4 +182,10 @@
 (add-to-list 'org-structure-template-alist
              '("x" "#+BEGIN_EXAM\n?\n#+END_EXAM" ""))
 
+;;; limit the width
+(defun fyi/org-width ()
+  (set-fill-column 110)
+  (auto-fill-mode t))
+(add-hook 'org-mode-hook 'fyi/org-width)
+
 (provide 'init-org-mode)
