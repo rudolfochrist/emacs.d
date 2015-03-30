@@ -78,6 +78,7 @@
         init-gnus
         init-whitespace
         init-smart-mode-line
+        init-easy-kill
         ))
 
 ;; load them
