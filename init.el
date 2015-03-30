@@ -79,6 +79,7 @@
         init-whitespace
         init-smart-mode-line
         init-easy-kill
+        init-bug-hunter
         ))
 
 ;; load them
