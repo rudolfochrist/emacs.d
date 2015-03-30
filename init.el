@@ -7,11 +7,16 @@
 (add-to-list 'load-path "~/.emacs.d/vendor")
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
-;; homebrew executables
+;; executables
 (add-to-list 'exec-path "/usr/local/bin/")
 
-;; Latex
+;; Latex (is this platform independent?)
 (add-to-list 'exec-path "/usr/texbin/")
+
+;;; emacs customizations
+;;; http://irreal.org/blog/?p=3765
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
 
 ;; Packages
 (require 'package)
