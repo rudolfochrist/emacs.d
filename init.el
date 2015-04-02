@@ -51,6 +51,7 @@
         init-paredit
         init-slime
         init-magit
+        init-hippie-expand
         init-hippie-expand-slime
         init-multiple-cursors
         init-org-mode

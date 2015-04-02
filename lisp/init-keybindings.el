@@ -5,9 +5,6 @@
 ;; revert buffer
 (global-set-key (kbd "C-c r") 'revert-buffer)
 
-;;; always use hippie expand
-(global-set-key (kbd "M-/") 'hippie-expand)
-
 ;;; always use ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
