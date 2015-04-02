@@ -16,7 +16,7 @@
 
 (defun fyi/search-kb (search-string)
   (interactive "MSearch String: ")
-  (grep (concat "grep --color -inH -C 3 -e "
+  (grep (concat "grep --color -inH -C 3 -E "
                 (shell-quote-argument search-string)
                 " ~/org/kb.org"))
   (other-window 1))
