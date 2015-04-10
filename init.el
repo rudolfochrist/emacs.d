@@ -83,6 +83,7 @@
         init-easy-kill
         init-bug-hunter
         init-engine-mode
+        init-interleave
         ))
 
 ;; load them
