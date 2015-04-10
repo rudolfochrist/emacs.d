@@ -1,5 +1,5 @@
-(load-package 'darktooth-theme nil)
-(load-theme 'darktooth t)
+;(load-package 'darktooth-theme nil)
+(load-theme 'leuven t)
 
 ;; when in GUI emacs set size of frame
 (when window-system
