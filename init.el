@@ -71,6 +71,7 @@
         init-ediff
         init-dired
         init-iedit
+        init-emacs-lisp
         init-sotlisp
         init-erc
         init-ido
