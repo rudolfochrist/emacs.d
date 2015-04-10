@@ -82,6 +82,7 @@
         init-smart-mode-line
         init-easy-kill
         init-bug-hunter
+        init-engine-mode
         ))
 
 ;; load them
