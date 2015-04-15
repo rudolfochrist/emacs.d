@@ -1,6 +1,5 @@
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 
-
 ;;; setup local hyperspec
 ;;; see (ql:quickload "clhs") for more information
 (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
@@ -75,5 +74,20 @@
   (save-buffer))
 
 (add-to-list 'slime-before-compile-functions 'fyi/slime-save-before-compile)
+
+;;; Lookup documenation in Info hyperspec
+;;; need either https://github.com/RobBlackwell/dpans2texi
+;;; or the GNU Common Lips Info files [https://www.gnu.org/software/gcl/]
+(defun fyi/hyperspec-info-lookup (symbol)
+  (interactive (list (read-string "Lookup Hyperspec: " (thing-at-point 'symbol))))
+  (condition-case nil
+      (progn
+        (info "(ansicl/ansicl)")
+        (Info-index symbol))
+    ('user-error
+     (message "%s not found!" symbol)
+     (Info-exit))))
+
+(define-key slime-mode-map (kbd "C-c C-d i") #'fyi/hyperspec-info-lookup)
 
 (provide 'init-slime)
