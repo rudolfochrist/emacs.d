@@ -50,6 +50,7 @@
         init-markdown
         init-paredit
         init-slime
+        init-redshank
         init-magit
         init-hippie-expand
         init-hippie-expand-slime
