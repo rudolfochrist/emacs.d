@@ -86,6 +86,7 @@
         init-engine-mode
         init-interleave
         init-ibuffer-vc
+        init-undo-tree
         init-unkillable-scratch
         ))
 
