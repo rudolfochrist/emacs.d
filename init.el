@@ -63,6 +63,7 @@
         init-eval-sexp-fu
         init-org-babel
         init-ace-jump
+        init-ace-window
         init-geiser
         init-shen
         init-eshell
