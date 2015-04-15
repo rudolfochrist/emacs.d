@@ -86,6 +86,7 @@
         init-engine-mode
         init-interleave
         init-ibuffer-vc
+        init-unkillable-scratch
         ))
 
 ;; load them
