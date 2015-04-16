@@ -37,7 +37,7 @@ Example:
   "Generate a date-based revision string."
   (format-time-string format-string))
 
-(defun fyi/update-elisp-version (version-alist &optional create-tag-p)
+(defun fyi/update-version-string (version-alist &optional create-tag-p)
   (interactive
    (cond
      ((equal current-prefix-arg '(4))
