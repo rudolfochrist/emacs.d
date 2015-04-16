@@ -23,5 +23,16 @@
 
 (global-set-key (kbd "C-c C-c p") 'fyi/search-kb)
 
+(defun fyi/enumerate-list (lst)
+  "Transform LIST to an alist with it's enumeration.
+
+Exmaple:
+(fyi/enumerate-list '(x y))
+=> ((x . 1) (y . 2)) "
+  (let ((idx 0))
+    (cl-mapcar (lambda (elt)
+                 (cons elt (cl-incf idx)))
+               lst)))
+
 
 (provide 'init-defuns)
