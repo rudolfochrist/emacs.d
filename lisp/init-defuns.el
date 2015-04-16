@@ -50,9 +50,7 @@ Example:
      (t
       (list (list (cons (fyi/date-revision) 3))
             nil))))
-  (goto-char (point-min))
-  (re-search-forward
-   "Version: \\([[:digit:]]+\\)\\.\\([[:digit:]]\\)\\.\\([[:digit:]]+-?[[:digit:]]\\{0,3\\}\\)")
+  (re-search-forward "\\([[:digit:]]+\\)\\.\\([[:digit:]]+\\)\\.\\([[:digit:]]+-?[[:digit:]]\\{0,3\\}\\)")
   (when (match-string 0)
     (mapc (lambda (version)
             (replace-match (car version) nil nil nil (cdr version)))
