@@ -54,8 +54,12 @@ Example:
   (when (match-string 0)
     (mapc (lambda (version)
             (replace-match (car version) nil nil nil (cdr version)))
-          version-alist))
-  (when create-tag-p
-    (message "Create tag")))
+          version-alist)
+    (when create-tag-p
+      (save-buffer)
+      (magit-stage-item (buffer-file-name))
+      (magit-commit-internal "commit"
+                             (list "--all" (format "-m v%s"
+                                                   (thing-at-point 'symbol)))))))
 
 (provide 'init-defuns)
