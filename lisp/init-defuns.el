@@ -37,5 +37,30 @@ Example:
   "Generate a date-based revision string."
   (format-time-string format-string))
 
+(defun fyi/update-version-string (version-alist &optional create-tag-p)
+  (interactive
+   (cond
+     ((equal current-prefix-arg '(4))
+      (let ((major (read-string "Major: "))
+            (minor (read-string "Minor: "))
+            (patch (read-string "Patch: "))
+            (git-tag (y-or-n-p "Create tag?")))
+        (list (fyi/enumerate-list (list major minor patch))
+              git-tag)))
+     (t
+      (list (list (cons (fyi/date-revision) 3))
+            nil))))
+  (re-search-forward "\\([[:digit:]]+\\)\\.\\([[:digit:]]+\\)\\.\\([[:digit:]]+-?[[:digit:]]\\{0,3\\}\\)")
+  (when (match-string 0)
+    (mapc (lambda (version)
+            (replace-match (car version) nil nil nil (cdr version)))
+          version-alist)
+    (when create-tag-p
+      (let ((new-version (thing-at-point 'symbol)))
+        (save-buffer)
+        (magit-stage-item (buffer-file-name))
+        (magit-commit-internal "commit"
+                               (list "--all" (format "-m v%s" new-version)))
+        (magit-tag (format "v%s" new-version) "HEAD")))))
 
 (provide 'init-defuns)
