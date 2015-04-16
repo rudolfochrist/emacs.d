@@ -37,5 +37,19 @@ Example:
   "Generate a date-based revision string."
   (format-time-string format-string))
 
+(defun fyi/update-elisp-version (version-alist &optional create-tag)
+  (interactive
+   (cond
+     ((equal current-prefix-arg '(4))
+      nil)
+     (t
+      (list (list (cons (fyi/date-revision) 3)) nil))))
+  (goto-char (point-min))
+  (re-search-forward
+   "Version: \\([[:digit:]]+\\)\\.\\([[:digit:]]\\)\\.\\([[:digit:]]+-?[[:digit:]]\\{0,3\\}\\)")
+  (when (match-string 0)
+    (mapc (lambda (version)
+            (replace-match (car version) nil nil nil (cdr version)))
+          version-alist)))
 
 (provide 'init-defuns)
