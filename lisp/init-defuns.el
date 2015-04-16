@@ -34,5 +34,9 @@ Exmaple:
                  (cons elt (cl-incf idx)))
                lst)))
 
+(cl-defun fyi/date-revision (&optional (format-string "%Y%m%d-%3N"))
+  "Generate a date-based revision string."
+  (format-time-string format-string))
+
 
 (provide 'init-defuns)
