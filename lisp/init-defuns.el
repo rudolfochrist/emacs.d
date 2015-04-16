@@ -56,10 +56,11 @@ Example:
             (replace-match (car version) nil nil nil (cdr version)))
           version-alist)
     (when create-tag-p
-      (save-buffer)
-      (magit-stage-item (buffer-file-name))
-      (magit-commit-internal "commit"
-                             (list "--all" (format "-m v%s"
-                                                   (thing-at-point 'symbol)))))))
+      (let ((new-version (thing-at-point 'symbol)))
+        (save-buffer)
+        (magit-stage-item (buffer-file-name))
+        (magit-commit-internal "commit"
+                               (list "--all" (format "-m v%s" new-version)))
+        (magit-tag (format "v%s" new-version) "HEAD")))))
 
 (provide 'init-defuns)
