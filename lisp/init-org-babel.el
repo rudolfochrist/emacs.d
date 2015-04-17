@@ -22,6 +22,7 @@
 (setq org-confirm-babel-evaluate nil)   ; Don't ask for permission
 (setq org-src-fontify-natively t)       ; Show syntax highlighting per language native mode in *.org
 (setq org-src-preserve-indentation t)   ; For languages with significant whitespace like Python
-(setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+(setq org-plantuml-jar-path "~/.emacs.d/bin/plantuml.8022.jar")
+(setq org-ditaa-jar-path "~/.emacs.d/bin/ditaa0_9.jar")
 
 (provide 'init-org-babel)
