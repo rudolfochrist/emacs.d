@@ -7,8 +7,7 @@ My Emacs configuration files
 1. Install [SBCL](http://www.sbcl.org/) (or any other CL implementation)
 2. Install [Quicklisp](http://www.quicklisp.org/)
 3. Install Quicklisp Slime Helper: `(ql:quickload "quicklisp-slime-helper")`
-4. Install CLHS: `(ql:quickload "clhs")`
-   1. Configure CLHS: `(clhs:install-clhs-use-local)`
+4. Install <https://github.com/RobBlackwell/dpans2texi>
 
 ### Installation
 

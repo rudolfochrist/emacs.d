@@ -82,6 +82,7 @@
      (message "%s not found!" symbol)
      (Info-exit))))
 
-(define-key slime-mode-map (kbd "C-c C-d i") #'fyi/hyperspec-info-lookup)
+(define-key slime-mode-map (kbd "C-c C-d h") #'fyi/hyperspec-info-lookup)
+(define-key slime-repl-mode-map (kbd "C-c C-d h") #'fyi/hyperspec-info-lookup)
 
 (provide 'init-slime)
