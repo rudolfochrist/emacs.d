@@ -188,4 +188,22 @@
   (auto-fill-mode t))
 (add-hook 'org-mode-hook 'fyi/org-width)
 
+;;; org-mode narrowed navigation
+(defun fyi/org-next-heading-narrowed (direction)
+  "Go to the next heading and show it narrowed.
+If DIRECTION is 1 forward to the next heading. If DIRECTION
+is -1 go to the previous heading."
+  (widen)
+  (org-forward-heading-same-level direction)
+  (org-narrow-to-subtree)
+  (org-show-subtree)
+  (org-cycle-hide-drawers 'all))
+(define-key org-mode-map (kbd "C-c j") (lambda ()
+                                         (interactive)
+                                         (fyi/org-next-heading-narrowed 1)))
+(define-key org-mode-map (kbd "C-c k") (lambda ()
+                                         (interactive)
+                                         (fyi/org-next-heading-narrowed -1)))
+
+
 (provide 'init-org-mode)
