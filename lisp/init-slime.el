@@ -1,18 +1,12 @@
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 
-;;; setup local hyperspec
-;;; see (ql:quickload "clhs") for more information
-(load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
-
 (add-hook 'lisp-mode-hook #'slime-mode)
 (add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
 
-(setq slime-complete-symbol*-fancy t)
-(setq slime-complete-symbol-function #'slime-fuzzy-complete-symbol)
-(setq slime-startup-animation t)
-
-;;; use UTF-8
-(setq slime-net-coding-system 'utf-8-unix)
+(setq slime-complete-symbol*-fancy t
+      slime-complete-symbol-function #'slime-fuzzy-complete-symbol
+      slime-startup-animation t
+      slime-net-coding-system 'utf-8-unix)
 
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
