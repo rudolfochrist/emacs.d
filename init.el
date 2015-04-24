@@ -89,6 +89,7 @@
         init-ibuffer-vc
         init-undo-tree
         init-unkillable-scratch
+        init-projectile
         ))
 
 ;; load them
