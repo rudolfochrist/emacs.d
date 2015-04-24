@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: org-texinfo-index
+# key: ifi
+# binding: direct-keybinding
+# --
+#+${C}INDEX: $0
