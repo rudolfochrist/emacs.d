@@ -14,6 +14,8 @@
   (interactive)
   (disable-theme 'flatui)
   (load-theme 'cyberpunk t)
+  (when (featurep 'smart-mode-line)
+    (sml/apply-theme 'dark))
   (message "Dark theme loaded."))
 
 (let ((hour (string-to-int (format-time-string "%H"))))
