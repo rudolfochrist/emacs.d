@@ -85,4 +85,7 @@
 (define-key slime-mode-map (kbd "C-c C-d h") #'fyi/hyperspec-info-lookup)
 (define-key slime-repl-mode-map (kbd "C-c C-d h") #'fyi/hyperspec-info-lookup)
 
+;;; invoke fuzzy completion
+(define-key slime-mode-map (kbd "<backtab>") #'slime-complete-symbol)
+
 (provide 'init-slime)
