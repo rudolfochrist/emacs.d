@@ -57,19 +57,7 @@
   (add-to-list 'mu4e-headers-actions '("archive message" . fyi/mu4e-archive-message))
 
   ;;; view HTML emails in the browser
-  (add-to-list 'mu4e-view-actions '("browser email" . mu4e-action-view-in-browser) t)
-
-  ;;; I like my INBOX oldest first!
-  (defun fyi/descend-order-inbox (expr ignore-history)
-    "Changes the ordering of inbox to decending. Keeps the ascending order for other views or resets it."
-    (when (and (string-match "maildir:\"/Gmail/INBOX\"" expr)
-               (eq mu4e~headers-sort-direction 'descending))
-      (setq mu4e~headers-sort-direction 'ascending))
-    (when (and (not (string-match expr expr))
-               (eq mu4e~headers-sort-direction 'ascending))
-      (setq mu4e~headers-sort-direction 'descending)))
-
-  (advice-add 'mu4e~headers-search-execute :before #'fyi/descend-order-inbox))
+  (add-to-list 'mu4e-view-actions '("browser email" . mu4e-action-view-in-browser) t))
 
 ;;; me
 (setq user-mail-address "rudolfo.christ@gmail.com"
