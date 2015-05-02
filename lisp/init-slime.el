@@ -62,6 +62,22 @@
               (slime-repl-send-input t)))
   (:one-liner "Add a directory to asdf:*central-registry*"))
 
+(defslime-repl-shortcut slime-repl-quicklisp-quickload
+    ("quicklisp-quickload" "ql")
+  (:handler (lambda (system)
+              (interactive "MSystem: ")
+              (insert (format "(ql:quickload :%s)" system))
+              (slime-repl-send-input t)))
+  (:one-liner "cl:quickload system"))
+
+(defslime-repl-shortcut slime-repl-quickload-and-switch
+    ("quickload-and-switch" "qs")
+  (:handler (lambda (system)
+              (interactive "MSystem: ")
+              (insert (format "(progn (in-package :cl-user) (ql:quickload :%s) (in-package :%s))" system system))
+              (slime-repl-send-input t)))
+  (:one-liner "quickload and switch to system"))
+
 (defun fyi/slime-save-before-compile (&rest args)
   "Save the current buffer before compilation."
   (interactive)
