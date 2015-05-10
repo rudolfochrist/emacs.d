@@ -124,6 +124,23 @@
                                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
                                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+(add-to-list 'org-latex-classes '("lecture-article"
+                                  "\\documentclass[11pt,a4paper]{article}
+                                  [DEFAULT-PACKAGES] [PACKAGES]
+                                  \\usepackage{titling}
+                                  \\usepackage{fancyhdr}
+                                  \\usepackage{mdframed}
+                                  [EXTRA] \\pagestyle{fancy}
+                                  \\lhead{\\thetitle}
+                                  \\rhead{\\theauthor}
+                                  \\renewcommand{\\headrulewidth}{0.0}
+                                  \\newenvironment{exam}{\\begin{center}\\begin{mdframed}[backgroundcolor=yellow]}{\\end{mdframed}\\end{center}}"
+                                  ("\\section{%s}" . "\\section*{%s}")
+                                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
 (add-to-list 'org-latex-packages-alist '("" "color" nil))
 
 
@@ -168,7 +185,8 @@
 (add-to-list 'org-file-apps '("\\.pdf\\'" . "/Applications/Skim.app/Contents/SharedSupport/displayline 1 %s"))
 
 ;;; org-download
-(load "org-download/org-download")
+(add-to-list 'load-path (expand-file-name "org-download" emacs-d-vendor))
+(require 'org-download)
 
 (defun fyi/configure-org-download ()
   "Configures `org-download'."

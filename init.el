@@ -4,8 +4,8 @@
 (require 'cl-lib)
 
 ;;; customization
-(add-to-list 'load-path "~/.emacs.d/vendor")
-(add-to-list 'load-path "~/.emacs.d/lisp")
+(setq emacs-d-vendor (expand-file-name "~/.emacs.d/vendor/"))
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
 ;; executables
 (add-to-list 'exec-path "/usr/local/bin/")
