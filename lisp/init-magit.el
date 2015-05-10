@@ -1,7 +1,8 @@
 (require-package 'magit)
 (require-package 'git-timemachine)
 
-(setq magit-last-seen-setup-instructions "1.4.0")
+(setq magit-last-seen-setup-instructions "1.4.0"
+      auto-revert-check-vc-info t)
 
 ;; Use the right emacs client --> https://github.com/magit/magit/issues/862
 (when (window-system)
