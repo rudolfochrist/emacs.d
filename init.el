@@ -90,7 +90,7 @@
         init-undo-tree
         init-unkillable-scratch
         init-projectile
-        ))
+        init-elisp-slime-nav
         init-highlight-backquotes-mode))
 
 ;; load them
