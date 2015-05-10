@@ -91,6 +91,7 @@
         init-elisp-slime-nav
         init-swiper
         init-ivy
+        init-macrostep
         init-highlight-backquotes-mode))
 
 ;; load them
