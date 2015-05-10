@@ -1,18 +1,21 @@
 ;(load-package 'darktooth-theme nil)
 (load-package 'cyberpunk-theme nil)
-(load-package 'flatui-theme nil)
 
 (defun fyi/light-theme ()
   "Load light color scheme."
   (interactive)
   (disable-theme 'cyberpunk)
-  (load-theme 'flatui t)
+  (add-to-list 'default-frame-alist '(background-color . "old lace"))
+  (set-face-background 'default "old lace")
+  (when (featurep 'smart-mode-line)
+    (sml/apply-theme 'dark))
   (message "Light theme loaded."))
 
 (defun fyi/dark-theme ()
   "Load dark color theme."
   (interactive)
-  (disable-theme 'flatui)
+  (set-face-background 'default nil)
+  (setq default-frame-alist initial-frame-alist)
   (load-theme 'cyberpunk t)
   (when (featurep 'smart-mode-line)
     (sml/apply-theme 'dark))
