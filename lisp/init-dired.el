@@ -1,5 +1,4 @@
 (require 'dired-x)
-(require 'eshell)
 
 (global-set-key (kbd "<f10>") 'dired-jump)
 
@@ -39,5 +38,12 @@
   (interactive)
   (kill-new (dired-get-file-for-visit)))
 (define-key dired-mode-map (kbd "C-c c") 'fyi/file-path-to-kill)
+
+;;; use GNU Coreutils ls
+(when (eq system-type 'darwin)
+  (setq insert-directory-program "/usr/local/bin/gls"))
+
+;;; use natrual sort
+(setq dired-listing-switches "-alv")
 
 (provide 'init-dired)
