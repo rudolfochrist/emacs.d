@@ -91,6 +91,7 @@
         init-unkillable-scratch
         init-projectile
         ))
+        init-highlight-backquotes-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
