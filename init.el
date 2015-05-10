@@ -91,6 +91,7 @@
         init-unkillable-scratch
         init-projectile
         init-elisp-slime-nav
+        init-swiper
         init-highlight-backquotes-mode))
 
 ;; load them
