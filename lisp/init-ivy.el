@@ -1,11 +1,7 @@
-(require 'ido)
-(require-package 'ido-vertical-mode)
+(require 'ivy)
 (require 'cl-lib)
 
-
-(ido-mode 1)
-(ido-vertical-mode 1)
-(setq ido-enable-flex-matching t)
+(ivy-mode 1)
 
 ;;; [[http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html][Visit Directory inside a Set of Directories with Emacs]]
 (defcustom fyi/favorite-directories
@@ -36,8 +32,8 @@ With prefix argument FILES-TOO also offer to find files."
                          t "^[^\.].*" t))
                 fyi/favorite-directories))))))
     (dired
-     (ido-completing-read "Open directory: "
+     (ivy-completing-read "Open directory: "
                           completions 'ignored nil ""))))
 (global-set-key (kbd "C-x d") #'fyi/visit-favorite-dir)
 
-(provide 'init-ido)
+(provide 'init-ivy)

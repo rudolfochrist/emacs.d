@@ -76,7 +76,6 @@
         init-emacs-lisp
         init-sotlisp
         init-erc
-        init-ido
         init-org-page
         init-term
         init-gnus
@@ -92,6 +91,7 @@
         init-projectile
         init-elisp-slime-nav
         init-swiper
+        init-ivy
         init-highlight-backquotes-mode))
 
 ;; load them
