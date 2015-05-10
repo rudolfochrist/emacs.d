@@ -57,7 +57,6 @@
         init-multiple-cursors
         init-org-mode
         init-erlang
-        init-smex
         init-yasnippet
         init-ag
         init-prolog
