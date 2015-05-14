@@ -223,5 +223,12 @@ is -1 go to the previous heading."
                                          (interactive)
                                          (fyi/org-next-heading-narrowed -1)))
 
+;;; org-mode abbrevs)
+;; https://stackoverflow.com/questions/18232384/how-to-replace-a-string-with-a-non-backslashed-string-in-emacs-abbrev-mode
+(abbrev-table-put org-mode-abbrev-table :regexp "\\(\\\\[a-z0-9@]+\\)")
+(define-abbrev org-mode-abbrev-table "\Rightarrow" "⇒")
+(define-abbrev org-mode-abbrev-table "\\rightarrow" "→")
+(add-hook 'org-mode-hook 'abbrev-mode)
+
 
 (provide 'init-org-mode)
