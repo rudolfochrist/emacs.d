@@ -81,7 +81,6 @@
         init-whitespace
         init-smart-mode-line
         init-easy-kill
-        init-engine-mode
         init-interleave
         init-ibuffer-vc
         init-undo-tree
