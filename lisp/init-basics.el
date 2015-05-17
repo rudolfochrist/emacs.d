@@ -14,8 +14,8 @@
 (setq system-uses-terminfo nil)
 
 ;; disable backups and auto-save
-(setq backup-inhibited t)
-(setq auto-save-default nil)
+(setq backup-inhibited t
+      auto-save-default nil)
 
 ;; disable splash screen
 (setq inhibit-startup-message t)
@@ -28,10 +28,10 @@
 
 ;; tabs, spaces and indentation
 (setq-default indent-tabs-mode nil)
-(setq tab-width 2)
-(setq require-final-newline t)
+(setq tab-width 2
+      require-final-newline t
+      show-paren-style 'mixed)
 (show-paren-mode 1)
-(setq show-paren-style 'mixed)
 
 ;; Whenever an external process changes a file underneath emacs, and there
 ;; was no unsaved changes int the corresponding buffer, just revert its
