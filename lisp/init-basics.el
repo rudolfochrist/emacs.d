@@ -54,4 +54,7 @@
 (add-hook 'after-save-hook
   'executable-make-buffer-file-executable-if-script-p)
 
+;;; better scrolling
+(setq scroll-preserve-screen-position 'always)
+
 (provide 'init-basics)
