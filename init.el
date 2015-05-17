@@ -90,7 +90,8 @@
         init-swiper
         init-ivy
         init-macrostep
-        init-highlight-backquotes-mode))
+        init-highlight-backquotes-mode
+        init-aggressive-indent-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
