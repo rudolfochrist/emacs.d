@@ -15,10 +15,10 @@
 (global-set-key (kbd "<M-f9>") 'git-timemachine)
 
 ;;; use spelling in commit buffer
-(add-hook 'git-commit-mode-hook (apply-partially 'fyi/configure-flyspell "en_US"))
+(add-hook 'git-commit-mode-hook (apply-partially 'fyi-configure-flyspell "en_US"))
 
 ;;; http://endlessparentheses.com/automatically-configure-magit-to-access-github-prs.html
-(defun fyi/add-PR-fetch ()
+(defun fyi-add-PR-fetch ()
   "If refs/pull is not defined on a GH repo, define it."
   (let ((fetch-address
          "+refs/pull/*/head:refs/pull/origin/*")
@@ -34,10 +34,10 @@
          "config" "--add" "remote.origin.fetch"
          fetch-address)))))
 
-(add-hook 'magit-mode-hook #'fyi/add-PR-fetch)
+(add-hook 'magit-mode-hook #'fyi-add-PR-fetch)
 
 ;;; http://endlessparentheses.com/easily-create-github-prs-from-magit.html
-(defun fyi/visit-pull-request-url ()
+(defun fyi-visit-pull-request-url ()
   "Visit the current branch's PR on Github."
   (interactive)
   (browse-url
@@ -51,6 +51,6 @@
 
 (eval-after-load 'magit
   '(define-key magit-mode-map "V"
-     #'fyi/visit-pull-request-url))
+     #'fyi-visit-pull-request-url))
 
 (provide 'init-magit)

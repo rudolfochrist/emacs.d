@@ -1,7 +1,7 @@
 ;(load-package 'darktooth-theme nil)
 (load-package 'cyberpunk-theme nil)
 
-(defun fyi/light-theme ()
+(defun fyi-light-theme ()
   "Load light color scheme."
   (interactive)
   (disable-theme 'cyberpunk)
@@ -11,7 +11,7 @@
     (sml/apply-theme 'dark))
   (message "Light theme loaded."))
 
-(defun fyi/dark-theme ()
+(defun fyi-dark-theme ()
   "Load dark color theme."
   (interactive)
   (set-face-background 'default nil)
@@ -23,8 +23,8 @@
 
 (let ((hour (string-to-int (format-time-string "%H"))))
   (if (< 6 hour 18)
-      (fyi/light-theme)
-      (fyi/dark-theme)))
+      (fyi-light-theme)
+      (fyi-dark-theme)))
 
 
 ;; when in GUI emacs set size of frame

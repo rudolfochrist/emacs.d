@@ -25,19 +25,19 @@
     (find-alternate-file "..")))
 
 ;;; open with default/system app
-(defun fyi/system-open-file ()
+(defun fyi-system-open-file ()
   (interactive)
   (shell-command-to-string (format "open %s" (shell-quote-argument (dired-get-file-for-visit)))))
-(define-key dired-mode-map (kbd "M-RET") 'fyi/system-open-file)
+(define-key dired-mode-map (kbd "M-RET") 'fyi-system-open-file)
 
 ;;; mc style move/rename in dired
 (setq dired-dwim-target t)
 
 ;;; Copy file path to kill-ring
-(defun fyi/file-path-to-kill ()
+(defun fyi-file-path-to-kill ()
   (interactive)
   (kill-new (dired-get-file-for-visit)))
-(define-key dired-mode-map (kbd "C-c c") 'fyi/file-path-to-kill)
+(define-key dired-mode-map (kbd "C-c c") 'fyi-file-path-to-kill)
 
 ;;; use GNU Coreutils ls
 (when (eq system-type 'darwin)

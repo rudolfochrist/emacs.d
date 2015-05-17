@@ -30,7 +30,7 @@
       org-agenda-start-on-weekday nil
       org-agenda-skip-scheduled-if-deadline-is-shown t)
 
-(defun fyi/summarize-captured-url ()
+(defun fyi-summarize-captured-url ()
   "Summarizes the website for the given URL using sumy (https://github.com/miso-belica/sumy)."
   (let ((url (plist-get org-store-link-plist :link)))
     (with-temp-buffer
@@ -61,7 +61,7 @@
          "Add bookmark via org-protocol"
          entry
          (file "~/org/kb.org")
-         "* %a :bookmark:\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%?\n\n** Website Summary:\n\n%(fyi/summarize-captured-url)\n\n"
+         "* %a :bookmark:\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%?\n\n** Website Summary:\n\n%(fyi-summarize-captured-url)\n\n"
          :prepend t :empty-lines 1)
         ("v"
          "Add bookmark via org-protocol but omit summary"
@@ -188,26 +188,26 @@
 (add-to-list 'load-path (expand-file-name "org-download" emacs-d-vendor))
 (require 'org-download)
 
-(defun fyi/configure-org-download ()
+(defun fyi-configure-org-download ()
   "Configures `org-download'."
   (setq org-download-image-dir "~/org/org-download-images/"
         org-download-heading-lvl nil
         org-download-image-width 200))
 
-(add-hook 'org-mode-hook #'fyi/configure-org-download)
+(add-hook 'org-mode-hook #'fyi-configure-org-download)
 
 ;;; custom easy templates
 (add-to-list 'org-structure-template-alist
              '("x" "#+BEGIN_EXAM\n?\n#+END_EXAM" ""))
 
 ;;; limit the width
-(defun fyi/org-width ()
+(defun fyi-org-width ()
   (set-fill-column 110)
   (auto-fill-mode t))
-(add-hook 'org-mode-hook 'fyi/org-width)
+(add-hook 'org-mode-hook 'fyi-org-width)
 
 ;;; org-mode narrowed navigation
-(defun fyi/org-next-heading-narrowed (direction)
+(defun fyi-org-next-heading-narrowed (direction)
   "Go to the next heading and show it narrowed.
 If DIRECTION is 1 forward to the next heading. If DIRECTION
 is -1 go to the previous heading."
@@ -218,10 +218,10 @@ is -1 go to the previous heading."
   (org-cycle-hide-drawers 'all))
 (define-key org-mode-map (kbd "C-c j") (lambda ()
                                          (interactive)
-                                         (fyi/org-next-heading-narrowed 1)))
+                                         (fyi-org-next-heading-narrowed 1)))
 (define-key org-mode-map (kbd "C-c k") (lambda ()
                                          (interactive)
-                                         (fyi/org-next-heading-narrowed -1)))
+                                         (fyi-org-next-heading-narrowed -1)))
 
 ;;; org-mode abbrevs)
 ;; https://stackoverflow.com/questions/18232384/how-to-replace-a-string-with-a-non-backslashed-string-in-emacs-abbrev-mode

@@ -78,17 +78,17 @@
               (slime-repl-send-input t)))
   (:one-liner "quickload and switch to system"))
 
-(defun fyi/slime-save-before-compile (&rest args)
+(defun fyi-slime-save-before-compile (&rest args)
   "Save the current buffer before compilation."
   (interactive)
   (save-buffer))
 
-(add-to-list 'slime-before-compile-functions 'fyi/slime-save-before-compile)
+(add-to-list 'slime-before-compile-functions 'fyi-slime-save-before-compile)
 
 ;;; Lookup documenation in Info hyperspec
 ;;; need either https://github.com/RobBlackwell/dpans2texi
 ;;; or the GNU Common Lips Info files [https://www.gnu.org/software/gcl/]
-(defun fyi/hyperspec-info-lookup (symbol)
+(defun fyi-hyperspec-info-lookup (symbol)
   (interactive (list (read-string "Lookup Hyperspec: " (thing-at-point 'symbol))))
   (condition-case nil
       (progn
@@ -98,8 +98,8 @@
      (message "%s not found!" symbol)
      (Info-exit))))
 
-(define-key slime-mode-map (kbd "C-c C-d h") #'fyi/hyperspec-info-lookup)
-(define-key slime-repl-mode-map (kbd "C-c C-d h") #'fyi/hyperspec-info-lookup)
+(define-key slime-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
+(define-key slime-repl-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
 
 ;;; invoke fuzzy completion
 (define-key slime-mode-map (kbd "<backtab>") #'slime-complete-symbol)

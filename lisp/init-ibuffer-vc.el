@@ -13,11 +13,11 @@
          " "
          filename-and-process)))
 
-(defun fyi/enable-ibuffer-vc ()
+(defun fyi-enable-ibuffer-vc ()
   (ibuffer-vc-set-filter-groups-by-vc-root)
   (unless (eq ibuffer-sorting-mode 'alphabetic)
     (ibuffer-do-sort-by-alphabetic)))
 
-(add-hook 'ibuffer-hook #'fyi/enable-ibuffer-vc)
+(add-hook 'ibuffer-hook #'fyi-enable-ibuffer-vc)
 
 (provide 'init-ibuffer-vc)

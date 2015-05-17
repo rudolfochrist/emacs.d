@@ -45,7 +45,7 @@
   (setq mu4e-headers-skip-duplicates t)
 
   ;;; Archiving
-  (defun fyi/mu4e-archive-message (msg)
+  (defun fyi-mu4e-archive-message (msg)
     "Looks up the message in `All Mail' and marks it as read. Then deletes it from the `INBOX'"
     (let ((archive-maildir "/Gmail/[Google Mail].All Mail"))
       (unless (equal archive-maildir (mu4e-message-field msg :maildir))
@@ -53,8 +53,8 @@
           (mu4e~proc-move msg-id archive-maildir '(seen))
           (mu4e~view-in-headers-context (mu4e-mark-set 'delete))
           (mu4e-view-headers-next)))))
-  (add-to-list 'mu4e-view-actions '("archive message" . fyi/mu4e-archive-message))
-  (add-to-list 'mu4e-headers-actions '("archive message" . fyi/mu4e-archive-message))
+  (add-to-list 'mu4e-view-actions '("archive message" . fyi-mu4e-archive-message))
+  (add-to-list 'mu4e-headers-actions '("archive message" . fyi-mu4e-archive-message))
 
   ;;; view HTML emails in the browser
   (add-to-list 'mu4e-view-actions '("browser email" . mu4e-action-view-in-browser) t))
@@ -81,7 +81,7 @@
 (setq message-kill-buffer-on-exit t)
 
 ;;; check spelling
-(add-hook 'mu4e-compose-mode-hook (apply-partially 'fyi/configure-flyspell "german"))
+(add-hook 'mu4e-compose-mode-hook (apply-partially 'fyi-configure-flyspell "german"))
 
 ;;; hotkey
 (global-set-key (kbd "<f11>") 'mu4e)

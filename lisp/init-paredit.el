@@ -29,11 +29,11 @@
 
 ;;; hippie-expand: remove last )
 ;;; http://www.emacswiki.org/emacs/HippieExpand#toc7
-(defun fyi/he-substitute-string (str &optional ops)
+(defun fyi-he-substitute-string (str &optional ops)
   "remove extra paren when expanding line in paredit"
   (if (and paredit-mode (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
-(advice-add 'he-substitute-string :after 'fyi/he-substitute-string)
+(advice-add 'he-substitute-string :after 'fyi-he-substitute-string)
 
 
 

@@ -4,19 +4,19 @@
 (ivy-mode 1)
 
 ;;; [[http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html][Visit Directory inside a Set of Directories with Emacs]]
-(defcustom fyi/favorite-directories
+(defcustom fyi-favorite-directories
   '("~/dev/" "~/current/" "~/Documents/Archive/" "~/.emacs.d/" "~/quicklisp/local-projects/"
     "~/Dropbox/Lectures/HS-Mannheim/")
   "List of favorite directories.
-Used in `fyi/visit-favorite-dir'. The order here
+Used in `fyi-visit-favorite-dir'. The order here
 affects the order that completions will be offered."
   :type '(repeat directory)
   :group 'fyi)
 
-(defun fyi/visit-favorite-dir (files-too)
+(defun fyi-visit-favorite-dir (files-too)
   "Offer all directories inside a set of directories.
 Compile a list of all directories inside each element of
-`fyi/favorite-directories', and visit one of them with
+`fyi-favorite-directories', and visit one of them with
 `ido-completing-read'.
 With prefix argument FILES-TOO also offer to find files."
   (interactive "P")
@@ -30,10 +30,10 @@ With prefix argument FILES-TOO also offer to find files."
                         (directory-files
                          (expand-file-name x)
                          t "^[^\.].*" t))
-                fyi/favorite-directories))))))
+                fyi-favorite-directories))))))
     (dired
      (ivy-completing-read "Open directory: "
                           completions 'ignored nil ""))))
-(global-set-key (kbd "C-x d") #'fyi/visit-favorite-dir)
+(global-set-key (kbd "C-x d") #'fyi-visit-favorite-dir)
 
 (provide 'init-ivy)
