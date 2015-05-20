@@ -1,3 +1,4 @@
+(require-package 'bbdb)
 (require 'nnir)
 
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
@@ -46,8 +47,11 @@
 (add-hook 'mail-citation-hook 'sc-cite-original)
 (add-hook 'message-sent-hook 'gnus-score-followup-article)
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
-(add-hook 'message-mode-hook
-          (apply-partially 'fyi-configure-flyspell "german8"))
+(add-hook 'message-mode-hook (lambda ()
+                               (fyi-configure-flyspell "german8")
+                               (bbdb-initialize 'message)
+                               (bbdb-initialize 'gnus)
+                               (local-set-key (kbd "TAB") 'bbdb-complete-mail)))
 
 ;;; Tree view for groups
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
@@ -59,12 +63,35 @@
 
 ;;; sorting
 (setq gnus-parameters
-      '(("Mail"
+      '(("Mail"                         ; topic
          (gnus-thread-sort-functions '((not gnus-thread-sort-by-date))))
-        ("All Mail"
+        ("All Mail"                     ; group
          (display . all))
-        ("INBOX"
+        ("INBOX"                        ; group
          (gnus-thread-sort-functions '(gnus-thread-sort-by-date)))))
+
+;;; aesthetics
+;;; https://github.com/vanicat/emacs24-starter-kit/blob/master/starter-kit-gnus.org#more-attractive-summary-view
+(when window-system
+  (setq gnus-sum-thread-tree-indent "  "
+        gnus-sum-thread-tree-root "● "
+        gnus-sum-thread-tree-false-root "◯ "
+        gnus-sum-thread-tree-single-indent  ""
+        gnus-sum-thread-tree-vertical        "│"
+        gnus-sum-thread-tree-leaf-with-other "├─► "
+        gnus-sum-thread-tree-single-leaf     "╰─► "))
+(setq gnus-summary-line-format
+      (concat
+       "%0{%U%R%z%}"
+       "%3{│%}" "%1{%d%}" "%3{│%}" ;; date
+       "  "
+       "%4{%-20,20f%}"               ;; name
+       "  "
+       "%3{│%}"
+       " "
+       "%1{%B%}"
+       "%s\n"))
+(setq gnus-summary-display-arrow t)
 
 ;;; me
 (setq user-full-name "Sebastian Christ"
@@ -83,6 +110,19 @@
       smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587
       smtp-debug-info t)
+
+
+;;; managing contantcs
+(add-to-list 'load-path (expand-file-name "gmail2bbdb" emacs-d-vendor))
+(require 'gmail2bbdb)                   ; import from google see https://github.com/redguardtoo/gmail2bbdb
+
+(setq bbdb-offer-save 'auto
+      bbdb-notice-auto-save-file t
+      bbdb-expand-mail-aliases t
+      bbdb-canonicalize-redundant-nets-p t
+      bbdb-always-add-addresses t
+      bbdb-complete-mail-allow-cycling t)
+
 
 
 (global-set-key (kbd "<f11>") 'gnus)

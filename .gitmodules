@@ -10,3 +10,6 @@
 [submodule "vendor/highlight-backquotes-mode"]
 	path = vendor/highlight-backquotes-mode
 	url = https://github.com/DalekBaldwin/highlight-backquotes-mode.git
+[submodule "vendor/gmail2bbdb"]
+	path = vendor/gmail2bbdb
+	url = https://github.com/redguardtoo/gmail2bbdb.git
