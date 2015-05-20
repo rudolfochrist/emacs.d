@@ -67,7 +67,6 @@
         init-geiser
         init-shen
         init-eshell
-        init-mu4e
         init-info
         init-ediff
         init-dired
