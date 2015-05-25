@@ -2,6 +2,6 @@
 
 (setq ag-highlight-search t)
 (setq ag-reuse-buffers t)
-(global-set-key (kbd "<f2>") 'ag)
+(global-set-key (kbd "<M-f2>") 'ag)
 
 (provide 'init-ag)

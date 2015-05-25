@@ -1,7 +1,10 @@
 (require 'ivy)
 (require 'cl-lib)
+(require-package 'counsel)
 
 (ivy-mode 1)
+(define-key ivy-minibuffer-map (kbd "M-.") 'counsel-find-symbol)
+(global-set-key (kbd "<f2>") 'counsel-git-grep)
 
 ;;; [[http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html][Visit Directory inside a Set of Directories with Emacs]]
 (defcustom fyi-favorite-directories
