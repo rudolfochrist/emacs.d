@@ -1,4 +1,5 @@
 (require-package 'bbdb)
+(require 'gnus)
 (require 'nnir)
 
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
@@ -11,7 +12,8 @@
       gnus-read-active-file 'some
       ;; don't keep message buffers around
       message-kill-buffer-on-exit t
-      gnus-use-correct-string-widths nil)
+      gnus-use-correct-string-widths nil
+      mm-text-html-renderer 'gnus-w3m)
 
 ;;; setup paths
 (setq  message-directory (expand-file-name "~/gnus/mail/")
@@ -58,6 +60,7 @@
 
 ;;; threading
 (setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject
+      gnus-summary-make-false-root 'dummy
       gnus-summary-gather-subject-limit 'fuzzy
       gnus-thread-ignore-subject t)
 
@@ -93,6 +96,10 @@
        "%s\n"))
 (setq gnus-summary-display-arrow t)
 
+;;; gravatar
+(setq gnus-treat-from-gravatar 'head
+      gnus-treat-mail-gravatar 'head)
+
 ;;; me
 (setq user-full-name "Sebastian Christ"
       user-mail-address "rudolfo.christ@gmail.com")
@@ -122,8 +129,6 @@
       bbdb-canonicalize-redundant-nets-p t
       bbdb-always-add-addresses t
       bbdb-complete-mail-allow-cycling t)
-
-
 
 (global-set-key (kbd "<f11>") 'gnus)
 
