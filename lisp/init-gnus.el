@@ -51,8 +51,7 @@
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 (add-hook 'message-mode-hook (lambda ()
                                (fyi-configure-flyspell "german8")
-                               (bbdb-initialize 'message)
-                               (bbdb-initialize 'gnus)
+                               (bbdb-initialize 'gnus 'message)
                                (local-set-key (kbd "TAB") 'bbdb-complete-mail)))
 
 ;;; Tree view for groups
@@ -129,6 +128,7 @@
       bbdb-canonicalize-redundant-nets-p t
       bbdb-always-add-addresses t
       bbdb-complete-mail-allow-cycling t)
+(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
 
 (global-set-key (kbd "<f11>") 'gnus)
 
