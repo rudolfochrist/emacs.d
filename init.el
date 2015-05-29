@@ -91,7 +91,8 @@
         init-macrostep
         init-highlight-backquotes-mode
         init-aggressive-indent-mode
-        init-yaml-mode))
+        init-yaml-mode
+        init-company-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
