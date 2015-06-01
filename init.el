@@ -46,6 +46,7 @@
         init-linum
         init-keybindings
         init-spelling
+        init-company-mode
         init-javascript
         init-markdown
         init-paredit
@@ -89,8 +90,7 @@
         init-macrostep
         init-highlight-backquotes-mode
         init-aggressive-indent-mode
-        init-yaml-mode
-        init-company-mode))
+        init-yaml-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
