@@ -1,4 +1,5 @@
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(require-package 'slime)
+(require-package 'slime-company)
 
 (add-hook 'lisp-mode-hook #'slime-mode)
 (add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
@@ -17,40 +18,15 @@
         (abcl ("/usr/local/bin/abcl") :env ("PATH=/usr/local/bin:/usr/bin:$PATH"))))
 
 ;;; getting contrib fancy
-(setq slime-contribs '(slime-fancy slime-banner slime-asdf))
-
-;;; but disable autodoc
-(setq slime-use-autodoc-mode nil)
+(slime-setup '(slime-fancy slime-repl slime-banner slime-mdot-fu slime-company))
 
 ;;; use slime-mode on asd files
 (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
 
 ;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
-(define-key slime-mode-map (kbd "C-c /") 'slime-selector)
-(define-key slime-repl-mode-map (kbd "C-c /") 'slime-selector)
-
-;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
-(defun dmd/dump-slime ()
-  "Dump current SLIME instance to PWD/slime.img"
-  (interactive)
-  (save-excursion
-    (switch-to-buffer-other-window "*inferior-lisp*")
-    (goto-char (point-min))
-    (insert (format "(trivial-dump-core::sbcl-dump-image-slime %S)" (expand-file-name "slime.img")))
-    (inferior-slime-return)))
-
-;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
-(defun dmd/load-slime ()
-  "Load a previously saved SLIME image (see `dmd/dump-slime') named PWD/slime.img."
-  (interactive)
-  (slime-start :program "/usr/local/bin/sbcl"
-               :program-args '("--core" "slime.img")
-               :directory default-directory))
-
-;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
 ;; Add a directory to asdf:*central-registry*
 (defslime-repl-shortcut slime-repl-add-to-central-registry
-  ("add-to-central-registry" "+a" "add")
+    ("add-to-central-registry" "+a" "add")
   (:handler (lambda (directory)
               (interactive
                (list (expand-file-name (file-name-as-directory
@@ -78,13 +54,6 @@
               (slime-repl-send-input t)))
   (:one-liner "quickload and switch to system"))
 
-(defun fyi-slime-save-before-compile (&rest args)
-  "Save the current buffer before compilation."
-  (interactive)
-  (save-buffer))
-
-(add-to-list 'slime-before-compile-functions 'fyi-slime-save-before-compile)
-
 ;;; Lookup documenation in Info hyperspec
 ;;; need either https://github.com/RobBlackwell/dpans2texi
 ;;; or the GNU Common Lips Info files [https://www.gnu.org/software/gcl/]
@@ -100,8 +69,5 @@
 
 (define-key slime-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
 (define-key slime-repl-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
-
-;;; invoke fuzzy completion
-(define-key slime-mode-map (kbd "<backtab>") #'slime-complete-symbol)
 
 (provide 'init-slime)
