@@ -47,6 +47,7 @@
         init-keybindings
         init-spelling
         init-company-mode
+        init-hydra
         init-javascript
         init-markdown
         init-paredit
