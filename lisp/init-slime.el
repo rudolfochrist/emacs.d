@@ -18,7 +18,7 @@
         (abcl ("/usr/local/bin/abcl") :env ("PATH=/usr/local/bin:/usr/bin:$PATH"))))
 
 ;;; getting contrib fancy
-(slime-setup '(slime-fancy slime-repl slime-banner slime-mdot-fu slime-company))
+(slime-setup '(slime-fancy slime-repl slime-banner slime-mdot-fu slime-asdf slime-company))
 
 ;;; use slime-mode on asd files
 (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
@@ -41,7 +41,7 @@
 (defslime-repl-shortcut slime-repl-quicklisp-quickload
     ("quicklisp-quickload" "ql")
   (:handler (lambda (system)
-              (interactive "MSystem: ")
+              (interactive (list (slime-read-system-name)))
               (insert (format "(ql:quickload :%s)" system))
               (slime-repl-send-input t)))
   (:one-liner "cl:quickload system"))
@@ -49,7 +49,7 @@
 (defslime-repl-shortcut slime-repl-quickload-and-switch
     ("quickload-and-switch" "qs")
   (:handler (lambda (system)
-              (interactive "MSystem: ")
+              (interactive (list (slime-read-system-name)))
               (insert (format "(progn (in-package :cl-user) (ql:quickload :%s) (in-package :%s))" system system))
               (slime-repl-send-input t)))
   (:one-liner "quickload and switch to system"))
