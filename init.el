@@ -91,7 +91,10 @@
         init-macrostep
         init-highlight-backquotes-mode
         init-aggressive-indent-mode
-        init-yaml-mode))
+        init-yaml-mode
+        init-ruby
+        init-haml-sass
+        init-web-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
