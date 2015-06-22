@@ -11,11 +11,8 @@
 
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
-      '((sbcl ("/usr/local/bin/sbcl"))
-        (ccl ("/usr/local/bin/ccl"))
-        (allegro ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))
-        (clisp ("/usr/local/bin/clisp"))
-        (abcl ("/usr/local/bin/abcl") :env ("PATH=/usr/local/bin:/usr/bin:$PATH"))))
+      '((clisp ("/usr/local/bin/clisp"))
+        (sbcl ("/usr/local/bin/sbcl"))))
 
 ;;; getting contrib fancy
 (slime-setup '(slime-fancy slime-repl slime-banner slime-mdot-fu slime-asdf slime-company))
