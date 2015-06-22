@@ -30,7 +30,7 @@
                (nnimap-authinfo-file "~/.authinfo.gpg")
                ;; press 'E' to expire email
                (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash")
-               (nnmail-expiry-wait 90)))
+               (nnmail-expiry-wait 'immediate)))
 
 ;;; news
 (add-to-list 'gnus-secondary-select-methods
@@ -51,7 +51,6 @@
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 (add-hook 'message-mode-hook (lambda ()
                                (fyi-configure-flyspell "german8")
-                               (bbdb-initialize 'gnus 'message)
                                (local-set-key (kbd "TAB") 'bbdb-complete-mail)))
 
 ;;; Tree view for groups
@@ -129,6 +128,7 @@
       bbdb-always-add-addresses t
       bbdb-complete-mail-allow-cycling t)
 (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
+(bbdb-initialize 'gnus 'message)
 
 (global-set-key (kbd "<f11>") 'gnus)
 
