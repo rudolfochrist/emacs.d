@@ -11,8 +11,10 @@
 
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
-      '((clisp ("/usr/local/bin/clisp"))
-        (sbcl ("/usr/local/bin/sbcl"))))
+      '((ccl ("/usr/local/bin/ccl64"))
+        (clisp ("/usr/local/bin/clisp"))
+        (sbcl ("/usr/local/bin/sbcl"))
+        (ecl ("/usr/local/bin/ecl"))))
 
 ;;; getting contrib fancy
 (slime-setup '(slime-fancy slime-repl slime-banner slime-mdot-fu slime-asdf slime-company))
