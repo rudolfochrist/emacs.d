@@ -1,4 +1,6 @@
 (require-package 'bbdb)
+(require-package 'bbdb-ext)
+(require-package 'bbdb-vcard)
 (require 'gnus)
 (require 'nnir)
 
@@ -51,6 +53,7 @@
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 (add-hook 'message-mode-hook (lambda ()
                                (fyi-configure-flyspell "german8")
+                               (bbdb-mail-aliases)
                                (local-set-key (kbd "TAB") 'bbdb-complete-mail)))
 
 ;;; Tree view for groups
@@ -118,9 +121,6 @@
 
 
 ;;; managing contantcs
-(add-to-list 'load-path (expand-file-name "gmail2bbdb" emacs-d-vendor))
-(require 'gmail2bbdb)                   ; import from google see https://github.com/redguardtoo/gmail2bbdb
-
 (setq bbdb-offer-save 'auto
       bbdb-notice-auto-save-file t
       bbdb-expand-mail-aliases t
@@ -128,7 +128,7 @@
       bbdb-always-add-addresses t
       bbdb-complete-mail-allow-cycling t)
 (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-(bbdb-initialize 'gnus 'message)
+(bbdb-initialize '(gnus mail message pgp anniv))
 
 (global-set-key (kbd "<f11>") 'gnus)
 
