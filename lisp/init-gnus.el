@@ -87,7 +87,7 @@
 (setq gnus-summary-line-format
       (concat
        "%0{%U%R%z%}"
-       "%3{│%}" "%1{%d%}" "%3{│%}" ;; date
+       "│" "%&user-date;" "%23=│" ;; date
        "  "
        "%4{%-20,20f%}"               ;; name
        "  "
