@@ -29,9 +29,9 @@
 
 ;; when in GUI emacs set size of frame
 (when window-system
-  (set-frame-size (selected-frame) 150 45))
+  (set-frame-size (selected-frame) 150 45)
+  (set-frame-font "input-12"))
 
 ;;; pretty symbols
 (global-prettify-symbols-mode 1)
-
 (provide 'init-color)
