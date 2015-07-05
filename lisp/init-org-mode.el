@@ -53,9 +53,9 @@
          :prepend t :empty-lines 1)
         ("r"
          "Add link to ~/org/read-later.org via org-protocol"
-         item
+         entry
          (file "~/org/read-later.org")
-         "- [[%:link][%:description]] --- (%u)"
+         "* [[%:link][%:description]] --- (%u)"
          :prepend t :immediate-finish t)
         ("b"
          "Add bookmark via org-protocol"
