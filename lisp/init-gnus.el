@@ -8,14 +8,18 @@
 
 ;;; globals
 (setq gnus-select-method '(nnml "")
-      gnus-home-score-file (expand-file-name "~/.emacs.d/total-scoring.SCORE")
+      gnus-home-score-file (expand-file-name "~/.emacs.d/all.SCORE")
       gnus-use-cache t
       ;; fetch only part of the article. If possible.
       gnus-read-active-file 'some
       ;; don't keep message buffers around
       message-kill-buffer-on-exit t
       gnus-use-correct-string-widths nil
-      mm-text-html-renderer 'gnus-w3m)
+      mm-text-html-renderer 'gnus-w3m
+      mm-inline-text-html-with-images t)
+
+;;; display inlined images
+(add-to-list 'mm-attachment-override-types "image/.*")
 
 ;;; setup paths
 (setq  message-directory (expand-file-name "~/gnus/mail/")
