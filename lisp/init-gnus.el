@@ -131,8 +131,17 @@
       bbdb-canonicalize-redundant-nets-p t
       bbdb-always-add-addresses t
       bbdb-complete-mail-allow-cycling t)
-(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
 (bbdb-initialize '(gnus mail message pgp anniv))
+
+(defun fyi-gnus-archive-inbox ()
+  (interactive)
+  (mark-whole-buffer)
+  (gnus-summary-delete-article))
+
+(defun fyi-gnus-keybindings ()
+  (define-key gnus-summary-mode-map (kbd "C-c C-a") 'fyi-gnus-archive-inbox))
+
+(add-hook 'gnus-summary-mode-hook 'fyi-gnus-keybindings)
 
 (global-set-key (kbd "<f11>") 'gnus)
 
