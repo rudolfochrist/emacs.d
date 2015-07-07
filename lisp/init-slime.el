@@ -39,9 +39,9 @@
 
 (defslime-repl-shortcut slime-repl-quicklisp-quickload
     ("quicklisp-quickload" "ql")
-  (:handler (lambda (system)
+  (:handler (lambda (&rest systems)
               (interactive (list (slime-read-system-name)))
-              (insert (format "(ql:quickload :%s)" system))
+              (insert (format "(ql:quickload '%s)" systems))
               (slime-repl-send-input t)))
   (:one-liner "cl:quickload system"))
 
@@ -66,11 +66,28 @@
      (message "%s not found!" symbol)
      (Info-exit))))
 
-;;; custom keys
-(with-eval-after-load "slime"
-  (define-key slime-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
-  (define-key slime-repl-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
-  (define-key slime-repl-mode-map (kbd "C-l") #'slime-repl-clear-buffer))
+(defun fyi-slime-autodoc-newline ()
+  (interactive)
+  (if (eq major-mode 'slime-repl-mode)
+      (slime-repl-newline-and-indent)
+      (newline-and-indent))
+  (let ((doc (slime-autodoc t)))
+    (when doc
+      (eldoc-message "%s" doc))))
+(eldoc-add-command 'fyi-slime-autodoc-newline)
 
+(defun fyi-slime-keybindings ()
+  (define-key slime-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
+  (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline))
+
+(add-hook 'slime-mode-hook 'fyi-slime-keybindings)
+
+(defun fyi-slime-repl-keybindings ()
+  (define-key slime-repl-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
+  (define-key slime-repl-mode-map (kbd "C-l") #'slime-repl-clear-buffer)
+  (define-key slime-repl-mode-map (kbd "SPC") #'slime-autodoc-space)
+  (define-key slime-repl-mode-map (kbd "C-j") #'fyi-slime-autodoc-newline))
+
+(add-hook 'slime-repl-mode-hook 'fyi-slime-repl-keybindings)
 
 (provide 'init-slime)
