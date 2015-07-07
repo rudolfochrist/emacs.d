@@ -138,9 +138,65 @@
   (mark-whole-buffer)
   (gnus-summary-delete-article))
 
-(defun fyi-gnus-keybindings ()
-  (define-key gnus-summary-mode-map (kbd "C-c C-a") 'fyi-gnus-archive-inbox))
+;;; https://github.com/jwiegley/dot-emacs/blob/master/dot-gnus.el#L530
+(defun fyi-gnus-article-get-urls-region (min max)
+  "Return a list of urls found in the region between MIN and MAX"
+  (let (url-list)
+    (save-excursion
+      (save-restriction
+        (narrow-to-region min max)
+        (goto-char (point-min))
+        (while (re-search-forward gnus-button-url-regexp nil t)
+          (let ((match-string (match-string-no-properties 0)))
+            (if (and (not (equal (substring match-string 0 4) "file"))
+                     (not (member match-string url-list)))
+                (setq url-list (cons match-string url-list)))))))
+    url-list))
 
+;;; https://github.com/jwiegley/dot-emacs/blob/master/dot-gnus.el#L544
+(defun fyi-gnus-article-get-current-urls ()
+  "Return a list of the urls found in the current `gnus-article-buffer'"
+  (let (url-list)
+    (with-current-buffer gnus-article-buffer
+      (setq url-list
+            (fyi-gnus-article-get-urls-region (point-min) (point-max))))
+    url-list))
+
+;;; https://github.com/jwiegley/dot-emacs/blob/master/dot-gnus.el#L552
+(defun fyi-gnus-article-browse-urls ()
+  "Visit a URL from the `gnus-article-buffer' by showing a
+buffer with the list of URLs found with the `gnus-button-url-regexp'."
+  (interactive)
+  (gnus-configure-windows 'article)
+  (gnus-summary-select-article nil nil 'pseudo)
+  (let ((temp-buffer (generate-new-buffer " *Article URLS*"))
+        (urls (fyi-gnus-article-get-current-urls))
+        (this-window (selected-window))
+        (browse-window (get-buffer-window gnus-article-buffer))
+        (count 0))
+    (save-excursion
+      (save-window-excursion
+        (with-current-buffer temp-buffer
+          (mapc (lambda (string)
+                  (insert (format "\t%d: %s\n" count string))
+                  (setq count (1+ count))) urls)
+          (not-modified)
+          (pop-to-buffer temp-buffer)
+          (setq count
+                (string-to-number
+                 (char-to-string (if (fboundp
+                                      'read-char-exclusive)
+                                     (read-char-exclusive)
+                                     (read-char)))))
+          (kill-buffer temp-buffer)))
+      (if browse-window
+          (progn (select-window browse-window)
+                 (browse-url (nth count urls)))))
+    (select-window this-window)))
+
+(defun fyi-gnus-keybindings ()
+  (define-key gnus-summary-mode-map (kbd "C-c C-a") 'fyi-gnus-archive-inbox)
+  (define-key gnus-summary-mode-map (kbd "C-c C-u") 'fyi-gnus-article-browse-urls))
 (add-hook 'gnus-summary-mode-hook 'fyi-gnus-keybindings)
 
 (global-set-key (kbd "<f11>") 'gnus)
