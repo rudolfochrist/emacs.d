@@ -11,9 +11,10 @@
 
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
-      '((ccl ("/usr/local/bin/ccl64"))
+      '((sbcl ("/usr/local/bin/sbcl"))
+        (ccl ("/usr/local/bin/ccl64"))
+        (ccl-trunk ("/usr/local/src/ccl/scripts/ccl64"))
         (clisp ("/usr/local/bin/clisp"))
-        (sbcl ("/usr/local/bin/sbcl"))
         (ecl ("/usr/local/bin/ecl"))))
 
 ;;; getting contrib fancy
