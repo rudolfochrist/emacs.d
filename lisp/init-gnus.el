@@ -45,11 +45,12 @@
                (nntp-port-number 563)
                (nntp-address "news.gmane.org")))
 
+
 (add-to-list 'gnus-secondary-select-methods
-             '(nntp "news.eternal-september.org"
+             '(nntp "nntp.aioe.org"
                (nntp-open-connection-function nntp-open-tls-stream)
                (nntp-port-number 563)
-               (nntp-address "news.eternal-september.org")))
+               (nntp-address "nntp.aioe.org")))
 
 ;;; hooks
 (add-hook 'mail-citation-hook 'sc-cite-original)
@@ -65,7 +66,6 @@
 
 ;;; threading
 (setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject
-      gnus-summary-make-false-root 'dummy
       gnus-summary-gather-subject-limit 'fuzzy
       gnus-thread-ignore-subject t)
 
