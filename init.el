@@ -62,7 +62,7 @@
         init-prolog
         init-eval-sexp-fu
         init-org-babel
-        init-ace-jump
+        init-avy
         init-ace-window
         init-geiser
         init-shen
