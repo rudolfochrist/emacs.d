@@ -1,7 +1,7 @@
 (require-package 'hydra)
 
 (global-set-key
- (kbd "C-M-'")
+ (kbd "C-M-=")
  (defhydra hydra-globals (:hint nil)
    "
 Some global mappings.
