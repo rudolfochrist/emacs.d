@@ -26,8 +26,14 @@
         ("M-N" . term-send-backward-kill-word)
         ("<M-backspace>" . term-send-backward-kill-word)
         ("M-r" . term-send-reverse-search-history)
-        ("M-," . term-send-raw)
-        ("M-." . comint-dynamic-complete)))
+        ("M-," . term-send-raw)))
 (multi-term-keystroke-setup)
+
+(when (equal system-type 'darwin)
+  (defun fyi-iterm-current-location ()
+    (interactive)
+    (term-send-raw-string "open -a iTerm $PWD")
+    (term-send-return))
+  (push '("M-." . fyi-iterm-current-location) term-bind-key-alist))
 
 (provide 'init-term)
