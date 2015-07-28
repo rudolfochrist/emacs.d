@@ -94,7 +94,8 @@
         init-yaml-mode
         init-ruby
         init-haml-sass
-        init-web-mode))
+        init-web-mode
+        init-hl-line-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
