@@ -3,7 +3,9 @@
 (defhydra hydra-avy (:color blue)
   "Jump to"
   ("w" avy-goto-word-or-subword-1 "word/subword")
-  ("c" avy-goto-char "character"))
+  ("c" avy-goto-char "character")
+  ("l" avy-goto-line "line")
+  ("a" avy-goto-word-0 "all words"))
 
 (global-set-key
  (kbd "C-M-S-q")
