@@ -53,13 +53,21 @@
                (nntp-address "nntp.aioe.org")))
 
 ;;; hooks
+(defun fyi-gnus-multi-tab ()
+  "bbdb mail complete in message header. Yasnippet expand in message body."
+  (interactive)
+  (if (message-in-body-p)
+      (yas-expand)
+      (bbdb-complete-mail)))
+
 (add-hook 'mail-citation-hook 'sc-cite-original)
 (add-hook 'message-sent-hook 'gnus-score-followup-article)
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 (add-hook 'message-mode-hook (lambda ()
                                (fyi-configure-flyspell "german8")
+                               (enable-yas-minor-mode)
                                (bbdb-mail-aliases)
-                               (local-set-key (kbd "TAB") 'bbdb-complete-mail)))
+                               (local-set-key (kbd "TAB") 'fyi-gnus-multi-tab)))
 
 ;;; Tree view for groups
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
