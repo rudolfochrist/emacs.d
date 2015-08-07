@@ -3,7 +3,15 @@
 (require-package 'counsel)
 
 (ivy-mode 1)
-(global-set-key (kbd "<f2>") 'counsel-git-grep)
+(global-set-key (kbd "<f2>") (lambda (arg)
+                               (interactive "p")
+                               (cond
+                                 ((= arg 4)
+                                  (counsel-ag))
+                                 ((= arg 16)
+                                  (search-kb))
+                                 (t
+                                  (counsel-git-grep)))))
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
 

@@ -20,16 +20,6 @@ Argument DICTIONARY The Ispell dictionary to use."
   (set-input-method "german-prefix")
   (flyspell-mode 1))
 
-(defun fyi-search-kb (search-string)
-  "Search the KB for SEARCH-STRING."
-  (interactive "MSearch String: ")
-  (grep (concat "grep --color -inH -C 3 -E "
-                (shell-quote-argument search-string)
-                " ~/org/kb.org"))
-  (other-window 1))
-
-(global-set-key (kbd "C-c C-c p") 'fyi-search-kb)
-
 (defun fyi-enumerate-list (lst)
   "Transform LST to an enumerated alist.
 
@@ -91,6 +81,8 @@ and a tag is generated."
         (magit-commit-internal "commit"
                                (list "--all" (format "-m v%s" new-version)))
         (magit-tag (format "v%s" new-version) "HEAD")))))
+
+
 
 (provide 'init-defuns)
 

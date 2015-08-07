@@ -58,7 +58,6 @@
         init-org-mode
         init-erlang
         init-yasnippet
-        init-ag
         init-prolog
         init-eval-sexp-fu
         init-org-babel
@@ -95,7 +94,8 @@
         init-ruby
         init-haml-sass
         init-web-mode
-        init-hl-line-mode))
+        init-hl-line-mode
+        init-search-kb))
 
 ;; load them
 (dolist (file setup-pkg-full)
