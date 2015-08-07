@@ -2,7 +2,6 @@
 
 (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp .t)
                                                          (js . t)
-                                                         (R . t)
                                                          (sql . t)
                                                          (C . t)
                                                          (clojure . t)
