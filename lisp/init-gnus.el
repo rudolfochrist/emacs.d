@@ -66,7 +66,8 @@
       sc-auto-fill-region-p nil
       sc-citation-leader "  "
       sc-preferred-attribution-list '("x-attribution" "no-attrib") ; see below!
-      sc-confirm-always-p nil)
+      sc-confirm-always-p nil
+      sc-preferred-header-style 1)
 (add-hook 'mail-citation-hook 'sc-cite-original)
 
 (defun fyi-sc-pre-handler ()
