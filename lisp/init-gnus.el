@@ -60,7 +60,22 @@
       (yas-expand)
       (bbdb-complete-mail)))
 
+;;; citation
+(setq sc-cite-blank-lines-p t
+      sc-fixup-whitespace-p nil
+      sc-auto-fill-region-p nil
+      sc-citation-leader "  "
+      sc-preferred-attribution-list '("x-attribution" "no-attrib") ; see below!
+      sc-confirm-always-p nil)
 (add-hook 'mail-citation-hook 'sc-cite-original)
+
+(defun fyi-sc-pre-handler ()
+  ;; don't use attribution if x-attribution is undefined
+  ;; I confess: a little hacky
+  (push '("no-attrib" . "") sc-attributions))
+(add-hook 'sc-attribs-preselect-hook 'fyi-sc-pre-handler)
+
+;;; message setup
 (add-hook 'message-sent-hook 'gnus-score-followup-article)
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 (add-hook 'message-mode-hook (lambda ()
