@@ -1,6 +1,10 @@
 (require 'dired-x)
 
-(global-set-key (kbd "<f10>") 'dired-jump)
+(global-set-key (kbd "<f10>") (lambda (arg)
+                                (interactive "p")
+                                (if (= arg 16)
+                                    (counsel-locate)
+                                    (call-interactively 'dired-jump))))
 
 ;;; open eshell from dired
 ;;; http://oremacs.com/2015/01/10/dired-ansi-term/
