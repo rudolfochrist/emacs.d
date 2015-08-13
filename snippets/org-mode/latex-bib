@@ -3,5 +3,5 @@
 # key: \bib
 # binding: direct-keybinding
 # --
-\bibliography{/Users/fyi/Documents/mendeley-bibtex/library}
+\bibliography{/Users/fyi/Dropbox/Papers/library.bib}
 \bibliographystyle{plain}
