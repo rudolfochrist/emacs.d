@@ -1,0 +1,15 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: letter
+# key: letter
+# binding: direct-keybinding
+# --
+#+STARTUP: showall
+#+OPTIONS: after-closing-order:(ps encl cc) after-letter-order:(after_letter) backaddress:t
+#+OPTIONS: foldmarks:t email:t subject:titled
+#+LATEX_CLASS: default-koma-letter
+#+LATEX_CLASS_OPTIONS: [a4paper]
+#+LCO: ${1:de} me ${2:lambda-letter}
+#+PLACE: $3
+${4:#+SUBJECT: A letter for you}
+#+date: ${5:\today}
+$0

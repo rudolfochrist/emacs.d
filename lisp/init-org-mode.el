@@ -5,6 +5,7 @@
 (require-package 'org-plus-contrib
                  :require 'org)
 (require 'ox-latex)
+(require 'ox-koma-letter)
 (require 'org-checklist)
 
 ;;; enable org-protocol
@@ -141,6 +142,9 @@
                                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
                                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+(setq org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
+      org-export-date-timestamp-format "%Y-%m-%d")
+
 (add-to-list 'org-latex-packages-alist '("" "color" nil))
 
 
@@ -177,9 +181,11 @@
 
 ;;; needed for bibtex
 (setq org-latex-pdf-process '("pdflatex -interaction nonstopmode %f"
+;;; use xelatex with bibtex
+(setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
                               "bibtex %b"
-                              "pdflatex -interaction nonstopmode %f"
-                              "pdflatex -interaction nonstopmode %f"))
+                              "xelatex -interaction nonstopmode %f"
+                              "xelatex -interaction nonstopmode %f"))
 
 ;;; use Skim to open PDFs
 (add-to-list 'org-file-apps '("\\.pdf\\'" . "/Applications/Skim.app/Contents/SharedSupport/displayline 1 %s"))
