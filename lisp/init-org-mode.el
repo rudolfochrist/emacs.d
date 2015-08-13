@@ -173,14 +173,25 @@
 (org-add-link-type
  "hl" nil
  (lambda (path desc format)
-  (cond
-   ((eq format 'html)
-    (format "<font style=\"background-color:%s;\">%s</font>" path desc))
-   ((eq format 'latex)
-    (format "\\colorbox{%s}{%s}" path desc))))) ;; require \usepackage{color}
+   (cond
+     ((eq format 'html)
+      (format "<font style=\"background-color:%s;\">%s</font>" path desc))
+     ((eq format 'latex)
+      (format "\\colorbox{%s}{%s}" path desc))))) ;; require \usepackage{color}
 
-;;; needed for bibtex
-(setq org-latex-pdf-process '("pdflatex -interaction nonstopmode %f"
+;;; bibdexk/bibtex/citation links
+(org-add-link-type
+ "x-bdsk"
+ (lambda (path)
+   (browse-url (concat "x-bdsk:" path)))
+ (lambda (path desc format)
+   (case format
+     ('html
+      (format "<font style=\"background-color: red\">Check %s in BibDesk</font>" desc))
+     ('latex
+      (when (string-match "^cite:\\(.*\\)" desc)
+        (format "\\cite{%s}" (match-string 1 desc)))))))
+
 ;;; use xelatex with bibtex
 (setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
                               "bibtex %b"
