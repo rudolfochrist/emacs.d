@@ -6,7 +6,7 @@
 ;;; distel -- see https://github.com/massemanet/distel/blob/master/INSTALL
 (add-to-list 'load-path "/usr/local/share/distel/elisp/")
 (require 'distel nil t)
-(eval-after-load "distel"
+(with-eval-after-load "distel"
   (distel-setup))
 
 (add-to-list 'auto-mode-alist '("\\.erl$" . erlang-mode))
