@@ -87,25 +87,15 @@
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "<f12>") 'org-agenda)
 
-;;; open key files
-(global-set-key (kbd "C-c o") #'(lambda ()
-                                  (interactive)
-                                  (find-file (expand-file-name "~/org/read-later.org"))))
-(global-set-key (kbd "C-c p") #'(lambda ()
-                                  (interactive)
-                                  (find-file (expand-file-name "~/org/kb.org"))))
-
 (add-hook 'org-mode-hook
           (lambda ()
             (visual-line-mode t)
             (set-input-method 'german-prefix)))
 
 ;;; Enable yasnippets in org
-;;; from Richard Riley in org-mode mailing list
 (add-hook 'org-mode-hook '(lambda ()
-                            (make-variable-buffer-local 'yas/trigger-key)
-                            (setq yas/trigger-key [tab])
-                            (define-key yas/keymap [tab] 'yas/next-field-group)))
+                           (org-set-local 'yas/trigger-key [tab])
+                           (define-key yas/keymap [tab] 'yas-next-field-or-maybe-expand)))
 
 ;;; latex export customization
 (add-to-list 'org-latex-classes '("fyi-article"
