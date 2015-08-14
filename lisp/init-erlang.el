@@ -1,4 +1,4 @@
-(add-to-list 'load-path "/usr/local/opt/erlang/lib/erlang/lib/tools-2.7.2/emacs")
+(add-to-list 'load-path (car (file-expand-wildcards "/usr/local/opt/erlang/lib/erlang/lib/tools-*/emacs")))
 (add-to-list 'exec-path "/usr/local/opt/erlang/bin")
 (setq erlang-root-dir "/usr/local/otp/erlang")
 (require 'erlang-start nil t)
