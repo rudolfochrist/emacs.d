@@ -42,7 +42,7 @@
 (setq setup-pkg-full
       '(init-basics
         init-defuns
-        init-color
+        init-appearance
         init-linum
         init-keybindings
         init-spelling
