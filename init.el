@@ -77,7 +77,6 @@
         init-term
         init-gnus
         init-whitespace
-        init-smart-mode-line
         init-easy-kill
         init-interleave
         init-ibuffer-vc
