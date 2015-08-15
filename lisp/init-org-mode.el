@@ -132,8 +132,11 @@
                                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
                                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+;;; misc.
 (setq org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
-      org-export-date-timestamp-format "%Y-%m-%d")
+      org-export-date-timestamp-format "%Y-%m-%d"
+      org-footnote-auto-label 'plain    ; generate numbered footnotes like [1]
+      )
 
 (add-to-list 'org-latex-packages-alist '("" "color" nil))
 
@@ -236,6 +239,11 @@ is -1 go to the previous heading."
 (define-abbrev org-mode-abbrev-table "\Rightarrow" "⇒")
 (define-abbrev org-mode-abbrev-table "\\rightarrow" "→")
 (add-hook 'org-mode-hook 'abbrev-mode)
+
+;;; use org-special-* keys
+(setq org-special-ctrl-a/e t
+      org-special-ctrl-k t
+      org-special-ctrl-o t)
 
 
 (provide 'init-org-mode)
