@@ -16,4 +16,9 @@
                :sort-by :date     ;; how to sort the posts
                :category-index t))
 
+(defun op/do-preview ()
+  (interactive)
+  (let ((op/repository-org-branch (car (vc-git-branches))))
+    (op/do-publication nil nil "~/Desktop/org-page-preview/preview" nil nil)))
+
 (provide 'init-org-page)
