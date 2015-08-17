@@ -4,7 +4,8 @@
       op/site-domain "https://rudolfochrist.github.io"
       op/site-main-title "Sebastian Christ"
       op/site-sub-title "(funcall (λ ()))"
-      op/personal-github-link "https://github.com/rudolfochrist")
+      op/personal-github-link "https://github.com/rudolfochrist"
+      op/theme-root-directory (concat op/repository-directory "themes/"))
 
 (add-to-list 'op/category-config-alist
              '("blog" ;; this is the default configuration
