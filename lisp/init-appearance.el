@@ -37,10 +37,21 @@
 ;;; match highlight to color scheme
 (set-face-background 'highlight "#AB4642")
 
+;;; org-mode font-locking
+(custom-set-faces
+ '(org-link ((t (:underline t))))
+ '(magit-branch-remote ((t (:foreground "#AB4642"))))
+ '(magit-branch-local ((t (:inherit magit-branch-remote))))
+ '(magit-branch-current ((t (:inherit magit-branch-remote))))
+ '(magit-head ((t (:inherit magit-branch-remote)))))
+
+;;; info faces
+(set-face-attribute 'info-xref nil :underline t :weight 'bold)
+
 ;; when in GUI emacs set size of frame
 (when window-system
   (set-frame-size (selected-frame) 150 45)
-  (set-frame-font "input-12"))
+  (set-frame-font "input-12" nil t))
 
 ;;; pretty symbols
 (global-prettify-symbols-mode 1)
