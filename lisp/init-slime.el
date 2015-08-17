@@ -12,6 +12,7 @@
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
       '((sbcl ("/usr/local/bin/sbcl"))
+        (acl ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))
         (ccl ("/usr/local/bin/ccl64"))
         (ccl-trunk ("/usr/local/src/ccl/scripts/ccl64"))
         (clisp ("/usr/local/bin/clisp"))
