@@ -45,6 +45,7 @@
       '(init-basics
         init-defuns
         init-appearance
+        init-mode-line
         init-linum
         init-keybindings
         init-spelling

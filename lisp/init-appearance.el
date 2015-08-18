@@ -56,44 +56,6 @@
 ;;; pretty symbols
 (global-prettify-symbols-mode 1)
 
-;;; mode-line setup
-(setq display-time-day-and-date t
-      display-time-24hr-format t)
-(display-time-mode 1)
-(display-battery-mode 1)
-
-(defun fyi-toggle-mode-line ()
-  (interactive)
-  (let ((active-bg "#7CAFC2")
-        (inactive-bg "#E8E8E8")
-        (fg "#181818")
-        (barely-visible 20))
-    (cond
-      ((= barely-visible (face-attribute 'mode-line :height nil 'default))
-       (set-face-attribute 'mode-line nil
-                           :foreground fg
-                           :background active-bg)
-       (set-face-attribute 'mode-line-inactive nil
-                           :foreground fg
-                           :background inactive-bg)
-       (set-faces-attribute '(mode-line
-                              mode-line-inactive)
-                            :height (face-attribute 'default :height)))
-      (t
-       (set-face-attribute 'mode-line nil
-                           :foreground active-bg
-                           :background active-bg)
-       (set-face-attribute 'mode-line-inactive nil
-                           :foreground inactive-bg
-                           :background inactive-bg)
-       (set-faces-attribute '(mode-line
-                              mode-line-inactive)
-                            :height barely-visible)))))
-(global-set-key (kbd "C-x tt") 'fyi-toggle-mode-line)
-
-;;; toggle mode-line on startup
-(fyi-toggle-mode-line)
-
 ;; tabs, spaces and indentation
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2
