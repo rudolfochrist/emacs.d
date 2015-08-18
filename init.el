@@ -27,16 +27,18 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defun load-package (pkg require-symbol)
+(defun load-package (pkg require-symbol from-dir)
   "Install a package only if it's not already installed"
-  (when (not (package-installed-p pkg))
-    (package-install pkg))
+  (unless (package-installed-p pkg)
+    (if from-dir
+        (push from-dir load-path)
+        (package-install pkg)))
   (if require-symbol
       require-symbol
-    pkg))
+      pkg))
 
-(cl-defun require-package (pkg &key require)
-  (require (load-package pkg require)))
+(cl-defun require-package (pkg &key require from-dir)
+  (require (load-package pkg require from-dir)))
 
 ;; Subpackages
 (setq setup-pkg-full
