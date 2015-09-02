@@ -13,13 +13,6 @@
   (shell-command-on-region
    (mark) (point) "xmllint --format -" (buffer-name) t))
 
-(defun fyi-configure-flyspell (dictionary)
-  "Apply flyspell settings.
-Argument DICTIONARY The Ispell dictionary to use."
-  (ispell-change-dictionary dictionary)
-  (set-input-method "german-prefix")
-  (flyspell-mode 1))
-
 (defun fyi-enumerate-list (lst)
   "Transform LST to an enumerated alist.
 

@@ -87,10 +87,7 @@
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "<f12>") 'org-agenda)
 
-(add-hook 'org-mode-hook
-          (lambda ()
-            (visual-line-mode t)
-            (set-input-method 'german-prefix)))
+(add-hook 'org-mode-hook 'visual-line-mode)
 
 ;;; Enable yasnippets in org
 (add-hook 'org-mode-hook '(lambda ()

@@ -80,7 +80,7 @@
 (add-hook 'message-sent-hook 'gnus-score-followup-article)
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 (add-hook 'message-mode-hook (lambda ()
-                               (fyi-configure-flyspell "german8")
+                               (ispell-change-dictionary "german8")
                                (enable-yas-minor-mode)
                                (bbdb-mail-aliases)
                                (local-set-key (kbd "TAB") 'fyi-gnus-multi-tab)))

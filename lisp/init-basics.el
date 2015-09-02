@@ -34,4 +34,7 @@
 ;;; better scrolling
 (setq scroll-preserve-screen-position 'always)
 
+;;; special characters EVERYWHERE!!!!!!
+(set-input-method "latin-9-prefix")
+
 (provide 'init-basics)
