@@ -245,5 +245,16 @@ is -1 go to the previous heading."
       org-special-ctrl-k t
       org-special-ctrl-o t)
 
+;;; org/ispell ignorables
+;;; see: http://endlessparentheses.com/ispell-and-org-mode.html
+(defun fyi-org-ispell ()
+  "Configure `ispell-skip-region-alist' for `org-mode'."
+  (make-local-variable 'ispell-skip-region-alist)
+  (add-to-list 'ispell-skip-region-alist '(org-property-drawer-re))
+  (add-to-list 'ispell-skip-region-alist '("~" "~"))
+  (add-to-list 'ispell-skip-region-alist '("=" "="))
+  (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC")))
+(add-hook 'org-mode-hook #'fyi-org-ispell)
+
 
 (provide 'init-org-mode)
