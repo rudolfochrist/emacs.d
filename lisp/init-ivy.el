@@ -14,6 +14,7 @@
                                   (counsel-git-grep)))))
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
+(global-set-key (kbd "<f6>") 'ivy-resume)
 
 ;;; [[http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html][Visit Directory inside a Set of Directories with Emacs]]
 (defcustom fyi-favorite-directories
