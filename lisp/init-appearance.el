@@ -37,9 +37,12 @@
 ;;; match highlight to color scheme
 (set-face-background 'highlight "#AB4642")
 
-;;; org-mode font-locking
+;;; other custom faces
 (custom-set-faces
+ ;; org-mode
  '(org-link ((t (:underline t))))
+ '(org-date-selected ((t (:background "#AB4642" :foreground "#F8F8F8"))))
+ ;; magit
  '(magit-branch-remote ((t (:foreground "#AB4642"))))
  '(magit-branch-local ((t (:inherit magit-branch-remote))))
  '(magit-branch-current ((t (:inherit magit-branch-remote))))
