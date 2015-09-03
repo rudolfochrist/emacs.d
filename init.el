@@ -97,7 +97,8 @@
         init-haml-sass
         init-web-mode
         init-hl-line-mode
-        init-search-kb))
+        init-search-kb
+        init-ledger-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
