@@ -35,6 +35,8 @@
 (setq scroll-preserve-screen-position 'always)
 
 ;;; special characters EVERYWHERE!!!!!!
-(setq default-input-method "latin-9-prefix")
+(defun fyi-input-method ()
+  (set-input-method "latin-9-prefix"))
+(add-hook 'text-mode-hook 'fyi-input-method)
 
 (provide 'init-basics)
