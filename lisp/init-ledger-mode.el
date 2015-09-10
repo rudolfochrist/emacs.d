@@ -6,11 +6,4 @@
       ledger-reconcile-default-commodity "€"
       ledger-reconcile-default-date-format "%Y-%m-%d")
 
-(add-hook 'ledger-mode-hook
-          (lambda ()
-            (add-hook 'after-save-hook
-                      (lambda ()
-                        (ledger-post-align-xact (point)))
-                      nil t)))
-
 (provide 'init-ledger-mode)
