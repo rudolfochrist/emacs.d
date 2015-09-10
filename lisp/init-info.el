@@ -2,7 +2,8 @@
 ;;; Add custom documentation
 (add-to-list 'Info-directory-list "~/Documents/info")
 
-(global-set-key (kbd "C-h a") #'info-apropos)
+(global-set-key (kbd "C-h a") #'apropos)
+(global-set-key (kbd "C-h A") #'info-apropos)
 
 (info-lookup-add-help
  :mode 'lisp-mode
