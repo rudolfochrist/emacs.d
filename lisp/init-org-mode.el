@@ -69,7 +69,32 @@
          entry
          (file "~/org/kb.org")
          "* %:description :bookmark:\n:PROPERTIES:\n:CREATED: %U\n:URL: %:link\n:END:\n\n%?"
-         :prepend t :empty-lines 1)))
+         :prepend t :empty-lines 1)
+        ("l" "Ledger")
+        ("ll"
+         "Add transaction to cash account."
+         plain
+         (file "~/org/finances.ledger")
+         "%(org-read-date) * %^{Payee}
+    Assets:Cash
+    Expenses:%^{Account}  %^{Amount} €"
+         :empty-lines 1)
+        ("lc"
+         "Add transaction to checking account."
+         plain
+         (file "~/org/finances.ledger")
+         "%(org-read-date) %^{Payee}
+    Assets:Checking
+    Expenses:%^{Account}  %^{Amount} €"
+         :empty-lines 1)
+        ("lm"
+         "Add transaction to Master Card account."
+         plain
+         (file "~/org/finances.ledger")
+         "%(org-read-date) %^{Payee}
+    Liabilities:Master Card
+    Expenses:%^{Account}  %^{Amount} €"
+         :empty-lines 1)))
 
 ;;; setup diary
 (setq diary-file (expand-file-name "~/org/diary")
@@ -154,11 +179,11 @@
 (org-add-link-type
  "color" nil
  (lambda (path desc format)
-  (cond
-   ((eq format 'html)
-    (format "<span style=\"color:%s;\">%s</span>" path desc))
-   ((eq format 'latex)
-    (format "{\\color{%s}%s}" path desc)))))
+   (cond
+     ((eq format 'html)
+      (format "<span style=\"color:%s;\">%s</span>" path desc))
+     ((eq format 'latex)
+      (format "{\\color{%s}%s}" path desc)))))
 ;; org-mode highlight
 (org-add-link-type
  "hl" nil

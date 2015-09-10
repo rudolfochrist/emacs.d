@@ -8,7 +8,4 @@
 ;;; always use ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;;; single M-x key
-(global-set-key (kbd "C-M-w") 'execute-extended-command)
-
 (provide 'init-keybindings)

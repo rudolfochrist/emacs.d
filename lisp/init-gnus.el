@@ -22,9 +22,9 @@
 (add-to-list 'mm-attachment-override-types "image/.*")
 
 ;;; setup paths
-(setq  message-directory (expand-file-name "~/gnus/mail/")
-       gnus-directory (expand-file-name "~/gnus/news/")
-       nnfolder-directory (expand-file-name "~/gnus/mail/archive"))
+(setq  message-directory (expand-file-name "~/mail/gnus/")
+       gnus-directory (expand-file-name "~/mail/gnus/")
+       nnfolder-directory (expand-file-name "~/mail/gnus/"))
 
 ;;; gmail
 (add-to-list 'gnus-secondary-select-methods
@@ -99,6 +99,8 @@
          (gnus-thread-sort-functions '((not gnus-thread-sort-by-date))))
         ("All Mail"                     ; group
          (display . all))
+        ("Sent Mail"
+         (display . all))               ; group
         ("INBOX"                        ; group
          (gnus-thread-sort-functions '(gnus-thread-sort-by-date)))))
 

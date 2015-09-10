@@ -46,7 +46,8 @@
  '(magit-branch-remote ((t (:foreground "#AB4642"))))
  '(magit-branch-local ((t (:inherit magit-branch-remote))))
  '(magit-branch-current ((t (:inherit magit-branch-remote))))
- '(magit-head ((t (:inherit magit-branch-remote)))))
+ '(magit-head ((t (:inherit magit-branch-remote))))
+ '(magit-popup-argument ((t (:weight bold :box t)))))
 
 ;;; info faces
 (set-face-attribute 'info-xref nil :underline t :weight 'bold)
