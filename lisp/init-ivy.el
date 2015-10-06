@@ -1,6 +1,9 @@
 (require 'ivy)
 (require 'cl-lib)
 (require-package 'counsel)
+(require-package 'smex)
+
+(setq ivy-display-style 'fancy)
 
 (ivy-mode 1)
 (global-set-key (kbd "<f2>") (lambda (arg)
@@ -15,10 +18,11 @@
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
 (global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
 
 ;;; [[http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html][Visit Directory inside a Set of Directories with Emacs]]
 (defcustom fyi-favorite-directories
-  '("~/dev/" "~/current/" "~/Documents/Archive/" "~/.emacs.d/" "~/quicklisp/local-projects/"
+  '("~/dev/" "~/wip/" "~/Documents/Archive/" "~/.emacs.d/" "~/quicklisp/local-projects/"
     "~/Dropbox/Lectures/HS-Mannheim/")
   "List of favorite directories.
 Used in `fyi-visit-favorite-dir'. The order here
@@ -35,15 +39,15 @@ With prefix argument FILES-TOO also offer to find files."
   (interactive "P")
   (let ((completions
          (mapcar #'abbreviate-file-name
-           (cl-remove-if-not
-            (if files-too #'file-readable-p
-              #'file-directory-p)
-            (apply #'append
-              (mapcar (lambda (x)
-                        (directory-files
-                         (expand-file-name x)
-                         t "^[^\.].*" t))
-                fyi-favorite-directories))))))
+                 (cl-remove-if-not
+                  (if files-too #'file-readable-p
+                      #'file-directory-p)
+                  (apply #'append
+                         (mapcar (lambda (x)
+                                   (directory-files
+                                    (expand-file-name x)
+                                    t "^[^\.].*" t))
+                                 fyi-favorite-directories))))))
     (dired
      (ivy-completing-read "Open directory: "
                           completions 'ignored nil ""))))
