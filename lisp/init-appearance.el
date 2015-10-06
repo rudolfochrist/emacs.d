@@ -38,7 +38,9 @@
  '(org-date-selected ((t (:background "#AB4642" :foreground "#F8F8F8"))))
  '(org-warning ((t (:foreground "#AB4642" :bold t))))
  '(org-verbatim ((t (:foreground "#7CAFC2"))))
- '(org-code ((t (:foreground "#7CAFC2")))))
+ '(org-code ((t (:foreground "#7CAFC2"))))
+ ;; linum-realtive
+ '(linum-relative-current-face ((t :foreground "#A16946"))))
 
 ;;; info faces
 ;; (set-face-attribute 'info-xref nil :underline t :weight 'bold)
