@@ -39,9 +39,16 @@
 
 ;;; other custom faces
 (custom-set-faces
+ ;; basic faces
+ '(italic ((t (:slant italic))))
+ '(underline ((t :underline t)))
+ '(isearch ((t :background "#86C1B9")))
  ;; org-mode
- '(org-link ((t (:underline t))))
+ '(org-link ((t (:underline t :bold t :foreground "#AB4642"))))
  '(org-date-selected ((t (:background "#AB4642" :foreground "#F8F8F8"))))
+ '(org-warning ((t (:foreground "#AB4642" :bold t))))
+ '(org-verbatim ((t (:foreground "#7CAFC2"))))
+ '(org-code ((t (:foreground "#7CAFC2"))))
  ;; magit
  '(magit-branch-remote ((t (:foreground "#AB4642"))))
  '(magit-branch-local ((t (:inherit magit-branch-remote))))
