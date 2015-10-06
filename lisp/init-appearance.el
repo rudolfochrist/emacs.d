@@ -40,7 +40,9 @@
  '(org-verbatim ((t (:foreground "#7CAFC2"))))
  '(org-code ((t (:foreground "#7CAFC2"))))
  ;; linum-realtive
- '(linum-relative-current-face ((t :foreground "#A16946"))))
+ '(linum-relative-current-face ((t :foreground "#A16946")))
+ ;; magit
+ '(magit-branch-current ((t :foreground "#7CAFC2"))))
 
 ;;; info faces
 ;; (set-face-attribute 'info-xref nil :underline t :weight 'bold)
