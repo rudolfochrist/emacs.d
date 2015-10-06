@@ -143,6 +143,8 @@
                                   \\usepackage{titling}
                                   \\usepackage{fancyhdr}
                                   \\usepackage{mdframed}
+                                  \\usepackage{tikz}
+                                  \\usepackage{venndiagram}
                                   [EXTRA] \\pagestyle{fancy}
                                   \\lhead{\\thetitle}
                                   \\rhead{\\theauthor}
