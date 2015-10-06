@@ -48,4 +48,9 @@
 ;;; use natrual sort
 (setq dired-listing-switches "-alv")
 
+;;; don't ask recursively
+;;; https://www.reddit.com/r/emacs/comments/3ncebl/in_the_case_if_anyone_wants_to_give_dired_a_try/cvn6eml
+(setq dired-recursive-copies 'always
+      dired-recursive-deletes 'top)
+
 (provide 'init-dired)
