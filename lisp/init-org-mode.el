@@ -217,8 +217,9 @@
 (add-to-list 'org-file-apps '("\\.pdf\\'" . "/Applications/Skim.app/Contents/SharedSupport/displayline 1 %s"))
 
 ;;; org-download
-(add-to-list 'load-path (expand-file-name "org-download" emacs-d-vendor))
-(require 'org-download)
+(require-package 'org-download
+                 :from-dir
+                 (expand-file-name "org-download" emacs-d-vendor))
 
 (defun fyi-configure-org-download ()
   "Configures `org-download'."

@@ -1,11 +1,16 @@
-(add-to-list 'load-path (car (file-expand-wildcards "/usr/local/opt/erlang/lib/erlang/lib/tools-*/emacs")))
 (add-to-list 'exec-path "/usr/local/opt/erlang/bin")
 (setq erlang-root-dir "/usr/local/otp/erlang")
-(require 'erlang-start nil t)
+(require-package 'erlang-start
+                 :noerror t
+                 :from-dir
+                 (car
+                  (file-expand-wildcards
+                   "/usr/local/opt/erlang/lib/erlang/lib/tools-*/emacs")))
 
 ;;; distel -- see https://github.com/massemanet/distel/blob/master/INSTALL
-(add-to-list 'load-path "/usr/local/share/distel/elisp/")
-(require 'distel nil t)
+(require-package 'distel
+                 :noerror t
+                 :from-dir "/usr/local/share/distel/elisp/")
 (with-eval-after-load "distel"
   (distel-setup))
 

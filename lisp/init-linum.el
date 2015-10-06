@@ -5,8 +5,9 @@
 (setq linum-relative-current-symbol "")
 
 ;;; disable linum in some major modes
-(add-to-list 'load-path (expand-file-name "linum-off" emacs-d-vendor))
-(require 'linum-off)
+(require-package 'linum-off
+                 :from-dir
+                 (expand-file-name "linum-off" emacs-d-vendor))
 (setq linum-disabled-modes-list '(eshell-mode wl-summary-mode compilation-mode dired-mode doc-view-mode image-mode))
 
 (provide 'init-linum)

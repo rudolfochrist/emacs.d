@@ -1,5 +1,5 @@
-(add-to-list 'load-path
-             (expand-file-name "highlight-backquotes-mode" emacs-d-vendor))
-(require 'highlight-backquotes)
+(require-package 'highlight-backquotes
+                 :from-dir
+                 (expand-file-name "highlight-backquotes-mode" emacs-d-vendor))
 
 (provide 'init-highlight-backquotes-mode)
