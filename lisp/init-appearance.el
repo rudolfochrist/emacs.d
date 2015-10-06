@@ -18,46 +18,30 @@
 (require-package 'basic-theme)
 (load-theme 'basic t)
 
-;;; minimal font-locking and minor adjustments
 ;;; color-scheme -> https://github.com/chriskempson/base16
-(set-faces-attribute '(font-lock-comment-delimiter-face
-                       font-lock-comment-face)
-                     :foreground "#585858")
-
-(set-faces-attribute '(font-lock-function-name-face
-                       font-lock-builtin-face
-                       font-lock-keyword-face)
-                     :weight 'bold)
-
-;;; italic strings and docs
-(set-faces-attribute '(font-lock-doc-face
-                       font-lock-string-face)
-                     :slant 'italic)
-
-;;; match highlight to color scheme
-(set-face-background 'highlight "#AB4642")
-
-;;; other custom faces
 (custom-set-faces
  ;; basic faces
  '(italic ((t (:slant italic))))
  '(underline ((t :underline t)))
  '(isearch ((t :background "#86C1B9")))
+ '(highlight ((t :background "#A1B56C")))
+ ;; font locking
+ '(font-lock-comment-delimiter-face ((t :foreground "#585858")))
+ '(font-lock-comment-face ((t :foreground "#585858")))
+ '(font-lock-function-name-face ((t :bold t)))
+ '(font-lock-builtin-face ((t :bold t)))
+ '(font-lock-keyword-face ((t :bold t)))
+ '(font-lock-doc-face ((t :slant italic)))
+ '(font-lock-string-face ((t :slant italic)))
  ;; org-mode
  '(org-link ((t (:underline t :bold t :foreground "#AB4642"))))
  '(org-date-selected ((t (:background "#AB4642" :foreground "#F8F8F8"))))
  '(org-warning ((t (:foreground "#AB4642" :bold t))))
  '(org-verbatim ((t (:foreground "#7CAFC2"))))
- '(org-code ((t (:foreground "#7CAFC2"))))
- ;; magit
- '(magit-branch-remote ((t (:foreground "#AB4642"))))
- '(magit-branch-local ((t (:inherit magit-branch-remote))))
- '(magit-branch-current ((t (:inherit magit-branch-remote))))
- '(magit-head ((t (:inherit magit-branch-remote))))
- '(magit-popup-argument ((t (:weight bold :box t)))))
+ '(org-code ((t (:foreground "#7CAFC2")))))
 
 ;;; info faces
-(set-face-attribute 'info-xref nil :underline t :weight 'bold)
+;; (set-face-attribute 'info-xref nil :underline t :weight 'bold)
 
 ;; when in GUI emacs set size of frame
 (when window-system
