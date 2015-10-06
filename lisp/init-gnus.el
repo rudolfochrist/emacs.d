@@ -182,5 +182,6 @@
 (bbdb-initialize '(gnus mail message pgp anniv))
 
 (global-set-key (kbd "<f11>") 'gnus)
+(global-set-key (kbd "M-<f11>") 'gnus-other-frame)
 
 (provide 'init-gnus)
