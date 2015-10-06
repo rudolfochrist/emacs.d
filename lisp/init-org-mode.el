@@ -156,6 +156,11 @@
                                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
                                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+;;; extend latex "log" files
+(setq org-latex-logfiles-extensions
+      '("aux" "bcf" "blg" "fdb_latexmk" "fls" "figlist" "idx" "log" "nav" "out"
+        "ptc" "run.xml" "snm" "toc" "vrb" "xdv" "bbl" "ilg" "ind"))
+
 ;;; misc.
 (setq org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
       org-export-date-timestamp-format "%Y-%m-%d"
@@ -212,6 +217,7 @@
 ;;; use xelatex with bibtex
 (setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
                               "bibtex %b"
+                              "makeindex %b"
                               "xelatex -interaction nonstopmode %f"
                               "xelatex -interaction nonstopmode %f"))
 
