@@ -36,7 +36,9 @@
 ;;; Copy file path to kill-ring
 (defun fyi-file-path-to-kill ()
   (interactive)
-  (kill-new (dired-get-file-for-visit)))
+  (let ((file (dired-get-file-for-visit)))
+    (kill-new file)
+    (message "Copied %s to kill-ring" file)))
 (define-key dired-mode-map (kbd "C-c c") 'fyi-file-path-to-kill)
 
 ;;; use GNU Coreutils ls
