@@ -287,5 +287,13 @@ is -1 go to the previous heading."
   (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC")))
 (add-hook 'org-mode-hook #'fyi-org-ispell)
 
+;;; adjust ispell dictionary based on export language
+(defun fyi-org-adjust-ispell ()
+  (let ((language (plist-get (org-export-get-environment) :language)))
+    (ispell-change-dictionary (if (string-equal language "de")
+                                  "german8"
+                                  "en_US"))))
+(add-hook 'org-mode-hook 'fyi-org-adjust-ispell)
+
 
 (provide 'init-org-mode)
