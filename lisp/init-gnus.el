@@ -15,8 +15,26 @@
       ;; don't keep message buffers around
       message-kill-buffer-on-exit t
       gnus-use-correct-string-widths nil
-      mm-text-html-renderer 'gnus-w3m
-      mm-inline-text-html-with-images t)
+      mm-discouraged-alternatives '("text/html" "text/richtext")
+      mm-automatic-display '("text/plain"
+                             "text/enriched"
+                             "text/x-verbatim"
+                             "text/x-vcard"
+                             "image/.*"
+                             "message/delivery-status"
+                             "multipart/.*"
+                             "message/rfc822"
+                             "text/x-patch"
+                             "text/dns"
+                             "application/pgp-signature"
+                             "application/emacs-lisp"
+                             "application/x-emacs-lisp"
+                             "application/x-pkcs7-signature"
+                             "application/pkcs7-signature"
+                             "application/x-pkcs7-mime"
+                             "application/pkcs7-mime"
+                             "application/pgp\\'"
+                             "text/x-org"))
 
 ;;; display inlined images
 (add-to-list 'mm-attachment-override-types "image/.*")
