@@ -7,11 +7,11 @@
                                (interactive "p")
                                (cond
                                  ((= arg 4)
-                                  (counsel-ag))
+                                  (counsel-locate))
                                  ((= arg 16)
                                   (search-kb))
                                  (t
-                                  (counsel-git-grep)))))
+                                  (counsel-ag)))))
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
 (global-set-key (kbd "<f6>") 'ivy-resume)
