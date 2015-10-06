@@ -37,8 +37,8 @@
       require-symbol
       pkg))
 
-(cl-defun require-package (pkg &key require from-dir)
-  (require (load-package pkg require from-dir)))
+(cl-defun require-package (pkg &key require from-dir filename noerror)
+  (require (load-package pkg require from-dir) filename noerror))
 
 ;; Subpackages
 (setq setup-pkg-full
