@@ -110,15 +110,20 @@
 
 ;;; sorting
 (setq gnus-parameters
-      '(("Mail"                         ; topic
+      '(("Mail"
          (gnus-thread-sort-functions '((not gnus-thread-sort-by-date))))
-        ("All Mail"                     ; group
-         (display . all))
+        ("All Mail"
+         (display . all)
+         (expiry-wait . never))
         ("Sent Mail"
-         (display . all))               ; group
-        ("INBOX"                        ; group
+         (display . all))
+        ("INBOX"
          (gnus-thread-sort-functions '(gnus-thread-sort-by-date))
          (total-expire . t)
+         (expiry-wait . immediate))
+        ("on-hold"
+         (expiry-wait . immediate))
+        ("follow-up"
          (expiry-wait . immediate))))
 
 ;;; aesthetics
