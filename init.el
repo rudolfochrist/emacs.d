@@ -13,6 +13,9 @@
 ;; Latex (is this platform independent?)
 (add-to-list 'exec-path "/usr/texbin/")
 
+;;; prefer newer files
+(setq load-prefer-newer t)
+
 ;;; emacs customizations
 ;;; http://irreal.org/blog/?p=3765
 (setq custom-file "~/.emacs.d/custom.el")
