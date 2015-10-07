@@ -47,10 +47,13 @@
 ;;; info faces
 ;; (set-face-attribute 'info-xref nil :underline t :weight 'bold)
 
-;; when in GUI emacs set size of frame
+;; set font in GUI
 (when window-system
-  (set-frame-size (selected-frame) 150 45)
   (set-frame-font "input-12" nil t))
+
+;;; set frame size
+(push '(width . 150) default-frame-alist)
+(push '(height . 45) default-frame-alist)
 
 ;;; pretty symbols
 (global-prettify-symbols-mode 1)
