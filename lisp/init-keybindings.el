@@ -8,4 +8,7 @@
 ;;; always use ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;;; toggle fullscreen
+(global-set-key (kbd "C-x t f") 'toggle-frame-fullscreen)
+
 (provide 'init-keybindings)
