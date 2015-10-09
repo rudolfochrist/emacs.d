@@ -1,5 +1,10 @@
 ;;; general mode-line customizations
 
+(defun set-faces-attribute (faces &rest args)
+  "Set ARGS on multiple faces"
+  (dolist (face faces)
+    (apply 'set-face-attribute face nil args)))
+
 (setq display-time-day-and-date t
       display-time-24hr-format t)
 (display-time-mode 1)

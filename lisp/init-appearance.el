@@ -10,11 +10,6 @@
     (funcall mode -1)))
 
 ;;; theme
-(defun set-faces-attribute (faces &rest args)
-  "Set ARGS on multiple faces"
-  (dolist (face faces)
-    (apply 'set-face-attribute face nil args)))
-
 (require-package 'basic-theme)
 (load-theme 'basic t)
 
