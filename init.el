@@ -7,12 +7,6 @@
 (setq emacs-d-vendor (expand-file-name "~/.emacs.d/vendor/"))
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-;; executables
-(add-to-list 'exec-path "/usr/local/bin/")
-
-;; Latex (is this platform independent?)
-(add-to-list 'exec-path "/usr/texbin/")
-
 ;;; prefer newer files
 (setq load-prefer-newer t)
 
@@ -42,6 +36,10 @@
 
 (cl-defun require-package (pkg &key require from-dir filename noerror)
   (require (load-package pkg require from-dir) filename noerror))
+
+;;; setup paths
+(require-package 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
 
 ;; Subpackages
 (setq setup-pkg-full
