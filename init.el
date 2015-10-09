@@ -88,6 +88,7 @@
         init-unkillable-scratch
         init-projectile
         init-elisp-slime-nav
+        init-ag
         init-swiper
         init-ivy
         init-macrostep
