@@ -53,4 +53,7 @@
 (setq dired-recursive-copies 'always
       dired-recursive-deletes 'top)
 
+;;; gnus attachment integration
+(add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+
 (provide 'init-dired)
