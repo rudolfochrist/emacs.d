@@ -34,7 +34,8 @@
                              "application/x-pkcs7-mime"
                              "application/pkcs7-mime"
                              "application/pgp\\'"
-                             "text/x-org"))
+                             "text/x-org")
+      gnus-treat-display-smileys nil)
 
 ;;; display inlined images
 (add-to-list 'mm-attachment-override-types "image/.*")
