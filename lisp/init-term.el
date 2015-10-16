@@ -2,7 +2,38 @@
 
 (setq multi-term-program "/bin/zsh")
 
-(global-set-key (kbd "<f1>") 'multi-term)
+(defun fyi-term-mode-p (buffer)
+  (eq 'term-mode
+      (with-current-buffer buffer
+        major-mode)))
+
+(defun fyi-term-buffer-list ()
+  (remove-if-not #'fyi-term-mode-p (buffer-list)))
+
+(defun fyi-next-term-buffer (term-buffers)
+  (let ((current-index (position (current-buffer) term-buffers)))
+    (cond
+      ((null current-index)
+       (car term-buffers))
+      (t
+       (bury-buffer (current-buffer))
+       (nth (mod (1+ current-index)
+                 (length term-buffers))
+            term-buffers)))))
+
+(defun fyi-cycle-terminals (arg)
+  (interactive "P")
+  (let ((term-buffers (fyi-term-buffer-list)))
+    (cond
+      ((null term-buffers)
+       (multi-term))
+      ((= (length term-buffers) 1)
+       (switch-to-buffer (car term-buffers)))
+      (t
+       (switch-to-buffer (fyi-next-term-buffer term-buffers))))))
+
+(global-set-key (kbd "<f1>") 'fyi-cycle-terminals)
+(global-set-key (kbd "M-<f1>") 'multi-term)
 
 (setq term-bind-key-alist
       '(("C-c C-j" . term-line-mode)
