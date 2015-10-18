@@ -29,7 +29,7 @@
  '(font-lock-doc-face ((t :slant italic)))
  '(font-lock-string-face ((t :slant italic)))
  ;; info
- '(info-xref ((t :bold t :foreground "#7CAFC2")))
+ '(info-xref ((t :foreground "#7CAFC2")))
  ;; org-mode
  '(org-link ((t (:underline t :bold t :foreground "#AB4642"))))
  '(org-date-selected ((t (:background "#AB4642" :foreground "#F8F8F8"))))
