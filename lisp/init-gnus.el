@@ -123,9 +123,11 @@
          (total-expire . t)
          (expiry-wait . immediate))
         ("on-hold"
-         (expiry-wait . immediate))
+         (expiry-wait . immediate)
+         (gcc-self . t))
         ("follow-up"
-         (expiry-wait . immediate))))
+         (expiry-wait . immediate)
+         (gcc-self . t))))
 
 ;;; aesthetics
 ;;; https://github.com/vanicat/emacs24-starter-kit/blob/master/starter-kit-gnus.org#more-attractive-summary-view
