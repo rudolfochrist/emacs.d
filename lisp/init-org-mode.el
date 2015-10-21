@@ -159,7 +159,7 @@
 ;;; extend latex "log" files
 (setq org-latex-logfiles-extensions
       '("aux" "bcf" "blg" "fdb_latexmk" "fls" "figlist" "idx" "log" "nav" "out"
-        "ptc" "run.xml" "snm" "toc" "vrb" "xdv" "bbl" "ilg" "ind"))
+        "ptc" "run.xml" "snm" "toc" "vrb" "xdv" "bbl" "ilg" "ind" "lof" "lot"))
 
 ;;; misc.
 (setq org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
