@@ -59,7 +59,7 @@
 ;;; need either https://github.com/RobBlackwell/dpans2texi
 ;;; or the GNU Common Lips Info files [https://www.gnu.org/software/gcl/]
 (defun fyi-hyperspec-info-lookup (symbol)
-  (interactive (list (read-string "Lookup Hyperspec: " (thing-at-point 'symbol))))
+  (interactive (list (slime-read-symbol-name "Hyperspec Lookup: ")))
   (condition-case nil
       (progn
         (info "(ansicl/ansicl)")
