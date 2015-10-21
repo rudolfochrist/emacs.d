@@ -187,4 +187,20 @@
 (global-set-key (kbd "<f11>") 'gnus)
 (global-set-key (kbd "M-<f11>") 'gnus-other-frame)
 
+;;; google groups search
+(defun fyi-search-google-groups ()
+  "Search message-id on Google Groups"
+  (interactive)
+  (let* ((article (gnus-summary-article-number))
+         (header (gnus-summary-article-header article))
+         (message-id (substring (mail-header-message-id header) 1 -1)))
+    (browse-url (format "https://groups.google.com/forum/#!search/messageid:%s"
+                        message-id))))
+
+;;; key-bindings
+(defun fyi-gnus-summary-keybindings ()
+  (define-key gnus-summary-goto-map (kbd "s") 'fyi-search-google-groups))
+(add-hook 'gnus-summary-mode-hook 'fyi-gnus-summary-keybindings)
+
+
 (provide 'init-gnus)
