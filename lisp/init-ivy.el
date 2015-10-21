@@ -51,6 +51,6 @@ With prefix argument FILES-TOO also offer to find files."
     (dired
      (ivy-completing-read "Open directory: "
                           completions 'ignored nil ""))))
-(global-set-key (kbd "C-x d") #'fyi-visit-favorite-dir)
+(global-set-key (kbd "C-x C-d") #'fyi-visit-favorite-dir)
 
 (provide 'init-ivy)

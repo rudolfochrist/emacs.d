@@ -80,12 +80,14 @@
 
 (defun fyi-slime-keybindings ()
   (define-key slime-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
+  (define-key slime-mode-map (kbd "C-c C-d C-h") #'fyi-hyperspec-info-lookup)
   (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline))
 
 (add-hook 'slime-mode-hook 'fyi-slime-keybindings)
 
 (defun fyi-slime-repl-keybindings ()
   (define-key slime-repl-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
+  (define-key slime-repl-mode-map (kbd "C-d C-h") #'fyi-hyperspec-info-lookup)
   (define-key slime-repl-mode-map (kbd "C-l") #'slime-repl-clear-buffer)
   (define-key slime-repl-mode-map (kbd "SPC") #'slime-autodoc-space)
   (define-key slime-repl-mode-map (kbd "C-j") #'fyi-slime-autodoc-newline))

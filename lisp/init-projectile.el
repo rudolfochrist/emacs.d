@@ -4,8 +4,11 @@
 (setq projectile-switch-project-action 'projectile-dired
       projectile-completion-system 'ivy)
 
+(global-set-key (kbd "C-x C-M-f") 'projectile-find-file-dwim)
+(global-set-key (kbd "C-x C-M-b") 'projectile-switch-to-buffer)
+
 (global-set-key
- (kbd "C-c C-p")
+ (kbd "M-p")
  (defhydra hydra-project (:color blue :hint nil :idle 0.4)
    "
                                                                     ╭────────────┐
