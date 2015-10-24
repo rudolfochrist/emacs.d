@@ -80,6 +80,7 @@
 
 ;;; org-capture
 (global-set-key (kbd "<M-f12>") 'org-capture)
+(setq org-gnus-prefer-web-links t)
 (setq org-capture-templates
       '(("t"
          "todo"

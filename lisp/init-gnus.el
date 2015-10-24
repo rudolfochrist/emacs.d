@@ -7,43 +7,58 @@
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
 
 ;;; globals
-(setq gnus-select-method '(nnml "")
-      gnus-home-score-file (expand-file-name "~/.emacs.d/all.SCORE")
-      gnus-use-cache t
-      ;; fetch only part of the article. If possible.
-      gnus-read-active-file 'some
-      ;; don't keep message buffers around
-      message-kill-buffer-on-exit t
-      gnus-use-correct-string-widths nil
-      mm-discouraged-alternatives '("text/html" "text/richtext")
-      mm-automatic-display '("text/plain"
-                             "text/enriched"
-                             "text/x-verbatim"
-                             "text/x-vcard"
-                             "image/.*"
-                             "message/delivery-status"
-                             "multipart/.*"
-                             "message/rfc822"
-                             "text/x-patch"
-                             "text/dns"
-                             "application/pgp-signature"
-                             "application/emacs-lisp"
-                             "application/x-emacs-lisp"
-                             "application/x-pkcs7-signature"
-                             "application/pkcs7-signature"
-                             "application/x-pkcs7-mime"
-                             "application/pkcs7-mime"
-                             "application/pgp\\'"
-                             "text/x-org")
-      gnus-treat-display-smileys nil)
+(setq  gnus-home-score-file (expand-file-name "~/.emacs.d/all.SCORE")
+       gnus-use-cache t
+       ;; fetch only part of the article. If possible.
+       gnus-read-active-file 'some
+       ;; don't keep message buffers around
+       message-kill-buffer-on-exit t
+       gnus-use-correct-string-widths nil
+       ;; don't show hmtl mail...
+       mm-discouraged-alternatives '("text/html" "text/richtext")
+       mm-automatic-display '("text/plain"
+                              "text/enriched"
+                              "text/x-verbatim"
+                              "text/x-vcard"
+                              "image/.*"
+                              "message/delivery-status"
+                              "multipart/.*"
+                              "message/rfc822"
+                              "text/x-patch"
+                              "text/dns"
+                              "application/pgp-signature"
+                              "application/emacs-lisp"
+                              "application/x-emacs-lisp"
+                              "application/x-pkcs7-signature"
+                              "application/pkcs7-signature"
+                              "application/x-pkcs7-mime"
+                              "application/pkcs7-mime"
+                              "application/pgp\\'"
+                              "text/x-org")
+       gnus-treat-display-smileys nil)
 
 ;;; display inlined images
 (add-to-list 'mm-attachment-override-types "image/.*")
 
-;;; setup paths
-(setq  message-directory (expand-file-name "~/mail/gnus/")
-       gnus-directory (expand-file-name "~/mail/gnus/")
-       nnfolder-directory (expand-file-name "~/mail/gnus/"))
+;;; RSS [.newsrc synched therefore the primary select method]
+(setq gnus-select-method
+      '(nntp "news.gwene.org"
+        (nntp-open-connection-function nntp-open-tls-stream)
+        (nntp-port-number 563)
+        (nntp-address "news.gwene.org")))
+
+;;; news
+(add-to-list 'gnus-secondary-select-methods
+             '(nntp "nntp.aioe.org"
+               (nntp-open-connection-function nntp-open-tls-stream)
+               (nntp-port-number 563)
+               (nntp-address "nntp.aioe.org")))
+
+(add-to-list 'gnus-secondary-select-methods
+             '(nntp "news.gmane.org"
+               (nntp-open-connection-function nntp-open-tls-stream)
+               (nntp-port-number 563)
+               (nntp-address "news.gmane.org")))
 
 ;;; gmail
 (add-to-list 'gnus-secondary-select-methods
@@ -53,20 +68,6 @@
                (nnimap-stream ssl)
                (nnimap-search-engine imap)
                (nnimap-authinfo-file "~/.authinfo.gpg")))
-
-;;; news
-(add-to-list 'gnus-secondary-select-methods
-             '(nntp "news.gmane.org"
-               (nntp-open-connection-function nntp-open-tls-stream)
-               (nntp-port-number 563)
-               (nntp-address "news.gmane.org")))
-
-
-(add-to-list 'gnus-secondary-select-methods
-             '(nntp "nntp.aioe.org"
-               (nntp-open-connection-function nntp-open-tls-stream)
-               (nntp-port-number 563)
-               (nntp-address "nntp.aioe.org")))
 
 ;;; hooks
 (defun fyi-gnus-multi-tab ()
@@ -184,23 +185,52 @@
       bbdb-complete-mail-allow-cycling t)
 (bbdb-initialize '(gnus mail message pgp anniv))
 
+;;; global key bindings
 (global-set-key (kbd "<f11>") 'gnus)
 (global-set-key (kbd "M-<f11>") 'gnus-other-frame)
 
-;;; google groups search
-(defun fyi-search-google-groups ()
-  "Search message-id on Google Groups"
+;;; wash GWENE
+(defun fyi-gwene-wash-html ()
+  (when (string-prefix-p "gwene" gnus-newsgroup-name)
+    (gnus-article-wash-html)))
+(add-hook 'gnus-article-prepare-hook 'fyi-gwene-wash-html)
+
+;;; RSS Reader features
+(defun fyi-get-article-url ()
+  (gnus-summary-verbose-headers 1)
+  (prog1
+      (with-current-buffer gnus-article-buffer
+        (let ((nnmail-extra-headers (cons 'Archived-at
+                                          nnmail-extra-headers)))
+          (let ((archived-at (cdr (assoc 'Archived-at
+                                         (mail-header-extra (nnheader-parse-head t))))))
+            (when archived-at
+              (substring archived-at 1 -1)))))
+    (gnus-summary-verbose-headers -1)))
+
+(defun fyi-gwene-browse-original ()
   (interactive)
-  (let* ((article (gnus-summary-article-number))
-         (header (gnus-summary-article-header article))
-         (message-id (substring (mail-header-message-id header) 1 -1)))
-    (browse-url (format "https://groups.google.com/forum/#!search/messageid:%s"
-                        message-id))))
+  (browse-url (fyi-get-article-url)))
 
-;;; key-bindings
-(defun fyi-gnus-summary-keybindings ()
-  (define-key gnus-summary-goto-map (kbd "s") 'fyi-search-google-groups))
-(add-hook 'gnus-summary-mode-hook 'fyi-gnus-summary-keybindings)
+(defun fyi-gwene-read-later ()
+  (interactive)
+  (let ((title (mail-header-subject
+                (gnus-summary-article-header
+                 (gnus-summary-article-number))))
+        (url (fyi-get-article-url))
+        (org-capture-link-is-already-stored t))
+    (push (list url title) org-stored-links)
+    (org-store-link-props :link url
+                          :description title
+                          :annotation (org-make-link-string url title))
+    (org-capture nil "r")))
 
+(defhydra hydra-rss-reader (:color blue)
+  "RSS Reader Convenience"
+  ("o" fyi-gwene-browse-original "browse original")
+  ("r" fyi-gwene-read-later "read later"))
+
+(define-key gnus-summary-mode-map (kbd "C-c C-m") 'hydra-rss-reader/body)
+(define-key gnus-article-mode-map (kbd "C-c C-m") 'hydra-rss-reader/body)
 
 (provide 'init-gnus)
