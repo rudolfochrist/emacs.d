@@ -11,9 +11,11 @@
 
 ;;; theme
 (require-package 'basic-theme)
+(require 'init-mode-line)
 (load-theme 'basic t)
 
 ;;; color-scheme -> https://github.com/chriskempson/base16
+;;; my basic-theme adjustments
 (custom-set-faces
  ;; basic faces
  '(italic ((t (:slant italic))))
@@ -49,9 +51,6 @@
  '(linum-relative-current-face ((t :foreground "#A16946")))
  ;; magit
  '(magit-branch-current ((t :foreground "#7CAFC2"))))
-
-;;; info faces
-;; (set-face-attribute 'info-xref nil :underline t :weight 'bold)
 
 ;; set font in GUI
 (when window-system
