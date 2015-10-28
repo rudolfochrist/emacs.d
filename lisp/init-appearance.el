@@ -10,47 +10,7 @@
     (funcall mode -1)))
 
 ;;; theme
-(require-package 'basic-theme)
-(require 'init-mode-line)
-(load-theme 'basic t)
-
-;;; color-scheme -> https://github.com/chriskempson/base16
-;;; my basic-theme adjustments
-(custom-set-faces
- ;; basic faces
- '(italic ((t (:slant italic))))
- '(underline ((t :underline t)))
- '(isearch ((t :background "#86C1B9")))
- '(highlight ((t :background "#A1B56C")))
- ;; font locking
- '(font-lock-comment-delimiter-face ((t :foreground "#585858")))
- '(font-lock-comment-face ((t :foreground "#585858")))
- '(font-lock-function-name-face ((t :bold t)))
- '(font-lock-builtin-face ((t :bold t)))
- '(font-lock-keyword-face ((t :bold t)))
- '(font-lock-doc-face ((t :slant italic)))
- '(font-lock-string-face ((t :slant italic)))
- ;; info
- '(info-xref ((t :foreground "#7CAFC2")))
- ;; org-mode
- '(org-link ((t (:underline t :bold t :foreground "#AB4642"))))
- '(org-date-selected ((t (:background "#AB4642" :foreground "#F8F8F8"))))
- '(org-warning ((t (:foreground "#AB4642" :bold t))))
- '(org-verbatim ((t (:foreground "#7CAFC2"))))
- '(org-code ((t (:foreground "#7CAFC2"))))
- '(org-block ((t (:background "#D8D8D8"))))
- '(org-level-1 ((t :foreground "#AB4642" :bold t)))
- '(org-level-2 ((t :foreground "#7CAFC2" :bold t)))
- '(org-level-3 ((t :foreground "#7CAFC2" :bold t)))
- '(org-level-4 ((t :foreground "#7CAFC2" :bold t)))
- '(org-level-5 ((t :foreground "#7CAFC2" :bold t)))
- '(org-level-6 ((t :foreground "#7CAFC2" :bold t)))
- '(org-level-7 ((t :foreground "#7CAFC2" :bold t)))
- '(org-level-8 ((t :foreground "#7CAFC2" :bold t)))
- ;; linum-realtive
- '(linum-relative-current-face ((t :foreground "#A16946")))
- ;; magit
- '(magit-branch-current ((t :foreground "#7CAFC2"))))
+(require 'init-basic-theme)
 
 ;; set font in GUI
 (when window-system
