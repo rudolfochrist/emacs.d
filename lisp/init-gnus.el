@@ -230,7 +230,7 @@
   ("o" fyi-gwene-browse-original "browse original")
   ("r" fyi-gwene-read-later "read later"))
 
-(define-key gnus-summary-mode-map (kbd "C-c C-m") 'hydra-rss-reader/body)
-(define-key gnus-article-mode-map (kbd "C-c C-m") 'hydra-rss-reader/body)
+(define-key gnus-summary-mode-map (kbd "C-c C-.") 'hydra-rss-reader/body)
+(define-key gnus-article-mode-map (kbd "C-c C-.") 'hydra-rss-reader/body)
 
 (provide 'init-gnus)
