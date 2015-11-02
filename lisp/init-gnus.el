@@ -122,7 +122,8 @@
         ("INBOX"
          (gnus-thread-sort-functions '(gnus-thread-sort-by-date))
          (total-expire . t)
-         (expiry-wait . immediate))
+         (expiry-wait . immediate)
+         (gcc-self . t))
         ("on-hold"
          (expiry-wait . immediate)
          (gcc-self . t))
