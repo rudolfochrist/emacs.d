@@ -55,6 +55,21 @@
 
 (setq org-directory "~/org/"
       org-agenda-files '("~/org/todo.org" "~/org/read-later.org" "~/org/kb.org"))
+(global-set-key
+ (kbd "C-x t j")
+ (defhydra hydra-prominent-files (:color blue
+                                  :hint nil)
+   "
+Quickly jumo to files:
+_b_ooks
+_f_inances
+_k_nowledge base
+_r_ead later
+"
+   ("b" (find-file "~/org/books.org"))
+   ("f" (find-file "~/org/finances.ledger"))
+   ("k" (find-file "~/org/kb.org"))
+   ("r" (find-file "~/org/read-later.org"))))
 
 ;;; todos setup
 (setq org-todo-keywords
