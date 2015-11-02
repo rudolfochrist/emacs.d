@@ -21,8 +21,8 @@
                  (length term-buffers))
             term-buffers)))))
 
-(defun fyi-cycle-terminals (arg)
-  (interactive "P")
+(defun fyi-cycle-terminals ()
+  (interactive)
   (let ((term-buffers (fyi-term-buffer-list)))
     (cond
       ((null term-buffers)
