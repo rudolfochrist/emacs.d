@@ -158,7 +158,7 @@ _r_ead later
 (calendar-set-date-style 'iso)
 
 (require-package 'german-holidays)
-(setq holiday-other-holidays holiday-german-holidays)
+(setq calendar-holidays holiday-german-holidays)
 
 ;;; custom agenda views
 (setq org-agenda-custom-commands '(("d" "Today"
