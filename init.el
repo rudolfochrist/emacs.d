@@ -98,7 +98,8 @@
         init-haml-sass
         init-web-mode
         init-search-kb
-        init-ledger-mode))
+        init-ledger-mode
+        init-anzu))
 
 ;; load them
 (dolist (file setup-pkg-full)
