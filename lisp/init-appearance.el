@@ -9,8 +9,9 @@
   (when (fboundp mode)
     (funcall mode -1)))
 
-;;; theme
-(require 'init-basic-theme)
+;;; theme du jour
+(require-package 'iodine-theme :noerror t)
+(load-theme 'iodine t)
 
 ;; set font in GUI
 (when window-system
