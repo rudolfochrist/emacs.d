@@ -74,7 +74,6 @@
         init-dired
         init-iedit
         init-emacs-lisp
-        init-sotlisp
         init-erc
         init-org-page
         init-term
@@ -85,7 +84,6 @@
         init-ibuffer-vc
         init-undo-tree
         init-unkillable-scratch
-        init-projectile
         init-elisp-slime-nav
         init-ag
         init-swiper
@@ -100,8 +98,8 @@
         init-search-kb
         init-ledger-mode
         init-anzu
-        init-beacon))
-
+        init-beacon
+        init-find-file-in-project))
 ;; load them
 (dolist (file setup-pkg-full)
   (require file))
