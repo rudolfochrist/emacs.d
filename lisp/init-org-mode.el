@@ -50,16 +50,19 @@
  (defhydra hydra-prominent-files (:color blue
                                   :hint nil)
    "
-Quickly jumo to files:
+Quickly jump to files:
 _b_ooks
 _f_inances
 _k_nowledge base
 _r_ead later
+_a_nnual book expenses
 "
    ("b" (find-file "~/org/books.org"))
    ("f" (find-file "~/org/finances.ledger"))
    ("k" (find-file "~/org/kb.org"))
-   ("r" (find-file "~/org/read-later.org"))))
+   ("r" (find-file "~/org/read-later.org"))
+   ("a" (find-file (format "~/Documents/Archive/Finances/%s/book-expenses.org"
+                           (nth 2 (calendar-current-date)))))))
 
 ;;; todos setup
 (setq org-todo-keywords
