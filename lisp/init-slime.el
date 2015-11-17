@@ -14,9 +14,9 @@
       '((sbcl ("/usr/local/bin/sbcl"))
         (acl ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))
         (ccl ("/usr/local/bin/ccl64"))
-        (ccl-trunk ("/usr/local/src/ccl/scripts/ccl64"))
         (clisp ("/usr/local/bin/clisp"))
-        (ecl ("/usr/local/bin/ecl"))))
+        (ecl ("/usr/local/bin/ecl"))
+        (abcl ("/usr/local/bin/abcl"))))
 
 ;;; getting contrib fancy
 (slime-setup '(slime-fancy slime-repl slime-banner slime-mdot-fu slime-asdf slime-company))
