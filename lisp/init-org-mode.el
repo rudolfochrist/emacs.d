@@ -20,7 +20,7 @@
 ;;; overwrite because of bugs
 (defun org-latex-header-blocks-filter (backend)
   (when (org-export-derived-backend-p backend 'latex)
-    (let ((positions
+    (let ((blocks
 	   (org-element-map (org-element-parse-buffer 'greater-element nil) 'export-block
 	     (lambda (block)
 	       (when (and (string= (org-element-property :type block) "LATEX")
@@ -29,30 +29,20 @@
 				   "yes"))
 		 (list (org-element-property :begin block)
 		       (org-element-property :end block)
-		       (org-element-property :post-affiliated block)))))))
-      (mapc (lambda (pos)
-              (let* ((beg (first pos))
-                     (end (second pos))
-                     (post-affiliated (third pos))
-                     (contents-lines (split-string
-                                      (buffer-substring-no-properties beg
-                                                                      end)
-                                      "\n")))
-                (goto-char post-affiliated)
-                (delete-region beg end)
-                (dolist (line (remove-if (lambda (line)
-                                           (or
-                                            (string-prefix-p "#+HEADER:" line)
-                                            (string-prefix-p "#+BEGIN_LaTeX" line)
-                                            (string-prefix-p "#+END_LaTeX" line)))
-                                         contents-lines))
+		       (org-element-property :value block)))))))
+      (mapc (lambda (block)
+	      (goto-char (nth 0 block))
+	      (let ((contents-lines (split-string (nth 2 block) "\n" t)))
+                (delete-region (nth 0 block) (nth 1 block))
+                (dolist (line contents-lines)
                   (insert (concat "#+latex_header: "
                                   (replace-regexp-in-string "\\` *" "" line)
                                   "\n")))))
-	    ;; go in reverse, to avoid wrecking the numeric positions
+	    ;; go in reverse, to avoid wrecking the numeric blocks
 	    ;; earlier in the file
-	    (reverse positions)))))
+	    (reverse blocks)))))
 
+;;; org files
 (setq org-directory "~/org/"
       org-agenda-files '("~/org/todo.org" "~/org/read-later.org" "~/org/kb.org"))
 (global-set-key
