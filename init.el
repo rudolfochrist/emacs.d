@@ -99,7 +99,8 @@
         init-web-mode
         init-search-kb
         init-ledger-mode
-        init-anzu))
+        init-anzu
+        init-beacon))
 
 ;; load them
 (dolist (file setup-pkg-full)
