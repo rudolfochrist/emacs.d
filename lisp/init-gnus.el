@@ -196,29 +196,98 @@
     (gnus-article-wash-html)))
 (add-hook 'gnus-article-prepare-hook 'fyi-gwene-wash-html)
 
-;;; RSS Reader features
-(defun fyi-get-article-url ()
+;;; URL handling features
+;;; see https://github.com/jwiegley/dot-emacs/blob/master/dot-gnus.el
+(defun gnus-article-get-urls-region (min max)
+  "Return a list of urls found in the region between MIN and MAX."
+  (let (url-list)
+    (save-excursion
+      (save-restriction
+        (narrow-to-region min max)
+        (goto-char (point-min))
+        (while (re-search-forward gnus-button-url-regexp nil t)
+          (let ((match-string (match-string-no-properties 0)))
+            (if (and (not (equal (substring match-string 0 4) "file"))
+                     (not (member match-string url-list)))
+                (setq url-list (cons match-string url-list)))))))
+    url-list))
+
+(defun gnus-article-get-current-urls ()
+  "Return a list of the urls found in the current `gnus-article-buffer'."
+  (let (url-list)
+    (with-current-buffer gnus-article-buffer
+      (setq url-list
+            (gnus-article-get-urls-region (point-min) (point-max))))
+    url-list))
+
+(defun gnus-article-browse-urls ()
+  "Visit a URL from the `gnus-article-buffer' by showing a
+buffer with the list of URLs found with the `gnus-button-url-regexp'."
+  (interactive)
+  (gnus-configure-windows 'article)
+  (gnus-summary-select-article nil nil 'pseudo)
+  (let ((temp-buffer (generate-new-buffer " *Article URLS*"))
+        (urls (gnus-article-get-current-urls))
+        (this-window (selected-window))
+        (browse-window (get-buffer-window gnus-article-buffer))
+        (count 0))
+    (save-excursion
+      (when (> (length urls) 1)
+        (save-window-excursion
+          (with-current-buffer temp-buffer
+            (mapc (lambda (string)
+                    (insert (format "\t%d: %s\n" count string))
+                    (setq count (1+ count))) urls)
+            (not-modified)
+            (pop-to-buffer temp-buffer)
+            (setq count
+                  (string-to-number
+                   (char-to-string (if (fboundp
+                                        'read-char-exclusive)
+                                       (read-char-exclusive)
+                                       (read-char)))))
+            (kill-buffer temp-buffer))))
+      (if browse-window
+          (progn (select-window browse-window)
+                 (browse-url (nth count urls)))))
+    (select-window this-window)))
+
+(defun fyi-article-get-header (header)
+  "Return HEADER of article in the current `gnus-article-buffer'."
   (gnus-summary-verbose-headers 1)
   (prog1
       (with-current-buffer gnus-article-buffer
-        (let ((nnmail-extra-headers (cons 'Archived-at
+        (let ((nnmail-extra-headers (cons header
                                           nnmail-extra-headers)))
-          (let ((archived-at (cdr (assoc 'Archived-at
+          (let ((archived-at (cdr (assoc header
                                          (mail-header-extra (nnheader-parse-head t))))))
             (when archived-at
               (substring archived-at 1 -1)))))
     (gnus-summary-verbose-headers -1)))
 
-(defun fyi-gwene-browse-original ()
-  (interactive)
-  (browse-url (fyi-get-article-url)))
+(defun fyi-article-archived-at ()
+  "Return archived-at header of article in the current `gnus-article-buffer'."
+  (fyi-article-get-header 'Archived-at))
 
-(defun fyi-gwene-read-later ()
+(defun fyi-article-message-id-permalink ()
+  "Create a permalink to http://al.howardknight.net."
+  (format "http://al.howardknight.net/msgid.cgi?STYPE=msgid&A=0&MSGI=<%s>"
+          (fyi-article-get-header 'Message-ID)))
+
+(defun fyi-article-browse-original ()
+  "Open current article in the browser."
+  (interactive)
+  (browse-url (or (fyi-article-archived-at)
+                  (fyi-article-message-id-permalink))))
+
+(defun fyi-article-read-later ()
+  "Save article to read-later."
   (interactive)
   (let ((title (mail-header-subject
                 (gnus-summary-article-header
                  (gnus-summary-article-number))))
-        (url (fyi-get-article-url))
+        (url (or (fyi-article-archived-at)
+                 (fyi-article-message-id-permalink)))
         (org-capture-link-is-already-stored t))
     (push (list url title) org-stored-links)
     (org-store-link-props :link url
@@ -226,12 +295,17 @@
                           :annotation (org-make-link-string url title))
     (org-capture nil "r")))
 
-(defhydra hydra-rss-reader (:color blue)
-  "RSS Reader Convenience"
-  ("o" fyi-gwene-browse-original "browse original")
-  ("r" fyi-gwene-read-later "read later"))
+(defhydra hydra-url-handlers (:color blue)
+  "URL handler Convenience"
+  ("o" fyi-article-browse-original "browse original")
+  ("O" gnus-article-browse-urls "browse contained URLs")
+  ("r" fyi-article-read-later "read later"))
 
-(define-key gnus-summary-mode-map (kbd "C-c C-.") 'hydra-rss-reader/body)
-(define-key gnus-article-mode-map (kbd "C-c C-.") 'hydra-rss-reader/body)
+(define-key gnus-summary-mode-map (kbd "C-c C-.") 'hydra-url-handlers/body)
+(define-key gnus-article-mode-map (kbd "C-c C-.") 'hydra-url-handlers/body)
+
+;;; enable hl-line
+(add-hook 'gnus-summary-mode-hook 'hl-line-mode)
+(add-hook 'gnus-group-mode-hook 'hl-line-mode)
 
 (provide 'init-gnus)
