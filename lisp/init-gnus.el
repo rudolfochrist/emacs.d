@@ -184,7 +184,7 @@
       bbdb-canonicalize-redundant-nets-p t
       bbdb-always-add-addresses t
       bbdb-complete-mail-allow-cycling t)
-(bbdb-initialize '(gnus mail message pgp anniv))
+(bbdb-initialize 'gnus 'message 'anniv)
 
 ;;; global key bindings
 (global-set-key (kbd "<f11>") 'gnus)
