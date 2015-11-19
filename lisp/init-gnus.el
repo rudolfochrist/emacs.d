@@ -220,9 +220,8 @@
             (gnus-article-get-urls-region (point-min) (point-max))))
     url-list))
 
-(defun gnus-article-browse-urls ()
-  "Visit a URL from the `gnus-article-buffer' by showing a
-buffer with the list of URLs found with the `gnus-button-url-regexp'."
+(defun gnus-article-urls-action (action &optional support)
+  "Applies ACTION on the found URLs in article buffer."
   (interactive)
   (gnus-configure-windows 'article)
   (gnus-summary-select-article nil nil 'pseudo)
@@ -249,30 +248,43 @@ buffer with the list of URLs found with the `gnus-button-url-regexp'."
             (kill-buffer temp-buffer))))
       (if browse-window
           (progn (select-window browse-window)
-                 (browse-url (nth count urls)))))
+                 (funcall action
+                          (nth count urls)
+                          (when support
+                            (funcall support))))))
     (select-window this-window)))
 
-(defun fyi-article-get-header (header)
-  "Return HEADER of article in the current `gnus-article-buffer'."
+(defun fyi-article-get-header (header &optional skip-bounds)
+  "Return HEADER of article in the current `gnus-article-buffer'.
+
+If SKIP-BOUNDS is non-nil, skip the first and the last character from the header
+value. This is useful if you want to omit some '<' and '>' that some headers
+have (e.g. Message-ID)."
   (gnus-summary-verbose-headers 1)
   (prog1
       (with-current-buffer gnus-article-buffer
         (let ((nnmail-extra-headers (cons header
                                           nnmail-extra-headers)))
-          (let ((archived-at (cdr (assoc header
-                                         (mail-header-extra (nnheader-parse-head t))))))
-            (when archived-at
-              (substring archived-at 1 -1)))))
+          (let ((header-value (cdr (assoc header
+                                          (mail-header-extra (nnheader-parse-head t))))))
+            (when header-value
+              (apply #'substring-no-properties
+                     header-value
+                     (when skip-bounds
+                       (list 1 -1)))))))
     (gnus-summary-verbose-headers -1)))
 
 (defun fyi-article-archived-at ()
   "Return archived-at header of article in the current `gnus-article-buffer'."
-  (fyi-article-get-header 'Archived-at))
+  (fyi-article-get-header 'Archived-at t))
 
 (defun fyi-article-message-id-permalink ()
   "Create a permalink to http://al.howardknight.net."
-  (format "http://al.howardknight.net/msgid.cgi?STYPE=msgid&A=0&MSGI=<%s>"
+  (format "http://al.howardknight.net/msgid.cgi?STYPE=msgid&A=0&MSGI=%s"
           (fyi-article-get-header 'Message-ID)))
+
+(defun fyi-article-subject ()
+  (fyi-article-get-header 'Subject))
 
 (defun fyi-article-browse-original ()
   "Open current article in the browser."
@@ -280,26 +292,31 @@ buffer with the list of URLs found with the `gnus-button-url-regexp'."
   (browse-url (or (fyi-article-archived-at)
                   (fyi-article-message-id-permalink))))
 
+(defun fyi-capture-read-later (url &optional title)
+  "Capture URL to read-later file.
+
+If TITLE is nil, then the URL is used as title."
+  (let ((org-capture-link-is-already-stored t))
+    (push (list url (or title url)) org-stored-links)
+    (org-store-link-props :link url
+                          :description (or title url)
+                          :annotation (org-make-link-string url (or title url)))
+    (org-capture nil "r")))
+
 (defun fyi-article-read-later ()
   "Save article to read-later."
   (interactive)
-  (let ((title (mail-header-subject
-                (gnus-summary-article-header
-                 (gnus-summary-article-number))))
-        (url (or (fyi-article-archived-at)
-                 (fyi-article-message-id-permalink)))
-        (org-capture-link-is-already-stored t))
-    (push (list url title) org-stored-links)
-    (org-store-link-props :link url
-                          :description title
-                          :annotation (org-make-link-string url title))
-    (org-capture nil "r")))
+  (fyi-capture-read-later (or (fyi-article-archived-at)
+                              (fyi-article-message-id-permalink))
+                          (fyi-article-subject)))
 
 (defhydra hydra-url-handlers (:color blue)
   "URL handler Convenience"
   ("o" fyi-article-browse-original "browse original")
-  ("O" gnus-article-browse-urls "browse contained URLs")
-  ("r" fyi-article-read-later "read later"))
+  ("O" (gnus-article-urls-action #'browse-url) "browse contained URLs")
+  ("r" fyi-article-read-later "read later")
+  ("R" (gnus-article-urls-action #'fyi-capture-read-later #'fyi-article-subject)
+       "read-later contained URLs"))
 
 (define-key gnus-summary-mode-map (kbd "C-c C-.") 'hydra-url-handlers/body)
 (define-key gnus-article-mode-map (kbd "C-c C-.") 'hydra-url-handlers/body)
