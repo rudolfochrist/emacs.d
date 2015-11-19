@@ -6,4 +6,6 @@
     (check-parens)))
 (add-hook 'after-save-hook #'fyi-lisp-after-save)
 
+(add-to-list 'auto-mode-alist '("Cask\\'" . emacs-lisp-mode))
+
 (provide 'init-emacs-lisp)
