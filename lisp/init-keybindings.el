@@ -6,7 +6,8 @@
 (global-set-key (kbd "C-c r") 'revert-buffer)
 
 ;;; always use ibuffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-c C-b") 'ibuffer)
 
 ;;; toggle fullscreen
 (global-set-key (kbd "C-x t f") 'toggle-frame-fullscreen)
