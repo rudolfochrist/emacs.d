@@ -12,4 +12,7 @@
 ;;; toggle fullscreen
 (global-set-key (kbd "C-x t f") 'toggle-frame-fullscreen)
 
+;;; compile
+(global-set-key (kbd "C-x c") 'compile)
+
 (provide 'init-keybindings)
