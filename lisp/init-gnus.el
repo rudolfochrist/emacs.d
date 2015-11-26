@@ -310,16 +310,38 @@ If TITLE is nil, then the URL is used as title."
                               (fyi-article-message-id-permalink))
                           (fyi-article-subject)))
 
-(defhydra hydra-url-handlers (:color blue)
-  "URL handler Convenience"
-  ("o" fyi-article-browse-original "browse original")
-  ("O" (gnus-article-urls-action #'browse-url) "browse contained URLs")
-  ("r" fyi-article-read-later "read later")
-  ("R" (gnus-article-urls-action #'fyi-capture-read-later #'fyi-article-subject)
-       "read-later contained URLs"))
+(defhydra hydra-gnus (:color blue :hint nil)
+  "
+  URL Stuff
+  ----------
+  [_o_] browse original             [_r_] read later
+  [_O_] in-article browse original  [_R_] in-article read later
 
-(define-key gnus-summary-mode-map (kbd "C-c C-.") 'hydra-url-handlers/body)
-(define-key gnus-article-mode-map (kbd "C-c C-.") 'hydra-url-handlers/body)
+  Common but seldom used
+  ----------------------
+  [_f_] forward mail                 [_b_] show mail in browser
+  [_v_] view attachment externally   [_h_] toggle verbose headers
+  [_s_] save attachments
+"
+  ("o" fyi-article-browse-original)
+  ("r" fyi-article-read-later)
+  ("O" (gnus-article-urls-action #'browse-url))
+  ("R" (gnus-article-urls-action #'fyi-capture-read-later #'fyi-article-subject))
+  ("f" gnus-summary-mail-forward)
+  ("v" gnus-mime-view-part-externally)
+  ("s" gnus-mime-save-part)
+  ("b" gnus-article-browse-html-article)
+  ("h" gnus-summary-verbose-headers))
+
+;; (defhydra hydra-gnus (:color blue
+;;                              :hint )
+;;   ("o" fyi-article-browse-original)
+;;   ("O" (gnus-article-urls-action #'browse-url))
+;;   ("r" fyi-article-read-later)
+;;   ("R" (gnus-article-urls-action #'fyi-capture-read-later #'fyi-article-subject)))
+
+(define-key gnus-summary-mode-map (kbd "C-c C-.") 'hydra-gnus/body)
+(define-key gnus-article-mode-map (kbd "C-c C-.") 'hydra-gnus/body)
 
 ;;; enable hl-line
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
