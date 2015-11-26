@@ -56,4 +56,10 @@
 ;;; gnus attachment integration
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
+;;; dired-details
+;;; inspired by https://github.com/magnars/.emacs.d/
+(require-package 'dired-details)
+(setq dired-details-hidden-string "--- ")
+(dired-details-install)
+
 (provide 'init-dired)
