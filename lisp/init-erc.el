@@ -7,8 +7,8 @@
       erc-hide-list '("JOIN" "PART" "QUIT"))
 
 ;;; enable logging
-(push 'log erc-modules)
-(setq erc-log-channels-directory "~/.erc/logs/"
-      erc-save-buffer-on-part t)
+(require 'erc-log)
+(setq erc-log-channels-directory "~/.erc/logs/")
+(erc-log-enable)
 
 (provide 'init-erc)
