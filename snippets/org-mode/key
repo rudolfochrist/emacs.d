@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: key
+# key: key
+# --
+@@html:<kbd>@@$0@@html:</kbd>@@
