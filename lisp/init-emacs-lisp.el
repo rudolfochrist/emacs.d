@@ -8,4 +8,8 @@
 
 (add-to-list 'auto-mode-alist '("Cask\\'" . emacs-lisp-mode))
 
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (setq-local lisp-indent-function #'lisp-indent-function)))
+
 (provide 'init-emacs-lisp)

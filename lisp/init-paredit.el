@@ -18,6 +18,10 @@
 
 ;;; use `common-lisp-indent-function'
 (setq lisp-indent-function #'common-lisp-indent-function)
+(add-hook 'lisp-mode-hook
+          (lambda ()
+            (setq-local lisp-indent-function
+                        #'common-lisp-indent-function)))
 
 ;;; hippie-expand: remove last )
 ;;; http://www.emacswiki.org/emacs/HippieExpand#toc7
@@ -26,8 +30,5 @@
   (if (and paredit-mode (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 (advice-add 'he-substitute-string :after 'fyi-he-substitute-string)
-
-
-
 
 (provide 'init-paredit)
