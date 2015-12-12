@@ -72,7 +72,7 @@
   (interactive)
   (if (eq major-mode 'slime-repl-mode)
       (slime-repl-newline-and-indent)
-      (newline-and-indent))
+    (newline-and-indent))
   (let ((doc (slime-autodoc t)))
     (when doc
       (eldoc-message "%s" doc))))
