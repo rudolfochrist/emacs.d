@@ -314,31 +314,30 @@ If TITLE is nil, then the URL is used as title."
   "
   URL Stuff
   ----------
-  [_o_] browse original             [_r_] read later
-  [_O_] in-article browse original  [_R_] in-article read later
+  [_g_] browse original              [_r_] read later
+  [_G_] in-article browse original   [_R_] in-article read later
 
   Common but seldom used
   ----------------------
   [_f_] forward mail                 [_b_] show mail in browser
-  [_v_] view attachment externally   [_h_] toggle verbose headers
+  [_o_] view attachment externally   [_h_] toggle verbose headers
   [_s_] save attachments
+
+  Replying
+  --------
+  [_w_]: Mail -- Wide reply          [_W_]: Mail -- Wide reply w/ original
 "
-  ("o" fyi-article-browse-original)
+  ("g" fyi-article-browse-original)
   ("r" fyi-article-read-later)
-  ("O" (gnus-article-urls-action #'browse-url))
+  ("G" (gnus-article-urls-action #'browse-url))
   ("R" (gnus-article-urls-action #'fyi-capture-read-later #'fyi-article-subject))
   ("f" gnus-summary-mail-forward)
-  ("v" gnus-mime-view-part-externally)
+  ("o" gnus-mime-view-part-externally)
   ("s" gnus-mime-save-part)
   ("b" gnus-article-browse-html-article)
-  ("h" gnus-summary-verbose-headers))
-
-;; (defhydra hydra-gnus (:color blue
-;;                              :hint )
-;;   ("o" fyi-article-browse-original)
-;;   ("O" (gnus-article-urls-action #'browse-url))
-;;   ("r" fyi-article-read-later)
-;;   ("R" (gnus-article-urls-action #'fyi-capture-read-later #'fyi-article-subject)))
+  ("h" gnus-summary-verbose-headers)
+  ("w" gnus-summary-wide-reply)
+  ("W" gnus-summary-wide-reply-with-original))
 
 (define-key gnus-summary-mode-map (kbd "C-c C-.") 'hydra-gnus/body)
 (define-key gnus-article-mode-map (kbd "C-c C-.") 'hydra-gnus/body)
@@ -346,5 +345,40 @@ If TITLE is nil, then the URL is used as title."
 ;;; enable hl-line
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)
+
+;;; Message hydra
+(define-key
+  message-mode-map
+  (kbd "C-c C-.")
+  (defhydra hydra-message (:color blue :hint nil)
+    "
+  Goto                                       Actions                          PGP/MIME
+  -------------------------------------------------------------------------------------
+  _t_: 'To' header [C-c C-f C-t]             _a_: Insert 'Mail-Follow-To'     _i_: Sign message
+  _o_: 'From' header [C-c C-f C-o]           _S_: Change current subject      _e_: Encrypt message
+  _b_: 'Bcc' header [C-c C-f C-b]            _w_: Insert signature            _p_: Preview
+  _c_: 'Cc' header [C-c C-f C-c]             _x_: Cross-post
+  _s_: 'Subject' header [C-c C-f C-s]        _A_: Attach file
+  _r_: 'Reply-To' header [C-c C-f C-r]       _W_: Act as wide reply
+  _f_: 'Followup-To' header [C-c C-f C-f]
+  _n_: 'Newsgroups' header [C-c C-f C-n]
+"
+    ("t" message-goto-to)
+    ("o" message-goto-from)
+    ("b" message-goto-bcc)
+    ("c" message-goto-cc)
+    ("s" message-goto-subject)
+    ("r" message-goto-reply-to)
+    ("f" message-goto-followup-to)
+    ("n" message-goto-newsgroups)
+    ("a" message-generate-unsubscribed-mail-followup-to)
+    ("S" message-change-subject)
+    ("w" message-insert-signature)
+    ("x" message-cross-post-followup-to)
+    ("A" mml-attach-file)
+    ("i" mml-secure-message-sign-pgpmime)
+    ("e" mml-secure-message-encrypt-pgpmime)
+    ("p" mml-preview)
+    ("W" message-insert-wide-reply)))
 
 (provide 'init-gnus)
