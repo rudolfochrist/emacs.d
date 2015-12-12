@@ -36,7 +36,9 @@
                               "application/pgp\\'"
                               "text/x-org")
        gnus-treat-display-smileys nil
-       gnus-gcc-mark-as-read t)
+       gnus-gcc-mark-as-read t
+       gnus-message-archive-group nil
+       gnus-topic-display-empty-topics nil)
 
 ;;; RSS [.newsrc synced therefore the primary select method]
 (setq gnus-select-method
@@ -61,19 +63,19 @@
 ;;; gmail
 (add-to-list 'gnus-secondary-select-methods
              '(nnimap "gmail"
-               (nnimap-address "imap.gmail.com")
-               (nnimap-server-port 993)
-               (nnimap-stream ssl)
-               (nnimap-search-engine imap)
-               (nnimap-authinfo-file "~/.authinfo.gpg")))
+                      (nnimap-address "imap.gmail.com")
+                      (nnimap-server-port 993)
+                      (nnimap-stream ssl)
+                      (nnimap-search-engine imap)
+                      (nnimap-authinfo-file "~/.authinfo.gpg")))
 
-;;; hooks
+;;; message-mode setup
 (defun fyi-gnus-multi-tab ()
   "bbdb mail complete in message header. Yasnippet expand in message body."
   (interactive)
   (if (message-in-body-p)
       (yas-expand)
-      (bbdb-complete-mail)))
+    (bbdb-complete-mail)))
 
 ;;; citation
 (setq sc-cite-blank-lines-p t
@@ -91,7 +93,6 @@
   (push '("no-attrib" . "") sc-attributions))
 (add-hook 'sc-attribs-preselect-hook 'fyi-sc-pre-handler)
 
-;;; message setup
 (add-hook 'message-mode-hook (lambda ()
                                (ispell-change-dictionary "german8")
                                (enable-yas-minor-mode)
@@ -104,7 +105,11 @@
 ;;; threading
 (setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject
       gnus-summary-gather-subject-limit 'fuzzy
-      gnus-thread-ignore-subject t)
+      gnus-sort-gathered-threads-function 'gnus-thread-sort-by-date
+      gnus-thread-ignore-subject nil
+      gnus-thread-hide-subtree t)
+
+(add-hook 'gnus-summary-prepared-hook #'gnus-summary-hide-all-threads)
 
 ;;; parameters
 (setq gnus-parameters
@@ -129,25 +134,16 @@
 ;;; aesthetics
 ;;; https://github.com/vanicat/emacs24-starter-kit/blob/master/starter-kit-gnus.org#more-attractive-summary-view
 (when window-system
-  (setq gnus-sum-thread-tree-indent "  "
-        gnus-sum-thread-tree-root "● "
-        gnus-sum-thread-tree-false-root "◯ "
-        gnus-sum-thread-tree-single-indent  ""
-        gnus-sum-thread-tree-vertical        "│"
-        gnus-sum-thread-tree-leaf-with-other "├─► "
-        gnus-sum-thread-tree-single-leaf     "╰─► "))
-(setq gnus-summary-line-format
-      (concat
-       "%0{%U%R%z%}"
-       "│" "%&user-date;" "%23=│" ;; date
-       "  "
-       "%4{%-20,20f%}"               ;; name
-       "  "
-       "%3{│%}"
-       " "
-       "%1{%B%}"
-       "%s\n"))
-(setq gnus-summary-display-arrow t)
+  (setq gnus-sum-thread-tree-indent " "
+        gnus-sum-thread-tree-root ""
+        gnus-sum-thread-tree-false-root ""
+        gnus-sum-thread-tree-single-indent ""
+        gnus-sum-thread-tree-vertical "|"
+        gnus-sum-thread-tree-leaf-with-other "+-> "
+        gnus-sum-thread-tree-single-leaf "\\-> "))
+
+(setq gnus-summary-line-format "%6V %U%R%O %-20&user-date; %-25,25f %3t %(%* %B%s%)\n"
+      gnus-summary-display-arrow t)
 
 ;;; me
 (setq user-full-name "Sebastian Christ"
@@ -334,6 +330,7 @@ If TITLE is nil, then the URL is used as title."
 (define-key gnus-article-mode-map (kbd "C-c C-.") 'hydra-gnus/body)
 
 ;;; enable hl-line
+(add-hook 'gnus-group-mode-hook 'hl-line-mode)
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)
 
