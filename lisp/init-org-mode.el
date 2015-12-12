@@ -359,5 +359,23 @@ is -1 go to the previous heading."
                                   "en_US"))))
 (add-hook 'org-mode-hook 'fyi-org-adjust-ispell)
 
+;;; export and move
+(defvar org-export-directory nil
+  "Override this file-locally.")
+
+(defun org-export-html-and-move ()
+  "Exports org buffer and moves the file to `org-export-directory'."
+  (interactive)
+  (unless (eq major-mode 'org-mode)
+    (user-error "Please go to an Org Mode buffer."))
+  (org-html-export-to-html)
+  (when (and org-export-directory
+             (file-exists-p org-export-directory))
+    (let ((file-name (format "%s.html" (file-name-base (buffer-file-name))))
+          (cwd (file-name-directory (buffer-file-name))))
+      (rename-file (concat cwd file-name)
+                   (concat org-export-directory file-name)
+                   t))))
+
 
 (provide 'init-org-mode)
