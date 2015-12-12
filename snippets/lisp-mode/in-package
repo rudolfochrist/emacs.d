@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: in-package
+# key: in
+# --
+(in-package :${1:cl-user})
+
+$0
