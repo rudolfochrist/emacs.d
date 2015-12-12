@@ -100,6 +100,7 @@
         init-anzu
         init-beacon
         init-find-file-in-project))
+
 ;; load them
 (dolist (file setup-pkg-full)
   (require file))
