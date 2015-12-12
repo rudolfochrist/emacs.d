@@ -6,6 +6,8 @@
 
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
 
+;;; Settings highly influenced by John Wiegley (https://github.com/jwiegley/dot-emacs/)
+
 ;;; globals
 (setq  gnus-home-score-file (expand-file-name "~/.emacs.d/all.SCORE")
        gnus-use-cache t
