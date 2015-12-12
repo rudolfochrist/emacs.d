@@ -35,17 +35,15 @@
                               "application/pkcs7-mime"
                               "application/pgp\\'"
                               "text/x-org")
-       gnus-treat-display-smileys nil)
+       gnus-treat-display-smileys nil
+       gnus-gcc-mark-as-read t)
 
-;;; display inlined images
-(add-to-list 'mm-attachment-override-types "image/.*")
-
-;;; RSS [.newsrc synched therefore the primary select method]
+;;; RSS [.newsrc synced therefore the primary select method]
 (setq gnus-select-method
       '(nntp "news.gwene.org"
-        (nntp-open-connection-function nntp-open-tls-stream)
-        (nntp-port-number 563)
-        (nntp-address "news.gwene.org")))
+             (nntp-open-connection-function nntp-open-tls-stream)
+             (nntp-port-number 563)
+             (nntp-address "news.gwene.org")))
 
 ;;; news
 (add-to-list 'gnus-secondary-select-methods
@@ -94,8 +92,6 @@
 (add-hook 'sc-attribs-preselect-hook 'fyi-sc-pre-handler)
 
 ;;; message setup
-(add-hook 'message-sent-hook 'gnus-score-followup-article)
-(add-hook 'message-sent-hook 'gnus-score-followup-thread)
 (add-hook 'message-mode-hook (lambda ()
                                (ispell-change-dictionary "german8")
                                (enable-yas-minor-mode)
@@ -110,7 +106,7 @@
       gnus-summary-gather-subject-limit 'fuzzy
       gnus-thread-ignore-subject t)
 
-;;; sorting
+;;; parameters
 (setq gnus-parameters
       '(("Mail"
          (gnus-thread-sort-functions '((not gnus-thread-sort-by-date))))
@@ -122,8 +118,7 @@
         ("INBOX"
          (gnus-thread-sort-functions '(gnus-thread-sort-by-date))
          (total-expire . t)
-         (expiry-wait . immediate)
-         (gcc-self . t))
+         (expiry-wait . immediate))
         ("on-hold"
          (expiry-wait . immediate)
          (gcc-self . t))
@@ -153,10 +148,6 @@
        "%1{%B%}"
        "%s\n"))
 (setq gnus-summary-display-arrow t)
-
-;;; gravatar
-(setq gnus-treat-from-gravatar 'head
-      gnus-treat-mail-gravatar 'head)
 
 ;;; me
 (setq user-full-name "Sebastian Christ"
