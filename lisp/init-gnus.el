@@ -42,6 +42,11 @@
        gnus-message-archive-group nil
        gnus-topic-display-empty-topics nil)
 
+(defun activate-gnus ()
+  "Start Gnus when not already running."
+  (unless (get-buffer "*Group*")
+    (gnus)))
+
 ;;; RSS [.newsrc synced therefore the primary select method]
 (setq gnus-select-method
       '(nntp "news.gwene.org"
@@ -70,6 +75,16 @@
                       (nnimap-stream ssl)
                       (nnimap-search-engine imap)
                       (nnimap-authinfo-file "~/.authinfo.gpg")))
+
+;;; finding parents
+(setq gnus-refer-thread-use-nnir t
+      gnus-refer-article-method
+      '(current
+        (nnir "nnimap:gmail")
+        (nntp "news.gmane.org"
+              (nntp-address "news.gmane.org"))
+        (nntp "nntp.aioe.org"
+              (nntp-address "nntp.aioe.org"))))
 
 ;;; message-mode setup
 (defun fyi-gnus-multi-tab ()
@@ -267,10 +282,9 @@ have (e.g. Message-ID)."
   "Return archived-at header of article in the current `gnus-article-buffer'."
   (fyi-article-get-header 'Archived-at t))
 
-(defun fyi-article-message-id-permalink ()
-  "Create a permalink to http://al.howardknight.net."
-  (format "http://al.howardknight.net/msgid.cgi?STYPE=msgid&A=0&MSGI=%s"
-          (fyi-article-get-header 'Message-ID)))
+(defun fyi-article-message-id ()
+  "Return the article's Message-ID."
+  (fyi-article-get-header 'Message-ID))
 
 (defun fyi-article-subject ()
   (fyi-article-get-header 'Subject))
@@ -279,7 +293,7 @@ have (e.g. Message-ID)."
   "Open current article in the browser."
   (interactive)
   (browse-url (or (fyi-article-archived-at)
-                  (fyi-article-message-id-permalink))))
+                  (fyi-article-message-id))))
 
 (defun fyi-capture-read-later (url &optional title)
   "Capture URL to read-later file.
@@ -296,7 +310,7 @@ If TITLE is nil, then the URL is used as title."
   "Save article to read-later."
   (interactive)
   (fyi-capture-read-later (or (fyi-article-archived-at)
-                              (fyi-article-message-id-permalink))
+                              (fyi-article-message-id))
                           (fyi-article-subject)))
 
 (defhydra hydra-gnus (:color blue :hint nil)
@@ -370,5 +384,13 @@ If TITLE is nil, then the URL is used as title."
     ("e" mml-secure-message-encrypt-pgpmime)
     ("p" mml-preview)
     ("W" message-insert-wide-reply)))
+
+;;; Find mail by message-id
+;;; http://www.emacswiki.org/emacs/FindMailByMessageId
+(defun gnus-goto-article (message-id)
+  (activate-gnus)
+  (gnus-summary-read-group "nnvirtual:INBOX" 15 t)
+  (let ((nnir-imap-default-search-key "imap"))
+    (gnus-summary-refer-article message-id)))
 
 (provide 'init-gnus)
