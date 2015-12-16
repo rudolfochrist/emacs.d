@@ -9,38 +9,37 @@
 ;;; Settings highly influenced by John Wiegley (https://github.com/jwiegley/dot-emacs/)
 
 ;;; globals
-(setq  gnus-home-score-file (expand-file-name "~/.emacs.d/all.SCORE")
-       gnus-use-cache t
-       ;; fetch only part of the article. If possible.
-       gnus-read-active-file 'some
-       ;; don't keep message buffers around
-       message-kill-buffer-on-exit t
-       gnus-use-correct-string-widths nil
-       ;; don't show hmtl mail...
-       mm-discouraged-alternatives '("text/html" "text/richtext")
-       mm-automatic-display '("text/plain"
-                              "text/enriched"
-                              "text/x-verbatim"
-                              "text/x-vcard"
-                              "image/.*"
-                              "message/delivery-status"
-                              "multipart/.*"
-                              "message/rfc822"
-                              "text/x-patch"
-                              "text/dns"
-                              "application/pgp-signature"
-                              "application/emacs-lisp"
-                              "application/x-emacs-lisp"
-                              "application/x-pkcs7-signature"
-                              "application/pkcs7-signature"
-                              "application/x-pkcs7-mime"
-                              "application/pkcs7-mime"
-                              "application/pgp\\'"
-                              "text/x-org")
-       gnus-treat-display-smileys nil
-       gnus-gcc-mark-as-read t
-       gnus-message-archive-group nil
-       gnus-topic-display-empty-topics nil)
+(setq gnus-use-cache t
+      ;; fetch only part of the article. If possible.
+      gnus-read-active-file 'some
+      ;; don't keep message buffers around
+      message-kill-buffer-on-exit t
+      gnus-use-correct-string-widths nil
+      ;; don't show hmtl mail...
+      mm-discouraged-alternatives '("text/html" "text/richtext")
+      mm-automatic-display '("text/plain"
+                             "text/enriched"
+                             "text/x-verbatim"
+                             "text/x-vcard"
+                             "image/.*"
+                             "message/delivery-status"
+                             "multipart/.*"
+                             "message/rfc822"
+                             "text/x-patch"
+                             "text/dns"
+                             "application/pgp-signature"
+                             "application/emacs-lisp"
+                             "application/x-emacs-lisp"
+                             "application/x-pkcs7-signature"
+                             "application/pkcs7-signature"
+                             "application/x-pkcs7-mime"
+                             "application/pkcs7-mime"
+                             "application/pgp\\'"
+                             "text/x-org")
+      gnus-treat-display-smileys nil
+      gnus-gcc-mark-as-read t
+      gnus-message-archive-group nil
+      gnus-topic-display-empty-topics nil)
 
 (defun activate-gnus ()
   "Start Gnus when not already running."
@@ -124,14 +123,18 @@
       gnus-summary-gather-subject-limit 'fuzzy
       gnus-sort-gathered-threads-function 'gnus-thread-sort-by-date
       gnus-thread-ignore-subject nil
-      gnus-thread-hide-subtree t)
+      gnus-thread-hide-subtree t
+      gnus-thread-sort-functions '(gnus-thread-sort-by-number
+                                   gnus-thread-sort-by-most-recent-date
+                                   gnus-thread-sort-by-score))
 
 (add-hook 'gnus-summary-prepared-hook #'gnus-summary-hide-all-threads)
 
 ;;; parameters
 (setq gnus-parameters
       '(("Mail"
-         (gnus-thread-sort-functions '((not gnus-thread-sort-by-date))))
+         (gnus-thread-sort-functions '(gnus-thread-sort-by-number
+                                       (not gnus-thread-sort-by-most-recent-date))))
         ("All Mail"
          (display . all)
          (expiry-wait . never))
@@ -141,12 +144,16 @@
          (gnus-thread-sort-functions '(gnus-thread-sort-by-date))
          (total-expire . t)
          (expiry-wait . immediate))
+        ("Mail\\|INBOX"
+         (gnus-use-scoring nil))
         ("on-hold"
          (expiry-wait . immediate)
          (gcc-self . t))
         ("follow-up"
          (expiry-wait . immediate)
-         (gcc-self . t))))
+         (gcc-self . t))
+        ("Feeds"
+         (gnus-use-scoring nil))))
 
 ;;; aesthetics
 ;;; https://github.com/vanicat/emacs24-starter-kit/blob/master/starter-kit-gnus.org#more-attractive-summary-view
@@ -389,8 +396,28 @@ If TITLE is nil, then the URL is used as title."
 ;;; http://www.emacswiki.org/emacs/FindMailByMessageId
 (defun gnus-goto-article (message-id)
   (activate-gnus)
-  (gnus-summary-read-group "nnvirtual:INBOX" 15 t)
+  (gnus-summary-read-group "nnimap+gmail:INBOX" 15 t)
   (let ((nnir-imap-default-search-key "imap"))
     (gnus-summary-refer-article message-id)))
+
+;;; scoring
+(setq gnus-score-default-duration 'p
+      gnus-score-expiry-days 30
+      gnus-use-adaptive-scoring '(line)
+      gnus-score-interactive-default-score 10
+      gnus-summary-mark-below -50
+      gnus-summary-expunge-below -100
+      gnus-thread-expunge-below -300
+      gnus-summary-default-high-score 50
+      gnus-decay-score "\\.ADAPT\\'")
+
+(setq gnus-default-adaptive-score-alist
+      '((gnus-forwarded-mark (subject 2) (from 2))
+        (gnus-replied-mark (subject 5) (from 5))
+        (gnus-read-mark (subject 1))
+        (gnus-del-mark (subject -1))
+        (gnus-killed-mark (subject -11))
+        (gnus-catchup-mark (subject -11))
+        (gnus-expirable-mark (subject -100))))
 
 (provide 'init-gnus)
