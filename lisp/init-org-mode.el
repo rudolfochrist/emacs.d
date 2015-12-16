@@ -44,11 +44,12 @@
 
 ;;; org files
 (setq org-directory "~/org/"
-      org-agenda-files '("~/org/todo.org" "~/org/read-later.org" "~/org/kb.org"))
+      org-agenda-files '("~/org/tasks/todo.org"))
+
 (global-set-key
  (kbd "C-x t j")
  (defhydra hydra-prominent-files (:color blue
-                                  :hint nil)
+                                         :hint nil)
    "
 Quickly jump to files:
 _b_ooks
@@ -277,6 +278,47 @@ _a_nnual book expenses
      ('latex
       (when (string-match "^cite:\\(.*\\)" desc)
         (format "\\cite{%s}" (match-string 1 desc)))))))
+
+;;; message links
+(org-add-link-type
+ "message"
+ (lambda (message-id)
+   (with-temp-buffer
+     (switch-to-buffer (current-buffer))
+     (gnus-goto-article message-id)))
+ ;; no export
+ nil)
+
+(defun org-get-message-link (&optional title)
+  (with-current-buffer gnus-original-article-buffer
+    (let ((message-id (gnus-fetch-field "message-id"))
+          (subject (or title (gnus-fetch-field "subject"))))
+      (org-make-link-string (format "message:%s" message-id)
+                            (rfc2047-decode-string subject)))))
+
+(defun org-insert-message-link (&optional arg)
+  (interactive "P")
+  (insert (org-get-message-link (if arg "writes"))))
+
+(defun org-get-url-link ()
+  (let ((description (do-applescript
+                      "tell application \"Google Chrome\"
+title of active tab of front window
+end tell"))
+        (url (do-applescript
+              "tell application \"Google Chrome\"
+URL of active tab of front window
+end tell")))
+    (org-make-link-string url description)))
+
+(defun org-insert-url-link ()
+  (interactive)
+  (insert (org-get-url-link)))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-x l") #'org-insert-message-link)
+            (local-set-key (kbd "C-c C-x u") #'org-insert-url-link)))
 
 ;;; use xelatex with bibtex
 (setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
