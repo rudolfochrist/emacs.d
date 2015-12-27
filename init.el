@@ -47,6 +47,7 @@
         init-defuns
         init-appearance
         init-linum
+        init-my-override-keymap
         init-keybindings
         init-spelling
         init-company-mode
