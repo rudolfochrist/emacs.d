@@ -6,6 +6,6 @@
 (global-set-key (kbd "C-x o") #'ace-window)
 
 (when window-system
-  (global-set-key (kbd "<C-return>") #'other-window))
+  (define-key my-override-keymap-map (kbd "<C-return>") #'other-window))
 
 (provide 'init-ace-window)
