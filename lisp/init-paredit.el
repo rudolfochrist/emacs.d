@@ -14,7 +14,8 @@
   (define-key paredit-mode-map (kbd "[") 'paredit-open-round)
   (define-key paredit-mode-map (kbd "]") 'paredit-close-round)
   (define-key paredit-mode-map (kbd "(") 'paredit-open-bracket)
-  (define-key paredit-mode-map (kbd ")") 'paredit-close-bracket))
+  (define-key paredit-mode-map (kbd ")") 'paredit-close-bracket)
+  (define-key paredit-mode-map (kbd "C-c C-o") 'paredit-insert-section-header))
 
 ;;; use `common-lisp-indent-function'
 (setq lisp-indent-function #'common-lisp-indent-function)
@@ -30,5 +31,16 @@
   (if (and paredit-mode (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 (advice-add 'he-substitute-string :after 'fyi-he-substitute-string)
+
+(require 's)
+
+(defun paredit-insert-section-header (header)
+  "Insert a banner with format ;;; HEADER ;;;."
+  (interactive "sDescription: ")
+  (let* ((header-length 80)
+         (trans-header (format "  %s  " (upcase header)))
+         (banner (s-join "" (make-list (floor (- header-length (length trans-header)) 2) ";"))))
+    (insert (kbd "C-l") "\n")
+    (insert (concat banner trans-header banner))))
 
 (provide 'init-paredit)

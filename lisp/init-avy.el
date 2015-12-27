@@ -8,7 +8,7 @@
   ("a" avy-goto-word-0 "all words"))
 
 (global-set-key
- (kbd "C-q")
+ (kbd "C-x t a")
  (lambda (prefix)
    (interactive "P")
    (if prefix
