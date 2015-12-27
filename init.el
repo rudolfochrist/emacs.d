@@ -100,7 +100,9 @@
         init-ledger-mode
         init-anzu
         init-beacon
-        init-find-file-in-project))
+        init-find-file-in-project
+        init-page-navigation
+        init-redshank))
 
 ;; load them
 (dolist (file setup-pkg-full)
