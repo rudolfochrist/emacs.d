@@ -39,7 +39,7 @@
       gnus-treat-display-smileys nil
       gnus-gcc-mark-as-read t
       gnus-message-archive-group nil
-      gnus-topic-display-empty-topics nil)
+      gnus-topic-display-empty-topics t)
 
 (defun activate-gnus ()
   "Start Gnus when not already running."
@@ -56,15 +56,15 @@
 ;;; news
 (add-to-list 'gnus-secondary-select-methods
              '(nntp "nntp.aioe.org"
-               (nntp-open-connection-function nntp-open-tls-stream)
-               (nntp-port-number 563)
-               (nntp-address "nntp.aioe.org")))
+                    (nntp-open-connection-function nntp-open-tls-stream)
+                    (nntp-port-number 563)
+                    (nntp-address "nntp.aioe.org")))
 
 (add-to-list 'gnus-secondary-select-methods
              '(nntp "news.gmane.org"
-               (nntp-open-connection-function nntp-open-tls-stream)
-               (nntp-port-number 563)
-               (nntp-address "news.gmane.org")))
+                    (nntp-open-connection-function nntp-open-tls-stream)
+                    (nntp-port-number 563)
+                    (nntp-address "news.gmane.org")))
 
 ;;; gmail
 (add-to-list 'gnus-secondary-select-methods
@@ -124,24 +124,23 @@
       gnus-sort-gathered-threads-function 'gnus-thread-sort-by-date
       gnus-thread-ignore-subject nil
       gnus-thread-hide-subtree t
-      gnus-thread-sort-functions '(gnus-thread-sort-by-number
-                                   gnus-thread-sort-by-most-recent-date
-                                   gnus-thread-sort-by-score))
+      gnus-thread-sort-functions '((not gnus-thread-sort-by-most-recent-date)
+                                   gnus-thread-sort-by-total-score)
+      gnus-article-sort-functions '((not lgnus-article-sort-by-most-recent-date)
+                                    gnus-article-sort-by-score))
 
 (add-hook 'gnus-summary-prepared-hook #'gnus-summary-hide-all-threads)
 
 ;;; parameters
 (setq gnus-parameters
-      '(("Mail"
-         (gnus-thread-sort-functions '(gnus-thread-sort-by-number
-                                       (not gnus-thread-sort-by-most-recent-date))))
-        ("All Mail"
+      '(("All Mail"
+         (gnus-article-sort-functions '(gnus-article-sort-by-most-recent-date))
+         (gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date))
          (display . all)
          (expiry-wait . never))
         ("Sent Mail"
          (display . all))
         ("INBOX"
-         (gnus-thread-sort-functions '(gnus-thread-sort-by-date))
          (total-expire . t)
          (expiry-wait . immediate))
         ("Mail\\|INBOX"
@@ -152,7 +151,9 @@
         ("follow-up"
          (expiry-wait . immediate)
          (gcc-self . t))
-        ("Feeds"
+        ("gwene\\..*"
+         (gnus-article-sort-functions '((not gnus-article-sort-by-most-recent-number)))
+         (gnus-thread-sort-functions '((not gnus-thread-sort-by-most-recent-date)))
          (gnus-use-scoring nil))))
 
 ;;; aesthetics
@@ -255,7 +256,7 @@
                    (char-to-string (if (fboundp
                                         'read-char-exclusive)
                                        (read-char-exclusive)
-                                       (read-char)))))
+                                     (read-char)))))
             (kill-buffer temp-buffer))))
       (if browse-window
           (progn (select-window browse-window)
@@ -405,9 +406,9 @@ If TITLE is nil, then the URL is used as title."
       gnus-score-expiry-days 30
       gnus-use-adaptive-scoring '(line)
       gnus-score-interactive-default-score 10
-      gnus-summary-mark-below -50
-      gnus-summary-expunge-below -100
-      gnus-thread-expunge-below -300
+      gnus-summary-mark-below -10
+      gnus-summary-expunge-below -10
+      gnus-thread-expunge-below -100
       gnus-summary-default-high-score 50
       gnus-decay-score "\\.ADAPT\\'")
 
@@ -419,5 +420,8 @@ If TITLE is nil, then the URL is used as title."
         (gnus-killed-mark (subject -11))
         (gnus-catchup-mark (subject -11))
         (gnus-expirable-mark (subject -100))))
+
+(add-hook 'message-sent-hook #'gnus-score-followup-article)
+(add-hook 'message-sent-hook #'gnus-score-followup-thread)
 
 (provide 'init-gnus)
