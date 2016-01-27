@@ -7,12 +7,12 @@
   ("l" avy-goto-line "line")
   ("a" avy-goto-word-0 "all words"))
 
-(global-set-key
- (kbd "C-x t a")
- (lambda (prefix)
-   (interactive "P")
-   (if prefix
-       (hydra-avy/body)
-       (avy-goto-word-or-subword-1))))
+(define-key my-override-keymap-map
+  (kbd "M-s")
+  (lambda (prefix)
+    (interactive "P")
+    (if prefix
+        (hydra-avy/body)
+      (call-interactively #'avy-goto-word-1))))
 
 (provide 'init-avy)

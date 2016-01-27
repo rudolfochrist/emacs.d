@@ -100,7 +100,7 @@
         init-anzu
         init-beacon
         init-page-navigation
-        init-redshank))
+        init-redshank
         init-projectile))
 
 ;; load them

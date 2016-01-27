@@ -106,7 +106,7 @@ _a_nnual book expenses
          "Add link to ~/org/read-later.org via org-protocol"
          entry
          (file "~/org/read-later.org")
-         "* [[%:link][%:description]] --- (%u)"
+         "* %:description --- (%u)\n:PROPERTIES:\n:URL: %:link\n:END:\n\n"
          :prepend t :immediate-finish t)
         ("b"
          "Add bookmark via org-protocol"

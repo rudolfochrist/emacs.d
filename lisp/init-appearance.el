@@ -21,9 +21,6 @@
 (push '(width . 150) default-frame-alist)
 (push '(height . 45) default-frame-alist)
 
-;;; pretty symbols
-(global-prettify-symbols-mode 1)
-
 ;; tabs, spaces and indentation
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2
