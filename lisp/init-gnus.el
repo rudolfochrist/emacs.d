@@ -119,14 +119,14 @@
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
 ;;; threading
-(setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject
+(setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
       gnus-summary-gather-subject-limit 'fuzzy
       gnus-sort-gathered-threads-function 'gnus-thread-sort-by-date
       gnus-thread-ignore-subject nil
       gnus-thread-hide-subtree t
       gnus-thread-sort-functions '((not gnus-thread-sort-by-most-recent-date)
                                    gnus-thread-sort-by-total-score)
-      gnus-article-sort-functions '((not lgnus-article-sort-by-most-recent-date)
+      gnus-article-sort-functions '((not gnus-article-sort-by-most-recent-date)
                                     gnus-article-sort-by-score))
 
 (add-hook 'gnus-summary-prepared-hook #'gnus-summary-hide-all-threads)
@@ -134,8 +134,6 @@
 ;;; parameters
 (setq gnus-parameters
       '(("All Mail"
-         (gnus-article-sort-functions '(gnus-article-sort-by-most-recent-date))
-         (gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date))
          (display . all)
          (expiry-wait . never))
         ("Sent Mail"
@@ -147,16 +145,18 @@
          (gnus-use-scoring nil))
         ("on-hold"
          (expiry-wait . immediate)
-         (gcc-self . t))
+         (gcc-self . t)
+         (display . all))
         ("follow-up"
          (expiry-wait . immediate)
-         (gcc-self . t))
+         (gcc-self . t)
+         (display . all))
         ("gwene\\..*"
          (gnus-article-sort-functions '((not gnus-article-sort-by-most-recent-number)))
          (gnus-thread-sort-functions '((not gnus-thread-sort-by-most-recent-date)))
          (gnus-use-scoring nil))))
 
-;;; aesthetics
+;;; Aesthetics
 ;;; https://github.com/vanicat/emacs24-starter-kit/blob/master/starter-kit-gnus.org#more-attractive-summary-view
 (when window-system
   (setq gnus-sum-thread-tree-indent " "
