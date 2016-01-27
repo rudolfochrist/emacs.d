@@ -82,7 +82,6 @@
         init-whitespace
         init-easy-kill
         init-interleave
-        init-ibuffer-vc
         init-undo-tree
         init-unkillable-scratch
         init-elisp-slime-nav
@@ -100,9 +99,9 @@
         init-ledger-mode
         init-anzu
         init-beacon
-        init-find-file-in-project
         init-page-navigation
         init-redshank))
+        init-projectile))
 
 ;; load them
 (dolist (file setup-pkg-full)
