@@ -19,7 +19,7 @@
         (abcl ("/usr/local/bin/abcl"))))
 
 ;;; getting contrib fancy
-(slime-setup '(slime-fancy slime-repl slime-banner slime-mdot-fu slime-asdf slime-company))
+(slime-setup '(slime-fancy slime-repl slime-banner slime-asdf slime-company))
 
 ;;; use slime-mode on asd files
 (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
@@ -48,7 +48,7 @@
   (:one-liner "cl:quickload system"))
 
 (defslime-repl-shortcut slime-repl-quickload-and-switch
-    ("quickload-and-switch" "qs")
+  ("quickload-and-switch" "qs")
   (:handler (lambda (system)
               (interactive (list (slime-read-system-name)))
               (insert (format "(progn (in-package :cl-user) (ql:quickload :%s) (in-package :%s))" system system))
@@ -68,6 +68,7 @@
      (message "%s not found!" symbol)
      (Info-exit))))
 
+;;; show autodoc also on newline.
 (defun fyi-slime-autodoc-newline ()
   (interactive)
   (if (eq major-mode 'slime-repl-mode)
