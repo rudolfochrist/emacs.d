@@ -79,6 +79,7 @@
         init-org-page
         init-term
         init-gnus
+        init-attachment-reminder
         init-whitespace
         init-easy-kill
         init-interleave
