@@ -1,0 +1,17 @@
+# emacs.d
+
+My Emacs configuration files
+
+### Prerequisites
+
+1. Install [[http://www.sbcl.org/][SBCL]] (or any other CL implementation)
+2. Install [[http://www.quicklisp.org/][Quicklisp]]
+3. Install [[http://quickdocs.org/clhs/][clhs]]
+4. Clone [[https://github.com/rudolfochrist/quicklisp-docs][rudolfochrist/quicklisp-docs]]
+5. Install [[http://input.fontbureau.com/][Input Font]]
+
+* Installation
+
+: $ cd $HOME
+: $ git clone https://github.com/rudolfochrist/emacs.d.git .emacs.d
+: $ emacs

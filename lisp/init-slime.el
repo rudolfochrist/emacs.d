@@ -1,6 +1,13 @@
 (require-package 'slime)
 (require-package 'slime-company)
 
+;;; HyperSpec/Documentation
+(load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
+
+(load (expand-file-name "~/quicklisp/local-projects/quicklisp-docs/quicklisp-docs.el") t)
+(setq ql-docs-browser-function #'eww-browse-url)
+(ql-docs-reload-docs)
+
 (add-hook 'lisp-mode-hook #'slime-mode)
 (add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
 
@@ -55,19 +62,6 @@
               (slime-repl-send-input t)))
   (:one-liner "quickload and switch to system"))
 
-;;; Lookup documenation in Info hyperspec
-;;; need either https://github.com/RobBlackwell/dpans2texi
-;;; or the GNU Common Lips Info files [https://www.gnu.org/software/gcl/]
-(defun fyi-hyperspec-info-lookup (symbol)
-  (interactive (list (slime-read-symbol-name "Hyperspec Lookup: ")))
-  (condition-case nil
-      (progn
-        (info "(ansicl/ansicl)")
-        (Info-index symbol))
-    ('user-error
-     (message "%s not found!" symbol)
-     (Info-exit))))
-
 ;;; show autodoc also on newline.
 (defun fyi-slime-autodoc-newline ()
   (interactive)
@@ -80,15 +74,11 @@
 (eldoc-add-command 'fyi-slime-autodoc-newline)
 
 (defun fyi-slime-keybindings ()
-  (define-key slime-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
-  (define-key slime-mode-map (kbd "C-c C-d C-h") #'fyi-hyperspec-info-lookup)
   (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline))
 
 (add-hook 'slime-mode-hook 'fyi-slime-keybindings)
 
 (defun fyi-slime-repl-keybindings ()
-  (define-key slime-repl-mode-map (kbd "C-c C-d h") #'fyi-hyperspec-info-lookup)
-  (define-key slime-repl-mode-map (kbd "C-d C-h") #'fyi-hyperspec-info-lookup)
   (define-key slime-repl-mode-map (kbd "C-l") #'slime-repl-clear-buffer)
   (define-key slime-repl-mode-map (kbd "SPC") #'slime-autodoc-space)
   (define-key slime-repl-mode-map (kbd "C-j") #'fyi-slime-autodoc-newline))
