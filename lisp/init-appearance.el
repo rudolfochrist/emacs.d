@@ -10,8 +10,9 @@
     (funcall mode -1)))
 
 ;;; theme du jour
-(require-package 'iodine-theme :noerror t)
-(load-theme 'iodine t)
+
+(require-package 'meacupla-theme :noerror t)
+(load-theme 'meacupla t)
 
 ;; set font in GUI
 (when window-system
@@ -44,11 +45,8 @@
   '(" \\[.*\\]"                         ; slime package + CL implementaion
     )
   "Regular expressions to minor modes visible in the mode line.")
-(setq rm-whitelist (mapconcat 'identity *rm-mode-regexps* "\\|"))
+(setq rm-whitelist (mapconcat 'identity *rm-mode-regexps* "\\|")
+      sml/theme 'dark)
 (sml/setup)
-
-;;; face adjustments
-(custom-set-faces
- '(which-func ((t :foreground "white"))))
 
 (provide 'init-appearance)
