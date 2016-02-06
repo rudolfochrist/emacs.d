@@ -2,6 +2,10 @@
 ;;; apperently this has to be set BEFORE org.el is loaded!
 (setq org-export-backends '(ascii html latex texinfo))
 
+;; (add-to-list 'load-path "~/dev/org-mode/lisp/")
+;; (add-to-list 'load-path "~/dev/org-mode/contrib/lisp/")
+;; (require 'org)
+
 (require-package 'org-plus-contrib
                  :require 'org)
 (require 'ox-latex)
