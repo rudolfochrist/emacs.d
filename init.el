@@ -101,7 +101,8 @@
         init-beacon
         init-page-navigation
         init-redshank
-        init-projectile))
+        init-projectile
+        init-imenu-anywhere))
 
 ;; load them
 (dolist (file setup-pkg-full)
