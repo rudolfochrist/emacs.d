@@ -2,7 +2,7 @@
 
 My Emacs configuration files
 
-### Prerequisites
+* Prerequisites
 
 1. Install [[http://www.sbcl.org/][SBCL]] (or any other CL implementation)
 2. Install [[http://www.quicklisp.org/][Quicklisp]]
