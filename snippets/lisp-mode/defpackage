@@ -2,6 +2,8 @@
 # name: defpackage
 # key: defpackage
 # --
+(in-package #:cl-user)
+
 (defpackage #:${1:package}${2:
   (:nicknames ${3:nicks})}
   (:use ${4::cl}${5: packages})${6:
