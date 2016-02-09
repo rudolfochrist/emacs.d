@@ -56,12 +56,14 @@
                                          :hint nil)
    "
 Quickly jump to files:
+_t_odos
 _b_ooks
 _f_inances
 _k_nowledge base
 _r_ead later
 _a_nnual book expenses
 "
+   ("t" (find-file "~/org/tasks/todo.org"))
    ("b" (find-file "~/org/books.org"))
    ("f" (find-file "~/org/finances.ledger"))
    ("k" (find-file "~/org/kb.org"))
@@ -71,8 +73,7 @@ _a_nnual book expenses
 
 ;;; todos setup
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "TODAY(o)" "|" "DONE(d)")
-        (sequence "CANCELLED(c)")))
+      '((sequence "PROJECT(p)" "TODO(t)" "WAITING(w)" "SOMEDAY(s)" "|" "DONE(d)")))
 
 ;;; agenda
 (setq org-log-done 'time
