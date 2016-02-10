@@ -195,7 +195,9 @@
       bbdb-expand-mail-aliases t
       bbdb-canonicalize-redundant-nets-p t
       bbdb-always-add-addresses t
-      bbdb-complete-mail-allow-cycling t)
+      bbdb-complete-mail-allow-cycling t
+      ;; don't handle anniversaries in BBDB.
+      bbdb-anniv-alist nil)
 (bbdb-initialize 'gnus 'message 'anniv)
 
 ;;; global key bindings

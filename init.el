@@ -41,6 +41,9 @@
 (require-package 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
 
+;;; debugging init.el
+(require-package 'bug-hunter)
+
 ;; Subpackages
 (setq setup-pkg-full
       '(init-basics
