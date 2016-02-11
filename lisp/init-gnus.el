@@ -401,6 +401,8 @@ If TITLE is nil, then the URL is used as title."
 ;;; http://www.emacswiki.org/emacs/FindMailByMessageId
 (defun gnus-goto-article (group message-id)
   (activate-gnus)
+  (when (string-match "gmail" group)
+    (setq group "nnimap+gmail:[Google Mail]/All Mail"))
   (gnus-summary-read-group group 15 t)
   (let ((nnir-imap-default-search-key "imap"))
     (gnus-summary-refer-article message-id)))

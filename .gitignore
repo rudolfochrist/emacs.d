@@ -18,3 +18,4 @@ bin/
 /bbdb
 /bbdb-vcard/
 /recentf
+*.elc
