@@ -135,7 +135,9 @@
 (setq gnus-parameters
       '(("All Mail"
          (display . all)
-         (expiry-wait . never))
+         (expiry-wait . never)
+         (gnus-article-sort-functions '(gnus-article-sort-by-most-recent-date))
+         (gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date)))
         ("Sent Mail"
          (display . all))
         ("INBOX"
@@ -397,9 +399,9 @@ If TITLE is nil, then the URL is used as title."
 
 ;;; Find mail by message-id
 ;;; http://www.emacswiki.org/emacs/FindMailByMessageId
-(defun gnus-goto-article (message-id)
+(defun gnus-goto-article (group message-id)
   (activate-gnus)
-  (gnus-summary-read-group "nnimap+gmail:INBOX" 15 t)
+  (gnus-summary-read-group group 15 t)
   (let ((nnir-imap-default-search-key "imap"))
     (gnus-summary-refer-article message-id)))
 

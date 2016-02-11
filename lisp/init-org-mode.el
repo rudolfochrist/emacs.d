@@ -21,6 +21,10 @@
 (require 'ox-extra)
 (ox-extras-activate '(latex-header-blocks ignore-headlines))
 
+;;; jwiegley's smart capture
+(require-package 'org-smart-capture :from-dir (expand-file-name "org-smart-caputure"
+                                                                emacs-d-vendor))
+
 ;;; overwrite because of bugs
 (defun org-latex-header-blocks-filter (backend)
   (when (org-export-derived-backend-p backend 'latex)
@@ -107,7 +111,8 @@ _a_nnual book expenses
       '(("a" "Add task" entry
          (file+headline "~/org/tasks/todo.org" "Inbox")
          "* TODO %?
-ADDED: %U"
+ADDED: %U
+SCHEDULED: %t"
          :prepend t)
         ("n" "Add note to kb" entry
          (file "~/org/kb.org")
@@ -301,10 +306,14 @@ ADDED: %U"
 ;;; message links
 (org-add-link-type
  "message"
- (lambda (message-id)
-   (with-temp-buffer
-     (switch-to-buffer (current-buffer))
-     (gnus-goto-article message-id)))
+ (lambda (ref)
+   (let* ((split (split-string (substring-no-properties ref 2)
+                               "/"))
+          (group (base64-decode-string (car split)))
+          (message-id (cadr split)))
+     (with-temp-buffer
+       (switch-to-buffer (current-buffer))
+       (gnus-goto-article group message-id))))
  ;; no export
  nil)
 
