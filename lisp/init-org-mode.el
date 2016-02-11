@@ -22,7 +22,7 @@
 (ox-extras-activate '(latex-header-blocks ignore-headlines))
 
 ;;; jwiegley's smart capture
-(require-package 'org-smart-capture :from-dir (expand-file-name "org-smart-caputure"
+(require-package 'org-smart-capture :from-dir (expand-file-name "org-smart-capture"
                                                                 emacs-d-vendor))
 
 ;;; overwrite because of bugs
