@@ -73,11 +73,19 @@ _a_nnual book expenses
 
 ;;; todos setup
 (setq org-todo-keywords
-      '((sequence "PROJECT(p)" "TODO(t)" "WAITING(w)" "SOMEDAY(s)" "|" "DONE(d)")))
+      '((sequence "PROJECT(p)" "TODO(t)" "WAITING(w)" "DELEGATED(k)" "SOMEDAY(s)" "|" "DONE(d)"))
+      org-todo-keyword-faces
+      '(("PROJECT" :weight bold :foreground "dark magenta")
+        ("DONE" :weight bold :foreground "forest green")
+        ("SOMEDAY" :weight bold :foreground "dark goldenrod")
+        ("TODO" :weight bold :foreground "medium blue")
+        ("APPT" :weight bold :foreground "medium blue")
+        ("WAITING" :weight bold :foreground "red")
+        ("DELEGATED" :weight bold :foreground "red")))
 
 ;;; agenda
 (setq org-log-done 'time
-      org-agenda-ndays 10
+      org-agenda-span 'week
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
       org-agenda-todo-ignore-scheduled t
@@ -96,60 +104,54 @@ _a_nnual book expenses
 (global-set-key (kbd "<M-f12>") 'org-capture)
 (setq org-gnus-prefer-web-links t)
 (setq org-capture-templates
-      '(("t"
-         "todo"
-         entry
-         (file+headline "~/org/todo.org" "Tasks")
-         "* TODO %?\n")
-        ("n"
-         "Add note to kb"
-         entry
+      '(("a" "Add task" entry
+         (file+headline "~/org/tasks/todo.org" "Inbox")
+         "* TODO %?
+ADDED: %U"
+         :prepend t)
+        ("n" "Add note to kb" entry
          (file "~/org/kb.org")
-         "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n"
+         "* %?
+:PROPERTIES:
+:CREATED: %U
+:END:\n\n"
          :prepend t :empty-lines 1)
-        ("r"
-         "Add link to ~/org/read-later.org via org-protocol"
-         entry
+        ("r" "Add link to ~/org/read-later.org via org-protocol" entry
          (file "~/org/read-later.org")
-         "* %:description --- (%u)\n:PROPERTIES:\n:URL: %:link\n:END:\n\n"
+         "* %:description --- (%u)
+:PROPERTIES:
+:URL: %:link
+:END:\n\n"
          :prepend t :immediate-finish t)
-        ("b"
-         "Add bookmark via org-protocol"
-         entry
+        ("b" "Add bookmark via org-protocol" entry
          (file "~/org/kb.org")
-         "* %:description :bookmark:\n:PROPERTIES:\n:CREATED: %U\n:URL: %:link\n:END:\n\n%?\n\n** Website Summary:\n\n%(fyi-summarize-captured-url)\n\n"
+         "* %:description :bookmark:
+:PROPERTIES:
+:CREATED: %U
+:URL: %:link
+:END:
+
+%?
+
+** Website Summary:
+
+%(fyi-summarize-captured-url)\n\n"
          :prepend t :empty-lines 1)
-        ("v"
-         "Add bookmark via org-protocol but omit summary"
-         entry
+        ("v" "Add bookmark via org-protocol but omit summary" entry
          (file "~/org/kb.org")
-         "* %:description :bookmark:\n:PROPERTIES:\n:CREATED: %U\n:URL: %:link\n:END:\n\n%?"
-         :prepend t :empty-lines 1)
-        ("l" "Ledger")
-        ("ll"
-         "Add transaction to cash account."
-         plain
-         (file "~/org/finances.ledger")
-         "%(org-read-date) * %^{Payee}
-    Assets:Cash
-    Expenses:%^{Account}  %^{Amount} €"
-         :empty-lines 1)
-        ("lc"
-         "Add transaction to checking account."
-         plain
-         (file "~/org/finances.ledger")
-         "%(org-read-date) %^{Payee}
-    Assets:Checking
-    Expenses:%^{Account}  %^{Amount} €"
-         :empty-lines 1)
-        ("lm"
-         "Add transaction to Master Card account."
-         plain
-         (file "~/org/finances.ledger")
-         "%(org-read-date) %^{Payee}
-    Liabilities:Master Card
-    Expenses:%^{Account}  %^{Amount} €"
-         :empty-lines 1)))
+         "* %:description :bookmark:
+:PROPERTIES:
+:CREATED: %U
+:URL: %:link
+:END:
+
+%?"
+         :prepend t :empty-lines 1)))
+
+;;; refile
+(setq org-refile-targets
+      '(("~/org/tasks/todo.org" :level . 1)
+        (org-agenda-files :todo . "PROJECT")))
 
 ;;; setup diary
 (setq diary-file (expand-file-name "~/org/diary")
@@ -160,9 +162,21 @@ _a_nnual book expenses
 (setq calendar-holidays holiday-german-holidays)
 
 ;;; custom agenda views
-(setq org-agenda-custom-commands '(("d" "Today"
-                                    ((agenda "" ((org-agenda-ndays 1)))
-                                     (todo "TODAY")))))
+(setq org-agenda-custom-commands
+      '(("d" "Today" agenda ""
+         ((org-agenda-span 'day)))
+        ("u" "Uncategorized items" tags "CATEGORY=\"INBOX\"&LEVEL=2"
+         ((org-agenda-overriding-header "Uncategorized items:")))
+        ("j" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"INBOX\""
+         ((org-agenda-overriding-header "All TODOs")))
+        ("w" "Waiting/Delegated tasks" tags "TODO=\"WAITING\"|TODO=\"DELEGATED\""
+         ((org-agenda-overriding-header "Waiting/Delegated tasks:")))
+        ("y" "Someday/Maybe tasks" todo "SOMEDAY"
+         ((org-agenda-overriding-header "Someday/Maybe tasks:")))
+        ("Y" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|SOMEDAY\\|PROJECT}"
+         ((org-agenda-overriding-header "Unscheduled tasks:")
+          (org-agenda-skip-function
+           '(org-agenda-skip-entry-if 'timestamp))))))
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "<f12>") 'org-agenda)
@@ -171,8 +185,8 @@ _a_nnual book expenses
 
 ;;; Enable yasnippets in org
 (add-hook 'org-mode-hook '(lambda ()
-                           (org-set-local 'yas/trigger-key [tab])
-                           (define-key yas/keymap [tab] 'yas-next-field-or-maybe-expand)))
+                            (org-set-local 'yas/trigger-key [tab])
+                            (define-key yas/keymap [tab] 'yas-next-field-or-maybe-expand)))
 
 ;;; latex export customization
 (add-to-list 'org-latex-classes
@@ -358,23 +372,6 @@ end tell")))
   (auto-fill-mode t))
 (add-hook 'org-mode-hook 'fyi-org-width)
 
-;;; org-mode narrowed navigation
-(defun fyi-org-next-heading-narrowed (direction)
-  "Go to the next heading and show it narrowed.
-If DIRECTION is 1 forward to the next heading. If DIRECTION
-is -1 go to the previous heading."
-  (widen)
-  (org-forward-heading-same-level direction)
-  (org-narrow-to-subtree)
-  (org-show-subtree)
-  (org-cycle-hide-drawers 'all))
-(define-key org-mode-map (kbd "C-c j") (lambda ()
-                                         (interactive)
-                                         (fyi-org-next-heading-narrowed 1)))
-(define-key org-mode-map (kbd "C-c k") (lambda ()
-                                         (interactive)
-                                         (fyi-org-next-heading-narrowed -1)))
-
 ;;; org-mode abbrevs)
 ;; https://stackoverflow.com/questions/18232384/how-to-replace-a-string-with-a-non-backslashed-string-in-emacs-abbrev-mode
 (abbrev-table-put org-mode-abbrev-table :regexp "\\(\\\\[a-z0-9@]+\\)")
@@ -423,6 +420,5 @@ is -1 go to the previous heading."
       (rename-file (concat cwd file-name)
                    (concat org-export-directory file-name)
                    t))))
-
 
 (provide 'init-org-mode)
