@@ -105,7 +105,7 @@ _a_nnual book expenses
       (buffer-string))))
 
 ;;; org-capture
-(global-set-key (kbd "<M-f12>") 'org-capture)
+(global-set-key (kbd "<M-f12>") #'org-smart-capture)
 (setq org-gnus-prefer-web-links t)
 (setq org-capture-templates
       '(("a" "Add task" entry
