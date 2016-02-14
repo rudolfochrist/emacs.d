@@ -25,12 +25,14 @@
   (interactive)
   (let ((term-buffers (fyi-term-buffer-list)))
     (cond
-      ((null term-buffers)
-       (multi-term))
-      ((= (length term-buffers) 1)
-       (switch-to-buffer (car term-buffers)))
-      (t
-       (switch-to-buffer (fyi-next-term-buffer term-buffers))))))
+     ((fyi-term-mode-p (current-buffer))
+      (bury-buffer))
+     ((null term-buffers)
+      (multi-term))
+     ((= (length term-buffers) 1)
+      (switch-to-buffer (car term-buffers)))
+     (t
+      (switch-to-buffer (fyi-next-term-buffer term-buffers))))))
 
 (global-set-key (kbd "<f1>") 'fyi-cycle-terminals)
 (global-set-key (kbd "M-<f1>") 'multi-term)
