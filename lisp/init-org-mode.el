@@ -77,7 +77,7 @@ _a_nnual book expenses
 
 ;;; todos setup
 (setq org-todo-keywords
-      '((sequence "PROJECT(p)" "TODO(t)" "WAITING(w)" "DELEGATED(k)" "SOMEDAY(s)" "|" "DONE(d)"))
+      '((sequence "TODO(t)" "PROJECT(p)" "WAITING(w)" "DELEGATED(k)" "SOMEDAY(s)" "|" "DONE(d)"))
       org-todo-keyword-faces
       '(("PROJECT" :weight bold :foreground "dark magenta")
         ("DONE" :weight bold :foreground "forest green")
