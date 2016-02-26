@@ -96,7 +96,9 @@ _a_nnual book expenses
       org-agenda-todo-ignore-scheduled t
       org-agenda-todo-ignore-deadlines 'near
       org-agenda-start-on-weekday nil
-      org-agenda-skip-scheduled-if-deadline-is-shown t)
+      org-agenda-skip-scheduled-if-deadline-is-shown t
+      org-agenda-skip-deadline-prewarning-if-scheduled t
+      org-deadline-warning-days 7)
 
 (defun fyi-summarize-captured-url ()
   "Summarizes the website for the given URL using sumy (https://github.com/miso-belica/sumy)."
@@ -112,8 +114,8 @@ _a_nnual book expenses
       '(("a" "Add task" entry
          (file+headline "~/org/tasks/todo.org" "Inbox")
          "* TODO %?
-ADDED: %U
-SCHEDULED: %t"
+SCHEDULED: %t
+ADDED: %U"
          :prepend t)
         ("n" "Add note to kb" entry
          (file "~/org/kb.org")
@@ -155,7 +157,8 @@ SCHEDULED: %t"
          :prepend t :empty-lines 1)))
 
 ;;; refile
-(setq org-refile-targets
+(setq org-refile-allow-creating-parent-nodes 'confirm
+      org-refile-targets
       '(("~/org/tasks/todo.org" :level . 1)
         (org-agenda-files :todo . "PROJECT")))
 
@@ -171,6 +174,8 @@ SCHEDULED: %t"
 (setq org-agenda-custom-commands
       '(("d" "Today" agenda ""
          ((org-agenda-span 'day)))
+        ("p" "Active projects" tags "TODO=\"PROJECT\""
+         ((org-agenda-overriding-header "Active Projects:")))
         ("u" "Uncategorized items" tags "CATEGORY=\"INBOX\"&LEVEL=2"
          ((org-agenda-overriding-header "Uncategorized items:")))
         ("j" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"INBOX\""
@@ -179,7 +184,7 @@ SCHEDULED: %t"
          ((org-agenda-overriding-header "Waiting/Delegated tasks:")))
         ("y" "Someday/Maybe tasks" todo "SOMEDAY"
          ((org-agenda-overriding-header "Someday/Maybe tasks:")))
-        ("Y" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|SOMEDAY\\|PROJECT}"
+        ("Y" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|SOMEDAY\\|PROJECT\\|CANCELED}"
          ((org-agenda-overriding-header "Unscheduled tasks:")
           (org-agenda-skip-function
            '(org-agenda-skip-entry-if 'timestamp))))))
