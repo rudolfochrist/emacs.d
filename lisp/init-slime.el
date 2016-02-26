@@ -18,12 +18,12 @@
 
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
-      '((sbcl ("/usr/local/bin/sbcl"))
-        (acl ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))
-        (ccl ("/usr/local/bin/ccl64"))
-        (clisp ("/usr/local/bin/clisp"))
+      '((ccl ("/usr/local/bin/ccl64"))
+        (sbcl ("/usr/local/bin/sbcl"))
         (ecl ("/usr/local/bin/ecl"))
-        (abcl ("/usr/local/bin/abcl"))))
+        (clisp ("/usr/local/bin/clisp"))
+        (abcl ("/usr/local/bin/abcl"))
+        (acl ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))))
 
 ;;; getting contrib fancy
 (slime-setup '(slime-fancy slime-repl slime-banner slime-asdf slime-company))
