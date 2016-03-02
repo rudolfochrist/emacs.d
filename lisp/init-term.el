@@ -25,12 +25,12 @@
   (interactive)
   (let ((term-buffers (fyi-term-buffer-list)))
     (cond
-     ((fyi-term-mode-p (current-buffer))
-      (bury-buffer))
      ((null term-buffers)
       (multi-term))
      ((= (length term-buffers) 1)
-      (switch-to-buffer (car term-buffers)))
+      (if (fyi-term-mode-p (current-buffer))
+          (bury-buffer)
+        (switch-to-buffer (car term-buffers))))
      (t
       (switch-to-buffer (fyi-next-term-buffer term-buffers))))))
 
