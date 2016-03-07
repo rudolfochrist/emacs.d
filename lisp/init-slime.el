@@ -18,8 +18,8 @@
 
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
-      '((ccl ("/usr/local/bin/ccl64"))
-        (sbcl ("/usr/local/bin/sbcl"))
+      '((sbcl ("/usr/local/bin/sbcl"))
+        (ccl ("/usr/local/bin/ccl64"))
         (ecl ("/usr/local/bin/ecl"))
         (clisp ("/usr/local/bin/clisp"))
         (abcl ("/usr/local/bin/abcl"))
@@ -73,15 +73,27 @@
       (eldoc-message "%s" doc))))
 (eldoc-add-command 'fyi-slime-autodoc-newline)
 
+;;; switch to repl and back again
+(defun fyi-slime-repl-switch ()
+  (interactive)
+  (cond
+   ((eq major-mode 'slime-repl-mode)
+    (other-window 1)
+    (switch-to-buffer (second (buffer-list))))
+   (t
+    (slime-switch-to-output-buffer))))
+
 (defun fyi-slime-keybindings ()
-  (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline))
+  (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline)
+  (define-key slime-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch))
 
 (add-hook 'slime-mode-hook 'fyi-slime-keybindings)
 
 (defun fyi-slime-repl-keybindings ()
   (define-key slime-repl-mode-map (kbd "C-l") #'slime-repl-clear-buffer)
   (define-key slime-repl-mode-map (kbd "SPC") #'slime-autodoc-space)
-  (define-key slime-repl-mode-map (kbd "C-j") #'fyi-slime-autodoc-newline))
+  (define-key slime-repl-mode-map (kbd "C-j") #'fyi-slime-autodoc-newline)
+  (define-key slime-repl-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch))
 
 (add-hook 'slime-repl-mode-hook 'fyi-slime-repl-keybindings)
 

@@ -52,16 +52,16 @@ If CREATE-TAG-P is non-nil than the current file gets saved, committed
 and a tag is generated."
   (interactive
    (cond
-     ((equal current-prefix-arg '(4))
-      (let ((major (read-string "Major: "))
-            (minor (read-string "Minor: "))
-            (patch (read-string "Patch: "))
-            (git-tag (y-or-n-p "Create tag? ")))
-        (list (fyi-enumerate-list (list major minor patch))
-              git-tag)))
-     (t
-      (list (list (cons (fyi-date-revision) 3))
-            nil))))
+    ((equal current-prefix-arg '(4))
+     (let ((major (read-string "Major: "))
+           (minor (read-string "Minor: "))
+           (patch (read-string "Patch: "))
+           (git-tag (y-or-n-p "Create tag? ")))
+       (list (fyi-enumerate-list (list major minor patch))
+             git-tag)))
+    (t
+     (list (list (cons (fyi-date-revision) 3))
+           nil))))
   (re-search-forward "\\([[:digit:]]+\\)\\.\\([[:digit:]]+\\)\\.\\([[:digit:]]+-?[[:digit:]]\\{0,3\\}\\)")
   (when (match-string 0)
     (mapc (lambda (version)
@@ -75,7 +75,12 @@ and a tag is generated."
                                (list "--all" (format "-m v%s" new-version)))
         (magit-tag (format "v%s" new-version) "HEAD")))))
 
-
+(defun fyi-mode-buffers (mode)
+  "Returns a list of buffers with major mode MODE."
+  (cl-remove-if-not (lambda (buffer)
+                      (with-current-buffer buffer
+                        (eql major-mode mode)))
+                    (buffer-list)))
 
 (provide 'init-defuns)
 
