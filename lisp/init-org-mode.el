@@ -12,11 +12,6 @@
 (require 'ox-koma-letter)
 (require 'org-checklist)
 
-;;; enable org-protocol
-(unless (server-running-p)
-  (server-start))
-(require 'org-protocol)
-
 ;;; use some extras
 (require 'ox-extra)
 (ox-extras-activate '(latex-header-blocks ignore-headlines))
@@ -102,7 +97,7 @@ _a_nnual book expenses
 
 (defun fyi-summarize-captured-url ()
   "Summarizes the website for the given URL using sumy (https://github.com/miso-belica/sumy)."
-  (let ((url (plist-get org-store-link-plist :link)))
+  (let ((url (fyi-get-current-url)))
     (with-temp-buffer
       (call-process "sumy" nil t nil "text-rank" (format "--url=%s" url) "--length=10%")
       (buffer-string))))
@@ -124,19 +119,19 @@ ADDED: %U"
 :CREATED: %U
 :END:\n\n"
          :prepend t :empty-lines 1)
-        ("r" "Add link to ~/org/read-later.org via org-protocol" entry
+        ("r" "Add link to ~/org/read-later.org" entry
          (file "~/org/read-later.org")
-         "* %:description --- (%u)
+         "* %(fyi-get-current-title) --- (%u)
 :PROPERTIES:
-:URL: %:link
+:URL: %(fyi-get-current-url)
 :END:\n\n"
          :prepend t :immediate-finish t)
-        ("b" "Add bookmark via org-protocol" entry
+        ("b" "Add bookmark" entry
          (file "~/org/kb.org")
-         "* %:description :bookmark:
+         "* %(fyi-get-current-title) :bookmark:
 :PROPERTIES:
 :CREATED: %U
-:URL: %:link
+:URL: %(fyi-get-current-url)
 :END:
 
 %?
@@ -145,12 +140,12 @@ ADDED: %U"
 
 %(fyi-summarize-captured-url)\n\n"
          :prepend t :empty-lines 1)
-        ("v" "Add bookmark via org-protocol but omit summary" entry
+        ("v" "Add bookmark but omit summary" entry
          (file "~/org/kb.org")
-         "* %:description :bookmark:
+         "* %(fyi-get-current-title) :bookmark:
 :PROPERTIES:
 :CREATED: %U
-:URL: %:link
+:URL: %(fyi-get-current-url)
 :END:
 
 %?"
@@ -282,19 +277,19 @@ ADDED: %U"
  "color" nil
  (lambda (path desc format)
    (cond
-     ((eq format 'html)
-      (format "<span style=\"color:%s;\">%s</span>" path desc))
-     ((eq format 'latex)
-      (format "{\\color{%s}%s}" path desc)))))
+    ((eq format 'html)
+     (format "<span style=\"color:%s;\">%s</span>" path desc))
+    ((eq format 'latex)
+     (format "{\\color{%s}%s}" path desc)))))
 ;; org-mode highlight
 (org-add-link-type
  "hl" nil
  (lambda (path desc format)
    (cond
-     ((eq format 'html)
-      (format "<font style=\"background-color:%s;\">%s</font>" path desc))
-     ((eq format 'latex)
-      (format "\\colorbox{%s}{%s}" path desc))))) ;; require \usepackage{color}
+    ((eq format 'html)
+     (format "<font style=\"background-color:%s;\">%s</font>" path desc))
+    ((eq format 'latex)
+     (format "\\colorbox{%s}{%s}" path desc))))) ;; require \usepackage{color}
 
 ;;; bibdexk/bibtex/citation links
 (org-add-link-type
@@ -334,16 +329,24 @@ ADDED: %U"
   (interactive "P")
   (insert (org-get-message-link (if arg "writes"))))
 
-(defun org-get-url-link ()
-  (let ((description (do-applescript
-                      "tell application \"Google Chrome\"
+(defun fyi-get-current-url ()
+  "Fetches the active tab's URL from Google Chrome."
+  (do-applescript
+   "tell application \"Google Chrome\"
+URL of active tab of front window
+end tell"))
+
+(defun fyi-get-current-title ()
+  "Fetches the active tab's title from Google Chrome"
+  (do-applescript
+   "tell application \"Google Chrome\"
 title of active tab of front window
 end tell"))
-        (url (do-applescript
-              "tell application \"Google Chrome\"
-URL of active tab of front window
-end tell")))
-    (org-make-link-string url description)))
+
+(defun org-get-url-link ()
+  (org-make-link-string
+   (fyi-get-current-url)
+   (fyi-get-current-title)))
 
 (defun org-insert-url-link ()
   (interactive)
