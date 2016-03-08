@@ -83,6 +83,35 @@ _a_nnual book expenses
         ("WAITING" :weight bold :foreground "red")
         ("DELEGATED" :weight bold :foreground "red")))
 
+;;; archiving DONE tasks
+;;; https://github.com/jwiegley/dot-emacs/blob/master/dot-org.el#L330
+(defvar org-archive-expiry-days 9
+  "The number of days after which a completed task should be auto-archived.
+This can be zero for immediate or a floating point value.")
+
+(defun org-archive-expired-tasks ()
+  "Archive task with a completion date after `org-archive-expiry-days'."
+  (interactive)
+  (flet ((prop (property element)
+               (org-element-property property element))
+         (completep (headline)
+                    (member (prop :todo-type headline)
+                            '(done canceled)))
+         (expirep (headline)
+                  (>= (time-to-number-of-days
+                       (time-subtract (current-time)
+                                      (org-time-string-to-time
+                                       (prop :raw-value (prop :closed headline)))))
+                      org-archive-expiry-days)))
+    (save-excursion
+      (goto-char (point-min))
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (headline)
+          (when (and (completep headline)
+                     (expirep headline))
+            (goto-char (prop :begin headline))
+            (org-archive-subtree)))))))
+
 ;;; agenda
 (setq org-log-done 'time
       org-agenda-span 'week
