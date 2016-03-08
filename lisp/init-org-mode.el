@@ -126,6 +126,13 @@ ADDED: %U"
 :URL: %(fyi-get-current-url)
 :END:\n\n"
          :prepend t :immediate-finish t)
+        ("y" "Add link to ~/org/read-later.org" entry
+         (file "~/org/read-later.org")
+         "* %:description  --- (%u)
+:PROPERTIES:
+:URL: %:link
+:END:\n\n"
+         :prepend t :immediate-finish t)
         ("b" "Add bookmark" entry
          (file "~/org/kb.org")
          "* %(fyi-get-current-title) :bookmark:

@@ -316,7 +316,7 @@ If TITLE is nil, then the URL is used as title."
     (org-store-link-props :link url
                           :description (or title url)
                           :annotation (org-make-link-string url (or title url)))
-    (org-capture nil "r")))
+    (org-capture nil "y")))
 
 (defun fyi-article-read-later ()
   "Save article to read-later."
