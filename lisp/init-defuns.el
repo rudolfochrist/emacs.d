@@ -75,7 +75,7 @@ and a tag is generated."
                                (list "--all" (format "-m v%s" new-version)))
         (magit-tag (format "v%s" new-version) "HEAD")))))
 
-(defun fyi-mode-buffers (mode)
+(defun fyi-mode-buffer-list (mode)
   "Returns a list of buffers with major mode MODE."
   (cl-remove-if-not (lambda (buffer)
                       (with-current-buffer buffer
