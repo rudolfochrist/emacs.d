@@ -2,12 +2,13 @@
 # name: defpackage
 # key: defpackage
 # --
-(in-package #:cl-user)
-
+(in-package :cl-user)
 (defpackage #:${1:package}${2:
   (:nicknames ${3:nicks})}
   (:use ${4::cl}${5: packages})${6:
   (:shadow ${7:packages})}${8:
   (:export ${9:packages})}${10:
   (:documentation "${11:doc}")})
+${12:
+(in-package :$1)}
 $0

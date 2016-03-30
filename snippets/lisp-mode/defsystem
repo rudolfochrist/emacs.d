@@ -15,5 +15,5 @@
   :license "${18:$$(yas-choose-value '("MIT" "BSD Simplified" "LLGPL"))}"}${19:
   :serial t}${20:
   :components (${21:(:file "package")})}${22:
-  :depends-on (${22:#:alexandria})})
+  :depends-on (${22::alexandria})})
 $0
