@@ -98,6 +98,13 @@
     ;; finally, switch to that window
     (other-window 1)))
 
-(define-key dired-mode-map "Y" 'fyi-dired-rsync)
+(with-eval-after-load "dired"
+  (define-key dired-mode-map "Y" #'fyi-dired-rsync))
+
+;;; dired-narrow
+(require-package 'dired-narrow)
+
+(with-eval-after-load "dired"
+  (define-key dired-mode-map "/" #'dired-narrow))
 
 (provide 'init-dired)
