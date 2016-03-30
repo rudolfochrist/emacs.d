@@ -106,7 +106,8 @@
         init-page-navigation
         init-redshank
         init-projectile
-        init-imenu-anywhere))
+        init-imenu-anywhere
+        init-flycheck))
 
 ;; load them
 (dolist (file setup-pkg-full)
