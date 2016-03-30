@@ -26,7 +26,10 @@
         (acl ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))))
 
 ;;; getting contrib fancy
-(slime-setup '(slime-fancy slime-repl slime-banner slime-asdf slime-company))
+(slime-setup '(slime-fancy
+               slime-banner slime-asdf slime-company
+               slime-tramp slime-xref-browser slime-highlight-edits
+               slime-sprof))
 
 ;;; use slime-mode on asd files
 (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
@@ -79,7 +82,7 @@
   (cond
    ((eq major-mode 'slime-repl-mode)
     (other-window 1)
-    (switch-to-buffer (second (buffer-list))))
+    (switch-to-buffer (first (fyi-mode-buffer-list 'lisp-mode))))
    (t
     (slime-switch-to-output-buffer))))
 
