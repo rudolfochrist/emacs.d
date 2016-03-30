@@ -94,14 +94,33 @@
     (bbdb-complete-mail)))
 
 ;;; citation
+(require 'supercite)
+
 (setq sc-cite-blank-lines-p t
       sc-fixup-whitespace-p nil
       sc-auto-fill-region-p nil
-      sc-citation-leader "  "
+      sc-citation-leader " "
       sc-preferred-attribution-list '("x-attribution" "no-attrib") ; see below!
       sc-confirm-always-p nil
-      sc-preferred-header-style 1)
+      sc-preferred-header-style 0       ; see below! sc-header-on-author-wrote.
+      sc-reference-tag-string "")
 (add-hook 'mail-citation-hook 'sc-cite-original)
+
+(defun sc-header-on-author-wrote ()
+  "On <date>, <from> wrote:"
+  (let* ((sc-mumble "")
+         (whofrom (sc-whofrom))
+         (time (parse-time-string (sc-mail-field "date")))
+         (minute (nth 1 time))
+         (hour (nth 2 time))
+         (day (nth 3 time))
+         (month (nth 4 time))
+         (year (nth 5 time)))
+    (when whofrom
+      (insert sc-reference-tag-string
+              (format "On %d-%02d-%02d %d:%d, " year month day hour minute)
+              whofrom " wrote:\n"))))
+(add-to-list 'sc-rewrite-header-list '(sc-header-on-author-wrote) nil)
 
 (defun fyi-sc-pre-handler ()
   ;; don't use attribution if x-attribution is undefined
@@ -203,7 +222,14 @@
 (bbdb-initialize 'gnus 'message 'anniv)
 
 ;;; global key bindings
-(global-set-key (kbd "<f11>") 'gnus)
+(defun start-gnus ()
+  "Opens Gnus in other frame unless Gnus' already running."
+  (interactive)
+  (let ((gnus-buffer (get-buffer "*Group*")))
+    (if gnus-buffer
+        (switch-to-buffer-other-frame gnus-buffer)
+      (gnus-other-frame))))
+(global-set-key (kbd "<f11>") #'start-gnus)
 (global-set-key (kbd "M-<f11>") 'gnus-other-frame)
 
 ;;; wash GWENE
