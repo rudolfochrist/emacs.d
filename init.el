@@ -43,6 +43,7 @@
 
 ;;; debugging init.el
 (require-package 'bug-hunter)
+(require-package 'esup)
 
 ;; Subpackages
 (setq setup-pkg-full
