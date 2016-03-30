@@ -102,12 +102,15 @@ This can be zero for immediate or a floating point value.")
                        (time-subtract (current-time)
                                       (org-time-string-to-time
                                        (prop :raw-value (prop :closed headline)))))
-                      org-archive-expiry-days)))
+                      org-archive-expiry-days))
+         (level-2-p (headline)
+                    (= 2 (prop :level headline))))
     (save-excursion
       (goto-char (point-min))
       (org-element-map (org-element-parse-buffer) 'headline
         (lambda (headline)
-          (when (and (completep headline)
+          (when (and (level-2-p headline)
+                     (completep headline)
                      (expirep headline))
             (goto-char (prop :begin headline))
             (org-archive-subtree)))))))
