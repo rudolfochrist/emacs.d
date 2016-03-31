@@ -71,8 +71,6 @@
         init-org-babel
         init-avy
         init-ace-window
-        init-geiser
-        init-shen
         init-eshell
         init-info
         init-ediff
