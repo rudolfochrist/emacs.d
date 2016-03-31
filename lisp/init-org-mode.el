@@ -17,8 +17,7 @@
 (ox-extras-activate '(latex-header-blocks ignore-headlines))
 
 ;;; jwiegley's smart capture
-(require-package 'org-smart-capture :from-dir (expand-file-name "org-smart-capture"
-                                                                emacs-d-site-lisp))
+(require-package 'org-smart-capture :from-dir emacs-d-site-lisp)
 
 ;;; overwrite because of bugs
 (defun org-latex-header-blocks-filter (backend)
@@ -408,8 +407,7 @@ end tell"))
 
 ;;; org-download
 (require-package 'org-download
-                 :from-dir
-                 (expand-file-name "org-download" emacs-d-site-lisp))
+                 :from-dir emacs-d-site-lisp)
 
 (defun fyi-configure-org-download ()
   "Configures `org-download'."
