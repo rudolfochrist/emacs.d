@@ -38,23 +38,25 @@
 (show-paren-mode 1)
 
 ;;; mode-line globals
-(setq display-time-day-and-date t
-      display-time-24hr-format t)
+(setq display-time-24hr-format t)
 (display-time-mode 1)
-(display-battery-mode 1)
 
 ;;; which-function-mode
 (which-func-mode 1)
 
-;;; smart-mode-line
-(require-package 'rich-minority)
-(require-package 'smart-mode-line)
-(defvar *rm-mode-regexps*
-  '(" \\[.*\\]"                         ; slime package + CL implementaion
-    )
-  "Regular expressions to minor modes visible in the mode line.")
-(setq rm-whitelist (mapconcat 'identity *rm-mode-regexps* "\\|")
-      sml/theme 'dark)
-(sml/setup)
+;;; mode-line
+(require-package 'spaceline :require 'spaceline-config)
+
+(spaceline-define-segment cl-package-impl
+  (cdr (assoc 'slime-mode minor-mode-alist))
+  :when (eql major-mode 'lisp-mode))
+
+(spaceline-define-segment project-info
+  (concat "P:" (projectile-project-name)))
+
+(spaceline-emacs-theme 'cl-package-impl 'project-info)
+(spaceline-toggle-minor-modes-off)
+
+(global-set-key (kbd "C-x t m") #'spaceline-toggle-minor-modes)
 
 (provide 'init-appearance)
