@@ -4,7 +4,7 @@
 (require 'cl-lib)
 
 ;;; customization
-(setq emacs-d-vendor (expand-file-name "~/.emacs.d/vendor/"))
+(setq emacs-d-site-lisp (expand-file-name "~/.emacs.d/site-lisp/"))
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
 ;;; prefer newer files
