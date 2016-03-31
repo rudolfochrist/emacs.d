@@ -1,6 +1,5 @@
 .mc-lists.el
 auto-save-list/
-elpa/
 places
 url/
 eshell/history
