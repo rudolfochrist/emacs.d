@@ -205,8 +205,8 @@ ADDED: %U"
 
 ;;; custom agenda views
 (setq org-agenda-custom-commands
-      '(("d" "Today" agenda ""
-         ((org-agenda-span 'day)))
+      '(("d" "Agenda" agenda ""
+         ((org-agenda-category-filter-preset '("-INBOX"))))
         ("p" "Active projects" tags "TODO=\"PROJECT\""
          ((org-agenda-overriding-header "Active Projects:")))
         ("u" "Uncategorized items" tags "CATEGORY=\"INBOX\"&LEVEL=2"
