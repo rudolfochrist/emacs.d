@@ -458,7 +458,7 @@ end tell"))
   (let ((language (plist-get (org-export-get-environment) :language)))
     (ispell-change-dictionary (if (string-equal language "de")
                                   "german8"
-                                  "en_US"))))
+                                "en_US"))))
 (add-hook 'org-mode-hook 'fyi-org-adjust-ispell)
 
 ;;; export and move
@@ -478,5 +478,20 @@ end tell"))
       (rename-file (concat cwd file-name)
                    (concat org-export-directory file-name)
                    t))))
+
+;;; org export filters
+(defvar org-export-latex-add-link-footnotes nil
+  "If non-nil links will be added as footnotes if exported to latex.")
+
+(defun org-export-latex-link-footnote (text backend info)
+  "Create a footnote in latex for each link. So when printed the information isn't lost."
+  (when (and (org-export-derived-backend-p backend 'latex)
+             org-export-latex-add-link-footnotes
+             (string-match "\\\\href{\\(.*\\)}{\\(.*\\)}" text))
+    (when (some (lambda (type)
+                  (string-prefix-p type (match-string 1 text)))
+                '("http" "https" "ftp" "mailto" "doi"))
+      (format "%s \\footnote{\\url{%s}} " text (match-string 1 text)))))
+(add-to-list 'org-export-filter-link-functions #'org-export-latex-link-footnote)
 
 (provide 'init-org-mode)
