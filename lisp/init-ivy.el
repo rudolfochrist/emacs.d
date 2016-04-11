@@ -1,3 +1,4 @@
+(require-package 'swiper)
 (require 'ivy)
 (require 'cl-lib)
 (require-package 'counsel)
@@ -20,10 +21,11 @@
                   (if arg
                       (hydra-search/body)
                     (counsel-ag))))
-(global-set-key (kbd "C-h f") 'counsel-describe-function)
-(global-set-key (kbd "C-h v") 'counsel-describe-variable)
-(global-set-key (kbd "<f6>") 'ivy-resume)
-(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-h f") #'counsel-describe-function)
+(global-set-key (kbd "C-h v") #'counsel-describe-variable)
+(global-set-key (kbd "<f6>") #'ivy-resume)
+(global-set-key (kbd "M-x") #'counsel-M-x)
+(global-set-key (kbd "C-c C-f") #'ivy-recentf)
 
 ;;; [[http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html][Visit Directory inside a Set of Directories with Emacs]]
 (defcustom fyi-favorite-directories

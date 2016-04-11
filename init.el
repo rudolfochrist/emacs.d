@@ -89,7 +89,6 @@
         init-unkillable-scratch
         init-elisp-slime-nav
         init-ag
-        init-swiper
         init-ivy
         init-macrostep
         init-highlight-backquotes-mode
