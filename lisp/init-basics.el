@@ -23,10 +23,6 @@
 ;; don't ring the bell
 (setq ring-bell-function 'ignore)
 
-;;; delete trailing whitespace before save
-(add-hook 'before-save-hook (lambda ()
-                              (delete-trailing-whitespace)))
-
 ;;; make script executable if it contains shebang
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)

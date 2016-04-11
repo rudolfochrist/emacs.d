@@ -105,7 +105,8 @@
         init-redshank
         init-projectile
         init-imenu-anywhere
-        init-flycheck))
+        init-flycheck
+	init-org-ref))
 
 ;; load them
 (dolist (file setup-pkg-full)
