@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "scss-mode" "scss-mode.el" (22269 12578 0 0))
+;;;### (autoloads nil "scss-mode" "scss-mode.el" (22284 37873 0 0))
 ;;; Generated autoloads from scss-mode.el
 
 (autoload 'scss-mode "scss-mode" "\

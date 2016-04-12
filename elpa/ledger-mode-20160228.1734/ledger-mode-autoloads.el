@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "ledger-mode" "ledger-mode.el" (22269 12582
+;;;### (autoloads nil "ledger-mode" "ledger-mode.el" (22284 37876
 ;;;;;;  0 0))
 ;;; Generated autoloads from ledger-mode.el
 
@@ -20,7 +20,7 @@ A mode for editing ledger data files.
 ;;;;;;  "ledger-navigate.el" "ledger-occur.el" "ledger-post.el" "ledger-reconcile.el"
 ;;;;;;  "ledger-regex.el" "ledger-report.el" "ledger-schedule.el"
 ;;;;;;  "ledger-sort.el" "ledger-state.el" "ledger-test.el" "ledger-texi.el"
-;;;;;;  "ledger-xact.el") (22269 12582 369954 0))
+;;;;;;  "ledger-xact.el") (22284 37876 956939 0))
 
 ;;;***
 

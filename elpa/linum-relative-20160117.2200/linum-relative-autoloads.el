@@ -3,8 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "linum-relative" "linum-relative.el" (22269
-;;;;;;  7850 0 0))
+;;;### (autoloads nil "linum-relative" "linum-relative.el" (22284
+;;;;;;  37722 0 0))
 ;;; Generated autoloads from linum-relative.el
 
 (autoload 'linum-relative-toggle "linum-relative" "\

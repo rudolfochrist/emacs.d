@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "biblio-arxiv" "biblio-arxiv.el" (22280 56454
+;;;### (autoloads nil "biblio-arxiv" "biblio-arxiv.el" (22284 37891
 ;;;;;;  0 0))
 ;;; Generated autoloads from biblio-arxiv.el
 
@@ -18,8 +18,8 @@ Start an arXiv search for QUERY, prompting if needed.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-crossref" "biblio-crossref.el" (22280
-;;;;;;  56454 0 0))
+;;;### (autoloads nil "biblio-crossref" "biblio-crossref.el" (22284
+;;;;;;  37891 0 0))
 ;;; Generated autoloads from biblio-crossref.el
 
 (add-hook 'biblio-init-hook #'biblio-crossref-backend)
@@ -33,7 +33,7 @@ Start a CrossRef search for QUERY, prompting if needed.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-dblp" "biblio-dblp.el" (22280 56454
+;;;### (autoloads nil "biblio-dblp" "biblio-dblp.el" (22284 37891
 ;;;;;;  0 0))
 ;;; Generated autoloads from biblio-dblp.el
 
@@ -48,8 +48,8 @@ Start a DBLP search for QUERY, prompting if needed.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-dissemin" "biblio-dissemin.el" (22280
-;;;;;;  56454 0 0))
+;;;### (autoloads nil "biblio-dissemin" "biblio-dissemin.el" (22284
+;;;;;;  37891 0 0))
 ;;; Generated autoloads from biblio-dissemin.el
 
 (autoload 'biblio-dissemin-lookup "biblio-dissemin" "\
@@ -70,7 +70,7 @@ Add Dissemin to list of `biblio-selection-mode' actions.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-doi" "biblio-doi.el" (22280 56454 0
+;;;### (autoloads nil "biblio-doi" "biblio-doi.el" (22284 37891 0
 ;;;;;;  0))
 ;;; Generated autoloads from biblio-doi.el
 
@@ -81,7 +81,7 @@ Insert BibTeX entry matching DOI.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-hal" "biblio-hal.el" (22280 56454 0
+;;;### (autoloads nil "biblio-hal" "biblio-hal.el" (22284 37891 0
 ;;;;;;  0))
 ;;; Generated autoloads from biblio-hal.el
 
@@ -96,8 +96,8 @@ Start a HAL search for QUERY, prompting if needed.
 
 ;;;***
 
-;;;### (autoloads nil nil ("biblio-pkg.el" "biblio.el") (22280 56454
-;;;;;;  673379 0))
+;;;### (autoloads nil nil ("biblio-pkg.el" "biblio.el") (22284 37891
+;;;;;;  297735 0))
 
 ;;;***
 

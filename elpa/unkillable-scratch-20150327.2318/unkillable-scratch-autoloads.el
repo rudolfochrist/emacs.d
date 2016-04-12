@@ -4,7 +4,7 @@
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
 ;;;### (autoloads nil "unkillable-scratch" "unkillable-scratch.el"
-;;;;;;  (22269 12565 0 0))
+;;;;;;  (22284 37863 0 0))
 ;;; Generated autoloads from unkillable-scratch.el
 
 (defvar unkillable-scratch nil "\

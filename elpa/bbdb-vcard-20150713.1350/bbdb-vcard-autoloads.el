@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "bbdb-vcard" "bbdb-vcard.el" (22269 12561 0
+;;;### (autoloads nil "bbdb-vcard" "bbdb-vcard.el" (22284 37859 0
 ;;;;;;  0))
 ;;; Generated autoloads from bbdb-vcard.el
 
@@ -43,7 +43,7 @@ the *BBDB* buffer.
 
 ;;;***
 
-;;;### (autoloads nil "vcard" "vcard.el" (22269 12561 0 0))
+;;;### (autoloads nil "vcard" "vcard.el" (22284 37859 0 0))
 ;;; Generated autoloads from vcard.el
 
 (defvar vcard-pretty-print-function 'vcard-format-sample-box "\
@@ -113,7 +113,7 @@ Note: this function modifies the buffer!
 
 ;;;***
 
-;;;### (autoloads nil nil ("bbdb-vcard-pkg.el") (22269 12561 112353
+;;;### (autoloads nil nil ("bbdb-vcard-pkg.el") (22284 37859 887905
 ;;;;;;  0))
 
 ;;;***
