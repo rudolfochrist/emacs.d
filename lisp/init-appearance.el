@@ -27,8 +27,8 @@
   (set-frame-font "input-12" nil t))
 
 ;;; set frame size
-(push '(width . 150) default-frame-alist)
-(push '(height . 45) default-frame-alist)
+(push '(width . 185) default-frame-alist)
+(push '(height . 53) default-frame-alist)
 
 ;; tabs, spaces and indentation
 (setq-default indent-tabs-mode nil)
@@ -37,26 +37,25 @@
       show-paren-style 'mixed)
 (show-paren-mode 1)
 
-;;; mode-line globals
-(setq display-time-24hr-format t)
+;;; mode-line
+(setq display-time-24hr-format t
+      display-time-default-load-average nil
+      display-time-day-and-date t
+      display-battery-mode t)
 (display-time-mode 1)
 
-;;; which-function-mode
 (which-func-mode 1)
 
-;;; mode-line
-(require-package 'spaceline :require 'spaceline-config)
-
-(spaceline-define-segment cl-package-impl
-  (cdr (assoc 'slime-mode minor-mode-alist))
-  :when (eql major-mode 'lisp-mode))
-
-(spaceline-define-segment project-info
-  (concat "P:" (projectile-project-name)))
-
-(spaceline-emacs-theme 'cl-package-impl 'project-info)
-(spaceline-toggle-minor-modes-off)
-
-(global-set-key (kbd "C-x t m") #'spaceline-toggle-minor-modes)
+(require-package 'smart-mode-line)
+(setq sml/theme 'dark
+      sml/shorten-modes nil
+      sml/shorten-mode-string ""
+      rm-whitelist (mapconcat #'identity
+                              '(;; SLIME: CL Implementation and Package
+                                "\\[.*\\]"
+                                ;; Projectile (this works only with my adjusted lighter for projectile.
+                                "P:.*")
+                              "\\|"))
+(sml/setup)
 
 (provide 'init-appearance)

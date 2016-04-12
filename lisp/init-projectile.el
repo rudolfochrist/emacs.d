@@ -70,4 +70,11 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
                           (unless (eq ibuffer-sorting-mode 'alphabetic)
                             (ibuffer-do-sort-by-alphabetic))))
 
+;;; new mode-line lighter
+(setq projectile-mode-line
+      '(:eval
+        (if (file-remote-p default-directory)
+            " Projectile"
+          (format " P:%s" (projectile-project-name)))))
+
 (provide 'init-projectile)
