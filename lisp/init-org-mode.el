@@ -296,7 +296,7 @@ ADDED: %U"
 (setq org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
       org-export-date-timestamp-format "%Y-%m-%d"
       org-footnote-auto-label 'plain    ; generate numbered footnotes like [1]
-      )
+      org-latex-hyperref-template "\\hypersetup{\n pdfauthor={%a},\n pdftitle={%t},\n pdfkeywords={%k},\n pdfsubject={%d},\n pdfcreator={%c}, \n pdflang={%L}, \n colorlinks=true}\n")
 
 (add-to-list 'org-latex-packages-alist '("" "color" nil))
 
@@ -433,7 +433,7 @@ end tell"))
 ;;; org-mode abbrevs)
 ;; https://stackoverflow.com/questions/18232384/how-to-replace-a-string-with-a-non-backslashed-string-in-emacs-abbrev-mode
 (abbrev-table-put org-mode-abbrev-table :regexp "\\(\\\\[a-z0-9@]+\\)")
-(define-abbrev org-mode-abbrev-table "\Rightarrow" "⇒")
+(define-abbrev org-mode-abbrev-table "\\Rightarrow" "⇒")
 (define-abbrev org-mode-abbrev-table "\\rightarrow" "→")
 (add-hook 'org-mode-hook 'abbrev-mode)
 
@@ -485,8 +485,8 @@ end tell"))
 
 (defun org-export-latex-link-footnote (text backend info)
   "Create a footnote in latex for each link. So when printed the information isn't lost."
-  (when (and (org-export-derived-backend-p backend 'latex)
-             org-export-latex-add-link-footnotes
+  (when (and org-export-latex-add-link-footnotes
+             (org-export-derived-backend-p backend 'latex)
              (string-match "\\\\href{\\(.*\\)}{\\(.*\\)}" text))
     (when (some (lambda (type)
                   (string-prefix-p type (match-string 1 text)))
