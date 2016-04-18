@@ -220,6 +220,8 @@ ADDED: %U"
          ((org-agenda-overriding-header "Waiting/Delegated tasks:")))
         ("y" "Someday/Maybe tasks" todo "SOMEDAY"
          ((org-agenda-overriding-header "Someday/Maybe tasks:")))
+        ("x" "Review Done/Canceled tasks" tags "TODO={DONE\\|CANCELED}&CATEGORY<>\"INBOX\"&LEVEL=2"
+         ((org-agenda-overriding-header "Review Done/Canceled tasks:")))
         ("Y" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|SOMEDAY\\|PROJECT\\|CANCELED}"
          ((org-agenda-overriding-header "Unscheduled tasks:")
           (org-agenda-skip-function
