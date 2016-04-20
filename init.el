@@ -106,7 +106,8 @@
         init-projectile
         init-imenu-anywhere
         init-flycheck
-	init-org-ref))
+	init-org-ref
+        init-which-key))
 
 ;; load them
 (dolist (file setup-pkg-full)
