@@ -107,7 +107,8 @@
         init-imenu-anywhere
         init-flycheck
 	init-org-ref
-        init-which-key))
+        init-which-key
+        init-company-quickhelp))
 
 ;; load them
 (dolist (file setup-pkg-full)
