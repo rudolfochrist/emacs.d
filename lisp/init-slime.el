@@ -4,7 +4,8 @@
 ;;; HyperSpec/Documentation
 (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
 
-(load (expand-file-name "~/quicklisp/local-projects/quicklisp-docs/quicklisp-docs.el") t)
+(require-package 'quicklisp-docs
+                 :from-dir (expand-file-name "~/quicklisp/local-projects/quicklisp-docs/"))
 (setq ql-docs-browser-function #'eww-browse-url)
 (ql-docs-reload-docs)
 
