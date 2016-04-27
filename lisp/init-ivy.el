@@ -1,5 +1,4 @@
-(require-package 'swiper)
-(require 'ivy)
+(require-package 'ivy)
 (require 'cl-lib)
 (require-package 'counsel)
 (require-package 'smex)
