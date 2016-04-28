@@ -4,7 +4,7 @@
 
 ;; Author: John Kitchin <jkitchin@andrew.cmu.edu>
 ;; URL: https://github.com/jkitchin/org-ref
-;; Version: 0.8.0
+;; Version: 0.8.1
 ;; Keywords: org-mode, cite, ref, label
 ;; Package-Requires: ((dash "2.11.0") (helm "1.5.5") (helm-bibtex "2.0.0") (hydra "0.13.2") (key-chord "0") (s "1.10.0") (f "0.18.0") (emacs "24.4"))
 
@@ -2438,6 +2438,36 @@ file.  Makes a new buffer with clickable links."
 			field
 			(cdr (assoc field entry))))
 	      other-fields "\n")
+	     "\n}\n\n"))
+    (bibtex-find-entry key)
+    (bibtex-fill-entry)
+    (bibtex-clean-entry)))
+
+;; downcase entries
+;;;###autoload
+(defun org-ref-downcase-bibtex-entry ()
+  "Downcase the entry type and fields."
+  (interactive)
+  (bibtex-beginning-of-entry)
+  (let* ((entry (bibtex-parse-entry))
+         (entry-fields)
+         (type (downcase (cdr (assoc "=type=" entry))))
+         (key (cdr (assoc "=key=" entry))))
+
+    (setq entry-fields (mapcar (lambda (x) (car x)) entry))
+    ;; we do not want to reenter these fields
+    (setq entry-fields (remove "=key=" entry-fields))
+    (setq entry-fields (remove "=type=" entry-fields))
+
+    (bibtex-kill-entry)
+    (insert
+     (concat "@" (downcase type) "{" key ",\n"
+	     (mapconcat
+	      (lambda (field)
+		(format "%s = %s,"
+			(downcase field)
+			(cdr (assoc field entry))))
+	      entry-fields "\n")
 	     "\n}\n\n"))
     (bibtex-find-entry key)
     (bibtex-fill-entry)

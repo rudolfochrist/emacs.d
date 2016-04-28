@@ -1,4 +1,4 @@
-(define-package "org-ref" "20160426.758" "citations, cross-references and bibliographies in org-mode"
+(define-package "org-ref" "20160427.1327" "citations, cross-references and bibliographies in org-mode"
   '((dash "2.11.0")
     (helm "1.5.5")
     (helm-bibtex "2.0.0")
