@@ -12,7 +12,9 @@
       org-ref-pdf-directory "~/Dropbox/Papers/Library/")
 
 (with-eval-after-load "org"
+  (define-key org-mode-map (kbd "C-c ff") #'org-ref-helm-insert-cite-link)
   (define-key org-mode-map (kbd "C-c fr") #'org-ref-helm-insert-ref-link)
-  (define-key org-mode-map (kbd "C-c fl") #'org-ref-helm-insert-label-link))
+  (define-key org-mode-map (kbd "C-c fl") #'org-ref-helm-insert-label-link)
+  (define-key org-mode-map (kbd "C-c fg") #'org-ref-insert-glossary-link))
 
 (provide 'init-org-ref)

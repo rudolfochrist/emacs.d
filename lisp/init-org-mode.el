@@ -63,7 +63,9 @@ _a_nnual book expenses
 "
    ("t" (find-file "~/org/tasks/todo.org"))
    ("b" (find-file "~/org/books.org"))
-   ("f" (find-file "~/org/finances.ledger"))
+   ("f" (find-file (format "~/Documents/Archive/Finances/%s/%s.ledger"
+                           (nth 2 (calendar-current-date))
+                           (nth 2 (calendar-current-date)))))
    ("k" (find-file "~/org/kb.org"))
    ("r" (find-file "~/org/read-later.org"))
    ("a" (find-file (format "~/Documents/Archive/Finances/%s/book-expenses.org"
@@ -291,8 +293,9 @@ ADDED: %U"
 
 ;;; extend latex "log" files
 (setq org-latex-logfiles-extensions
-      '("aux" "bcf" "blg" "fdb_latexmk" "fls" "figlist" "idx" "log" "nav" "out"
-        "ptc" "run.xml" "snm" "toc" "vrb" "xdv" "bbl" "ilg" "ind" "lof" "lot"))
+      '("aux" "bcf" "blg" "fdb_latexmk" "fls" "figlist" "glg" "glo" "gls" "idx" "ist"
+        "log" "nav" "out" "ptc" "run.xml" "snm" "toc" "vrb" "xdv" "bbl" "ilg" "ind"
+        "lof" "lot"))
 
 ;;; misc.
 (setq org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
@@ -404,6 +407,7 @@ end tell"))
 (setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
                               "bibtex %b"
                               "makeindex %b"
+                              "makeglossaries %b"
                               "xelatex -interaction nonstopmode %f"
                               "xelatex -interaction nonstopmode %f"))
 

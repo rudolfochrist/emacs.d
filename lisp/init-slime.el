@@ -30,7 +30,7 @@
 (slime-setup '(slime-fancy
                slime-banner slime-asdf slime-company
                slime-tramp slime-xref-browser slime-highlight-edits
-               slime-sprof))
+               slime-sprof slime-macrostep))
 
 ;;; use slime-mode on asd files
 (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
