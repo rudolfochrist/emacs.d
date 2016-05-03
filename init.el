@@ -108,7 +108,8 @@
         init-flycheck
 	init-org-ref
         init-which-key
-        init-company-quickhelp))
+        init-company-quickhelp
+        init-writeroom-mode))
 
 ;; load them
 (dolist (file setup-pkg-full)
