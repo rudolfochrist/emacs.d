@@ -1,4 +1,5 @@
-(require-package 'ledger-mode)
+(require-package 'ledger-mode
+                 :from-dir (expand-file-name "~/dev/ledger/lisp/"))
 
 (add-to-list 'auto-mode-alist '("\\.ledger\\'" . ledger-mode))
 
