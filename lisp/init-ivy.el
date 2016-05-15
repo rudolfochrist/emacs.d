@@ -24,7 +24,7 @@
 (global-set-key (kbd "C-h v") #'counsel-describe-variable)
 (global-set-key (kbd "<f6>") #'ivy-resume)
 (global-set-key (kbd "M-x") #'counsel-M-x)
-(define-key my-override-keymap-map (kbd "C-c C-f") #'ivy-recentf)
+(define-key my-override-keymap-map (kbd "C-x C-S-f") #'ivy-recentf)
 
 ;;; [[http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html][Visit Directory inside a Set of Directories with Emacs]]
 (defcustom fyi-favorite-directories
