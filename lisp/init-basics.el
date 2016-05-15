@@ -35,4 +35,7 @@
   (set-input-method "latin-9-prefix"))
 (add-hook 'text-mode-hook 'fyi-input-method)
 
+;;; overwrite selected text
+(delete-selection-mode 1)
+
 (provide 'init-basics)
