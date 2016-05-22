@@ -30,7 +30,7 @@
 (slime-setup '(slime-fancy
                slime-banner slime-asdf slime-company
                slime-tramp slime-xref-browser slime-highlight-edits
-               slime-sprof slime-macrostep))
+               slime-sprof slime-macrostep slime-indentation))
 
 ;;; use slime-mode on asd files
 (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
@@ -38,7 +38,7 @@
 ;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
 ;; Add a directory to asdf:*central-registry*
 (defslime-repl-shortcut slime-repl-add-to-central-registry
-    ("add-to-central-registry" "+a" "add")
+  ("add-to-central-registry" "+a" "add")
   (:handler (lambda (directory)
               (interactive
                (list (expand-file-name (file-name-as-directory
@@ -51,7 +51,7 @@
   (:one-liner "Add a directory to asdf:*central-registry*"))
 
 (defslime-repl-shortcut slime-repl-quicklisp-quickload
-    ("quicklisp-quickload" "ql")
+  ("quicklisp-quickload" "ql")
   (:handler (lambda (&rest systems)
               (interactive (list (slime-read-system-name)))
               (insert (format "(ql:quickload '%s)" systems))
@@ -87,9 +87,23 @@
    (t
     (slime-switch-to-output-buffer))))
 
+;;; file header
+(defun fyi-slime-insert-header (cl-style coding)
+  (interactive
+   (if (not current-prefix-arg)
+       (list "modern" "utf-8-unix")
+     (list
+      (completing-read "Style: " common-lisp-styles)
+      (completing-read "Coding: " coding-system-list))))
+  (insert (format ";;; -*- mode: Lisp; common-lisp-style: %s; slime-coding: %s -*-\n"
+                  cl-style coding))
+  (let ((file-name (buffer-file-name)))
+    (insert ";;;\n;;; " (file-name-base file-name) (file-name-extension file-name t))))
+
 (defun fyi-slime-keybindings ()
   (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline)
-  (define-key slime-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch))
+  (define-key slime-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch)
+  (define-key slime-mode-map (kbd "C-c C-d i") #'fyi-slime-insert-header))
 
 (add-hook 'slime-mode-hook 'fyi-slime-keybindings)
 
