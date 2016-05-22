@@ -7,19 +7,16 @@
 
 (ivy-mode 1)
 
-(defhydra hydra-search (:color blue)
-  "Searching and finding"
-  ("l" counsel-locate "Locate")
-  ("s" search-kb "search KB")
-  ("i" counsel-imenu "imenu")
-  ("q" nil "Quit"))
+(global-set-key
+ (kbd "<M-f2>")
+ (defhydra hydra-search (:color blue)
+   "Searching and finding"
+   ("l" counsel-locate "Locate")
+   ("s" search-kb "search KB")
+   ("i" counsel-imenu "imenu")
+   ("q" nil "Quit")))
 
-(global-set-key (kbd "<f2>")
-                (lambda (arg)
-                  (interactive "P")
-                  (if arg
-                      (hydra-search/body)
-                    (counsel-ag))))
+(global-set-key (kbd "<f2>") #'counsel-ag)
 (global-set-key (kbd "C-h f") #'counsel-describe-function)
 (global-set-key (kbd "C-h v") #'counsel-describe-variable)
 (global-set-key (kbd "<f6>") #'ivy-resume)
