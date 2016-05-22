@@ -19,8 +19,8 @@
 
 ;;; Multiple Lisps
 (setq slime-lisp-implementations
-      '((sbcl ("/usr/local/bin/sbcl"))
-        (ccl ("/usr/local/bin/ccl64"))
+      '((ccl ("/usr/local/bin/ccl64"))
+        (sbcl ("/usr/local/bin/sbcl"))
         (ecl ("/usr/local/bin/ecl"))
         (clisp ("/usr/local/bin/clisp"))
         (abcl ("/usr/local/bin/abcl"))
