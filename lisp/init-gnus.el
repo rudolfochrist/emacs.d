@@ -227,8 +227,8 @@
   (interactive)
   (let ((gnus-buffer (get-buffer "*Group*")))
     (if gnus-buffer
-        (switch-to-buffer-other-frame gnus-buffer)
-      (gnus-other-frame))))
+        (switch-to-buffer gnus-buffer)
+      (gnus))))
 (global-set-key (kbd "<f11>") #'start-gnus)
 (global-set-key (kbd "M-<f11>") 'gnus-other-frame)
 
