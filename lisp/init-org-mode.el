@@ -197,6 +197,16 @@ ADDED: %U"
       '(("~/org/tasks/todo.org" :level . 1)
         (org-agenda-files :todo . "PROJECT")))
 
+(defun fyi-projectize-new-refile-targets (parent child)
+  (save-excursion
+    (save-restriction
+      (widen)
+      (goto-char
+       (org-find-exact-headline-in-buffer child (current-buffer) t))
+      (org-todo "PROJECT"))))
+
+(advice-add 'org-refile-new-child :after #'fyi-projectize-new-refile-targets)
+
 ;;; setup diary
 (setq diary-file (expand-file-name "~/org/diary")
       org-agenda-include-diary t)
