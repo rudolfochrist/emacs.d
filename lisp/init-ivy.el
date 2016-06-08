@@ -56,4 +56,41 @@ With prefix argument FILES-TOO also offer to find files."
                           completions 'ignored nil ""))))
 (global-set-key (kbd "C-x C-d") #'fyi-visit-favorite-dir)
 
+;;; personal counsel commands
+
+(defvar counsel-makefile-pattern "\[M|m\]akefile"
+  "Regex to match Makefile names.")
+
+(defun counsel--extract-make-targets (&rest _ignore)
+  (let* ((dir (file-name-directory (buffer-file-name)))
+         (makefile (car (directory-files dir t counsel-makefile-pattern)))
+         targets)
+    (unless makefile
+      (user-error "No Makefile in %s" dir))
+    (with-temp-buffer
+      (insert-file-contents makefile)
+      (goto-char (point-min))
+      (while (re-search-forward "^\\w*\\s-*:\[ |\n\]" nil t)
+        (push (string-trim (subseq (match-string 0) 0 (position ?: (match-string 0))))
+              targets)))
+    targets))
+
+(defun counsel-make (target &rest flags)
+  "Run GNU Make TRAGET.
+
+FLAGS defaults to '-k'."
+  (interactive
+   (let ((flags "-k"))
+     (when current-prefix-arg
+       (setq flags (read-from-minibuffer "Flags: "
+                                         nil
+                                         read-expression-map
+                                         nil
+                                         read-expression-history)))
+     (list (ivy-read "Target: " #'counsel--extract-make-targets)
+           flags)))
+  (compile (format "make %s %s"(mapconcat #'identity flags " ") target)))
+
+(global-set-key (kbd "C-x tc") #'counsel-make)
+
 (provide 'init-ivy)
