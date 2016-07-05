@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: basic
+# key: basic_
+# --
+#+TITLE: $1${2:
+#+AUTHOR: ${3:Sebastian Christ}}${4:
+#+EMAIL: ${5:rudolfo.christ@gmail.com}}${6:
+#+DATE: ${7:`(format-time-string org-export-date-timestamp-format)`}}${8:
+#+LANGUAGE: ${9:en}}
+
+$0

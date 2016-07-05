@@ -1,0 +1,57 @@
+# -*- mode: snippet -*-
+# name: bug_
+# key: bug_
+# --
+* ${1:TITLE}
+:PROPERTIES:
+:DATE: ${2:DATE}
+:END:
+
+** Symptom
+
+${3:Describe the symptoms of the bug. What happens? Or what doesn't
+happen at all. E.g Infinite loop when decoding Q.931 message}
+
+** Cause
+
+${4:What caused the bug? E.g When an unknown element id is found in a
+Q.931 message, we try to skip it by reading the length, and advancing
+the pos pointer that many bytes. However, in this case the length was
+zero, causing us to try to skip the same element id over and over.}
+
+** How found
+
+${5:How did I stumble of the bug? E.g. This happened during parsing of
+a setup message taken from an Ethereal trace from Nortel. Their
+message was 1016 bytes long (it included a lot of fast start
+elements), but our MSG_MAX_LEN was 1000. Normally we then receive a
+truncated message from common/Communication.cxx, but now, when fed
+directly in to be parsed, memory past the end of the array was
+accessed, and it happened to be zero, exposing this problem.  To find
+it, I just added a few print outs in the q931 parsing code. But it was
+lucky that the data happened to be zero.}
+
+** Fix
+
+${6:How did I fix the bug? E.g. If the length given is zero, set it to
+one. This way we always move forward.}
+
+** Fixed in file(s)
+
+${7:callh/q931_msg.cxx}
+
+** Caused by me
+
+${8:Yes}
+
+** Time taken to resolve bug
+${9:1 hour}
+
+** Lessons
+
+${10:What did I learn in the end? Should I take more stuff into
+account in the futute? E.g.
+Trusted the data received in an incoming
+message. It's not just giving huge numbers that can cause
+problems. Indicating a length of zero could be just as bad.}
+

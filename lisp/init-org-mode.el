@@ -58,11 +58,13 @@ _t_odos
 _b_ooks
 _f_inances
 _k_nowledge base
+_B_ug Knowledge Base
 _r_ead later
 _a_nnual book expenses
 "
    ("t" (find-file "~/org/tasks/todo.org"))
    ("b" (find-file "~/org/books.org"))
+   ("B" (find-file "~/org/bug-kb.org"))
    ("f" (find-file (format "~/Documents/Archive/Finances/%s/%s.ledger"
                            (nth 2 (calendar-current-date))
                            (nth 2 (calendar-current-date)))))
