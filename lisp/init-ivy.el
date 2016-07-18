@@ -2,6 +2,7 @@
 (require 'cl-lib)
 (require-package 'counsel)
 (require-package 'smex)
+(require 'recentf)
 
 (setq ivy-display-style 'fancy)
 
