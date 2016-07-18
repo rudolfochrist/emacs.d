@@ -103,7 +103,6 @@
         init-beacon
         init-page-navigation
         init-redshank
-        init-projectile
         init-imenu-anywhere
         init-flycheck
 	init-org-ref
@@ -120,3 +119,4 @@
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
+(put 'downcase-region 'disabled nil)
