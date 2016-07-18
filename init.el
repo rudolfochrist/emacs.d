@@ -109,7 +109,8 @@
         init-which-key
         init-company-quickhelp
         init-writeroom-mode
-        init-irony-mode))
+        init-irony-mode
+        init-ffip))
 
 ;; load them
 (dolist (file setup-pkg-full)
