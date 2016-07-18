@@ -82,6 +82,20 @@ and a tag is generated."
                         (eql major-mode mode)))
                     (buffer-list)))
 
+(defun fyi-yank-file-path (arg)
+  "Yanks the buffer's file path"
+  (interactive "P")
+  (let ((path (cond
+               ((equal arg '(16))
+                (format "%s::%d" (buffer-file-name) (line-number-at-pos)))
+               ((equal arg '(4))
+                (format "%s:%d" (buffer-file-name) (line-number-at-pos)))
+               (t
+                (buffer-file-name)))))
+    (kill-new path)
+    (message "Yanked %s." path)))
+(global-set-key (kbd "C-x ty") #'fyi-yank-file-path)
+
 (provide 'init-defuns)
 
 ;;; init-defuns.el ends here
