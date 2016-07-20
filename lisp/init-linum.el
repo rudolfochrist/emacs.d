@@ -1,8 +1,6 @@
 
 ;;; Setup line numbers
-(require-package 'linum-relative)
 (global-linum-mode 1)
-(setq linum-relative-current-symbol "")
 
 ;;; disable linum in some major modes
 (require-package 'linum-off
