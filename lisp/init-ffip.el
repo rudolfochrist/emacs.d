@@ -4,7 +4,8 @@
   "Applies FN to each buffer of the current project, denoted by `ffip-project-root'."
   (let ((buffers (remove-if-not (lambda (buffer)
                                   (when (buffer-file-name buffer)
-                                    (string-prefix-p (ffip-project-root) (buffer-file-name buffer))))
+                                    (string-prefix-p (expand-file-name (ffip-project-root))
+                                                     (buffer-file-name buffer))))
                                 (buffer-list))))
     (dolist (buffer buffers)
       (with-current-buffer buffer
