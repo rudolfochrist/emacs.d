@@ -3,7 +3,8 @@
 (defun ffip-apply-project-buffers (fn)
   "Applies FN to each buffer of the current project, denoted by `ffip-project-root'."
   (let ((buffers (remove-if-not (lambda (buffer)
-                                  (when (buffer-file-name buffer)
+                                  (when (and (buffer-file-name buffer)
+                                             (ffip-project-root))
                                     (string-prefix-p (expand-file-name (ffip-project-root))
                                                      (buffer-file-name buffer))))
                                 (buffer-list))))
