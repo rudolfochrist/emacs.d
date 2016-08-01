@@ -93,7 +93,6 @@
         init-ivy
         init-macrostep
         init-highlight-backquotes-mode
-        init-aggressive-indent-mode
         init-yaml-mode
         init-ruby
         init-haml-sass
@@ -101,7 +100,6 @@
         init-search-kb
         init-ledger-mode
         init-anzu
-        init-beacon
         init-page-navigation
         init-redshank
         init-imenu-anywhere
