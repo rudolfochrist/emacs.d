@@ -102,11 +102,13 @@
         init-redshank
         init-imenu-anywhere
         init-flycheck
-	init-org-ref
+        init-org-ref
         init-which-key
         init-company-quickhelp
         init-irony-mode
-        init-ffip))
+        init-ffip
+        init-easy-kill
+	))
 
 ;; load them
 (dolist (file setup-pkg-full)
