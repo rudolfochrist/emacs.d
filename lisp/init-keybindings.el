@@ -12,4 +12,8 @@
 ;;; toggle fullscreen
 (global-set-key (kbd "C-x t f") 'toggle-frame-fullscreen)
 
+;;; move by paragprah
+(global-set-key (kbd "M-[") #'backward-paragraph)
+(global-set-key (kbd "M-]") #'forward-paragraph)
+
 (provide 'init-keybindings)
