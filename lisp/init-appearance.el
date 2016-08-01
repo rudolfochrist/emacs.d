@@ -18,9 +18,8 @@
     (funcall mode -1)))
 
 ;;; theme du jour
-
-(require-package 'meacupla-theme :noerror t)
-(load-theme 'meacupla t)
+(require-package 'zerodark-theme :noerror t)
+(load-theme 'zerodark t)
 
 ;; set font in GUI
 (when window-system
