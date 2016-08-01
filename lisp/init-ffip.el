@@ -20,11 +20,18 @@
   (interactive)
   (ffip-apply-project-buffers #'kill-buffer))
 
+(defun ffip-revert-project-buffers ()
+  (interactive)
+  (ffip-apply-project-buffers
+   (lambda ()
+     (revert-buffer nil t))))
+
 (defvar ffip-command-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "f") #'find-file-in-project)
     (define-key map (kbd "s") #'ffip-save-project-buffers)
     (define-key map (kbd "k") #'ffip-kill-project-buffers)
+    (define-key map (kbd "r") #'ffip-revert-project-buffers)
     map))
 (define-key (current-global-map) (kbd "C-c p") ffip-command-map)
 
