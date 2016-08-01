@@ -21,6 +21,10 @@
 (require-package 'zerodark-theme :noerror t)
 (load-theme 'zerodark t)
 
+;;; use red cursor
+(custom-set-faces
+ '(cursor ((t :background "indian red"))))
+
 ;; set font in GUI
 (when window-system
   (set-frame-font "input-12" nil t))
