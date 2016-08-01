@@ -29,10 +29,11 @@
   (unless (package-installed-p pkg)
     (if from-dir
         (push from-dir load-path)
-        (package-install pkg)))
+      (package-refresh-contents)
+      (package-install pkg)))
   (if require-symbol
       require-symbol
-      pkg))
+    pkg))
 
 (cl-defun require-package (pkg &key require from-dir filename noerror)
   (require (load-package pkg require from-dir) filename noerror))
