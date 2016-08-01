@@ -84,7 +84,6 @@
         init-gnus
         init-attachment-reminder
         init-whitespace
-        init-easy-kill
         init-interleave
         init-undo-tree
         init-unkillable-scratch
@@ -95,7 +94,6 @@
         init-highlight-backquotes-mode
         init-yaml-mode
         init-ruby
-        init-haml-sass
         init-web-mode
         init-search-kb
         init-ledger-mode
@@ -107,7 +105,6 @@
 	init-org-ref
         init-which-key
         init-company-quickhelp
-        init-writeroom-mode
         init-irony-mode
         init-ffip))
 
