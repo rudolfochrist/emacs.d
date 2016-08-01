@@ -1,6 +1,19 @@
 (require-package 'redshank)
 (require 'redshank-loader)
 
+(defun redshank-let<->let* ()
+  (interactive)
+  (save-excursion
+    (redshank-point-at-enclosing-let-form)
+    (forward-char)
+    (cond
+     ((looking-at "let ")
+      (forward-word)
+      (insert "*"))
+     ((looking-at "let\\* ")
+      (forward-word)
+      (delete-char 1)))))
+
 (redshank-setup '(lisp-mode-hook
                   emacs-lisp-mode-hook
                   slime-repl-mode-hook))
@@ -21,6 +34,7 @@
   ("f" redshank-complete-form "Complete form")
   ("l" redshank-letify-form-up "Letify up")
   ("L" redshank-enclose-form-with-lambda "Enclose with λ")
+  ("k" redshank-let<->let* "LET <-> LET*")
   ("n" redshank-rewrite-negated-predicate "Negate predicate")
   ("p" redshank-maybe-splice-progn "Maybe splice progn")
   ("x" redshank-extract-to-defun "Extract to defun")
