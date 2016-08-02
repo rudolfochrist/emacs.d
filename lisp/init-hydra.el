@@ -45,7 +45,7 @@ _q_ : I just changed my mind. Quit.
      Text Scaling                Window Resizing
 -------------------------  ----------------------------
 _g_: increase text scale              _k_
-_f_: decrease text scale           _h_   _l_
+_f_: decrease text scale           _h_     _l_
 _0_: default text size                _j_
                            _=_: Balance windows
 "
