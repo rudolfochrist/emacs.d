@@ -32,6 +32,12 @@
                slime-tramp slime-xref-browser slime-highlight-edits
                slime-sprof slime-macrostep slime-indentation))
 
+;;; set highlight-edits faces
+(with-eval-after-load "slime-highlight-edits"
+  (custom-set-faces
+   '(slime-highlight-edits-face ((t (:slant italic))))))
+
+
 ;;; use slime-mode on asd files
 (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
 
