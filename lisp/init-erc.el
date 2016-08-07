@@ -1,4 +1,6 @@
 (require 'erc)
+(when (eql system-type 'darwin)
+  (require-package 'erc-terminal-notifier))
 
 (setq erc-nick "rudolfochrist"
       erc-prompt-for-password nil
