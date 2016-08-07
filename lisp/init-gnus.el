@@ -201,7 +201,7 @@
 
 (setq send-mail-function 'smtpmail-send-it
       message-send-mail-function 'smtpmail-send-it
-      starttls-use-gnytls t
+      starttls-use-gnutls t
       smptmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
       smtp-auth-crednetials (expand-file-name "~/.authinfo.gpg")
       smtpmail-default-smtp-server "smtp.gmail.com"
