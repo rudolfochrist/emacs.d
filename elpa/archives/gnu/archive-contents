@@ -250,6 +250,11 @@
 	   "Highlight uncommitted changes using VC" tar
 	   ((:keywords "vc" "diff")
 	    (:url . "https://github.com/dgutov/diff-hl"))])
+ (diffview .
+	   [(1 0)
+	    nil "View diffs in side-by-side format" single
+	    ((:url . "https://github.com/mgalgs/diffview-mode")
+	     (:keywords "convenience" "diff"))])
  (dismal .
 	 [(1 5)
 	  ((cl-lib
@@ -676,13 +681,17 @@
 		((:url . "http://elpa.gnu.org/packages/rainbow-mode.html")
 		 (:keywords "faces"))])
  (realgud .
-	  [(1 4 2)
+	  [(1 4 3)
 	   ((load-relative
 	     (1 2))
 	    (loc-changes
 	     (1 2))
 	    (test-simple
-	     (1 2 0)))
+	     (1 2 0))
+	    (cl-lib
+	     (0 5))
+	    (emacs
+	     (24)))
 	   "A modular front-end for interacting with external debuggers" tar
 	   ((:url . "http://github.com/realgud/realgud/"))])
  (register-list .
@@ -747,7 +756,11 @@
 	       (:keywords "convenience"))])
  (sml-mode .
 	   [(6 7)
-	    nil "Major mode for editing (Standard) ML" single
+	    ((emacs
+	      (24))
+	     (cl-lib
+	      (0 5)))
+	    "Major mode for editing (Standard) ML" single
 	    ((:url . "http://elpa.gnu.org/packages/sml-mode.html")
 	     (:keywords "sml"))])
  (soap-client .
@@ -805,8 +818,10 @@
 	((:url . "http://www.dr-qubit.org/emacs.php")
 	 (:keywords "extensions" "matching" "data structures tnfa" "nfa" "dfa" "finite state automata" "automata" "regexp"))])
  (temp-buffer-browse .
-		     [(1 4)
-		      nil "temp buffer browse mode" single
+		     [(1 5)
+		      ((emacs
+			(24)))
+		      "temp buffer browse mode" single
 		      ((:url . "http://elpa.gnu.org/packages/temp-buffer-browse.html")
 		       (:keywords "convenience"))])
  (test-simple .
