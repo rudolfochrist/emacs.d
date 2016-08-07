@@ -9,6 +9,20 @@
 (add-hook 'scheme-mode-hook #'enable-paredit-mode)
 (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
 
+;;; don't add space before splicing (,@) or reader macros
+(defun fyi-paredit-adjust-spacing (endp delimiter)
+  (cond
+   ((or (looking-back "#\\+.*")
+        (looking-back "#-.*"))
+    t)
+   ((looking-back "#.*")
+    nil)
+   ((looking-back ",@")
+    nil)
+   (t t)))
+
+(add-to-list 'paredit-space-for-delimiter-predicates 'fyi-paredit-adjust-spacing)
+
 ;;; make parentheses unshifted in lisp mode
 (unless (null paredit-mode-map)
   (define-key paredit-mode-map (kbd "[") 'paredit-open-round)
