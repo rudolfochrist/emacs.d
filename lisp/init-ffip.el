@@ -1,5 +1,10 @@
 (require-package 'find-file-in-project)
 
+;;; prune lisp files
+(setq ffip-prune-patterns
+      (append ffip-prune-patterns
+              (list "*.fasl" "*.abcl" "*.dx32fsl" "*.dx64fsl")))
+
 (defun ffip-apply-project-buffers (fn)
   "Applies FN to each buffer of the current project, denoted by `ffip-project-root'."
   (let ((buffers (remove-if-not (lambda (buffer)
