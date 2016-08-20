@@ -76,15 +76,17 @@ _a_nnual book expenses
 ;;; todos setup
 (setq org-todo-keywords
       '((sequence "TODO(t)" "PROJECT(p)" "WAITING(w)" "DELEGATED(k)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)"))
-      org-todo-keyword-faces
-      '(("PROJECT" :weight bold :foreground "dark magenta")
-        ("DONE" :weight bold :foreground "forest green")
-        ("CANCELED" :wight bold :foreground "forest green")
-        ("SOMEDAY" :weight bold :foreground "dark goldenrod")
-        ("TODO" :weight bold :foreground "medium blue")
-        ("APPT" :weight bold :foreground "medium blue")
-        ("WAITING" :weight bold :foreground "red")
-        ("DELEGATED" :weight bold :foreground "red")))
+      ;; not needed with current face. But keep it any way
+      ;; org-todo-keyword-faces
+      ;; '(("PROJECT" :weight bold :foreground "dark magenta")
+      ;;   ("DONE" :weight bold :foreground "forest green")
+      ;;   ("CANCELED" :wight bold :foreground "forest green")
+      ;;   ("SOMEDAY" :weight bold :foreground "dark goldenrod")
+      ;;   ("TODO" :weight bold :foreground "medium blue")
+      ;;   ("APPT" :weight bold :foreground "medium blue")
+      ;;   ("WAITING" :weight bold :foreground "red")
+      ;;   ("DELEGATED" :weight bold :foreground "red"))
+      )
 
 ;;; archiving DONE tasks
 ;;; https://github.com/jwiegley/dot-emacs/blob/master/dot-org.el#L330

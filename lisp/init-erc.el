@@ -5,8 +5,13 @@
 (setq erc-nick "rudolfochrist"
       erc-prompt-for-password nil
       erc-user-full-name "Sebastian (Rudolfo) Christ"
-      erc-autojoin-channels-alist '(("freenode.net" "#emacs" "#lisp" "#lispcafe" "#sbcl" "#ccl" "#ecl"))
-      erc-hide-list '("JOIN" "PART" "QUIT"))
+      erc-autojoin-channels-alist '(("freenode.net"
+                                     "#emacs" "#lisp" "#lispcafe" "#sbcl" "#ccl" "#ecl" "#perl" "#perl6"))
+      erc-hide-list '("JOIN" "PART" "QUIT")
+      erc-fill-function #'erc-fill-static
+      erc-fill-static-center 22
+      ;; Freenode TLS port
+      erc-port 6697)
 
 ;;; enable logging
 (require 'erc-log)

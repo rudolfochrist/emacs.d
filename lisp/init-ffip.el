@@ -19,17 +19,20 @@
 
 (defun ffip-save-project-buffers ()
   (interactive)
-  (ffip-apply-project-buffers #'save-buffer))
+  (ffip-apply-project-buffers #'save-buffer)
+  (message "Saved buffers."))
 
 (defun ffip-kill-project-buffers ()
   (interactive)
-  (ffip-apply-project-buffers #'kill-buffer))
+  (ffip-apply-project-buffers #'kill-buffer)
+  (message "Killed buffers."))
 
 (defun ffip-revert-project-buffers ()
   (interactive)
   (ffip-apply-project-buffers
    (lambda ()
-     (revert-buffer nil t))))
+     (revert-buffer nil t)))
+  (message "Reverted buffers."))
 
 (defvar ffip-command-map
   (let ((map (make-sparse-keymap)))

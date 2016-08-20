@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ignore
+# key: ignore
+# --
+(declare (ignore ${1:vars}))$0
