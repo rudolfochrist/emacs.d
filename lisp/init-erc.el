@@ -45,7 +45,6 @@
      'face       'font-lock-comment-face)))
 
 (with-eval-after-load 'erc
-  (define-key erc-mode-map (kbd "C-`") #'fyi-cycle-erc-buffers)
   (define-key erc-mode-map (kbd "<escape>") #'fyi-mark-read))
 
 (provide 'init-erc)

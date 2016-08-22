@@ -16,4 +16,7 @@
 (global-set-key (kbd "M-[") #'backward-paragraph)
 (global-set-key (kbd "M-]") #'forward-paragraph)
 
+;;; go through frames
+(global-set-key (kbd "C-`") #'other-frame)
+
 (provide 'init-keybindings)
