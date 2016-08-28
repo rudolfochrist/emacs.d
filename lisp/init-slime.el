@@ -96,15 +96,20 @@
 ;;; file header
 (defun fyi-slime-insert-header (cl-style coding)
   (interactive
-   (if (not current-prefix-arg)
-       (list "modern" "utf-8-unix")
+   (cond
+    ((not current-prefix-arg)
+     (list nil nil))
+    ((equal current-prefix-arg '(4))
+     (list "modern" "utf-8-unix"))
+    ((equal current-prefix-arg '(16))
      (list
       (completing-read "Style: " common-lisp-styles)
-      (completing-read "Coding: " coding-system-list))))
-  (insert (format ";;; -*- mode: Lisp; common-lisp-style: %s; slime-coding: %s -*-\n"
-                  cl-style coding))
+      (completing-read "Coding: " coding-system-list)))))
+  (when (and cl-style coding)
+    (insert (format ";;; -*- mode: Lisp; common-lisp-style: %s; slime-coding: %s -*-\n;;;\n"
+                    cl-style coding)))
   (let ((file-name (buffer-file-name)))
-    (insert ";;;\n;;; " (file-name-base file-name) (file-name-extension file-name t))))
+    (insert ";;; " (file-name-base file-name) (file-name-extension file-name t))))
 
 (defun fyi-slime-keybindings ()
   (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline)

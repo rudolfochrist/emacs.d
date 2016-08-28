@@ -1,7 +1,4 @@
-;;; org-export backends
-;;; apperently this has to be set BEFORE org.el is loaded!
-(setq org-export-backends '(ascii html latex texinfo))
-
+;;; local orgmode
 ;; (add-to-list 'load-path "~/dev/org-mode/lisp/")
 ;; (add-to-list 'load-path "~/dev/org-mode/contrib/lisp/")
 ;; (require 'org)
@@ -10,6 +7,7 @@
                  :require 'org)
 (require 'ox-latex)
 (require 'ox-koma-letter)
+(require 'ox-md)
 (require 'org-checklist)
 
 ;;; use some extras

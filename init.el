@@ -108,6 +108,7 @@
         init-irony-mode
         init-ffip
         init-easy-kill
+        init-aggressive-indent-mode
 	))
 
 ;; load them
