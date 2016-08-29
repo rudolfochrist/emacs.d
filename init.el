@@ -109,6 +109,7 @@
         init-ffip
         init-easy-kill
         init-aggressive-indent-mode
+        init-ace-link
 	))
 
 ;; load them
