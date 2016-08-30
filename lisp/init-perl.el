@@ -1,3 +1,5 @@
+
+;;; interactive Perl
 
 (defvar perl-repl-buffer-name "perl-repl"
   "Perl REPL buffer name")
@@ -29,5 +31,10 @@
   (local-set-key (kbd "C-c C-r") #'perl-repl-eval-region))
 
 (add-hook 'perl-mode-hook #'perl-repl-keybindings)
+
+
+;;; Perl 6
+
+(require-package 'perl6-mode)
 
 (provide 'init-perl)

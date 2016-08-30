@@ -67,7 +67,6 @@
         init-org-mode
         init-erlang
         init-yasnippet
-        init-prolog
         init-eval-sexp-fu
         init-org-babel
         init-avy
