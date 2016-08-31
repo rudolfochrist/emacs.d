@@ -6,7 +6,7 @@
       erc-prompt-for-password nil
       erc-user-full-name "Sebastian (Rudolfo) Christ"
       erc-autojoin-channels-alist '(("freenode.net"
-                                     "#emacs" "#lisp" "#lispcafe" "#sbcl" "#ccl" "#ecl" "#perl" "#perl6"))
+                                     "#emacs" "#lisp" "#lispcafe" "#sbcl" "#ccl" "#perl" "#perl6"))
       erc-hide-list '("JOIN" "PART" "QUIT")
       erc-fill-function #'erc-fill-static
       erc-fill-static-center 22
