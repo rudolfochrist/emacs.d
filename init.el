@@ -100,7 +100,7 @@
         init-page-navigation
         init-redshank
         init-imenu-anywhere
-        init-flycheck
+        ;; init-flycheck
         init-org-ref
         init-which-key
         init-company-quickhelp

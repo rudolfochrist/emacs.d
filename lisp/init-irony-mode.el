@@ -20,12 +20,12 @@
   (add-to-list 'company-backend #'company-irony))
 
 ;;; flycheck
-(require-package 'flycheck-irony)
+;; (require-package 'flycheck-irony)
 ;;; flycheck-irony complaints it cannot find stdio.h
 ;;; keeping it disabled for now
 ;; (with-eval-after-load "flycheck"
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-(add-hook 'irony-mode-hook #'flycheck-mode)
+;; (add-hook 'irony-mode-hook #'flycheck-mode)
 
 ;;; irony-eldoc
 (require-package 'irony-eldoc)
