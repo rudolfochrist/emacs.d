@@ -307,7 +307,7 @@ ADDED: %U"
 (setq org-latex-logfiles-extensions
       '("aux" "bcf" "blg" "fdb_latexmk" "fls" "figlist" "glg" "glo" "gls" "idx" "ist"
         "log" "nav" "out" "ptc" "run.xml" "snm" "toc" "vrb" "xdv" "bbl" "ilg" "ind"
-        "lof" "lot"))
+        "lof" "lot" "lol"))
 
 ;;; misc.
 (setq org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
@@ -419,7 +419,7 @@ end tell"))
 (setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
                               "bibtex %b"
                               "makeindex %b"
-                              "makeglossaries %b"
+                              "PATH=\"/usr/bin:$PATH\" makeglossaries %b"  ; use system perl for makeglossaries
                               "xelatex -interaction nonstopmode %f"
                               "xelatex -interaction nonstopmode %f"))
 
