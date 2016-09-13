@@ -93,6 +93,24 @@
    (t
     (slime-switch-to-output-buffer))))
 
+(defun fyi-open-lisp ()
+  (interactive)
+  (let ((repl-buffers (fyi-mode-buffer-list 'slime-repl-mode)))
+    (cond
+     ;; no REPL active. Start new.
+     ((null repl-buffers)
+      (call-interactively #'slime))
+     ;; one REPL active. Switch to it.
+     ((= 1 (length repl-buffers))
+      (switch-to-buffer (first repl-buffers)))
+     ;; ivy select buffer
+     (t
+      (ivy-read "Lisp REPL: " (mapcar #'buffer-name repl-buffers)
+                :require-match t
+                :action (lambda (buffer)
+                          (switch-to-buffer buffer)))))))
+(global-set-key (kbd "<f5>") #'fyi-open-lisp)
+
 ;;; file header
 (defun fyi-slime-insert-header (cl-style coding)
   (interactive
@@ -111,6 +129,12 @@
   (let ((file-name (buffer-file-name)))
     (insert ";;; " (file-name-base file-name) (file-name-extension file-name t))))
 
+;;; Inspect last expresssion
+(defun slime-repl-inspect-last-expression ()
+  "Inspects the last expression."
+  (interactive)
+  (slime-repl-inspect "*"))
+
 (defun fyi-slime-keybindings ()
   (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline)
   (define-key slime-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch)
@@ -122,7 +146,8 @@
   (define-key slime-repl-mode-map (kbd "C-l") #'slime-repl-clear-buffer)
   (define-key slime-repl-mode-map (kbd "SPC") #'slime-autodoc-space)
   (define-key slime-repl-mode-map (kbd "C-j") #'fyi-slime-autodoc-newline)
-  (define-key slime-repl-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch))
+  (define-key slime-repl-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch)
+  (define-key slime-repl-mode-map (kbd "C-c O") #'slime-repl-inspect-last-expression))
 
 (add-hook 'slime-repl-mode-hook 'fyi-slime-repl-keybindings)
 
