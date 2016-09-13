@@ -2,6 +2,6 @@
 # name: in-package
 # key: in
 # --
-(in-package :${1:$$(downcase (yas-choose-value (slime-eval '(swank:list-all-package-names t))))})
+(in-package ${1::`(downcase (yas-choose-value (slime-eval '(swank:list-all-package-names t))))`})
 
 $0
