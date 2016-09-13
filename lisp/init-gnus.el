@@ -211,7 +211,8 @@
 
 
 ;;; managing contantcs
-(setq bbdb-offer-save 'auto
+(setq bbdb-file "~/org/contacts.bbdb"
+      bbdb-offer-save 'auto
       bbdb-notice-auto-save-file t
       bbdb-expand-mail-aliases t
       bbdb-canonicalize-redundant-nets-p t
