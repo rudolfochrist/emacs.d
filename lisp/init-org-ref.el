@@ -9,7 +9,8 @@
   (require pkg))
 
 (setq org-ref-default-bibliography reftex-default-bibliography
-      org-ref-pdf-directory "~/Dropbox/Papers/Library/")
+      org-ref-pdf-directory "~/Dropbox/Papers/Library/"
+      org-ref-default-citation-link "citep")
 
 (with-eval-after-load "org"
   (define-key org-mode-map (kbd "C-c ff") #'org-ref-helm-insert-cite-link)
