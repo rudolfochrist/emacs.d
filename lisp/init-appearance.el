@@ -51,16 +51,4 @@
 
 (which-func-mode 1)
 
-;; (require-package 'smart-mode-line)
-;; (setq sml/theme 'dark
-;;       sml/shorten-modes nil
-;;       sml/shorten-mode-string ""
-;;       rm-whitelist (mapconcat #'identity
-;;                               '(;; SLIME: CL Implementation and Package
-;;                                 "\\[.*\\]"
-;;                                 ;; Projectile (this works only with my adjusted lighter for projectile.
-;;                                 "P:.*")
-;;                               "\\|"))
-;; (sml/setup)
-
 (provide 'init-appearance)
