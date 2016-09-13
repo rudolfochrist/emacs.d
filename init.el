@@ -109,6 +109,7 @@
         init-easy-kill
         init-aggressive-indent-mode
         init-ace-link
+        init-dictcc
 	))
 
 ;; load them
