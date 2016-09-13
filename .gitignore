@@ -19,3 +19,4 @@ bin/
 /recentf
 *.elc
 .cask/
+/network-security.data
