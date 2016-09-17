@@ -25,4 +25,24 @@
           key))
 (setq org-ref-get-pdf-filename-function #'fyi-get-pdf-filename)
 
+(defun fyi-helm-bibtex-open (path)
+  (error "%s" path))
+
+(require 'bibtex-completion)
+
+;;; Patching this because my PDF file names are different
+(defun bibtex-completion-find-pdf-in-library (key-or-entry)
+  "Searches the directories in `bibtex-completion-library-path' for a
+PDF whose names is composed of the BibTeX key plus \".pdf\".  The
+path of the first matching PDF is returned."
+  (let* ((key (if (stringp key-or-entry)
+                  key-or-entry
+                (bibtex-completion-get-value "=key=" key-or-entry)))
+         (path (-first 'f-file?
+                       (list (fyi-get-pdf-filename key)))))
+    (when path (list path))))
+
+(setq bibtex-completion-library-path org-ref-pdf-directory
+      bibtex-completion-pdf-open-function #'org-open-file)
+
 (provide 'init-org-ref)
