@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "biblio-arxiv" "biblio-arxiv.el" (22487 43525
+;;;### (autoloads nil "biblio-arxiv" "biblio-arxiv.el" (22493 53295
 ;;;;;;  0 0))
 ;;; Generated autoloads from biblio-arxiv.el
 
@@ -24,8 +24,8 @@ Start an arXiv search for QUERY, prompting if needed.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-crossref" "biblio-crossref.el" (22487
-;;;;;;  43525 0 0))
+;;;### (autoloads nil "biblio-crossref" "biblio-crossref.el" (22493
+;;;;;;  53295 0 0))
 ;;; Generated autoloads from biblio-crossref.el
 
 (autoload 'biblio-crossref-backend "biblio-crossref" "\
@@ -45,7 +45,7 @@ Start a CrossRef search for QUERY, prompting if needed.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-dblp" "biblio-dblp.el" (22487 43525
+;;;### (autoloads nil "biblio-dblp" "biblio-dblp.el" (22493 53295
 ;;;;;;  0 0))
 ;;; Generated autoloads from biblio-dblp.el
 
@@ -66,8 +66,8 @@ Start a DBLP search for QUERY, prompting if needed.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-dissemin" "biblio-dissemin.el" (22487
-;;;;;;  43525 0 0))
+;;;### (autoloads nil "biblio-dissemin" "biblio-dissemin.el" (22493
+;;;;;;  53295 0 0))
 ;;; Generated autoloads from biblio-dissemin.el
 
 (autoload 'biblio-dissemin-lookup "biblio-dissemin" "\
@@ -88,7 +88,7 @@ Add Dissemin to list of `biblio-selection-mode' actions.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-doi" "biblio-doi.el" (22487 43525 0
+;;;### (autoloads nil "biblio-doi" "biblio-doi.el" (22493 53295 0
 ;;;;;;  0))
 ;;; Generated autoloads from biblio-doi.el
 
@@ -99,8 +99,8 @@ Insert BibTeX entry matching DOI.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-download" "biblio-download.el" (22487
-;;;;;;  43525 0 0))
+;;;### (autoloads nil "biblio-download" "biblio-download.el" (22493
+;;;;;;  53295 0 0))
 ;;; Generated autoloads from biblio-download.el
 
 (autoload 'biblio-download--register-action "biblio-download" "\
@@ -112,7 +112,7 @@ Add download to list of `biblio-selection-mode' actions.
 
 ;;;***
 
-;;;### (autoloads nil "biblio-hal" "biblio-hal.el" (22487 43525 0
+;;;### (autoloads nil "biblio-hal" "biblio-hal.el" (22493 53295 0
 ;;;;;;  0))
 ;;; Generated autoloads from biblio-hal.el
 
@@ -133,7 +133,7 @@ Start a HAL search for QUERY, prompting if needed.
 
 ;;;***
 
-;;;### (autoloads nil nil ("biblio-pkg.el" "biblio.el") (22487 43525
+;;;### (autoloads nil nil ("biblio-pkg.el" "biblio.el") (22493 53295
 ;;;;;;  0 0))
 
 ;;;***

@@ -1,10 +1,10 @@
 ;;; elisp-slime-nav-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "elisp-slime-nav" "elisp-slime-nav.el" (22284
-;;;;;;  37863 0 0))
+;;;### (autoloads nil "elisp-slime-nav" "elisp-slime-nav.el" (22493
+;;;;;;  53248 0 0))
 ;;; Generated autoloads from elisp-slime-nav.el
 
 (autoload 'elisp-slime-nav-mode "elisp-slime-nav" "\

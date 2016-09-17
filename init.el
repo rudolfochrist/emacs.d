@@ -18,7 +18,7 @@
 ;; Packages
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
 (package-initialize)
 (when (not package-archive-contents)
@@ -55,6 +55,7 @@
         init-my-override-keymap
         init-keybindings
         init-spelling
+        init-ivy
         init-company-mode
         init-hydra
         init-javascript
@@ -88,7 +89,6 @@
         init-unkillable-scratch
         init-elisp-slime-nav
         init-ag
-        init-ivy
         init-macrostep
         init-highlight-backquotes-mode
         init-yaml-mode

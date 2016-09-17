@@ -1,11 +1,11 @@
 ;;; org-page-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
 ;;;### (autoloads nil nil ("op-enhance.el" "op-export.el" "op-git.el"
 ;;;;;;  "op-template.el" "op-util.el" "op-vars.el" "org-page-pkg.el"
-;;;;;;  "org-page.el") (22395 60846 240989 0))
+;;;;;;  "org-page.el") (22493 53223 0 0))
 
 ;;;***
 

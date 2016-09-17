@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil nil ("erc-terminal-notifier.el") (22432 46989
+;;;### (autoloads nil nil ("erc-terminal-notifier.el") (22493 53191
 ;;;;;;  0 0))
 
 ;;;***

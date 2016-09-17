@@ -1,9 +1,9 @@
 ;;; redshank-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "redshank" "redshank.el" (22284 37881 0 0))
+;;;### (autoloads nil "redshank" "redshank.el" (22493 53289 0 0))
 ;;; Generated autoloads from redshank.el
 
 (autoload 'redshank-mode "redshank" "\
@@ -39,8 +39,8 @@ This function is designed to be added to hooks, for example:
 
 ;;;***
 
-;;;### (autoloads nil "redshank-loader" "redshank-loader.el" (22284
-;;;;;;  37881 0 0))
+;;;### (autoloads nil "redshank-loader" "redshank-loader.el" (22493
+;;;;;;  53289 0 0))
 ;;; Generated autoloads from redshank-loader.el
 
 (autoload 'redshank-setup "redshank-loader" "\
@@ -52,8 +52,7 @@ activate support for that, too.
 
 ;;;***
 
-;;;### (autoloads nil nil ("redshank-pkg.el") (22284 37881 228679
-;;;;;;  0))
+;;;### (autoloads nil nil ("redshank-pkg.el") (22493 53289 0 0))
 
 ;;;***
 

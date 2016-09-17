@@ -1,9 +1,9 @@
 ;;; bbdb-ext-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "bbdb-ext" "bbdb-ext.el" (22284 37859 0 0))
+;;;### (autoloads nil "bbdb-ext" "bbdb-ext.el" (22493 53234 0 0))
 ;;; Generated autoloads from bbdb-ext.el
 
 (autoload 'bbdb-google-map "bbdb-ext" "\

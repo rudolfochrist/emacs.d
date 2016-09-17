@@ -1,15 +1,16 @@
 ;;; unkillable-scratch-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
 ;;;### (autoloads nil "unkillable-scratch" "unkillable-scratch.el"
-;;;;;;  (22316 19454 0 0))
+;;;;;;  (22493 53246 0 0))
 ;;; Generated autoloads from unkillable-scratch.el
 
 (defvar unkillable-scratch nil "\
 Non-nil if Unkillable-Scratch mode is enabled.
-See the command `unkillable-scratch' for a description of this minor mode.
+See the `unkillable-scratch' command
+for a description of this minor mode.
 Setting this variable directly does not take effect;
 either customize it (see the info node `Easy Customization')
 or call the function `unkillable-scratch'.")

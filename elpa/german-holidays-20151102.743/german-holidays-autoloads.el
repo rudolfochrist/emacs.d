@@ -1,10 +1,9 @@
 ;;; german-holidays-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil nil ("german-holidays.el") (22284 37789 883168
-;;;;;;  0))
+;;;### (autoloads nil nil ("german-holidays.el") (22493 53125 0 0))
 
 ;;;***
 

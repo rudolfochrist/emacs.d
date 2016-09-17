@@ -1,9 +1,9 @@
 ;;; ledger-mode-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "ledger-mode" "ledger-mode.el" (22412 32821
+;;;### (autoloads nil "ledger-mode" "ledger-mode.el" (22493 53279
 ;;;;;;  0 0))
 ;;; Generated autoloads from ledger-mode.el
 
@@ -20,7 +20,7 @@ A mode for editing ledger data files.
 ;;;;;;  "ledger-navigate.el" "ledger-occur.el" "ledger-post.el" "ledger-reconcile.el"
 ;;;;;;  "ledger-regex.el" "ledger-report.el" "ledger-schedule.el"
 ;;;;;;  "ledger-sort.el" "ledger-state.el" "ledger-test.el" "ledger-texi.el"
-;;;;;;  "ledger-xact.el") (22412 32821 580314 0))
+;;;;;;  "ledger-xact.el") (22493 53280 0 0))
 
 ;;;***
 

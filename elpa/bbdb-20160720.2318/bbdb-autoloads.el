@@ -1,9 +1,9 @@
 ;;; bbdb-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "bbdb" "bbdb.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb" "bbdb.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb.el
 
 (defsubst bbdb-records nil "\
@@ -122,7 +122,7 @@ for example only for outgoing messages.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-anniv" "bbdb-anniv.el" (22425 49789 0
+;;;### (autoloads nil "bbdb-anniv" "bbdb-anniv.el" (22493 53230 0
 ;;;;;;  0))
 ;;; Generated autoloads from bbdb-anniv.el
 
@@ -137,7 +137,7 @@ To enable this feature, put the following into your .emacs:
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-com" "bbdb-com.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb-com" "bbdb-com.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb-com.el
 
 (autoload 'bbdb-do-all-records "bbdb-com" "\
@@ -511,7 +511,7 @@ Interactively, use BBDB prefix \\<bbdb-mode-map>\\[bbdb-do-all-records], see `bb
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-gnus" "bbdb-gnus.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb-gnus" "bbdb-gnus.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb-gnus.el
 
 (autoload 'bbdb/gnus-score "bbdb-gnus" "\
@@ -539,7 +539,7 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-ispell" "bbdb-ispell.el" (22425 49789
+;;;### (autoloads nil "bbdb-ispell" "bbdb-ispell.el" (22493 53230
 ;;;;;;  0 0))
 ;;; Generated autoloads from bbdb-ispell.el
 
@@ -550,7 +550,7 @@ Export BBDB records to ispell personal dictionaries.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-message" "bbdb-message.el" (22425 49789
+;;;### (autoloads nil "bbdb-message" "bbdb-message.el" (22493 53230
 ;;;;;;  0 0))
 ;;; Generated autoloads from bbdb-message.el
 
@@ -568,7 +568,7 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-mhe" "bbdb-mhe.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb-mhe" "bbdb-mhe.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb-mhe.el
 
 (autoload 'bbdb-insinuate-mh "bbdb-mhe" "\
@@ -579,7 +579,7 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-migrate" "bbdb-migrate.el" (22425 49789
+;;;### (autoloads nil "bbdb-migrate" "bbdb-migrate.el" (22493 53230
 ;;;;;;  0 0))
 ;;; Generated autoloads from bbdb-migrate.el
 
@@ -603,7 +603,7 @@ for outdated BBDB variables that are set via your personal `custom-file'.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-mu4e" "bbdb-mu4e.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb-mu4e" "bbdb-mu4e.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb-mu4e.el
 
 (autoload 'bbdb-insinuate-mu4e "bbdb-mu4e" "\
@@ -614,7 +614,7 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-mua" "bbdb-mua.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb-mua" "bbdb-mua.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb-mua.el
 
 (autoload 'bbdb-message-header "bbdb-mua" "\
@@ -805,7 +805,7 @@ For use as an element of `bbdb-notice-record-hook'.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-pgp" "bbdb-pgp.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb-pgp" "bbdb-pgp.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb-pgp.el
 
 (autoload 'bbdb-read-xfield-pgp-mail "bbdb-pgp" "\
@@ -837,7 +837,7 @@ to call the command `bbdb-pgp' manually, then call `mml-preview'.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-print" "bbdb-print.el" (22425 49789 0
+;;;### (autoloads nil "bbdb-print" "bbdb-print.el" (22493 53230 0
 ;;;;;;  0))
 ;;; Generated autoloads from bbdb-print.el
 
@@ -853,7 +853,7 @@ of the printout, notably the variables `bbdb-print-alist' and
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-rmail" "bbdb-rmail.el" (22425 49789 0
+;;;### (autoloads nil "bbdb-rmail" "bbdb-rmail.el" (22493 53230 0
 ;;;;;;  0))
 ;;; Generated autoloads from bbdb-rmail.el
 
@@ -865,7 +865,7 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-sc" "bbdb-sc.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb-sc" "bbdb-sc.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb-sc.el
 
 (autoload 'bbdb-sc-update-from "bbdb-sc" "\
@@ -885,7 +885,7 @@ BBDB into Supercite.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-snarf" "bbdb-snarf.el" (22425 49789 0
+;;;### (autoloads nil "bbdb-snarf" "bbdb-snarf.el" (22493 53230 0
 ;;;;;;  0))
 ;;; Generated autoloads from bbdb-snarf.el
 
@@ -916,7 +916,7 @@ See `bbdb-snarf-rule-alist' for details.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-vm" "bbdb-vm.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb-vm" "bbdb-vm.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb-vm.el
 
 (defvar bbdb/vm-auto-folder-headers '("From:" "To:" "CC:") "\
@@ -981,7 +981,7 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 
 ;;;***
 
-;;;### (autoloads nil "bbdb-wl" "bbdb-wl.el" (22425 49789 0 0))
+;;;### (autoloads nil "bbdb-wl" "bbdb-wl.el" (22493 53230 0 0))
 ;;; Generated autoloads from bbdb-wl.el
 
 (autoload 'bbdb-insinuate-wl "bbdb-wl" "\
@@ -991,8 +991,8 @@ Hook BBDB into Wanderlust.
 
 ;;;***
 
-;;;### (autoloads nil nil ("bbdb-pkg.el" "bbdb-site.el") (22425 49789
-;;;;;;  101505 0))
+;;;### (autoloads nil nil ("bbdb-pkg.el" "bbdb-site.el") (22493 53230
+;;;;;;  0 0))
 
 ;;;***
 

@@ -1,11 +1,11 @@
 ;;; mustache-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
 ;;;### (autoloads nil nil ("mustache-lex.el" "mustache-parse.el"
-;;;;;;  "mustache-pkg.el" "mustache-render.el" "mustache.el") (22284
-;;;;;;  37849 599048 0))
+;;;;;;  "mustache-pkg.el" "mustache-render.el" "mustache.el") (22493
+;;;;;;  53218 0 0))
 
 ;;;***
 

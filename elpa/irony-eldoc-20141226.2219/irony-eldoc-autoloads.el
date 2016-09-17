@@ -1,9 +1,9 @@
 ;;; irony-eldoc-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "irony-eldoc" "irony-eldoc.el" (22360 2849
+;;;### (autoloads nil "irony-eldoc" "irony-eldoc.el" (22493 53336
 ;;;;;;  0 0))
 ;;; Generated autoloads from irony-eldoc.el
 

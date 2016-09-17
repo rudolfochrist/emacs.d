@@ -46,8 +46,6 @@
       (progn (backward-delete-char 1) (forward-char))))
 (advice-add 'he-substitute-string :after 'fyi-he-substitute-string)
 
-(require 's)
-
 (defun paredit-insert-section-header (header)
   "Insert a banner with format ;;; HEADER ;;;."
   (interactive "sDescription: ")
