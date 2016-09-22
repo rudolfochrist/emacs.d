@@ -135,10 +135,24 @@
   (interactive)
   (slime-repl-inspect "*"))
 
+;;; docstring in minibuffer
+(defun slime-documentation-in-minibuffer (symbol)
+  (interactive
+   (let ((s-a-p (slime-symbol-at-point)))
+     (cond
+      ((or current-prefix-arg
+           (not s-a-p))
+       (list (slime-read-symbol-name "Symbol: ")))
+      (t
+       (list s-a-p)))))
+  (message "%s"
+           (slime-eval `(swank:documentation-symbol ,symbol))))
+
 (defun fyi-slime-keybindings ()
   (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline)
   (define-key slime-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch)
-  (define-key slime-mode-map (kbd "C-c C-d i") #'fyi-slime-insert-header))
+  (define-key slime-mode-map (kbd "C-c C-d i") #'fyi-slime-insert-header)
+  (define-key slime-mode-map (kbd "C-c C-d s") #'slime-documentation-in-minibuffer))
 
 (add-hook 'slime-mode-hook 'fyi-slime-keybindings)
 
@@ -147,7 +161,8 @@
   (define-key slime-repl-mode-map (kbd "SPC") #'slime-autodoc-space)
   (define-key slime-repl-mode-map (kbd "C-j") #'fyi-slime-autodoc-newline)
   (define-key slime-repl-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch)
-  (define-key slime-repl-mode-map (kbd "C-c O") #'slime-repl-inspect-last-expression))
+  (define-key slime-repl-mode-map (kbd "C-c O") #'slime-repl-inspect-last-expression)
+  (define-key slime-repl-mode-map (kbd "C-c C-d s") #'slime-documentation-in-minibuffer))
 
 (add-hook 'slime-repl-mode-hook 'fyi-slime-repl-keybindings)
 
