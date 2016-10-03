@@ -110,6 +110,7 @@
         init-aggressive-indent-mode
         init-ace-link
         init-dictcc
+        init-feature-mode
 	))
 
 ;; load them
