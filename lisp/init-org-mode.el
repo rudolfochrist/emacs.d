@@ -9,6 +9,7 @@
 (require 'ox-koma-letter)
 (require 'ox-md)
 (require 'org-checklist)
+(require 'org-drill)
 
 ;;; use some extras
 (require 'ox-extra)
