@@ -9,6 +9,10 @@
 (require 'ox-koma-letter)
 (require 'ox-md)
 (require 'org-checklist)
+
+;;; org-drill requires cl-lib but uses the old interface
+;;; for copy-list. The alias should fix this till it is changed.
+(defalias 'copy-list #'cl-copy-list)
 (require 'org-drill)
 
 ;;; use some extras
@@ -428,9 +432,7 @@ end tell"))
 (add-to-list 'org-file-apps '("\\.pdf\\'" . "/Applications/Skim.app/Contents/SharedSupport/displayline 1 %s"))
 
 ;;; org-download
-(require-package 'org-download
-                 :from-dir emacs-d-site-lisp)
-
+(require 'org-download)
 (defun fyi-configure-org-download ()
   "Configures `org-download'."
   (setq org-download-image-dir "~/org/org-download-images/"
