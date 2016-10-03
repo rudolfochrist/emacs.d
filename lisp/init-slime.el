@@ -145,8 +145,16 @@
        (list (slime-read-symbol-name "Symbol: ")))
       (t
        (list s-a-p)))))
-  (message "%s"
-           (slime-eval `(swank:documentation-symbol ,symbol))))
+  (let ((doc (slime-eval `(swank:documentation-symbol ,symbol))))
+    ;; calculate if it fits into the echo areas
+    ;; see: `display-message-or-buffer'
+    (if (<= (count-lines-string doc)
+            (typecase max-mini-window-height
+              (integer max-mini-window-height)
+              (float (* (frame-height)
+                        max-mini-window-height))))
+        (message "%s" doc)
+      (slime-documentation symbol))))
 
 (defun fyi-slime-keybindings ()
   (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline)

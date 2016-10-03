@@ -1,6 +1,8 @@
 ;;; init-defuns.el --- utility functions
 ;;; Code:
 
+(require 'cl-lib)
+
 (defun fyi-format-json ()
   "Pretty format json."
   (interactive)
@@ -129,6 +131,19 @@ is already narrowed."
 
 ;;; replace with default narrow
 (define-key ctl-x-map (kbd "n") #'narrow-or-widen-dwim)
+
+;;; counting lines
+(defun count-lines-string (string)
+  "Counts the lines in string.
+
+Effectively counts the occurrences of newlines."
+  (let ((start 0)
+        ;; if string don't contains a newline, we found 1 line. So start there.
+        (lines 1))
+    (while (string-match "\n" string start)
+      (setq start (match-end 0)
+            lines (1+ lines)))
+    lines))
 
 (provide 'init-defuns)
 
