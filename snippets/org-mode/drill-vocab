@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: drill-vocab
+# key: _dvoc
+# --
+* Vocab :drill:
+
+$1
+
+** German
+
+$0
