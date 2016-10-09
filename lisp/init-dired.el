@@ -35,6 +35,12 @@
   (shell-command-to-string (format "open %s" (shell-quote-argument (dired-get-file-for-visit)))))
 (define-key dired-mode-map (kbd "M-RET") 'fyi-system-open-file)
 
+(when (eq system-type 'darwin)
+  (defun dired-open-in-finder ()
+    (interactive)
+    (shell-command (format "open %s" (dired-current-directory))))
+  (define-key dired-mode-map (kbd "M-.") #'dired-open-in-finder))
+
 ;;; mc style move/rename in dired
 (setq dired-dwim-target t)
 
