@@ -1,5 +1,7 @@
 (require-package 'slime)
-(require-package 'slime-company)
+
+;;; slime-setup requires this when the contrib is needed. 
+(require-package 'slime-company :load-only t)
 
 ;;; HyperSpec/Documentation
 (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
@@ -27,10 +29,11 @@
         (acl ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))))
 
 ;;; getting contrib fancy
-(slime-setup '(slime-fancy
-               slime-banner slime-asdf slime-company
-               slime-tramp slime-xref-browser slime-highlight-edits
-               slime-sprof slime-macrostep slime-indentation))
+(setq slime-contribs
+      '(slime-fancy
+        slime-banner slime-asdf slime-company
+        slime-tramp slime-xref-browser slime-highlight-edits
+        slime-sprof slime-macrostep slime-indentation))
 
 ;;; set highlight-edits faces
 (with-eval-after-load "slime-highlight-edits"
