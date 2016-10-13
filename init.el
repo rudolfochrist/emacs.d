@@ -35,8 +35,10 @@
       require-symbol
     pkg))
 
-(cl-defun require-package (pkg &key require from-dir filename noerror)
-  (require (load-package pkg require from-dir) filename noerror))
+(cl-defun require-package (pkg &key require from-dir filename noerror load-only)
+  (if load-only
+      (load-package pkg require from-dir)
+    (require (load-package pkg require from-dir) filename noerror)))
 
 ;;; setup paths
 (require-package 'exec-path-from-shell)
