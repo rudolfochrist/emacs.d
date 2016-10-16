@@ -1,4 +1,5 @@
 (require-package 'magit)
+(require-package 'magithub)
 (require-package 'git-timemachine)
 
 ;; magit status
