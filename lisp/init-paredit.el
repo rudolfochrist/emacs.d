@@ -1,5 +1,6 @@
 (require-package 'paredit)
 (require-package 'paredit-everywhere)
+(require 'cl-lib)
 
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
@@ -23,13 +24,29 @@
 
 (add-to-list 'paredit-space-for-delimiter-predicates 'fyi-paredit-adjust-spacing)
 
-;;; make parentheses unshifted in lisp mode
-(unless (null paredit-mode-map)
-  (define-key paredit-mode-map (kbd "[") 'paredit-open-round)
-  (define-key paredit-mode-map (kbd "]") 'paredit-close-round)
-  (define-key paredit-mode-map (kbd "(") 'paredit-open-bracket)
-  (define-key paredit-mode-map (kbd ")") 'paredit-close-bracket)
-  (define-key paredit-mode-map (kbd "C-c C-o") 'paredit-insert-section-header))
+(defvar paredit-custom-keys-alist
+  '(
+    ;; better parens
+    ("[" . paredit-open-round)
+    ("]" . paredit-close-round)
+    ("(" . paredit-open-bracket)
+    (")" . paredit-close-bracket)
+    ;; navigation
+    ("s-h" . paredit-backward)
+    ("s-l" . paredit-forward)
+    ("s-k" . paredit-backward-up)
+    ("s-j" . paredit-forward-down)
+    ("s-<left>" . paredit-backward)
+    ("s-<right>" . paredit-forward)
+    ("s-<up>" . paredit-backward-up)
+    ("s-<down>" . paredit-forward-down)
+    ;; misc.
+    ("C-o C-o" . paredit-insert-section-header)))
+
+(defun paredit-custom-keybindings ()
+  (cl-loop for (key . func) in paredit-custom-keys-alist
+           do (define-key paredit-mode-map (kbd key) func)))      
+(add-hook 'paredit-mode-hook #'paredit-custom-keybindings)
 
 ;;; use `common-lisp-indent-function'
 (setq lisp-indent-function #'common-lisp-indent-function)
