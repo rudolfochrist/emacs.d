@@ -19,8 +19,4 @@
 ;;; go through frames
 (global-set-key (kbd "C-`") #'other-frame)
 
-;;; osx command to control
-(when (eq system-type 'darwin)
-  (setq ns-command-modifier 'control))
-
 (provide 'init-keybindings)
