@@ -8,7 +8,7 @@
 
 (global-set-key (kbd "<f1>") 'eshell)
 
-(defun eclear ()
+(defun eshell/clear ()
   "Clears the eshell buffer"
   (interactive)
   (let ((inhibit-read-only t))

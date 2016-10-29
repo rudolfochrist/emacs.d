@@ -82,7 +82,6 @@
         init-emacs-lisp
         init-erc
         init-org-page
-        init-term
         init-gnus
         init-attachment-reminder
         init-whitespace
