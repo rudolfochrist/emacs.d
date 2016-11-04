@@ -2,11 +2,21 @@
 (require 'em-smart)
 
 ;;; setup smart eshell
-(setq eshell-where-to-jump 'begin)
-(setq eshell-review-quick-commands nil)
-(setq eshell-smart-space-goes-to-end t)
+(setq eshell-where-to-jump 'begin
+      eshell-review-quick-commands nil
+      eshell-smart-space-goes-to-end t)
 
-(global-set-key (kbd "<f1>") 'eshell)
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (add-to-list 'eshell-visual-commands "htop")))
+
+(defun switch-eshell ()
+  "Switch to eshell buffer or hide it if current buffer"
+  (interactive)
+  (if (eq major-mode 'eshell-mode)
+      (switch-to-buffer (second (buffer-list)))
+    (eshell)))
+(global-set-key (kbd "<f1>") #'switch-eshell)
 
 (defun eshell/clear ()
   "Clears the eshell buffer"

@@ -1,3 +1,4 @@
 alias g git $*
 alias la ls -la $*
 alias ll ls -l $*
+alias fresh-emacs open -na Emacs
