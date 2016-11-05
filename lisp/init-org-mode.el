@@ -432,14 +432,14 @@ end tell"))
 (add-to-list 'org-file-apps '("\\.pdf\\'" . "/Applications/Skim.app/Contents/SharedSupport/displayline 1 %s"))
 
 ;;; org-download
-(require 'org-download)
-(defun fyi-configure-org-download ()
-  "Configures `org-download'."
-  (setq org-download-image-dir "~/org/org-download-images/"
-        org-download-heading-lvl nil
-        org-download-image-width 200))
+;; (require 'org-download)
+;; (defun fyi-configure-org-download ()
+;;   "Configures `org-download'."
+;;   (setq org-download-image-dir "~/org/org-download-images/"
+;;         org-download-heading-lvl nil
+;;         org-download-image-width 200))
 
-(add-hook 'org-mode-hook #'fyi-configure-org-download)
+;; (add-hook 'org-mode-hook #'fyi-configure-org-download)
 
 ;;; custom easy templates
 (add-to-list 'org-structure-template-alist

@@ -112,6 +112,7 @@
         init-ace-link
         init-dictcc
         init-feature-mode
+        init-fireplace
 	))
 
 ;; load them
