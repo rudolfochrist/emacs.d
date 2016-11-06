@@ -251,11 +251,6 @@ ADDED: %U"
 
 (add-hook 'org-mode-hook 'visual-line-mode)
 
-;;; Enable yasnippets in org
-(add-hook 'org-mode-hook '(lambda ()
-                            (org-set-local 'yas/trigger-key [tab])
-                            (define-key yas/keymap [tab] 'yas-next-field-or-maybe-expand)))
-
 ;;; latex export customization
 (add-to-list 'org-latex-classes
              '("fyi-article"
