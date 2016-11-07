@@ -130,7 +130,6 @@ This can be zero for immediate or a floating point value.")
       org-agenda-skip-scheduled-if-done t
       org-agenda-todo-ignore-scheduled t
       org-agenda-todo-ignore-deadlines 'near
-      org-agenda-start-on-weekday nil
       org-agenda-skip-scheduled-if-deadline-is-shown t
       org-agenda-skip-deadline-prewarning-if-scheduled t
       org-deadline-warning-days 7)
