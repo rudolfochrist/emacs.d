@@ -79,6 +79,7 @@ _a_nnual book expenses
 ;;; todos setup
 (setq org-todo-keywords
       '((sequence "TODO(t)" "PROJECT(p)" "WAITING(w)" "DELEGATED(k)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)"))
+      org-stuck-projects '("+PROJECT" ("TODO" "WAITING" "DELEGATED") nil "")
       ;; not needed with current face. But keep it any way
       ;; org-todo-keyword-faces
       ;; '(("PROJECT" :weight bold :foreground "dark magenta")
@@ -126,9 +127,10 @@ This can be zero for immediate or a floating point value.")
 ;;; agenda
 (setq org-log-done 'time
       org-agenda-span 'week
+      org-agenda-start-on-weekday nil   ; start agenda on current day
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
-      org-agenda-todo-ignore-scheduled t
+      org-agenda-todo-ignore-scheduled 'all
       org-agenda-todo-ignore-deadlines 'near
       org-agenda-skip-scheduled-if-deadline-is-shown t
       org-agenda-skip-deadline-prewarning-if-scheduled t

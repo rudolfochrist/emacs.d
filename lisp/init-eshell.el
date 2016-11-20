@@ -8,7 +8,8 @@
 
 (add-hook 'eshell-mode-hook
           (lambda ()
-            (add-to-list 'eshell-visual-commands "htop")))
+            (add-to-list 'eshell-visual-commands "htop")
+            (add-to-lsit 'eshell-visual-commands "svn")))
 
 (defun switch-eshell ()
   "Switch to eshell buffer or hide it if current buffer"
