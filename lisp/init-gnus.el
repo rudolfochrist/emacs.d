@@ -158,7 +158,9 @@
          (gnus-article-sort-functions '(gnus-article-sort-by-most-recent-date))
          (gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date)))
         ("Sent Mail"
-         (display . all))
+         (display . all)
+         (gnus-article-sort-functions '(gnus-article-sort-by-most-recent-date))
+         (gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date)))
         ("INBOX"
          (total-expire . t)
          (expiry-wait . immediate))
