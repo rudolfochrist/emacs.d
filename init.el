@@ -113,6 +113,7 @@
         init-dictcc
         init-feature-mode
         init-fireplace
+        init-goto-last-change
 	))
 
 ;; load them
