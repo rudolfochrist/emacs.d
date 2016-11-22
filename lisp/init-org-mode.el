@@ -79,7 +79,7 @@ _a_nnual book expenses
 ;;; todos setup
 (setq org-todo-keywords
       '((sequence "TODO(t)" "PROJECT(p)" "WAITING(w)" "DELEGATED(k)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)"))
-      org-stuck-projects '("+PROJECT" ("TODO" "WAITING" "DELEGATED") nil "")
+      org-stuck-projects '("TODO=\"PROJECT\"" ("TODO" "WAITING" "DELEGATED") nil "")
       ;; not needed with current face. But keep it any way
       ;; org-todo-keyword-faces
       ;; '(("PROJECT" :weight bold :foreground "dark magenta")
