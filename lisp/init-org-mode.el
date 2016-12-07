@@ -311,10 +311,30 @@ ADDED: %U"
         "lof" "lot" "lol"))
 
 ;;; misc.
+(defun toggle-org-latex-hyperref-colorlinks (&optional force-colorlinks)
+  "Toggel colorlinks=true in LaTeX hyperref setup.
+
+This is great for printing the document in grayscale.
+
+With prefix argumnet or if FORCE-COLORLINKS is non-nil set
+hypersetup to include colorlinks=true."
+  (interactive "P")
+  (let ((prefix "\\hypersetup{\n pdftitle={%t},\n pdfcreator={%c}, \n pdflang={%L},\n colorlinks=")
+        (suffix "}\n")
+        (colorlinksp (string-match "colorlinks=true" org-latex-hyperref-template)))
+    (setq org-latex-hyperref-template
+          (concat prefix
+                  (if (or force-colorlinks
+                          (not colorlinksp))
+                      "true"
+                    "false")
+                  suffix))))
+
 (setq org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
       org-export-date-timestamp-format "%Y-%m-%d"
-      org-footnote-auto-label 'plain    ; generate numbered footnotes like [1]
-      org-latex-hyperref-template "\\hypersetup{\n pdfauthor={%a},\n pdftitle={%t},\n pdfkeywords={%k},\n pdfsubject={%d},\n pdfcreator={%c}, \n pdflang={%L}, \n colorlinks=true}\n")
+      org-latex-prefer-user-labels t
+      org-footnote-auto-label t    ; generate numbered footnotes like [fn:1]
+      org-latex-hyperref-template (toggle-org-latex-hyperref-colorlinks 'force))
 
 (add-to-list 'org-latex-packages-alist '("" "color" nil))
 
