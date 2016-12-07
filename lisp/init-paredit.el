@@ -41,7 +41,7 @@
     ("s-<up>" . paredit-backward-up)
     ("s-<down>" . paredit-forward-down)
     ;; misc.
-    ("C-o C-o" . paredit-insert-section-header)))
+    ("C-c C-o" . paredit-insert-section-header)))
 
 (defun paredit-custom-keybindings ()
   (cl-loop for (key . func) in paredit-custom-keys-alist
