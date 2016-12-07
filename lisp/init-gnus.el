@@ -3,6 +3,7 @@
 (require-package 'bbdb-vcard)
 (require 'gnus)
 (require 'nnir)
+(require 'org)
 
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
 
@@ -128,11 +129,17 @@
   (push '("no-attrib" . "") sc-attributions))
 (add-hook 'sc-attribs-preselect-hook 'fyi-sc-pre-handler)
 
-(add-hook 'message-mode-hook (lambda ()
-                               (ispell-change-dictionary "german8")
-                               (enable-yas-minor-mode)
-                               (bbdb-mail-aliases)
-                               (local-set-key (kbd "TAB") 'fyi-gnus-multi-tab)))
+;;; message mode hook
+(defun fyi-message-mode-hook ()
+  (message-setup-fill-variables)
+  (ispell-change-dictionary "german8")
+  (yas-minor-mode 1)
+  (bbdb-mail-aliases)
+  (local-set-key (kbd "TAB") 'fyi-gnus-multi-tab)
+  (turn-on-orgtbl)
+  (turn-on-orgstruct++))
+
+(add-hook 'message-mode-hook #'fyi-message-mode-hook)
 
 ;;; Tree view for groups
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
@@ -458,5 +465,27 @@ If TITLE is nil, then the URL is used as title."
 
 (add-hook 'message-sent-hook #'gnus-score-followup-article)
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
+
+;;; signature
+(require 'ivy)
+(require 'counsel)
+
+(defun message-select-signature-file ()
+  (let ((dir (expand-file-name "~/.signatures/"))
+        sig-file)
+    (ivy-read "Signatures: "
+              (directory-files dir nil ".*\.sig")
+              :require-match t
+              :preselect (counsel-symbol-at-point)
+              :history 'message-select-signature-file
+              :caller 'message-select-signature-file
+              :action (lambda (file)
+                        (setq sig-file (concat dir file))))
+    
+    (with-temp-buffer
+      (insert-file-contents sig-file)
+      (buffer-string))))
+
+(setq message-signature #'message-select-signature-file)
 
 (provide 'init-gnus)
