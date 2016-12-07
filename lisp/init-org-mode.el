@@ -424,9 +424,6 @@ end tell"))
                               "xelatex -interaction nonstopmode %f"
                               "xelatex -interaction nonstopmode %f"))
 
-;;; use Skim to open PDFs
-(add-to-list 'org-file-apps '("\\.pdf\\'" . "/Applications/Skim.app/Contents/SharedSupport/displayline 1 %s"))
-
 ;;; org-download
 (require-package 'org-download)
 (setq org-download-image-dir "~/org/org-download-images/"
