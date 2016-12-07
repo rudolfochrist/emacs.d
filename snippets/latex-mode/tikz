@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: tikz
+# key: tikz
+# --
+\documentclass{article}
+
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+  % guide lines
+  \draw (0,0) grid (8,8);
+  $0
+
+\end{tikzpicture}
+
+\end{document}
