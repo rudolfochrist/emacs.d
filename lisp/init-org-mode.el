@@ -225,15 +225,15 @@ ADDED: %U"
 
 ;;; custom agenda views
 (setq org-agenda-custom-commands
-      '(("d" "Week Agenda" agenda ""
+      '(("i" "Inbox" tags "CATEGORY=\"INBOX\"&LEVEL=2"
+         ((org-agenda-overriding-header "Inbox:")))
+        ("d" "Week Agenda" agenda ""
          ((org-agenda-category-filter-preset '("-INBOX"))))
         ("D" "Day Agenda" agenda ""
          ((org-agenda-category-filter-preset '("-INBOX"))
           (org-agenda-span 'day)))
         ("p" "Active projects" tags "TODO=\"PROJECT\""
-         ((org-agenda-overriding-header "Active Projects:")))
-        ("u" "Uncategorized items" tags "CATEGORY=\"INBOX\"&LEVEL=2"
-         ((org-agenda-overriding-header "Uncategorized items:")))
+         ((org-agenda-overriding-header "Active Projects:"))) 
         ("j" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"INBOX\""
          ((org-agenda-overriding-header "All TODOs")))
         ("w" "Waiting/Delegated tasks" tags "TODO=\"WAITING\"|TODO=\"DELEGATED\""
