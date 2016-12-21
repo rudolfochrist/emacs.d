@@ -34,9 +34,17 @@
      (revert-buffer nil t)))
   (message "Reverted buffers."))
 
+(defun find-file-in-project-or-directory ()
+  "Searches for file either in current project or current directory."
+  (interactive)
+  (call-interactively
+   (if (ffip-get-project-root-directory)
+       #'find-file-in-project
+     #'find-file-in-current-directory)))
+
 (defvar ffip-command-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "f") #'find-file-in-project)
+    (define-key map (kbd "f") #'find-file-in-project-or-directory)
     (define-key map (kbd "s") #'ffip-save-project-buffers)
     (define-key map (kbd "k") #'ffip-kill-project-buffers)
     (define-key map (kbd "r") #'ffip-revert-project-buffers)
