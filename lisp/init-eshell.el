@@ -23,6 +23,12 @@
   "Clears the eshell buffer"
   (interactive)
   (let ((inhibit-read-only t))
-    (erase-buffer)))
+    (erase-buffer)
+    (eshell-send-input)))
+
+(defun fyi-eshell-keybindings ()
+  (let ((map eshell-mode-map))
+    (define-key map (kbd "C-l") #'eshell/clear)))
+(add-hook 'eshell-mode-hook #'fyi-eshell-keybindings)
 
 (provide 'init-eshell)
