@@ -159,11 +159,35 @@
         (message "%s" doc)
       (slime-documentation symbol))))
 
+;;; location asd or package files
+(require 'find-file-in-project)
+
+(defun fyi-find-current-asd-file ()
+  (interactive)
+  (let* ((dir (or (ffip-get-project-root-directory)
+                  default-directory))
+         (asd (concat dir 
+                      (file-name-base (directory-file-name dir))
+                      ".asd")))
+    (find-file asd)))
+
+(defun fyi-find-current-package-file ()
+  (interactive)
+  (let ((ffip-project-root (or (ffip-get-project-root-directory)
+                               default-directory))
+        file)
+    ;; using setq to have access to ffip-project-root binding
+    (setq file (cdar (ffip-project-search "package.lisp" nil)))
+    (when file
+      (find-file file))))
+
 (defun fyi-slime-keybindings ()
   (define-key slime-mode-map (kbd "RET") #'fyi-slime-autodoc-newline)
   (define-key slime-mode-map (kbd "C-c C-z") #'fyi-slime-repl-switch)
   (define-key slime-mode-map (kbd "C-c C-d i") #'fyi-slime-insert-header)
-  (define-key slime-mode-map (kbd "C-c C-d s") #'slime-documentation-in-minibuffer))
+  (define-key slime-mode-map (kbd "C-c C-d s") #'slime-documentation-in-minibuffer)
+  (define-key slime-mode-map (kbd "C-c C-d ,") #'fyi-find-current-asd-file)
+  (define-key slime-mode-map (kbd "C-c C-d .") #'fyi-find-current-package-file))
 
 (add-hook 'slime-mode-hook 'fyi-slime-keybindings)
 
