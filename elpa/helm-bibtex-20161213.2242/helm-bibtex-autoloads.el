@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "helm-bibtex" "helm-bibtex.el" (22610 59658
+;;;### (autoloads nil "helm-bibtex" "helm-bibtex.el" (22615 43028
 ;;;;;;  0 0))
 ;;; Generated autoloads from helm-bibtex.el
 
@@ -26,7 +26,7 @@ reread.
 ;;;***
 
 ;;;### (autoloads nil nil ("bibtex-completion.el" "helm-bibtex-pkg.el")
-;;;;;;  (22610 59658 0 0))
+;;;;;;  (22615 43028 0 0))
 
 ;;;***
 

@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "doi-utils" "doi-utils.el" (22610 59465 0 0))
+;;;### (autoloads nil "doi-utils" "doi-utils.el" (22615 43030 0 0))
 ;;; Generated autoloads from doi-utils.el
 
 (autoload 'doi-utils-get-bibtex-entry-pdf "doi-utils" "\
@@ -129,7 +129,7 @@ Search Crossref with QUERY and use helm to select an entry to add to BIBTEX-FILE
 
 ;;;***
 
-;;;### (autoloads nil "nist-webbook" "nist-webbook.el" (22610 59465
+;;;### (autoloads nil "nist-webbook" "nist-webbook.el" (22615 43030
 ;;;;;;  0 0))
 ;;; Generated autoloads from nist-webbook.el
 
@@ -145,7 +145,7 @@ Search NIST webbook for NAME.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-arxiv" "org-ref-arxiv.el" (22610 59465
+;;;### (autoloads nil "org-ref-arxiv" "org-ref-arxiv.el" (22615 43030
 ;;;;;;  0 0))
 ;;; Generated autoloads from org-ref-arxiv.el
 
@@ -169,8 +169,8 @@ key.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-bibtex" "org-ref-bibtex.el" (22610
-;;;;;;  59465 0 0))
+;;;### (autoloads nil "org-ref-bibtex" "org-ref-bibtex.el" (22615
+;;;;;;  43030 0 0))
 ;;; Generated autoloads from org-ref-bibtex.el
 
 (autoload 'org-ref-bibtex-generate-longtitles "org-ref-bibtex" "\
@@ -329,7 +329,7 @@ will clobber the file.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-core" "org-ref-core.el" (22610 59465
+;;;### (autoloads nil "org-ref-core" "org-ref-core.el" (22615 43030
 ;;;;;;  0 0))
 ;;; Generated autoloads from org-ref-core.el
 
@@ -519,8 +519,8 @@ Open the `org-ref' manual.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-glossary" "org-ref-glossary.el" (22610
-;;;;;;  59465 0 0))
+;;;### (autoloads nil "org-ref-glossary" "org-ref-glossary.el" (22615
+;;;;;;  43030 0 0))
 ;;; Generated autoloads from org-ref-glossary.el
 
 (autoload 'org-ref-add-glossary-entry "org-ref-glossary" "\
@@ -546,7 +546,7 @@ Helm command to insert glossary and acronym entries as links.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-helm" "org-ref-helm.el" (22610 59465
+;;;### (autoloads nil "org-ref-helm" "org-ref-helm.el" (22615 43030
 ;;;;;;  0 0))
 ;;; Generated autoloads from org-ref-helm.el
 
@@ -582,7 +582,7 @@ Run this with the point in a bibtex entry.
 ;;;***
 
 ;;;### (autoloads nil "org-ref-helm-bibtex" "org-ref-helm-bibtex.el"
-;;;;;;  (22610 59465 0 0))
+;;;;;;  (22615 43030 0 0))
 ;;; Generated autoloads from org-ref-helm-bibtex.el
 
 (autoload 'org-ref-bibtex-completion-completion "org-ref-helm-bibtex" "\
@@ -627,7 +627,7 @@ With a prefix ARG, browse labels.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-isbn" "org-ref-isbn.el" (22610 59465
+;;;### (autoloads nil "org-ref-isbn" "org-ref-isbn.el" (22615 43030
 ;;;;;;  0 0))
 ;;; Generated autoloads from org-ref-isbn.el
 
@@ -653,8 +653,8 @@ in the file. Data comes from worldcat.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-ivy-cite" "org-ref-ivy-cite.el" (22610
-;;;;;;  59465 0 0))
+;;;### (autoloads nil "org-ref-ivy-cite" "org-ref-ivy-cite.el" (22615
+;;;;;;  43030 0 0))
 ;;; Generated autoloads from org-ref-ivy-cite.el
 
 (autoload 'org-ref-ivy-cite-completion "org-ref-ivy-cite" "\
@@ -664,7 +664,7 @@ Use ivy for completion.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-latex" "org-ref-latex.el" (22610 59465
+;;;### (autoloads nil "org-ref-latex" "org-ref-latex.el" (22615 43030
 ;;;;;;  0 0))
 ;;; Generated autoloads from org-ref-latex.el
 
@@ -680,7 +680,7 @@ Jump to entry clicked on.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-pdf" "org-ref-pdf.el" (22610 59465
+;;;### (autoloads nil "org-ref-pdf" "org-ref-pdf.el" (22615 43030
 ;;;;;;  0 0))
 ;;; Generated autoloads from org-ref-pdf.el
 
@@ -706,8 +706,8 @@ variable `org-ref-pdf-doi-regex'.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-pubmed" "org-ref-pubmed.el" (22610
-;;;;;;  59465 0 0))
+;;;### (autoloads nil "org-ref-pubmed" "org-ref-pubmed.el" (22615
+;;;;;;  43030 0 0))
 ;;; Generated autoloads from org-ref-pubmed.el
 
 (autoload 'pubmed-insert-bibtex-from-pmid "org-ref-pubmed" "\
@@ -738,8 +738,8 @@ Open QUERY in Pubmed in a browser.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-reftex" "org-ref-reftex.el" (22610
-;;;;;;  59465 0 0))
+;;;### (autoloads nil "org-ref-reftex" "org-ref-reftex.el" (22615
+;;;;;;  43030 0 0))
 ;;; Generated autoloads from org-ref-reftex.el
 
 (autoload 'org-ref-reftex-completion "org-ref-reftex" "\
@@ -763,7 +763,7 @@ get a lot of options.  LINK-STRING is used by the link function.
 ;;;***
 
 ;;;### (autoloads nil "org-ref-scifinder" "org-ref-scifinder.el"
-;;;;;;  (22610 59465 0 0))
+;;;;;;  (22615 43030 0 0))
 ;;; Generated autoloads from org-ref-scifinder.el
 
 (autoload 'scifinder "org-ref-scifinder" "\
@@ -773,8 +773,8 @@ Open https://scifinder.cas.org/scifinder/view/scifinder/scifinderExplore.jsf in 
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-scopus" "org-ref-scopus.el" (22610
-;;;;;;  59465 0 0))
+;;;### (autoloads nil "org-ref-scopus" "org-ref-scopus.el" (22615
+;;;;;;  43030 0 0))
 ;;; Generated autoloads from org-ref-scopus.el
 
 (autoload 'scopus-related-by-keyword-url "org-ref-scopus" "\
@@ -810,7 +810,7 @@ Open QUERY as an advanced search at scopus.com.
 ;;;***
 
 ;;;### (autoloads nil "org-ref-url-utils" "org-ref-url-utils.el"
-;;;;;;  (22610 59465 0 0))
+;;;;;;  (22615 43030 0 0))
 ;;; Generated autoloads from org-ref-url-utils.el
 
 (autoload 'org-ref-url-debug-url "org-ref-url-utils" "\
@@ -837,7 +837,7 @@ Drag-n-drop function to download the first DOI in a url.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-utils" "org-ref-utils.el" (22610 59465
+;;;### (autoloads nil "org-ref-utils" "org-ref-utils.el" (22615 43030
 ;;;;;;  0 0))
 ;;; Generated autoloads from org-ref-utils.el
 
@@ -933,7 +933,7 @@ generated by `org-ref-reftex-format-citation'.
 
 ;;;***
 
-;;;### (autoloads nil "org-ref-wos" "org-ref-wos.el" (22610 59465
+;;;### (autoloads nil "org-ref-wos" "org-ref-wos.el" (22615 43030
 ;;;;;;  0 0))
 ;;; Generated autoloads from org-ref-wos.el
 
@@ -949,7 +949,7 @@ Open Web of Science search page in a browser.
 
 ;;;***
 
-;;;### (autoloads nil "x2bib" "x2bib.el" (22610 59465 0 0))
+;;;### (autoloads nil "x2bib" "x2bib.el" (22615 43030 0 0))
 ;;; Generated autoloads from x2bib.el
 
 (autoload 'ris2bib "x2bib" "\
@@ -975,7 +975,7 @@ Map over bibtex entries and clean them.
 
 ;;;### (autoloads nil nil ("org-ref-citeproc.el" "org-ref-helm-cite.el"
 ;;;;;;  "org-ref-ivy.el" "org-ref-pkg.el" "org-ref-sci-id.el" "org-ref-worldcat.el"
-;;;;;;  "org-ref.el") (22610 59465 0 0))
+;;;;;;  "org-ref.el") (22615 43030 0 0))
 
 ;;;***
 
