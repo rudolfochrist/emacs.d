@@ -18,14 +18,8 @@
     (funcall mode -1)))
 
 ;;; theme du jour
-(require-package 'zerodark-theme :noerror t)
-(load-theme 'zerodark t)
+(load (expand-file-name "themes/meacupla" user-emacs-directory))
 
-;;; personal theme adjustments
-(custom-set-faces
- '(cursor ((t (:background "indian red"))))
- '(region ((t (:background "#1f5582"))))
- '(secondary-selection ((t (:background "#61afef" :foreground "black")))))
 
 ;; set font in GUI
 (when window-system
@@ -49,6 +43,6 @@
       display-battery-mode t)
 (display-time-mode 1)
 
-(which-func-mode 1)
+(which-function-mode 1)
 
 (provide 'init-appearance)

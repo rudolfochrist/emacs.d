@@ -121,4 +121,3 @@
  ;; magit
  '(magit-branch-current ((t :foreground "#7CAFC2"))))
 
-(provide 'init-basic-theme)
