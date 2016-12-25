@@ -1,4 +1,6 @@
 (require-package 'avy)
+(eval-when-compile
+  (require 'hydra))
 
 (defhydra hydra-avy (:color blue)
   "Jump to"

@@ -1,4 +1,6 @@
 (require-package 'page-break-lines)
+(eval-when-compile
+  (require 'hydra))
 
 (global-page-break-lines-mode)
 

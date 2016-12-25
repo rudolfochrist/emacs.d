@@ -57,9 +57,9 @@
         init-my-override-keymap
         init-keybindings
         init-spelling
+        init-hydra
         init-ivy
         init-company-mode
-        init-hydra
         init-javascript
         init-markdown
         init-paredit

@@ -1,4 +1,6 @@
 (require-package 'hydra)
+(eval-when-compile
+  (require 'hydra))
 (require 'windmove)
 
 ;;; copied from https://github.com/abo-abo/hydra/blob/master/hydra-examples.el
@@ -34,10 +36,7 @@
       (shrink-window arg)
       (enlarge-window arg)))
 
-
-(global-set-key
- (kbd "C-M-=")
- (defhydra hydra-globals (:hint nil)
+(defhydra hydra-globals (:hint nil)
    "
 Some global mappings.
 _q_ : I just changed my mind. Quit.
@@ -57,6 +56,7 @@ _0_: default text size                _j_
    ("j" (hydra-move-splitter-down 5))
    ("k" (hydra-move-splitter-up 5))
    ("l" (hydra-move-splitter-right 5))
-   ("=" balance-windows :color blue)))
+   ("=" balance-windows :color blue))
+(global-set-key (kbd "C-M-=") #'hydra-globals)
 
 (provide 'init-hydra)

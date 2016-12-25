@@ -1,4 +1,6 @@
 (require-package 'multiple-cursors)
+(eval-when-compile
+  (require 'hydra))
 
 (global-set-key
  (kbd "C-<")

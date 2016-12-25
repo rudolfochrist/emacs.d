@@ -3,19 +3,18 @@
 (require-package 'counsel)
 (require-package 'smex)
 (require 'recentf)
+(require 'hydra)
 
 (setq ivy-display-style 'fancy)
-
 (ivy-mode 1)
 
-(global-set-key
- (kbd "<M-f2>")
- (defhydra hydra-search (:color blue)
-   "Searching and finding"
-   ("l" counsel-locate "Locate")
-   ("s" search-kb "search KB")
-   ("i" counsel-imenu "imenu")
-   ("q" nil "Quit")))
+(defhydra hydra-search (:color blue)
+  "Searching and finding"
+  ("l" counsel-locate "Locate")
+  ("s" search-kb "search KB")
+  ("i" counsel-imenu "imenu")
+  ("q" nil "Quit"))
+(global-set-key (kbd "<M-f2>") #'hydra-search)
 
 (global-set-key (kbd "<f2>") #'counsel-ag)
 (global-set-key (kbd "C-h f") #'counsel-describe-function)
