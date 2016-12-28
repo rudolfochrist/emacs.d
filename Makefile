@@ -11,10 +11,13 @@ all: byte-compile
 .PHONY: compile
 byte-compile: $(SRCS)
 	$(EMACS) $(EMACSFLAGS) \
-	--eval '(byte-recompile-directory "lisp" 0)' \
-	--eval '(byte-recompile-directory "themes" 0)' \
-	--eval '(byte-recompile-directory "site-lisp" 0)' \
-	--eval '(byte-recompile-file "init.el" nil 0)' \
+	--eval '(byte-compile-file "init.el")'
+	$(EMACS) $(EMACSFLAGS) \
+	--eval '(byte-recompile-directory "lisp" 0)'
+	$(EMACS) $(EMACSFLAGS) \
+	--eval '(byte-recompile-directory "themes" 0)' 
+	$(EMACS) $(EMACSFLAGS) \
+	--eval '(byte-recompile-directory "site-lisp" 0)' 
 
 .PHONY: clean
 clean:

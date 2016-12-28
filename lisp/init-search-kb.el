@@ -1,10 +1,12 @@
+(require 'ivy)
+
 (defun counsel-fyi-kb-search-function (string &rest unused)
   "Lookup STRING with index-cli"
   (if (< (length string) 3)
       (counsel-more-chars 3)
-      (counsel--async-command
-       (format "index-cli -i /Users/fyi/org -q \"%s\"" string))
-      nil))
+    (counsel--async-command
+     (format "index-cli -i /Users/fyi/org -q \"%s\"" string))
+    nil))
 
 (defun search-kb (&optional initial-input)
   "Search KB"
@@ -22,6 +24,6 @@
                           (org-show-entry)
                           (show-children))))))
 
-
+(global-set-key (kbd "<M-f2>") #'search-kb)
 
 (provide 'init-search-kb)

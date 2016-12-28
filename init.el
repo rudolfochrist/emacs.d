@@ -59,6 +59,7 @@
         init-spelling
         init-hydra
         init-ivy
+        init-search-kb
         init-company-mode
         init-javascript
         init-markdown
@@ -95,7 +96,6 @@
         init-yaml-mode
         init-ruby
         init-web-mode
-        init-search-kb
         init-ledger-mode
         init-anzu
         init-page-navigation
