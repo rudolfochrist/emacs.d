@@ -153,9 +153,7 @@
     (cond ((eq major-mode 'gnus-article-mode)
            (org-smart-capture-article)
            (with-current-buffer gnus-summary-buffer
-             (gnus-summary-mark-as-read
-              nil (unless (string= (buffer-name) "*Summary INBOX*")
-                    gnus-dormant-mark))))
+             (gnus-summary-mark-as-read nil)))
 
           ((eq major-mode 'gnus-summary-mode)
            (save-excursion
@@ -164,10 +162,7 @@
                     (multiple (> (length articles) 1)))
                (dolist (article articles)
                  (gnus-summary-remove-process-mark article)
-                 (gnus-summary-mark-as-read
-                  article (unless (string= (buffer-name gnus-summary-buffer)
-                                           "*Summary INBOX*")
-                            gnus-dormant-mark))
+                 (gnus-summary-mark-as-read article)
                  (unless arg
                    (save-excursion
                      (org-smart-capture-article article multiple))))
