@@ -66,7 +66,6 @@
         init-paredit
         init-slime
         init-magit
-        init-hippie-expand
         init-multiple-cursors
         init-org-mode
         init-erlang
