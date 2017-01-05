@@ -6,6 +6,8 @@
       magit-repository-directories '(("~/.emacs.d/" . 0)
                                      ("~/dev/" . 1)))
 
+(add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty))
+
 ;; magit status
 (global-set-key (kbd "<f9>") #'magit-status)
 (global-set-key (kbd "<M-f9>") #'magit-list-repositories)
