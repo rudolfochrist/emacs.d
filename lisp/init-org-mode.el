@@ -227,22 +227,21 @@ ADDED: %U"
 (setq org-agenda-custom-commands
       '(("i" "Inbox" tags "CATEGORY=\"INBOX\"&LEVEL=2"
          ((org-agenda-overriding-header "Inbox:")))
-        ("d" "Week Agenda" agenda ""
-         ((org-agenda-category-filter-preset '("-INBOX"))))
-        ("D" "Day Agenda" agenda ""
-         ((org-agenda-category-filter-preset '("-INBOX"))
-          (org-agenda-span 'day)))
-        ("p" "Active projects" tags "TODO=\"PROJECT\""
-         ((org-agenda-overriding-header "Active Projects:"))) 
-        ("j" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"INBOX\""
-         ((org-agenda-overriding-header "All TODOs")))
-        ("w" "Waiting/Delegated tasks" tags "TODO=\"WAITING\"|TODO=\"DELEGATED\""
+        ("p" "Personal Agenda" agenda ""
+         ((org-agenda-category-filter-preset '("-INBOX" "-WORK"))))
+        ("w" "Work Agenda" agenda ""
+         ((org-agenda-category-filter-preset '("+WORK"))))
+        ("A" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"INBOX\""
+         ((org-agenda-overriding-header "All TODOs"))) 
+        ("W" "Waiting/Delegated tasks" tags "TODO=\"WAITING\"|TODO=\"DELEGATED\""
          ((org-agenda-overriding-header "Waiting/Delegated tasks:")))
-        ("y" "Someday/Maybe tasks" todo "SOMEDAY"
+        ("P" "Active projects" tags "TODO=\"PROJECT\""
+         ((org-agenda-overriding-header "Active Projects:")))
+        ("Y" "Someday/Maybe tasks" todo "SOMEDAY"
          ((org-agenda-overriding-header "Someday/Maybe tasks:")))
-        ("x" "Review Done/Canceled tasks" tags "TODO={DONE\\|CANCELED}&CATEGORY<>\"INBOX\"&LEVEL=2"
+        ("R" "Review Done/Canceled tasks" tags "TODO={DONE\\|CANCELED}&CATEGORY<>\"INBOX\"&LEVEL=2"
          ((org-agenda-overriding-header "Review Done/Canceled tasks:")))
-        ("Y" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|SOMEDAY\\|PROJECT\\|CANCELED}"
+        ("U" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|SOMEDAY\\|PROJECT\\|CANCELED}"
          ((org-agenda-overriding-header "Unscheduled tasks:")
           (org-agenda-skip-function
            '(org-agenda-skip-entry-if 'timestamp))))))
