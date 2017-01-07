@@ -9,6 +9,7 @@
 (add-hook 'slime-repl-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook #'enable-paredit-mode)
 (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
+(add-hook 'ielm-mode-hook #'enable-paredit-mode)
 
 ;;; don't add space before splicing (,@) or reader macros
 (defun fyi-paredit-adjust-spacing (endp delimiter)

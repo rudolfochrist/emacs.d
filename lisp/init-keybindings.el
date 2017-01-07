@@ -23,4 +23,7 @@
 ;;; http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
 (global-set-key (kbd "C-x k") #'kill-this-buffer)
 
+;;; ielm
+(global-set-key (kbd "<M-f5>") #'ielm)
+
 (provide 'init-keybindings)
