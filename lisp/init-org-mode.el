@@ -225,13 +225,13 @@ ADDED: %U"
 
 ;;; custom agenda views
 (setq org-agenda-custom-commands
-      '(("i" "Inbox" tags "CATEGORY=\"INBOX\"&LEVEL=2"
+      '(("i" "Inbox" tags "CATEGORY=\"Inbox\"&LEVEL=2&TODO<>{DONE\\|CANCELED}"
          ((org-agenda-overriding-header "Inbox:")))
         ("p" "Personal Agenda" agenda ""
-         ((org-agenda-category-filter-preset '("-INBOX" "-WORK"))))
+         ((org-agenda-category-filter-preset '("-Inbox" "-Work"))))
         ("w" "Work Agenda" agenda ""
-         ((org-agenda-category-filter-preset '("+WORK"))))
-        ("A" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"INBOX\""
+         ((org-agenda-category-filter-preset '("+Work"))))
+        ("A" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"Inbox\""
          ((org-agenda-overriding-header "All TODOs"))) 
         ("W" "Waiting/Delegated tasks" tags "TODO=\"WAITING\"|TODO=\"DELEGATED\""
          ((org-agenda-overriding-header "Waiting/Delegated tasks:")))
@@ -239,7 +239,7 @@ ADDED: %U"
          ((org-agenda-overriding-header "Active Projects:")))
         ("Y" "Someday/Maybe tasks" todo "SOMEDAY"
          ((org-agenda-overriding-header "Someday/Maybe tasks:")))
-        ("R" "Review Done/Canceled tasks" tags "TODO={DONE\\|CANCELED}&CATEGORY<>\"INBOX\"&LEVEL=2"
+        ("R" "Review Done/Canceled tasks" tags "TODO={DONE\\|CANCELED}&CATEGORY<>\"Inbox\"&LEVEL=2"
          ((org-agenda-overriding-header "Review Done/Canceled tasks:")))
         ("U" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|SOMEDAY\\|PROJECT\\|CANCELED}"
          ((org-agenda-overriding-header "Unscheduled tasks:")
