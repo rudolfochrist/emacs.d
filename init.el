@@ -113,6 +113,7 @@
         init-feature-mode
         init-fireplace
         init-goto-last-change
+        init-ztree
 	))
 
 ;; load them
