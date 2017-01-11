@@ -49,7 +49,8 @@
 
 ;;; org files
 (setq org-directory "~/org/"
-      org-agenda-files '("~/org/tasks/todo.org"))
+      org-agenda-files '("~/org/tasks/personal.org"
+                         "~/org/tasks/m-creations.org"))
 
 (global-set-key
  (kbd "C-x t j")
@@ -62,7 +63,6 @@ _b_ooks
 _f_inances
 _k_nowledge base
 _B_ug Knowledge Base
-_r_ead later
 _a_nnual book expenses
 "
    ("t" (find-file "~/org/tasks/todo.org"))
@@ -72,7 +72,6 @@ _a_nnual book expenses
                            (nth 2 (calendar-current-date))
                            (nth 2 (calendar-current-date)))))
    ("k" (find-file "~/org/kb.org"))
-   ("r" (find-file "~/org/read-later.org"))
    ("a" (find-file (format "~/Documents/Archive/Finances/%s/book-expenses.org"
                            (nth 2 (calendar-current-date)))))))
 
@@ -136,13 +135,6 @@ This can be zero for immediate or a floating point value.")
       org-agenda-skip-deadline-prewarning-if-scheduled t
       org-deadline-warning-days 7)
 
-(defun fyi-summarize-captured-url ()
-  "Summarizes the website for the given URL using sumy (https://github.com/miso-belica/sumy)."
-  (let ((url (fyi-get-current-url)))
-    (with-temp-buffer
-      (call-process "sumy" nil t nil "text-rank" (format "--url=%s" url) "--length=10%")
-      (buffer-string))))
-
 ;;; org-capture
 (global-set-key (kbd "<M-f12>") #'org-smart-capture)
 (setq org-gnus-prefer-web-links t)
@@ -160,43 +152,14 @@ ADDED: %U"
 :CREATED: %U
 :END:\n\n"
          :prepend t :empty-lines 1)
-        ("r" "Add link to ~/org/read-later.org" entry
-         (file "~/org/read-later.org")
-         "* %(fyi-get-current-title) --- (%u)
-:PROPERTIES:
-:URL: %(fyi-get-current-url)
-:END:\n\n"
-         :prepend t :immediate-finish t)
-        ("y" "Add link to ~/org/read-later.org" entry
-         (file "~/org/read-later.org")
-         "* %:description  --- (%u)
-:PROPERTIES:
-:URL: %:link
-:END:\n\n"
-         :prepend t :immediate-finish t)
         ("b" "Add bookmark" entry
          (file "~/org/kb.org")
-         "* %(fyi-get-current-title) :bookmark:
+         "* %?  :bookmark:
 :PROPERTIES:
 :CREATED: %U
-:URL: %(fyi-get-current-url)
+:URL:
 :END:
-
-%?
-
-** Website Summary:
-
-%(fyi-summarize-captured-url)\n\n"
-         :prepend t :empty-lines 1)
-        ("v" "Add bookmark but omit summary" entry
-         (file "~/org/kb.org")
-         "* %(fyi-get-current-title) :bookmark:
-:PROPERTIES:
-:CREATED: %U
-:URL: %(fyi-get-current-url)
-:END:
-
-%?"
+"
          :prepend t :empty-lines 1)))
 
 ;;; refile
@@ -231,7 +194,7 @@ ADDED: %U"
          ((org-agenda-category-filter-preset '("-Inbox" "-Work"))))
         ("w" "Work Agenda" agenda ""
          ((org-agenda-category-filter-preset '("+Work"))))
-        ("f" "Follow up" tags "email&TODO<>{DONE\\|CANCELED}"
+        ("f" "Follow up" tags "FU&email&TODO<>{DONE\\|CANCELED}"
          ((org-agenda-overriding-header "Follow up:")))
         ("A" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"Inbox\""
          ((org-agenda-overriding-header "All TODOs"))) 
@@ -346,31 +309,6 @@ hypersetup to include colorlinks=true."
 (setq org-image-actual-width '(450))
 (setq org-startup-with-inline-images t)
 
-;;; plotting with gnuplot
-(require 'org-plot)
-(local-set-key (kbd "C-M-g") 'org-plot/gnuplot)
-
-;;; colorize/highlight text
-;;; see: https://www.mail-archive.com/emacs-orgmode@gnu.org/msg29988.html
-;; org-mode color
-(org-add-link-type
- "color" nil
- (lambda (path desc format)
-   (cond
-    ((eq format 'html)
-     (format "<span style=\"color:%s;\">%s</span>" path desc))
-    ((eq format 'latex)
-     (format "{\\color{%s}%s}" path desc)))))
-;; org-mode highlight
-(org-add-link-type
- "hl" nil
- (lambda (path desc format)
-   (cond
-    ((eq format 'html)
-     (format "<font style=\"background-color:%s;\">%s</font>" path desc))
-    ((eq format 'latex)
-     (format "\\colorbox{%s}{%s}" path desc))))) ;; require \usepackage{color}
-
 ;;; bibdexk/bibtex/citation links
 (org-add-link-type
  "x-bdsk"
@@ -409,34 +347,6 @@ hypersetup to include colorlinks=true."
   (interactive "P")
   (insert (org-get-message-link (if arg "writes"))))
 
-(defun fyi-get-current-url ()
-  "Fetches the active tab's URL from Google Chrome."
-  (do-applescript
-   "tell application \"Google Chrome\"
-URL of active tab of front window
-end tell"))
-
-(defun fyi-get-current-title ()
-  "Fetches the active tab's title from Google Chrome"
-  (do-applescript
-   "tell application \"Google Chrome\"
-title of active tab of front window
-end tell"))
-
-(defun org-get-url-link ()
-  (org-make-link-string
-   (fyi-get-current-url)
-   (fyi-get-current-title)))
-
-(defun org-insert-url-link ()
-  (interactive)
-  (insert (org-get-url-link)))
-
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c C-x l") #'org-insert-message-link)
-            (local-set-key (kbd "C-c C-x u") #'org-insert-url-link)))
-
 ;;; use xelatex with bibtex
 (setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
                               "bibtex %b"
@@ -450,10 +360,6 @@ end tell"))
 (setq org-download-image-dir "~/org/org-download-images/"
       org-download-heading-lvl nil
       org-download-image-width 200)
-
-;;; custom easy templates
-(add-to-list 'org-structure-template-alist
-             '("x" "#+BEGIN_EXAM\n?\n#+END_EXAM" ""))
 
 ;;; limit the width
 (defun fyi-org-width ()
@@ -491,24 +397,6 @@ end tell"))
                                   "german8"
                                 "en_US"))))
 (add-hook 'org-mode-hook 'fyi-org-adjust-ispell)
-
-;;; export and move
-(defvar org-export-directory nil
-  "Override this file-locally.")
-
-(defun org-export-html-and-move ()
-  "Exports org buffer and moves the file to `org-export-directory'."
-  (interactive)
-  (unless (eq major-mode 'org-mode)
-    (user-error "Please go to an Org Mode buffer."))
-  (org-html-export-to-html)
-  (when (and org-export-directory
-             (file-exists-p org-export-directory))
-    (let ((file-name (format "%s.html" (file-name-base (buffer-file-name))))
-          (cwd (file-name-directory (buffer-file-name))))
-      (rename-file (concat cwd file-name)
-                   (concat org-export-directory file-name)
-                   t))))
 
 ;;; org export filters
 (defvar org-export-latex-add-link-footnotes nil

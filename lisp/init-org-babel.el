@@ -1,17 +1,19 @@
 (require-package 'gnuplot)
 
-(org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp .t)
-                                                         (js . t)
-                                                         (lisp . t)
-                                                         (emacs-lisp . t)
-                                                         (latex . t)
-                                                         (python . t)
-                                                         (ruby . t)
-                                                         (sh . t)
-                                                         (dot . t)
-                                                         (gnuplot . t)
-                                                         (ditaa . t)
-                                                         (plantuml . t)))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp .t)
+   (js . t)
+   (lisp . t)
+   (emacs-lisp . t)
+   (latex . t)
+   (python . t)
+   (ruby . t)
+   (sh . t)
+   (dot . t)
+   (gnuplot . t)
+   (ditaa . t)
+   (plantuml . t)))
 
 (setq org-confirm-babel-evaluate nil)   ; Don't ask for permission
 (setq org-src-fontify-natively t        ; Show syntax highlighting per language native mode in *.org
