@@ -40,7 +40,7 @@
       gnus-treat-display-smileys nil
       gnus-gcc-mark-as-read t
       gnus-message-archive-group nil
-      gnus-topic-display-empty-topics t)
+      gnus-topic-display-empty-topics nil)
 
 (defun activate-gnus ()
   "Start Gnus when not already running."
@@ -87,47 +87,14 @@
               (nntp-address "nntp.aioe.org"))))
 
 ;;; message-mode setup
+(setq message-default-headers "X-Attribution: SRC")
+
 (defun fyi-gnus-multi-tab ()
   "bbdb mail complete in message header. Yasnippet expand in message body."
   (interactive)
   (if (message-in-body-p)
       (yas-expand)
     (bbdb-complete-mail)))
-
-;;; citation
-(require 'supercite)
-
-(setq sc-cite-blank-lines-p t
-      sc-fixup-whitespace-p nil
-      sc-auto-fill-region-p nil
-      sc-citation-leader " "
-      sc-preferred-attribution-list '("x-attribution" "no-attrib") ; see below!
-      sc-confirm-always-p nil
-      sc-preferred-header-style 0       ; see below! sc-header-on-author-wrote.
-      sc-reference-tag-string "")
-(add-hook 'mail-citation-hook 'sc-cite-original)
-
-(defun sc-header-on-author-wrote ()
-  "On <date>, <from> wrote:"
-  (let* ((sc-mumble "")
-         (whofrom (sc-whofrom))
-         (time (parse-time-string (sc-mail-field "date")))
-         (minute (nth 1 time))
-         (hour (nth 2 time))
-         (day (nth 3 time))
-         (month (nth 4 time))
-         (year (nth 5 time)))
-    (when whofrom
-      (insert sc-reference-tag-string
-              (format "On %d-%02d-%02d %d:%d, " year month day hour minute)
-              whofrom " wrote:\n"))))
-(add-to-list 'sc-rewrite-header-list '(sc-header-on-author-wrote) nil)
-
-(defun fyi-sc-pre-handler ()
-  ;; don't use attribution if x-attribution is undefined
-  ;; I confess: a little hacky
-  (push '("no-attrib" . "") sc-attributions))
-(add-hook 'sc-attribs-preselect-hook 'fyi-sc-pre-handler)
 
 ;;; message mode hook
 (defun fyi-message-mode-hook ()
@@ -138,7 +105,6 @@
   (local-set-key (kbd "TAB") 'fyi-gnus-multi-tab)
   (turn-on-orgtbl)
   (turn-on-orgstruct++))
-
 (add-hook 'message-mode-hook #'fyi-message-mode-hook)
 
 ;;; Tree view for groups
@@ -248,64 +214,10 @@
     (gnus-article-wash-html)))
 (add-hook 'gnus-article-prepare-hook 'fyi-gwene-wash-html)
 
-;;; URL handling features
-;;; see https://github.com/jwiegley/dot-emacs/blob/master/dot-gnus.el
-(defun gnus-article-get-urls-region (min max)
-  "Return a list of urls found in the region between MIN and MAX."
-  (let (url-list)
-    (save-excursion
-      (save-restriction
-        (narrow-to-region min max)
-        (goto-char (point-min))
-        (while (re-search-forward gnus-button-url-regexp nil t)
-          (let ((match-string (match-string-no-properties 0)))
-            (if (and (not (equal (substring match-string 0 4) "file"))
-                     (not (member match-string url-list)))
-                (setq url-list (cons match-string url-list)))))))
-    url-list))
+;;; article highlighting
+(add-hook 'gnus-article-mode-hook #'gnus-article-highlight)
 
-(defun gnus-article-get-current-urls ()
-  "Return a list of the urls found in the current `gnus-article-buffer'."
-  (let (url-list)
-    (with-current-buffer gnus-article-buffer
-      (setq url-list
-            (gnus-article-get-urls-region (point-min) (point-max))))
-    url-list))
-
-(defun gnus-article-urls-action (action &optional support)
-  "Applies ACTION on the found URLs in article buffer."
-  (interactive)
-  (gnus-configure-windows 'article)
-  (gnus-summary-select-article nil nil 'pseudo)
-  (let ((temp-buffer (generate-new-buffer " *Article URLS*"))
-        (urls (gnus-article-get-current-urls))
-        (this-window (selected-window))
-        (browse-window (get-buffer-window gnus-article-buffer))
-        (count 0))
-    (save-excursion
-      (when (> (length urls) 1)
-        (save-window-excursion
-          (with-current-buffer temp-buffer
-            (mapc (lambda (string)
-                    (insert (format "\t%d: %s\n" count string))
-                    (setq count (1+ count))) urls)
-            (not-modified)
-            (pop-to-buffer temp-buffer)
-            (setq count
-                  (string-to-number
-                   (char-to-string (if (fboundp
-                                        'read-char-exclusive)
-                                       (read-char-exclusive)
-                                     (read-char)))))
-            (kill-buffer temp-buffer))))
-      (if browse-window
-          (progn (select-window browse-window)
-                 (funcall action
-                          (nth count urls)
-                          (when support
-                            (funcall support))))))
-    (select-window this-window)))
-
+;;; Lesser used article features in a hydra
 (defun fyi-article-get-header (header &optional skip-bounds)
   "Return HEADER of article in the current `gnus-article-buffer'.
 
@@ -343,30 +255,12 @@ have (e.g. Message-ID)."
   (browse-url (or (fyi-article-archived-at)
                   (fyi-article-message-id))))
 
-(defun fyi-capture-read-later (url &optional title)
-  "Capture URL to read-later file.
-
-If TITLE is nil, then the URL is used as title."
-  (let ((org-capture-link-is-already-stored t))
-    (push (list url (or title url)) org-stored-links)
-    (org-store-link-props :link url
-                          :description (or title url)
-                          :annotation (org-make-link-string url (or title url)))
-    (org-capture nil "y")))
-
-(defun fyi-article-read-later ()
-  "Save article to read-later."
-  (interactive)
-  (fyi-capture-read-later (or (fyi-article-archived-at)
-                              (fyi-article-message-id))
-                          (fyi-article-subject)))
-
 (defhydra hydra-gnus (:color blue :hint nil)
   "
   URL Stuff
   ----------
-  [_g_] browse original              [_r_] read later
-  [_G_] in-article browse original   [_R_] in-article read later
+  [_g_] browse original             
+  [_G_] in-article browse original 
 
   Common but seldom used
   ----------------------
@@ -379,9 +273,7 @@ If TITLE is nil, then the URL is used as title."
   [_w_]: Mail -- Wide reply          [_W_]: Mail -- Wide reply w/ original
 "
   ("g" fyi-article-browse-original)
-  ("r" fyi-article-read-later)
   ("G" (gnus-article-urls-action #'browse-url))
-  ("R" (gnus-article-urls-action #'fyi-capture-read-later #'fyi-article-subject))
   ("f" gnus-summary-mail-forward)
   ("o" gnus-mime-view-part-externally)
   ("s" gnus-mime-save-part)
@@ -467,25 +359,15 @@ If TITLE is nil, then the URL is used as title."
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
 
 ;;; signature
-(require 'ivy)
-(require 'counsel)
+(setq message-signature t
+      message-signature-file "~/.signatures/private.sig")
 
-(defun message-select-signature-file ()
-  (let ((dir (expand-file-name "~/.signatures/"))
-        sig-file)
-    (ivy-read "Signatures: "
-              (directory-files dir nil ".*\.sig")
-              :require-match t
-              :preselect (counsel-symbol-at-point)
-              :history 'message-select-signature-file
-              :caller 'message-select-signature-file
-              :action (lambda (file)
-                        (setq sig-file (concat dir file))))
-    
-    (with-temp-buffer
-      (insert-file-contents sig-file)
-      (buffer-string))))
+;;; citation
+(require 'supercite)
 
-(setq message-signature #'message-select-signature-file)
+(setq sc-preferred-attribution-list
+      '("x-attribution" "initials" "firstname" "lastname"))
+
+(add-hook 'mail-citation-hook #'sc-cite-original)
 
 (provide 'init-gnus)
