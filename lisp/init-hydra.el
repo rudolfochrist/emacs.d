@@ -57,6 +57,6 @@ _0_: default text size                _j_
    ("k" (hydra-move-splitter-up 5))
    ("l" (hydra-move-splitter-right 5))
    ("=" balance-windows :color blue))
-(global-set-key (kbd "C-M-=") #'hydra-globals)
+(global-set-key (kbd "C-M-=") #'hydra-globals/body)
 
 (provide 'init-hydra)
