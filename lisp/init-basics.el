@@ -5,6 +5,11 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+;;; especially Perl is bitchy about it if you run commands from within
+;;; Emacs
+(setenv "LANG" "en_US.UTF-8")
+(setenv "LC_ALL" "en_US.UTF-8")
+
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
 
