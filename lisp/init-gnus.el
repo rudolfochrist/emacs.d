@@ -75,6 +75,8 @@
                       (nnimap-address "imap.gmail.com")
                       (nnimap-server-port 993)
                       (nnimap-stream ssl)
+                      (nnimap-inbox "INBOX")
+                      (nnimap-split-methods default)
                       (nnimap-search-engine imap)
                       (nnimap-authinfo-file "~/.authinfo.gpg")))
 
@@ -371,5 +373,11 @@ have (e.g. Message-ID)."
       '("x-attribution" "initials" "firstname" "lastname"))
 
 (add-hook 'mail-citation-hook #'sc-cite-original)
+
+;;; splitting mail
+(setq nnmail-split-methods
+      '(("list.lisp-hug" "To:.*lisp-hug@lispworks.com.*")
+        ("list.lisp-hug" "Cc:.*lisp-hug@lispworks.com.*")
+        ("mail.inbox" "")))
 
 (provide 'init-gnus)
