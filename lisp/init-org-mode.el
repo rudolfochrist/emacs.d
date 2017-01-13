@@ -79,17 +79,15 @@ _a_nnual book expenses
 (setq org-todo-keywords
       '((sequence "TODO(t)" "PROJECT(p)" "WAITING(w)" "DELEGATED(k)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)"))
       org-stuck-projects '("TODO=\"PROJECT\"" ("TODO" "WAITING" "DELEGATED") nil "")
-      ;; not needed with current face. But keep it any way
-      ;; org-todo-keyword-faces
-      ;; '(("PROJECT" :weight bold :foreground "dark magenta")
-      ;;   ("DONE" :weight bold :foreground "forest green")
-      ;;   ("CANCELED" :wight bold :foreground "forest green")
-      ;;   ("SOMEDAY" :weight bold :foreground "dark goldenrod")
-      ;;   ("TODO" :weight bold :foreground "medium blue")
-      ;;   ("APPT" :weight bold :foreground "medium blue")
-      ;;   ("WAITING" :weight bold :foreground "red")
-      ;;   ("DELEGATED" :weight bold :foreground "red"))
-      )
+      org-todo-keyword-faces
+      '(("PROJECT" :weight bold :foreground "dark magenta")
+        ("DONE" :weight bold :foreground "forest green")
+        ("CANCELED" :wight bold :foreground "forest green")
+        ("SOMEDAY" :weight bold :foreground "dark goldenrod")
+        ("TODO" :weight bold :foreground "medium blue")
+        ("APPT" :weight bold :foreground "medium blue")
+        ("WAITING" :weight bold :foreground "red")
+        ("DELEGATED" :weight bold :foreground "red")))
 
 ;;; archiving DONE tasks
 ;;; https://github.com/jwiegley/dot-emacs/blob/master/dot-org.el#L330
@@ -140,7 +138,7 @@ This can be zero for immediate or a floating point value.")
 (setq org-gnus-prefer-web-links t)
 (setq org-capture-templates
       '(("a" "Add task" entry
-         (file+headline "~/org/tasks/todo.org" "Inbox")
+         (file+headline "~/org/tasks/personal.org" "Inbox")
          "* TODO %?
 SCHEDULED: %t
 ADDED: %U"
@@ -165,8 +163,8 @@ ADDED: %U"
 ;;; refile
 (setq org-refile-allow-creating-parent-nodes 'confirm
       org-refile-targets
-      '(("~/org/tasks/todo.org" :level . 1)
-        (org-agenda-files :todo . "PROJECT")))
+      '((org-agenda-files . (:level . 1))
+        (org-agenda-files . (:todo . "PROJECT"))))
 
 (defun fyi-projectize-new-refile-targets (parent child)
   (save-excursion
