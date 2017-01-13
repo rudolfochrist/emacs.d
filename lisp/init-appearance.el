@@ -18,8 +18,7 @@
     (funcall mode -1)))
 
 ;;; theme du jour
-(load (expand-file-name "themes/tao" user-emacs-directory))
-
+(load (expand-file-name "themes/irreal" user-emacs-directory))
 
 ;; set font in GUI
 (when window-system
