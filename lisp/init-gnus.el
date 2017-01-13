@@ -4,6 +4,8 @@
 (require 'gnus)
 (require 'nnir)
 (require 'org)
+(eval-when-compile
+  (require 'hydra))
 
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
 
