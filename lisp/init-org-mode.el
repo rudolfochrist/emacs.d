@@ -53,14 +53,12 @@
                                          :hint nil)
    "
 Quickly jump to files:
-_t_odos
 _b_ooks
 _f_inances
 _k_nowledge base
 _B_ug Knowledge Base
 _a_nnual book expenses
 "
-   ("t" (find-file "~/org/tasks/todo.org"))
    ("b" (find-file "~/org/books.org"))
    ("B" (find-file "~/org/bug-kb.org"))
    ("f" (find-file (format "~/Documents/Archive/Finances/%s/%s.ledger"
@@ -197,7 +195,7 @@ ADDED: %U"
          ((org-agenda-overriding-header "Active Projects:")))
         ("Y" "Someday/Maybe tasks" todo "SOMEDAY"
          ((org-agenda-overriding-header "Someday/Maybe tasks:")))
-        ("R" "Review Done/Canceled tasks" tags "TODO={DONE\\|CANCELED}&CATEGORY<>\"Inbox\"&LEVEL=2"
+        ("R" "Review Done/Canceled tasks" tags "TODO={DONE\\|CANCELED}"
          ((org-agenda-overriding-header "Review Done/Canceled tasks:")))
         ("U" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|SOMEDAY\\|PROJECT\\|CANCELED}"
          ((org-agenda-overriding-header "Unscheduled tasks:")
@@ -265,7 +263,7 @@ ADDED: %U"
 (setq org-latex-logfiles-extensions
       '("aux" "bcf" "blg" "fdb_latexmk" "fls" "figlist" "glg" "glo" "gls" "idx" "ist"
         "log" "nav" "out" "ptc" "run.xml" "snm" "toc" "vrb" "xdv" "bbl" "ilg" "ind"
-        "lof" "lot" "lol"))
+        "lof" "lot" "lol" "xwm"))
 
 ;;; misc.
 (defun toggle-org-latex-hyperref-colorlinks (&optional force-colorlinks)
