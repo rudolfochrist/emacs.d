@@ -10,11 +10,6 @@
 (require 'ox-md)
 (require 'org-checklist)
 
-;;; org-drill requires cl-lib but uses the old interface
-;;; for copy-list. The alias should fix this till it is changed.
-(defalias 'copy-list #'cl-copy-list)
-(require 'org-drill)
-
 ;;; use some extras
 (require 'ox-extra)
 (ox-extras-activate '(latex-header-blocks ignore-headlines))
