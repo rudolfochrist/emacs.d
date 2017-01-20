@@ -10,6 +10,10 @@
 (require 'ox-md)
 (require 'org-checklist)
 
+;;; Don't use cache to prevent arbitrary crashes
+;;; http://mid.gmane.org/m2tw91ij98.fsf%2540gmail.com
+(setq org-element-use-cache nil)
+
 ;;; use some extras
 (require 'ox-extra)
 (ox-extras-activate '(latex-header-blocks ignore-headlines))
