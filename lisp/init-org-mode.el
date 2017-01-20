@@ -305,42 +305,49 @@ hypersetup to include colorlinks=true."
 (setq org-startup-with-inline-images t)
 
 ;;; bibdexk/bibtex/citation links
-(org-add-link-type
- "x-bdsk"
- (lambda (path)
-   (browse-url (concat "x-bdsk:" path)))
- (lambda (path desc format)
-   (case format
-     ('html
-      (format "<font style=\"background-color: red\">Check %s in BibDesk</font>" desc))
-     ('latex
-      (when (string-match "^cite:\\(.*\\)" desc)
-        (format "\\cite{%s}" (match-string 1 desc)))))))
+(defun org-bdsk-open (path)
+  (browse-url (concat "x-bdsk:" path)))
+
+(defun org-bdsk-export (path description export-backend)
+  (let ((cite-key (subseq path 2)))
+    (case export-backend
+      (html
+       (format "<p>[%s] %s" cite-key description))
+      (latex
+       (format "\\par [%s] \\textbf{%s}" cite-key description)))))
+
+(org-link-set-parameters "x-bdsk"
+                         :follow 'org-bdsk-open
+                         :export 'org-bdsk-export)
 
 ;;; message links
-(org-add-link-type
- "message"
- (lambda (ref)
-   (let* ((split (split-string (substring-no-properties ref 2)
-                               "/"))
-          (group (base64-decode-string (car split)))
-          (message-id (cadr split)))
-     (with-temp-buffer
-       (switch-to-buffer (current-buffer))
-       (gnus-goto-article group message-id))))
- ;; no export
- nil)
+(defun org-message-store-link ()
+  (when (memq major-mode '(gnus-summary-mode gnus-article-mode))
+    (let* ((group (car gnus-article-current))
+           (article (cdr gnus-article-current))
+           (data (gnus-data-find-list article))
+           (header (gnus-data-header (car data)))
+           (message-id (mail-header-message-id header))
+           (raw-subject (mail-header-subject header))
+           (subject (and raw-subject (rfc2047-decode-string raw-subject))))
+      (org-store-link-props
+       :type "message"
+       :link (format "message://%s/%s"
+                     (base64-encode-string group)
+                     (substring message-id 1 -1))
+       :description (subst-char-in-string
+                     ?\[ ?\{ (subst-char-in-string
+                              ?\] ?\} subject))))))
 
-(defun org-get-message-link (&optional title)
-  (with-current-buffer gnus-original-article-buffer
-    (let ((message-id (gnus-fetch-field "message-id"))
-          (subject (or title (gnus-fetch-field "subject"))))
-      (org-make-link-string (format "message:%s" message-id)
-                            (rfc2047-decode-string subject)))))
+(defun org-message-open (path)
+  (cl-destructuring-bind (group message-id)
+      (split-string (substring path 2) "/")
+    (gnus-goto-article (base64-decode-string group)
+                       message-id)))
 
-(defun org-insert-message-link (&optional arg)
-  (interactive "P")
-  (insert (org-get-message-link (if arg "writes"))))
+(org-link-set-parameters "message"
+                         :store 'org-message-store-link
+                         :follow 'org-message-open)
 
 ;;; use xelatex with bibtex
 (setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
