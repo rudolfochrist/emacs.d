@@ -189,7 +189,7 @@ ADDED: %U"
          ((org-agenda-category-filter-preset '("-Inbox" "-Work"))))
         ("w" "Work Agenda" agenda ""
          ((org-agenda-category-filter-preset '("+Work"))))
-        ("f" "Follow up" tags "FU&email&TODO<>{DONE\\|CANCELED}"
+        ("f" "Follow up" tags "fu&email&TODO<>{DONE\\|CANCELED}"
          ((org-agenda-overriding-header "Follow up:")))
         ("A" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"Inbox\""
          ((org-agenda-overriding-header "All TODOs"))) 
