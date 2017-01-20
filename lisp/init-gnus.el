@@ -369,7 +369,8 @@ have (e.g. Message-ID)."
 ;;; citation
 (require 'supercite)
 
-(setq sc-preferred-attribution-list
+(setq sc-auto-fill-region-p nil
+      sc-preferred-attribution-list
       '("x-attribution" "initials" "firstname" "lastname"))
 
 (add-hook 'mail-citation-hook #'sc-cite-original)
