@@ -1,17 +1,6 @@
 ;; disable splash screen
 (setq inhibit-startup-message t)
 
-;;; put fortune in scratch buffer
-;;; https://www.reddit.com/r/emacs/comments/4agorq/got_bored_of_the_initial_scratch_message_so/
-(setq initial-scratch-message
-      (format
-       ";; %s\n\n"
-       (replace-regexp-in-string
-        "\n" "\n;; " ; comment each line
-        (replace-regexp-in-string
-         "\n$" ""    ; remove trailing linebreak
-         (shell-command-to-string "fortune lambda")))))
-
 ;;;; Disable some GUI stuff
 (dolist (mode '(tool-bar-mode scroll-bar-mode))
   (when (fboundp mode)
