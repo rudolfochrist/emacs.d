@@ -16,7 +16,7 @@
 
 ;;; [[http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html][Visit Directory inside a Set of Directories with Emacs]]
 (defcustom fyi-favorite-directories
-  '("~/dev/" "~/wip/" "~/Documents/Archive/" "~/.emacs.d/" "~/quicklisp/local-projects/"
+  '("~/prj/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/"
     "~/Dropbox/Lectures/HS-Mannheim/")
   "List of favorite directories.
 Used in `fyi-visit-favorite-dir'. The order here

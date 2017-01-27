@@ -4,7 +4,7 @@
 
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
       magit-repository-directories '(("~/.emacs.d/" . 0)
-                                     ("~/dev/" . 1)))
+                                     ("~/prj/" . 1)))
 
 (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty))
 

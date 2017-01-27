@@ -1,11 +1,11 @@
 (require-package 'org-page)
 
-(setq op/repository-directory "~/dev/rudolfochrist.github.io/"
+(setq op/repository-directory "~/prj/rudolfochrist.github.io"
       op/site-domain "https://rudolfochrist.github.io"
       op/site-main-title "Sebastian Christ"
       op/site-sub-title "(funcall (λ ()))"
       op/personal-github-link "https://github.com/rudolfochrist"
-      op/theme-root-directory "~/dev/org-page-themes/")
+      op/theme-root-directory "~/prj/org-page-themes/")
 
 (add-to-list 'op/category-config-alist
              '("blog" ;; this is the default configuration

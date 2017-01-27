@@ -1,6 +1,6 @@
 ;;; local orgmode
-;; (add-to-list 'load-path "~/dev/org-mode/lisp/")
-;; (add-to-list 'load-path "~/dev/org-mode/contrib/lisp/")
+;; (add-to-list 'load-path "~/prj/org-mode/lisp/")
+;; (add-to-list 'load-path "~/prj/org-mode/contrib/lisp/")
 ;; (require 'org)
 
 (require-package 'org-plus-contrib
@@ -65,11 +65,11 @@ _a_nnual book expenses
 "
    ("b" (find-file "~/org/books.org"))
    ("B" (find-file "~/org/bug-kb.org"))
-   ("f" (find-file (format "~/Documents/Archive/Finances/%s/%s.ledger"
+   ("f" (find-file (format "~/archive/Finances/%s/%s.ledger"
                            (nth 2 (calendar-current-date))
                            (nth 2 (calendar-current-date)))))
    ("k" (find-file "~/org/kb.org"))
-   ("a" (find-file (format "~/Documents/Archive/Finances/%s/book-expenses.org"
+   ("a" (find-file (format "~/archive/Finances/%s/book-expenses.org"
                            (nth 2 (calendar-current-date)))))))
 
 ;;; todos setup

@@ -7,7 +7,7 @@
 (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
 
 (require-package 'quicklisp-docs
-                 :from-dir (expand-file-name "~/dev/quicklisp-docs/"))
+                 :from-dir (expand-file-name "~/prj/quicklisp-docs/"))
 (setq ql-docs-browser-function #'eww-browse-url)
 (ql-docs-reload-docs)
 
