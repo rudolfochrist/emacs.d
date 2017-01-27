@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: idefcv
+# key: idefcv
+# --
+#+TEXINFO: @anchor{$1 of $2 $3}
+#+ATTR_TEXINFO: :options {${1:category}} {${2:class}} {${3:name}}
+#+BEGIN_defcv
+$0
+#+END_defcv

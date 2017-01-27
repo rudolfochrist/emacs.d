@@ -1,0 +1,8 @@
+# key: idefmac
+# name: idefmac
+# --
+#+TEXINFO: @anchor{Macro $1}
+#+ATTR_TEXINFO: :options {${1:name}} ${2:arguments...} 
+#+BEGIN_defmac
+$0
+#+END_defmac

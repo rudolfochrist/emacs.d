@@ -1,0 +1,8 @@
+# key: idefun
+# name: idefun
+# --
+#+TEXINFO: @anchor{Function $1}
+#+ATTR_TEXINFO: :options {${1:name}} ${2:arguments...} 
+#+BEGIN_defun
+$0
+#+END_defun

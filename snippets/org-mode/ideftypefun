@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ideftypefun
+# key: ideftypefun
+# --
+#+TEXINFO: @anchor{Function $2}
+#+ATTR_TEXINFO: :options {${1:data-type}} {${2:name}} ${3:arguments...}
+#+BEGIN_deftypefun
+$0
+#+END_deftypefun

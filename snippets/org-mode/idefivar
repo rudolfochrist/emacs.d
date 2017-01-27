@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: idefivar
+# key: idefivar
+# --
+#+TEXINFO: @anchor{Instance Variable of $1 $2}
+#+ATTR_TEXINFO: :options {${1:class}} {${2:name}}
+#+BEGIN_defivar
+$0
+#+END_defivar

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: idefmethod
+# key: idefmethod
+# --
+#+TEXINFO: @anchor{Method of $2 $3}
+#+ATTR_TEXINFO: :options {${1:class}} {${2:name}} ${3:arguments...}
+#+BEGIN_defmethod
+$0
+#+END_defmethod

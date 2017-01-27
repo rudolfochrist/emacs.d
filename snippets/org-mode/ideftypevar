@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ideftypevar
+# key: ideftypevar
+# --
+#+TEXINFO: @anchor{Variable $2}
+#+ATTR_TEXINFO: :options {${1:data-type}} {${2:name}}
+#+BEGIN_deftypevar
+$0
+#+END_deftypevar

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ideftp
+# key: ideftp
+# --
+#+TEXINFO: @anchor{$1 $2}
+#+ATTR_TEXINFO: :options {${1:category}} {${2:name}} ${3:attributes...}
+#+BEGIN_deftp
+$0
+#+END_deftp
