@@ -43,4 +43,7 @@
 ;;; overwrite selected text
 (delete-selection-mode 1)
 
+;;; Confirm killing Emacs. Prevents accidental quitting.
+(setq confirm-kill-emacs #'yes-or-no-p)
+
 (provide 'init-basics)
