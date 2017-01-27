@@ -7,6 +7,6 @@
   (define-key company-active-map (kbd "M-.") 'company-show-location))
 (add-hook 'company-mode-hook #'fyi-company-keybindings)
 
-(global-set-key (kbd "C-' C-'") #'company-complete)
+(global-set-key (kbd "C-c ,,") #'company-complete)
 
 (provide 'init-company-mode)
