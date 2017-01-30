@@ -19,9 +19,13 @@
 ;;; go through frames
 (global-set-key (kbd "C-`") #'other-frame)
 
-;;; mostly I want to kill this buffer
-;;; http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
-(global-set-key (kbd "C-x k") #'kill-this-buffer)
+;;; bury the buffer
+(defun bury-or-kill-buffer (arg)
+  (interactive "P")
+  (if arg
+      (kill-buffer)
+    (bury-buffer)))
+(global-set-key (kbd "C-x k") #'bury-or-kill-buffer)
 
 ;;; ielm
 (global-set-key (kbd "<M-f5>") #'ielm)
