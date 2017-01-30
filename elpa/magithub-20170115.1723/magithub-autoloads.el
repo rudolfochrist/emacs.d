@@ -4,8 +4,8 @@
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
 ;;;### (autoloads nil nil ("magithub-cache.el" "magithub-ci.el" "magithub-core.el"
-;;;;;;  "magithub-issue.el" "magithub-pkg.el" "magithub.el") (22667
-;;;;;;  4487 0 0))
+;;;;;;  "magithub-issue.el" "magithub-pkg.el" "magithub.el") (22671
+;;;;;;  4707 0 0))
 
 ;;;***
 
