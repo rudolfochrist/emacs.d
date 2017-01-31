@@ -195,7 +195,7 @@ ADDED: %U"
   (let ((kb (find-file-noselect org-kb-file))
         (entry (org-element-at-point)))
     (unless (eql 'headline (org-element-type entry))
-      (setq entry (org-element-property :parent entry)))
+      (user-error "Must be on a headline!"))
     (org-copy-subtree nil t)
     (with-current-buffer kb
       (goto-char (point-min))
