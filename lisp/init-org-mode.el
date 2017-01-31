@@ -11,6 +11,10 @@
 (require 'ox-texinfo)
 (require 'org-checklist)
 
+(unless (server-running-p)
+  (server-start))
+(require 'org-protocol)
+
 ;;; Don't use cache to prevent arbitrary crashes
 ;;; http://mid.gmane.org/m2tw91ij98.fsf%2540gmail.com
 (setq org-element-use-cache nil)
@@ -50,7 +54,9 @@
 ;;; org files
 (setq org-directory "~/org/"
       org-agenda-files '("~/org/tasks/personal.org"
-                         "~/org/tasks/m-creations.org"))
+                         "~/org/tasks/m-creations.org")
+      org-web-capture-file "~/org/web.org"
+      org-kb-file "~/org/kb.org")
 
 (global-set-key
  (kbd "C-x t j")
@@ -156,13 +162,22 @@ ADDED: %U"
 :URL:
 :END:
 "
-         :prepend t :empty-lines 1)))
+         :prepend t :empty-lines 1)
+        ("w" "Capture website" entry
+         (file "~/org/web.org")
+         "* %:description :bookmark:
+:PROPERTIES:
+:CREATED: %U
+:URL: %l
+:END:"
+         :prepend t :empty-lines 1 :immediate-finish t)))
 
 ;;; refile
 (setq org-refile-allow-creating-parent-nodes 'confirm
-      org-refile-targets
+      org-arefile-targets
       '((org-agenda-files . (:level . 1))
-        (org-agenda-files . (:todo . "PROJECT"))))
+        (org-agenda-files . (:todo . "PROJECT"))
+        (("~/org/kb.org") . (:maxlevel . 1))))
 
 (defun fyi-projectize-new-refile-targets (parent child)
   (save-excursion
@@ -173,6 +188,22 @@ ADDED: %U"
       (org-todo "PROJECT"))))
 
 (advice-add 'org-refile-new-child :after #'fyi-projectize-new-refile-targets)
+
+(defun org-refile-web-capture ()
+  "Refile link from `org-web-capture-file' to `org-kb-file'."
+  (interactive)
+  (let ((kb (find-file-noselect org-kb-file))
+        (entry (org-element-at-point)))
+    (unless (eql 'headline (org-element-type entry))
+      (setq entry (org-element-property :parent entry)))
+    (org-copy-subtree nil t)
+    (with-current-buffer kb
+      (goto-char (point-min))
+      (outline-next-visible-heading 1)
+      (org-yank)
+      (save-buffer))
+    (message "Refiled %s to KB."
+             (org-element-property :title entry))))
 
 ;;; setup diary
 (setq diary-file (expand-file-name "~/org/diary")
@@ -207,8 +238,13 @@ ADDED: %U"
           (org-agenda-skip-function
            '(org-agenda-skip-entry-if 'timestamp))))))
 
+;;; org keybindings
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "<f12>") 'org-agenda)
+
+(defun fyi-org-keybindings ()
+  (define-key org-mode-map (kbd "C-c C-r") #'org-refile-web-capture))
+(add-hook 'org-mode-hook #'fyi-org-keybindings)
 
 (add-hook 'org-mode-hook 'visual-line-mode)
 
