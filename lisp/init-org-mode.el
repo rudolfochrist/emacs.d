@@ -174,10 +174,9 @@ ADDED: %U"
 
 ;;; refile
 (setq org-refile-allow-creating-parent-nodes 'confirm
-      org-arefile-targets
+      org-refile-targets
       '((org-agenda-files . (:level . 1))
-        (org-agenda-files . (:todo . "PROJECT"))
-        (("~/org/kb.org") . (:maxlevel . 1))))
+        (org-agenda-files . (:todo . "PROJECT"))))
 
 (defun fyi-projectize-new-refile-targets (parent child)
   (save-excursion
