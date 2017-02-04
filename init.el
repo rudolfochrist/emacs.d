@@ -16,84 +16,15 @@
 (load custom-file 'noerror)
 
 ;;; setup paths
-(require-package 'exec-path-from-shell)
+(require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
 
-;;; debugging init.el
-(require-package 'bug-hunter)
-(require-package 'esup)
+;;; load other files
+;;; - basics
+;;; - packages
+;;; - org
+;;; - gnus
 
-;; Subpackages
-(setq setup-pkg-full
-      '(init-basics
-        init-defuns
-        init-appearance
-        init-linum
-        init-my-override-keymap
-        init-keybindings
-        init-spelling
-        init-hydra
-        init-ivy
-        init-search-kb
-        init-company-mode
-        init-javascript
-        init-markdown
-        init-paredit
-        init-slime
-        init-magit
-        init-multiple-cursors
-        init-org-mode
-        init-erlang
-        init-yasnippet
-        init-eval-sexp-fu
-        init-org-babel
-        init-avy
-        init-ace-window
-        init-eshell
-        init-info
-        init-ediff
-        init-dired
-        init-iedit
-        init-emacs-lisp
-        init-erc
-        init-org-page
-        init-gnus
-        init-attachment-reminder
-        init-whitespace
-        init-interleave
-        init-undo-tree
-        init-unkillable-scratch
-        init-elisp-slime-nav
-        init-ag
-        init-macrostep
-        init-highlight-backquotes-mode
-        init-yaml-mode
-        init-ruby
-        init-web-mode
-        init-ledger-mode
-        init-anzu
-        init-page-navigation
-        init-redshank
-        init-imenu-anywhere
-        ;; init-flycheck
-        init-org-ref
-        init-which-key
-        init-company-quickhelp
-        init-irony-mode
-        init-ffip
-        init-easy-kill
-        init-aggressive-indent-mode
-        init-ace-link
-        init-dictcc
-        init-feature-mode
-        init-fireplace
-        init-goto-last-change
-        init-ztree
-	))
-
-;; load them
-(dolist (file setup-pkg-full)
-  (require file))
 (put 'erase-buffer 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
