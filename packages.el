@@ -30,3 +30,16 @@
   (use-package wgrep-ag
     :commands (wgrep-ag-setup))
   (add-hook 'ag-mode-hook 'wgrep-ag-setup))
+
+
+;;; company-mode
+
+(use-package company
+  :bind (("C-c ,," . company-complete)
+         :map company-active-map
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)
+         ("M-." . company-show-location))
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
