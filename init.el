@@ -1,11 +1,11 @@
-;;; My emacs config. Inspired by https://github.com/bodil/emacs.d
-
+;;; My emacs config.
 ;; use CL features
 (require 'cl-lib)
 
 ;;; customization
-(setq emacs-d-site-lisp (expand-file-name "~/.emacs.d/site-lisp/"))
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+(setq emacs-d (expand-file-name "~/.emacs.d/")
+      emacs-d-site-lisp (expand-file-name "site-lisp/" emacs-d))
+(add-to-list 'load-path emacs-d-site-lisp)
 
 ;;; prefer newer files
 (setq load-prefer-newer t)
@@ -14,31 +14,6 @@
 ;;; http://irreal.org/blog/?p=3765
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
-
-;; Packages
-(require 'package)
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-                         ("org" . "http://orgmode.org/elpa/")))
-(package-initialize)
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-(defun load-package (pkg require-symbol from-dir)
-  "Install a package only if it's not already installed"
-  (unless (package-installed-p pkg)
-    (if from-dir
-        (push from-dir load-path)
-      (package-refresh-contents)
-      (package-install pkg)))
-  (if require-symbol
-      require-symbol
-    pkg))
-
-(cl-defun require-package (pkg &key require from-dir filename noerror load-only)
-  (if load-only
-      (load-package pkg require from-dir)
-    (require (load-package pkg require from-dir) filename noerror)))
 
 ;;; setup paths
 (require-package 'exec-path-from-shell)
