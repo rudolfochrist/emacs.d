@@ -196,3 +196,10 @@
 
 (use-package hydra)
 
+
+;;; iedit
+
+(use-package iedit
+  :init (setq iedit-toggle-key-default (kbd "C-. '")))
+
+
