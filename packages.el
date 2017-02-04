@@ -179,4 +179,10 @@
          :map eshell-mode-map
          ("C-l" . eshell/clear)))
 
+
+;;; feature-mode
+
+(use-package feature-mode
+  :mode "\\.feature\\'")
+
 
