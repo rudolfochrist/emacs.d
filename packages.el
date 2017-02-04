@@ -18,3 +18,12 @@
   (add-hook 'gnus-article-mode-hook
             (lambda ()
               (bind-key "M-o" 'ace-link-gnus 'gnus-article-mode-map)))  )
+
+
+;;; ag
+
+(use-package ag
+  :init
+  (setq ag-reuse-buffers t
+        ag-reuse-window t)
+  :config)
