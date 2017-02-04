@@ -26,4 +26,7 @@
   :init
   (setq ag-reuse-buffers t
         ag-reuse-window t)
-  :config)
+  :config
+  (use-package wgrep-ag
+    :commands (wgrep-ag-setup))
+  (add-hook 'ag-mode-hook 'wgrep-ag-setup))
