@@ -102,6 +102,10 @@
   "Returns non-nil if current Emacs is running with a window-system."
   window-system)
 
+(defun system-macos-p ()
+  "Returns non-nil if `system-type' is 'darwin"
+  (eql 'darwin system-type))
+
 (defun mode-buffer-list (mode)
   "Returns a list of buffers with major mode MODE."
   (cl-remove-if-not
@@ -116,6 +120,15 @@
 ;;;
 ;;; M-s is for search
 ;;; M-g is for goto
+;;; C-. prefix map is for personal bindings
+
+;;; C-.
+(defvar ctl-period-map nil)
+(define-prefix-command 'ctl-period-map)
+(bind-key "C-." #'ctl-period-map)
+
+;;; easier other-window
+(bind-key* "<C-return>" #'other-window)
 
 
 
