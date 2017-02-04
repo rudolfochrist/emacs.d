@@ -92,4 +92,8 @@
     ;; inspired by https://github.com/magnars/.emacs.d/
     (setq dired-details-hidden-string "--- ")
     :config
-    (dired-details-install)))
+    (dired-details-install))
+  (use-package dired-narrow
+    :commands (dired-narrow)
+    :bind (:map dired-mode-map
+                ("/" . dired-narrow))))
