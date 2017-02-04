@@ -185,4 +185,9 @@
 (use-package feature-mode
   :mode "\\.feature\\'")
 
+
+;;; goto-last-change
+
+(use-package goto-last-change
+  :bind (("C-. -" . goto-last-change)))
 
