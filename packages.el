@@ -14,7 +14,7 @@
   ;; setup gnus
   (add-hook 'gnus-summary-mode-hook
             (lambda ()
-              (define-key gnus-summary-mode-map (kbd "M-o") #'ace-link-gnus)))
+              (bind-key "M-o" 'ace-link-gnus 'gnus-summary-mode-map)))
   (add-hook 'gnus-article-mode-hook
             (lambda ()
-              (define-key gnus-article-mode-map (kbd "M-o") #'ace-link-gnus))))
+              (bind-key "M-o" 'ace-link-gnus 'gnus-article-mode-map)))  )
