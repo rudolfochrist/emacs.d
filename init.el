@@ -1,5 +1,4 @@
 ;;; My emacs config.
-;; use CL features
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -7,6 +6,7 @@
 ;; You may delete these explanatory comments.
 ;; (package-initialize)
 
+;; use CL features
 (require 'cl-lib)
 
 ;;; site-lisp setup
