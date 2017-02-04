@@ -48,3 +48,22 @@
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
+
+;;; dired
+
+(use-package dired
+  :bind (("M-g d" . dired-jump)
+         ("M-g D" . dired-jump-elsewhere)
+         :map dired-mode-map
+         ("M-!" . async-shell-command)
+         ("l" . dired-up-directory))
+  :preface
+  (defun dired-jump-elsewhere ()
+    (interactive)
+    (let ((current-prefix-arg '(4)))
+      (call-interactively #'dired-jump)))
+  :init
+  (setq dired-garbage-files-regexp
+        "\\.idx\\|\\.run\\.xml$\\|\\.bbl$\\|\\.bcf$\\|.blg$\\|-blx.bib$\\|.nav$\\|.snm$\\|.out$\\|.synctex.gz$\\|\\(?:\\.\\(?:aux\\|bak\\|dvi\\|log\\|orig\\|rej\\|toc\\|pyg\\)\\)\\'")
+  :config
+  (use-package dired-x))
