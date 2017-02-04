@@ -97,3 +97,8 @@
     :commands (dired-narrow)
     :bind (:map dired-mode-map
                 ("/" . dired-narrow))))
+
+;;; easy-kill
+
+(use-package easy-kill
+  :bind (([remap kill-ring-save] . easy-kill)))
