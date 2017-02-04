@@ -30,6 +30,19 @@
 ;;; setup use-package
 (require 'diminish)
 (require 'use-package)
+(require 'bind-key)
+
+;;; basics
+
+(defun window-system-p ()
+  "Returns non-nil if current Emacs is running with a window-system."
+  window-system)
+
+;;; keybindings
+;;;
+;;; M-s is for search
+;;; M-g is for goto
+
 
 ;;; load other files
 ;;; - basics
