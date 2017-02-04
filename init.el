@@ -102,6 +102,14 @@
   "Returns non-nil if current Emacs is running with a window-system."
   window-system)
 
+(defun mode-buffer-list (mode)
+  "Returns a list of buffers with major mode MODE."
+  (cl-remove-if-not
+   (lambda (buffer)
+     (with-current-buffer buffer
+       (eql major-mode mode)))
+   (buffer-list)))
+
 
 
 ;;; KEYBINDINGS
@@ -114,6 +122,7 @@
 ;;; load other files
 ;;; - basics
 (load-file (expand-file-name "packages.el" user-emacs-directory))
+(load-file (expand-file-name "overrides.el" user-emacs-directory))
 ;;; - org
 ;;; - gnus
 
