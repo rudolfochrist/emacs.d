@@ -102,3 +102,81 @@
 
 (use-package easy-kill
   :bind (([remap kill-ring-save] . easy-kill)))
+
+
+;;; ediff
+
+(use-package ediff
+  :init
+  (setq ediff-window-setup-function #'ediff-setup-windows-plain
+        ediff-split-window-function #'split-window-horizontally
+        ;; ignores certain changes
+        ediff-diff-options "-w"))
+
+
+;;; erc
+
+(use-package erc
+  :init
+  (setq erc-nick "rudolfochrist"
+        erc-prompt-for-password nil
+        erc-user-full-name "Sebastian (Rudolfo) Christ"
+        erc-autojoin-channels-alist '(("freenode.net"
+                                       "#lisp" "#lispcafe" "#sbcl" "#ccl"))
+        erc-hide-list '("JOIN" "PART" "QUIT")
+        erc-fill-function #'erc-fill-static
+        erc-fill-static-center 22
+        ;; Freenode TLS port
+        erc-port 6697)
+  :preface
+  ;;; see: http://endlessparentheses.com/marking-emacs-chat-buffers-as-read.html
+  (defun erc-mark-as-read ()
+    "Mark buffer as read up to current line."
+    (interactive)
+    (let ((inhibit-read-only t))
+      (put-text-property (point-min)
+                         (line-beginning-position)
+                         'face
+                         'font-lock-comment-face)))
+  :bind (:map erc-mode-map
+              ("<escape>" . erc-mark-as-read))
+  :config
+  (use-package erc-log
+    :init
+    (setq erc-log-channels-directory "~/.erc/logs/"
+          erc-save-buffer-on-part t)
+    :config
+    (erc-log-enable)))
+
+
+;;; eshell
+
+(use-package eshell
+  :init
+  (setq eshell-where-to-jump 'begin
+        eshell-review-quick-commands nil
+        eshell-smart-space-goes-to-end t)
+
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (add-to-list 'eshell-visual-commands "htop")
+              (add-to-lsit 'eshell-visual-commands "svn")))
+  :preface
+  (defun switch-eshell ()
+    "Switch to eshell buffer or hide it if current buffer"
+    (interactive)
+    (if (eq major-mode 'eshell-mode)
+        (switch-to-buffer (second (buffer-list)))
+      (eshell)))
+
+  (defun eshell/clear ()
+    "Clears the eshell buffer"
+    (interactive)
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (eshell-send-input)))
+  :bind (("C-. t" . switch-eshell)
+         :map eshell-mode-map
+         ("C-l" . eshell/clear)))
+
+
