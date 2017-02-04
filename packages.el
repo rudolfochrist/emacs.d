@@ -191,3 +191,8 @@
 (use-package goto-last-change
   :bind (("C-. -" . goto-last-change)))
 
+
+;;; hydra
+
+(use-package hydra)
+
