@@ -508,3 +508,9 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :config
   (yas-reload-all))
 
+
+;;; ztree
+
+(use-package ztree
+  :commands (ztree-diff))
+
