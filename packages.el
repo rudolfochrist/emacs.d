@@ -220,5 +220,8 @@
     (add-hook hook #'irony-mode))
   (use-package company-irony
     :commands (company-irony)
-    :init (add-to-list 'company-backends #'company-irony)))
+    :init (add-to-list 'company-backends #'company-irony))
+  (use-package irony-eldoc
+    :commands (irony-eldoc)
+    :init (add-hook 'irony-mode-hook #'irony-eldoc)))
 

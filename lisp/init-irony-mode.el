@@ -1,9 +1,5 @@
 
 
-;;; irony-eldoc
-(require-package 'irony-eldoc)
-(add-hook 'irony-mode-hook #'irony-eldoc)
-
 ;;; GDB setup
 (require 'gdb-mi)
 (setq gdb-many-windows t)
