@@ -202,4 +202,9 @@
 (use-package iedit
   :init (setq iedit-toggle-key-default (kbd "C-. '")))
 
+
+;;; interleave
+
+(use-package interleave
+  :init (setq interleave-org-notes-dir-list nil))
 
