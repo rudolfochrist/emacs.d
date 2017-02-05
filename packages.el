@@ -231,3 +231,11 @@
 (use-package gdb-mi
   :init (setq gdb-many-windows t))
 
+
+;;; swiper, ivy, counsel
+
+(use-package ivy
+  :preface
+  (require 'recentf)
+  (use-package smex))
+
