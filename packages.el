@@ -293,5 +293,8 @@ With prefix argument SHOW-FILES-P also offer to find files."
 (use-package auctex
   :init
   (setq TeX-auto-save t
-        TeX-parse-self t))
+        TeX-parse-self t)
+  :config
+  (use-package latex-preview-pane
+    :init (setq latex-preview-pane "xelatex")))
 
