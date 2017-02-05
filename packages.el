@@ -330,3 +330,10 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :config
   (global-linum-mode 1))
 
+
+;;; macrostep
+
+(use-package macrostep
+  :bind (:map emacs-lisp-mode-map
+              ("C-c M-e" . macrostep-expand)))
+
