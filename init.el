@@ -482,6 +482,8 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :init
   (add-hook 'prog-mode-hook #'disable-linum-on-huge-file)
   (add-hook 'text-mode-hook #'disable-linum-on-huge-file)
+  (add-hook 'eshell-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'slime-repl-mode-hook (lambda () (linum-mode -1)))
   :config
   (global-linum-mode 1))
 
@@ -792,11 +794,17 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; aggressive-indent
 
 (use-package aggressive-indent
-  :init
+  :config
   (dolist (mode '(slime-repl-mode feature-mode))
     (add-to-list 'aggressive-indent-excluded-modes mode))
-  :config
   (global-aggressive-indent-mode 1))
+
+
+;;; imenu-anywhere
+
+(use-package imenu-anywhere
+  :bind (:map prog-mode-map
+              ("C-. C-," . imenu-anywhere)))
 
 
 ;;; Text scaling, window resizing (hydra)
