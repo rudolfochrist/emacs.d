@@ -432,3 +432,42 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
   (add-hook 'ielm-mode-hook #'enable-paredit-mode))
 
+
+;;; redshank
+
+(use-package redshank-loader
+  :bind (:map redshank-mode-map
+              ("C-. v" . redshank-hydra/body))
+  :preface
+  (defun redshank-let<->let* ()
+    (interactive)
+    (save-excursion
+      (redshank-point-at-enclosing-let-form)
+      (forward-char)
+      (cond
+       ((looking-at "let ")
+        (forward-word)
+        (insert "*"))
+       ((looking-at "let\\* ")
+        (forward-word)
+        (delete-char 1)))))
+
+  (defhydra hydra-redshank (:color blue)
+    "Modifications"
+    ("c" redshank-condify-form "Condify")
+    ("e" redshank-eval-whenify-form "Eval-Whenify")
+    ("f" redshank-complete-form "Complete form")
+    ("l" redshank-letify-form-up "Letify up")
+    ("L" redshank-enclose-form-with-lambda "Enclose with λ")
+    ("k" redshank-let<->let* "LET <-> LET*")
+    ("n" redshank-rewrite-negated-predicate "Negate predicate")
+    ("p" redshank-maybe-splice-progn "Maybe splice progn")
+    ("x" redshank-extract-to-defun "Extract to defun")
+    ("q" nil "Quit"))
+
+  :config
+  (redshank-setup '(lisp-mode-hook
+                    emacs-lisp-mode-hook
+                    slime-repl-mode-hook)))
+
+
