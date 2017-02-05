@@ -217,5 +217,8 @@
               ([remap complete-symbol] . irony-completion-at-point-async))
   :config
   (dolist (hook '(c++-mode-hook objc-mode-hook c-mode-hook))
-    (add-hook hook #'irony-mode)))
+    (add-hook hook #'irony-mode))
+  (use-package company-irony
+    :commands (company-irony)
+    :init (add-to-list 'company-backends #'company-irony)))
 
