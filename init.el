@@ -140,7 +140,7 @@
 ;;; - gnus
 
 
-;;; Misc.
+;;; Text scaling, window resizing (hydra)
 
 ;;; copied from https://github.com/abo-abo/hydra/blob/master/hydra-examples.el
 (require 'windmove)
@@ -201,7 +201,15 @@ _0_: default text size                _j_
 
 (bind-key "C-. =" #'hydra-scaling/body)
 
+
+;;; info
+(require 'info-look)
 
+(add-to-list 'Info-directory-list "~/info")
+(bind-key "C-h a" #'apropos)
+(bind-key "C-h A" #'info-apropos)
+
+
 ;;; enable disabled commands
 (put 'erase-buffer 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
