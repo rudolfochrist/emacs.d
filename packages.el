@@ -400,3 +400,35 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 (use-package page-break-lines
   :config (global-page-break-lines-mode))
 
+
+;;; paredit
+
+(use-package paredit
+  :bind (:map paredit-mode-map
+              ("[" . paredit-open-round)
+              ("]" . paredit-close-round)
+              ("(" . paredit-open-bracket)
+              (")" . paredit-close-bracket))
+  :preface
+  (defun paredit-adjust-spacing-p (endp delimiter)
+    "Don't add space before splicing (,@) or reader macros."
+    (cond
+     ((or (looking-back "#\\+.*")
+          (looking-back "#-.*"))
+      t)
+     ((looking-back "#.*")
+      nil)
+     ((looking-back ",@")
+      nil)
+     (t t)))
+  (add-to-list 'paredit-space-for-delimiter-predicates #'paredit-adjust-spacing-p)
+  :init
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+  (add-hook 'slime-repl-mode-hook #'enable-paredit-mode)
+  (add-hook 'scheme-mode-hook #'enable-paredit-mode)
+  (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
+  (add-hook 'ielm-mode-hook #'enable-paredit-mode))
+
