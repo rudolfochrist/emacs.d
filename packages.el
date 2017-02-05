@@ -244,7 +244,7 @@
                counsel-M-x))
   ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
   (defvar ivy-prominent-directories
-    '("~/prj/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
+    '("~/PR/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
     "List of prominent directories.")
 
   (defun ivy-visit-prominent-directory (show-files-p)
@@ -279,4 +279,11 @@ With prefix argument SHOW-FILES-P also offer to find files."
   (setq ivy-display-style 'fancy)
   :config
   (ivy-mode 1))
+
+
+;;; js2-mode
+
+(use-package js2-mode
+  :mode (("\\.js\\'" . js2mode)
+         ("\\.json\\'" . js2mode)))
 
