@@ -343,11 +343,14 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 (use-package magit
   :bind (("C-. gg" . magit-status)
          ("C-. GG" . magit-status-with-prefix)
-         ("C-. gl" . magit-list-repositories))
+         ("C-. gl" . magit-list-repositories)
+         ("C-. gt" . git-timemachine))
   :init
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
         magit-repository-directories '(("~/.emacs.d/" . 0)
                                        ("~/prj/" . 1)))
+  (use-package git-timemachine
+    :commands (git-timemachine))
   :config
   (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)))
 
