@@ -337,3 +337,17 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :bind (:map emacs-lisp-mode-map
               ("C-c M-e" . macrostep-expand)))
 
+
+;;; magit
+
+(use-package magit
+  :bind (("C-. gg" . magit-status)
+         ("C-. GG" . magit-status-with-prefix)
+         ("C-. gl" . magit-list-repositories))
+  :init
+  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
+        magit-repository-directories '(("~/.emacs.d/" . 0)
+                                       ("~/prj/" . 1)))
+  :config
+  (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)))
+
