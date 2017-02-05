@@ -308,3 +308,25 @@ With prefix argument SHOW-FILES-P also offer to find files."
         ledger-reconcile-default-commodity "EUR"
         ledger-reconcile-default-date-format "%Y-%m-%d"))
 
+
+;;; linum
+
+(use-package linum
+  :preface
+  (defun disable-linum-on-huge-file ()
+    "Disable linum if buffer contains more than 5000 lines.
+
+This requires wc to be installed. Uses wc -c file for performace reason.
+
+Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html"
+    (when (and (executable-find "wc")
+               (> (string-to-number
+                   (shell-command-to-string (format "wc -c %s" (buffer-file-name))))
+                  (* 5000 80))
+               (linum-mode -1))))
+  :init
+  (add-hook 'prog-mode-hook #'disable-linum-on-huge-file)
+  (add-hook 'text-mode-hook #'disable-linum-on-huge-file)
+  :config
+  (global-linum-mode 1))
+
