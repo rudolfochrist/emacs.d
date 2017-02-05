@@ -356,3 +356,12 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (use-package magithub
     :config (magithub-feature-autoinject t)))
 
+
+;;; markdown-mode
+
+(use-package markdown-mode
+  :mode (("\\.md\\'" . markdown-mode)
+         ("\\.mdown\\'" . markdown-mode))
+  :init
+  (add-hook 'markdown-mode-hook #'visual-line-mode))
+
