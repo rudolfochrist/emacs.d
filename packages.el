@@ -225,3 +225,9 @@
     :commands (irony-eldoc)
     :init (add-hook 'irony-mode-hook #'irony-eldoc)))
 
+
+;;; gdb
+
+(use-package gdb-mi
+  :init (setq gdb-many-windows t))
+
