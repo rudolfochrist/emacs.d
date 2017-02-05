@@ -200,7 +200,7 @@
 ;;; iedit
 
 (use-package iedit
-  :init (setq iedit-toggle-key-default (kbd "C-. '")))
+  :bind* (("C-. '" . iedit-mode)))
 
 
 ;;; interleave
@@ -237,5 +237,46 @@
 (use-package ivy
   :preface
   (require 'recentf)
-  (use-package smex))
+  (use-package smex)
+  (use-package counsel
+    :commands (counsel-ag
+               counsel-describe-function counsel-describe-variable
+               counsel-M-x))
+  ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
+  (defvar ivy-prominent-directories
+    '("~/prj/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
+    "List of prominent directories.")
+
+  (defun ivy-visit-prominent-directory (show-files-p)
+    "Offers all directories inside a set of directories.
+
+See `ivy-prominent-directories' for the list of directories to use. 
+With prefix argument SHOW-FILES-P also offer to find files."
+    (interactive "P")
+    (let ((completions
+           (mapcar #'abbreviate-file-name
+                   (cl-remove-if-not
+                    (if show-files-p #'file-readable-p
+                      #'file-directory-p)
+                    (apply #'append
+                           (mapcar (lambda (x)
+                                     (when (file-exists-p x)
+                                       (directory-files
+                                        (expand-file-name x)
+                                        t "^[^\.].*" t)))
+                                   ivy-prominent-directories))))))
+      (dired
+       (ivy-completing-read "Open directory: "
+                            completions 'ignored nil ""))))
+
+  :bind (("C-. s" . counsel-ag)
+         ("C-h f" . counsel-describe-function)
+         ("C-h v" . counsel-describe-variable)
+         ("C-. i" . ivy-resume)
+         ("M-x" . counsel-M-x)
+         ("C-x C-d" . ivy-visit-prominent-directory))
+  :init
+  (setq ivy-display-style 'fancy)
+  :config
+  (ivy-mode 1))
 
