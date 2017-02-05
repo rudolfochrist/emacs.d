@@ -241,7 +241,8 @@
   (use-package counsel
     :commands (counsel-ag
                counsel-describe-function counsel-describe-variable
-               counsel-M-x))
+               counsel-M-x
+               counsel-more-chars))
   ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
   (defvar ivy-prominent-directories
     '("~/PR/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
@@ -421,7 +422,6 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
      ((looking-back ",@")
       nil)
      (t t)))
-  (add-to-list 'paredit-space-for-delimiter-predicates #'paredit-adjust-spacing-p)
   :init
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
@@ -430,7 +430,9 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-hook 'slime-repl-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook #'enable-paredit-mode)
   (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
-  (add-hook 'ielm-mode-hook #'enable-paredit-mode))
+  (add-hook 'ielm-mode-hook #'enable-paredit-mode)
+  :config
+  (add-to-list 'paredit-space-for-delimiter-predicates #'paredit-adjust-spacing-p))
 
 
 ;;; redshank
@@ -469,5 +471,11 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (redshank-setup '(lisp-mode-hook
                     emacs-lisp-mode-hook
                     slime-repl-mode-hook)))
+
+
+;;; undo-tree
+
+(use-package undo-tree
+  :commands (undo-tree-visualize))
 
 
