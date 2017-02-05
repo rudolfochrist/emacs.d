@@ -789,6 +789,16 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
     (:one-liner "cl:quickload system")))
 
 
+;;; aggressive-indent
+
+(use-package aggressive-indent
+  :init
+  (dolist (mode '(slime-repl-mode feature-mode))
+    (add-to-list 'aggressive-indent-excluded-modes mode))
+  :config
+  (global-aggressive-indent-mode 1))
+
+
 ;;; Text scaling, window resizing (hydra)
 
 ;;; copied from https://github.com/abo-abo/hydra/blob/master/hydra-examples.el
