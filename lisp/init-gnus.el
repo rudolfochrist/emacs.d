@@ -381,4 +381,51 @@ have (e.g. Message-ID)."
         ("list.lisp-hug" "Cc:.*lisp-hug@lispworks.com.*")
         ("mail.inbox" "")))
 
+;;; attachment reminder
+;;; see http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e
+(defun my-message-attachment-present-p ()
+  "Return t if an attachment is found in the current message."
+  (save-excursion
+    (save-restriction
+      (widen)
+      (goto-char (point-min))
+      (when (search-forward "<#part" nil t) t))))
+
+(defcustom my-message-attachment-intent-re
+  (regexp-opt '("I attach"
+		"I have attached"
+		"I've attached"
+		"I have included"
+		"I've included"
+		"see the attached"
+		"see the attachment"
+		"attached file"
+                "siehe im Anhang"
+                "im Anhang"
+                "Anhang"
+                "anbei"))
+  "A regex which - if found in the message, and if there is no
+attachment - should launch the no-attachment warning.")
+
+(defcustom my-message-attachment-reminder
+  "Are you sure you want to send this message without any attachment? "
+  "The default question asked when trying to send a message
+containing `my-message-attachment-intent-re' without an
+actual attachment.")
+
+(defun my-message-warn-if-no-attachments ()
+  "Ask the user if s?he wants to send the message even though
+there are no attachments."
+  (when (and (save-excursion
+	       (save-restriction
+		 (widen)
+		 (goto-char (point-min))
+		 (re-search-forward my-message-attachment-intent-re nil t)))
+	     (not (my-message-attachment-present-p)))
+    (unless (y-or-n-p my-message-attachment-reminder)
+      (keyboard-quit))))
+
+(add-hook 'message-send-hook #'my-message-warn-if-no-attachments)
+
+
 (provide 'init-gnus)
