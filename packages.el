@@ -493,4 +493,8 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
         whitespace-style '(face lines-tail tabs))
   (add-hook 'prog-mode-hook #'whitespace-mode))
 
+
+;;; yaml-mode
+
+(use-package yaml-mode)
 
