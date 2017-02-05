@@ -352,5 +352,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (use-package git-timemachine
     :commands (git-timemachine))
   :config
-  (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)))
+  (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty))
+  (use-package magithub
+    :config (magithub-feature-autoinject t)))
 
