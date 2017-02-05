@@ -298,3 +298,13 @@ With prefix argument SHOW-FILES-P also offer to find files."
   (use-package latex-preview-pane
     :init (setq latex-preview-pane "xelatex")))
 
+
+;;; ledger-mode
+
+(use-package ledger-mode
+  :mode "\\.ledger\\'"
+  :init
+  (setq ledger-use-iso-dates t
+        ledger-reconcile-default-commodity "EUR"
+        ledger-reconcile-default-date-format "%Y-%m-%d"))
+
