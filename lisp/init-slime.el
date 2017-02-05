@@ -3,61 +3,8 @@
 ;;; slime-setup requires this when the contrib is needed. 
 (require-package 'slime-company :load-only t)
 
-;;; HyperSpec/Documentation
-(load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
-
-(require-package 'quicklisp-docs
-                 :from-dir (expand-file-name "~/prj/quicklisp-docs/"))
-(setq ql-docs-browser-function #'eww-browse-url)
-(ql-docs-reload-docs)
-
-(add-hook 'lisp-mode-hook #'slime-mode)
-(add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
-
-(setq slime-complete-symbol*-fancy t
-      slime-complete-symbol-function #'slime-fuzzy-complete-symbol
-      slime-startup-animation t
-      slime-net-coding-system 'utf-8-unix)
-
-;;; Multiple Lisps
-(setq slime-lisp-implementations
-      '((ccl ("/usr/local/bin/ccl64"))
-        (sbcl ("/usr/local/bin/sbcl"))
-        (ecl ("/usr/local/bin/ecl"))
-        (clisp ("/usr/local/bin/clisp"))
-        (abcl ("/usr/local/bin/abcl"))
-        (acl ("/Applications/AllegroCLexpress.app/Contents/Resources/alisp"))))
-
-;;; getting contrib fancy
-(setq slime-contribs
-      '(slime-fancy
-        slime-banner slime-asdf slime-company
-        slime-tramp slime-xref-browser slime-highlight-edits
-        slime-sprof slime-macrostep slime-indentation))
-
-;;; set highlight-edits faces
-(with-eval-after-load "slime-highlight-edits"
-  (custom-set-faces
-   '(slime-highlight-edits-face ((t (:slant italic))))))
 
 
-;;; use slime-mode on asd files
-(add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
-
-;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
-;; Add a directory to asdf:*central-registry*
-(defslime-repl-shortcut slime-repl-add-to-central-registry
-  ("add-to-central-registry" "+a" "add")
-  (:handler (lambda (directory)
-              (interactive
-               (list (expand-file-name (file-name-as-directory
-                                        (read-directory-name
-                                         "Add directory: "
-                                         (slime-eval '(swank:default-directory))
-                                         nil nil "")))))
-              (insert "(cl:pushnew (cl:truename #P\"" directory "\") asdf:*central-registry* :test #'equal)")
-              (slime-repl-send-input t)))
-  (:one-liner "Add a directory to asdf:*central-registry*"))
 
 (defslime-repl-shortcut slime-repl-quicklisp-quickload
   ("quicklisp-quickload" "ql")
@@ -67,13 +14,6 @@
               (slime-repl-send-input t)))
   (:one-liner "cl:quickload system"))
 
-(defslime-repl-shortcut slime-repl-quickload-and-switch
-  ("quickload-and-switch" "qs")
-  (:handler (lambda (system)
-              (interactive (list (slime-read-system-name)))
-              (insert (format "(progn (in-package :cl-user) (ql:quickload :%s) (in-package :%s))" system system))
-              (slime-repl-send-input t)))
-  (:one-liner "quickload and switch to system"))
 
 ;;; show autodoc also on newline.
 (defun fyi-slime-autodoc-newline ()

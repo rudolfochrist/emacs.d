@@ -535,4 +535,36 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :config
   (eldoc-add-command 'paredit-backward-delete
                      'paredit-close-round))
+
+;;; slime
+
+(use-package slime
+  :mode (("\\.asd\\'" . lisp-mode))
+  :init
+  (setq slime-complete-symbol*-fancy t
+        slime-complete-symbol-function #'slime-fuzzy-complete-symbol
+        slime-startup-animation t
+        slime-net-coding-system 'utf-8-unix
+        slime-lisp-implementations'((ccl ("/usr/local/bin/ccl64"))
+                                    (sbcl ("/usr/local/bin/sbcl"))
+                                    (ecl ("/usr/local/bin/ecl"))
+                                    (abcl ("/usr/local/bin/abcl"))))
+
+  (setq slime-contribs
+        '(slime-fancy
+          slime-banner slime-asdf slime-company
+          slime-tramp slime-xref-browser slime-highlight-edits
+          slime-sprof slime-macrostep slime-indentation))
+  
+  (add-hook 'lisp-mode-hook #'slime-mode)
+  (add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
+  :config
+  ;; HyperSpec/Documentation
+  (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
+  (use-package quicklisp-docs
+    :load-path "~/quicklisp/local-projects/quicklisp-docs/"
+    :init (setq ql-docs-browser-function #'eww-browse-url)
+    :config (ql-docs-reload-docs))
+  
+  )
 
