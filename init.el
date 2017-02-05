@@ -130,6 +130,20 @@
 ;;; easier other-window
 (bind-key* "<C-return>" #'other-window)
 
+;;; killing the whole region
+(bind-key "C-x C-k" #'kill-region)
+
+;;; buffer switching
+(bind-key "C-x C-b" #'ivy-switch-buffer)
+(bind-key "C-c C-b" #'ibuffer)
+
+;;; fullscreen
+(bind-key "C-x F" #'toggle-frame-fullscreen)
+
+;;; bury buffers instead of killing (that's so mean....)
+;;; and most of the time I realized that I need the buffer again after killing it.
+(bind-key "C-x k" #'bury-buffer)
+
 
 
 ;;; load other files
