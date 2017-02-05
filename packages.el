@@ -287,3 +287,11 @@ With prefix argument SHOW-FILES-P also offer to find files."
   :mode (("\\.js\\'" . js2mode)
          ("\\.json\\'" . js2mode)))
 
+
+;;; auctex
+
+(use-package auctex
+  :init
+  (setq TeX-auto-save t
+        TeX-parse-self t))
+
