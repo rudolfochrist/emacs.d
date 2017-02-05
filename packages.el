@@ -394,3 +394,9 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ("I" mc/insert-letters)
 ("q" nil)))
 
+
+;;; page-break-lines
+
+(use-package page-break-lines
+  :config (global-page-break-lines-mode))
+
