@@ -478,4 +478,9 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 (use-package undo-tree
   :commands (undo-tree-visualize))
 
+
+;;; which-key
+
+(use-package which-key
+  :config (which-key-mode))
 
