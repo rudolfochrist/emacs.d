@@ -498,3 +498,13 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 (use-package yaml-mode)
 
+
+;;; yasnippet
+
+(use-package yasnippet
+  :init
+  (dolist (hook '(text-mode-hook prog-mode-hook))
+    (add-hook hook #'yas-minor-mode))
+  :config
+  (yas-reload-all))
+
