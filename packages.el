@@ -208,3 +208,14 @@
 (use-package interleave
   :init (setq interleave-org-notes-dir-list nil))
 
+
+;;; irony-mode
+
+(use-package irony
+  :bind (:map irony-mode-map
+              ([remap completion-at-point] . irony-completion-at-point-async)
+              ([remap complete-symbol] . irony-completion-at-point-async))
+  :config
+  (dolist (hook '(c++-mode-hook objc-mode-hook c-mode-hook))
+    (add-hook hook #'irony-mode)))
+

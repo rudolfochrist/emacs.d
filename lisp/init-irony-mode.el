@@ -1,18 +1,3 @@
-(require-package 'irony)
-
-;;; lang modes
-(add-hook 'c++-mode-hook #'irony-mode)
-(add-hook 'objc-mode-hook #'irony-mode)
-(add-hook 'c-mode-hook #'irony-mode)
-
-(defun fyi-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    #'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    #'irony-completion-at-point-async))
-
-(add-hook 'irony-mode-hook #'fyi-irony-mode-hook)
-(add-hook 'irony-mode-hook #'irony-cdb-autosetup-compile-options)
 
 ;;; company
 (require-package 'company-irony)
