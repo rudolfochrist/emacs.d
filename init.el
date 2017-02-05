@@ -148,6 +148,12 @@
 (bind-key "C-x k" #'bury-buffer)
 
 
+;;; libs
+
+(use-package f    :defer t)
+(use-package d    :defer t)
+(use-package dash :defer t)
+
 
 ;;; avy
 
@@ -781,12 +787,6 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
                 (insert (format "(ql:quickload '%s)" systems))
                 (slime-repl-send-input t)))
     (:one-liner "cl:quickload system")))
-
-
-
-(load-file (expand-file-name "overrides.el" user-emacs-directory))
-;;; - org
-;;; - gnus
 
 
 ;;; Text scaling, window resizing (hydra)
