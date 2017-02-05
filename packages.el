@@ -514,3 +514,25 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 (use-package ztree
   :commands (ztree-diff))
 
+
+;;; emacs-lisp-mode
+
+(use-package emacs-lisp-mode
+  :mode (("Cask\\'" . emacs-lisp-mode))
+  :init
+  ;; emacs-lisp indentation 
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda () 
+              (setq-local lisp-indent-function #'lisp-indent-function))))
+
+
+;;; eldoc
+
+(use-package eldoc
+  :commands (eldoc-mode)
+  :init
+  (add-hook 'emacs-lisp-mode-hook #'eldoc-mode)
+  :config
+  (eldoc-add-command 'paredit-backward-delete
+                     'paredit-close-round))
+

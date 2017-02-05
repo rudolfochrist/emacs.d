@@ -260,6 +260,15 @@ _0_: default text size                _j_
 (bind-key "C-h A" #'info-apropos)
 
 
+;;; check for parens after save
+
+(defun check-parens-hook ()
+  (when (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
+    (check-parens)))
+
+(add-hook 'after-save-hook #'check-parens-hook)
+
+
 ;;; enable disabled commands
 (put 'erase-buffer 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
