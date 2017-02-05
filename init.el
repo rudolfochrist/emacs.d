@@ -769,6 +769,9 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   
   (add-hook 'lisp-mode-hook #'slime-mode)
   (add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
+  (add-hook 'lisp-mode-hook
+            (lambda ()
+              (setq-local lisp-indent-function #'common-lisp-indent-function)))
   :config
   ;; HyperSpec/Documentation
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
