@@ -18,7 +18,7 @@
 (ox-extras-activate '(latex-header-blocks ignore-headlines))
 
 ;;; jwiegley's smart capture
-(require-package 'org-smart-capture :from-dir emacs-d-site-lisp)
+(require 'org-smart-capture)
 
 ;;; overwrite because of bugs
 (defun org-latex-header-blocks-filter (backend)
@@ -69,9 +69,8 @@
       org-deadline-warning-days 7)
 
 ;;; org-capture
-(global-set-key (kbd "<M-f12>") #'org-smart-capture)
-(setq org-gnus-prefer-web-links t)
-(setq org-capture-templates
+(setq org-gnus-prefer-web-links t
+      org-capture-templates
       '(("a" "Add task" entry
          (file+headline "~/org/tasks/personal.org" "Inbox")
          "* TODO %?

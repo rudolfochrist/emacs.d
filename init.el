@@ -10,8 +10,12 @@
 (require 'cl-lib)
 
 ;;; load-path
-(setq  site-lisp-directory (expand-file-name "site-lisp/" user-emacs-directory))
+(setq lisp-directory (expand-file-name "lisp/" user-emacs-directory)
+      site-lisp-directory (expand-file-name "site-lisp/" user-emacs-directory))
+
+(add-to-list 'load-path lisp-directory)
 (add-to-list 'load-path site-lisp-directory)
+
 (let ((default-directory site-lisp-directory))
   (normal-top-level-add-subdirs-to-load-path))
 
@@ -859,6 +863,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :commands (org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-. a" . org-agenda)
+         ("C-. c" . org-smart-capture)
          :map org-mode-map
          ("C-c C-r" . org-refile-web-capture)))
 
