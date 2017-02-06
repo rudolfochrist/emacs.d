@@ -1,14 +1,15 @@
-(require-package 'bbdb)
-(require-package 'bbdb-ext)
-(require-package 'bbdb-vcard)
 (require 'gnus)
 (require 'nnir)
 (require 'org)
-(eval-when-compile
-  (require 'hydra))
+(require 'hydra)
+(require 'bind-keys)
 
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
 ;;; Settings highly influenced by John Wiegley (https://github.com/jwiegley/dot-emacs/)
+
+;;; me
+(setq user-full-name "Sebastian Christ"
+      user-mail-address "rudolfo.christ@gmail.com")
 
 ;;; globals
 (setq gnus-use-cache t
@@ -43,10 +44,21 @@
       gnus-message-archive-group nil
       gnus-topic-display-empty-topics nil)
 
+;;; starting/activating errors
 (defun activate-gnus ()
   "Start Gnus when not already running."
   (unless (get-buffer "*Group*")
     (gnus)))
+
+(defun start-gnus (other-frame)
+  "Opens Gnus unless Gnus' already running."
+  (interactive "P")
+  (let ((gnus-buffer (get-buffer "*Group*")))
+    (if gnus-buffer
+        (switch-to-buffer gnus-buffer)
+      (if other-frame
+          (gnus-other-frame)
+        (gnus)))))
 
 ;;; RSS [.newsrc synced therefore the primary select method]
 (setq gnus-select-method
@@ -89,10 +101,7 @@
         (nntp "nntp.aioe.org"
               (nntp-address "nntp.aioe.org"))))
 
-;;; message-mode setup
-(setq message-default-headers "X-Attribution: SRC")
-
-(defun fyi-gnus-multi-tab ()
+(defun my-gnus-multi-tab ()
   "bbdb mail complete in message header. Yasnippet expand in message body."
   (interactive)
   (if (message-in-body-p)
@@ -100,15 +109,15 @@
     (bbdb-complete-mail)))
 
 ;;; message mode hook
-(defun fyi-message-mode-hook ()
+(defun my-message-mode-hook ()
   (message-setup-fill-variables)
   (ispell-change-dictionary "german8")
   (yas-minor-mode 1)
   (bbdb-mail-aliases)
-  (local-set-key (kbd "TAB") 'fyi-gnus-multi-tab)
+  (local-set-key (kbd "TAB") 'my-gnus-multi-tab)
   (turn-on-orgtbl)
   (turn-on-orgstruct++))
-(add-hook 'message-mode-hook #'fyi-message-mode-hook)
+(add-hook 'message-mode-hook #'my-message-mode-hook)
 
 ;;; Tree view for groups
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
@@ -169,10 +178,6 @@
 (setq gnus-summary-line-format "%6V %U%R%O %-20&user-date; %-25,25f %3t %(%* %B%s%)\n"
       gnus-summary-display-arrow t)
 
-;;; me
-(setq user-full-name "Sebastian Christ"
-      user-mail-address "rudolfo.christ@gmail.com")
-
 ;;; sending mail
 ;;; this need gnutls to be installed
 (require 'smtpmail)
@@ -187,41 +192,22 @@
       smtpmail-smtp-service 587
       smtp-debug-info t)
 
-
-;;; managing contantcs
-(setq bbdb-file "~/org/contacts.bbdb"
-      bbdb-offer-save 'auto
-      bbdb-notice-auto-save-file t
-      bbdb-expand-mail-aliases t
-      bbdb-canonicalize-redundant-nets-p t
-      bbdb-always-add-addresses t
-      bbdb-complete-mail-allow-cycling t
-      ;; don't handle anniversaries in BBDB.
-      bbdb-anniv-alist nil)
-(bbdb-initialize 'gnus 'message 'anniv)
-
 ;;; global key bindings
-(defun start-gnus ()
-  "Opens Gnus in other frame unless Gnus' already running."
-  (interactive)
-  (let ((gnus-buffer (get-buffer "*Group*")))
-    (if gnus-buffer
-        (switch-to-buffer gnus-buffer)
-      (gnus))))
+
 (global-set-key (kbd "<f11>") #'start-gnus)
 (global-set-key (kbd "M-<f11>") 'gnus-other-frame)
 
 ;;; wash GWENE
-(defun fyi-gwene-wash-html ()
+(defun my-gwene-wash-html ()
   (when (string-prefix-p "gwene" gnus-newsgroup-name)
     (gnus-article-wash-html)))
-(add-hook 'gnus-article-prepare-hook 'fyi-gwene-wash-html)
+(add-hook 'gnus-article-prepare-hook 'my-gwene-wash-html)
 
 ;;; article highlighting
 (add-hook 'gnus-article-mode-hook #'gnus-article-highlight)
 
 ;;; Lesser used article features in a hydra
-(defun fyi-article-get-header (header &optional skip-bounds)
+(defun my-article-get-header (header &optional skip-bounds)
   "Return HEADER of article in the current `gnus-article-buffer'.
 
 If SKIP-BOUNDS is non-nil, skip the first and the last character from the header
@@ -241,29 +227,25 @@ have (e.g. Message-ID)."
                        (list 1 -1)))))))
     (gnus-summary-verbose-headers -1)))
 
-(defun fyi-article-archived-at ()
+(defun my-article-archived-at ()
   "Return archived-at header of article in the current `gnus-article-buffer'."
-  (fyi-article-get-header 'Archived-at t))
+  (my-article-get-header 'Archived-at t))
 
-(defun fyi-article-message-id ()
+(defun my-article-message-id ()
   "Return the article's Message-ID."
-  (fyi-article-get-header 'Message-ID))
+  (my-article-get-header 'Message-ID))
 
-(defun fyi-article-subject ()
-  (fyi-article-get-header 'Subject))
-
-(defun fyi-article-browse-original ()
+(defun my-article-browse-original ()
   "Open current article in the browser."
   (interactive)
-  (browse-url (or (fyi-article-archived-at)
-                  (fyi-article-message-id))))
+  (browse-url (or (my-article-archived-at)
+                  (my-article-message-id))))
 
-(defhydra hydra-gnus (:color blue :hint nil)
+(defhydra gnus-hydra (:color blue :hint nil)
   "
-  URL Stuff
+  Goto
   ----------
   [_g_] browse original             
-  [_G_] in-article browse original 
 
   Common but seldom used
   ----------------------
@@ -275,8 +257,7 @@ have (e.g. Message-ID)."
   --------
   [_w_]: Mail -- Wide reply          [_W_]: Mail -- Wide reply w/ original
 "
-  ("g" fyi-article-browse-original)
-  ("G" (gnus-article-urls-action #'browse-url))
+  ("g" my-article-browse-original)
   ("f" gnus-summary-mail-forward)
   ("o" gnus-mime-view-part-externally)
   ("s" gnus-mime-save-part)
@@ -285,8 +266,8 @@ have (e.g. Message-ID)."
   ("w" gnus-summary-wide-reply)
   ("W" gnus-summary-wide-reply-with-original))
 
-(define-key gnus-summary-mode-map (kbd "C-c C-.") 'hydra-gnus/body)
-(define-key gnus-article-mode-map (kbd "C-c C-.") 'hydra-gnus/body)
+(bind-key "C-c C-." #'gnus-hydra/body gnus-summary-mode-map)
+(bind-key "C-c C-." #'gnus-hydra/body gnus-article-mode-map)
 
 ;;; enable hl-line
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)
@@ -294,11 +275,8 @@ have (e.g. Message-ID)."
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)
 
 ;;; Message hydra
-(define-key
-  message-mode-map
-  (kbd "C-c C-.")
-  (defhydra hydra-message (:color blue :hint nil)
-    "
+(defhydra message-hydra (:color blue :hint nil)
+  "
   Goto                                       Actions                          PGP/MIME
   -------------------------------------------------------------------------------------
   _t_: 'To' header [C-c C-f C-t]             _a_: Insert 'Mail-Follow-To'     _i_: Sign message
@@ -310,23 +288,25 @@ have (e.g. Message-ID)."
   _f_: 'Followup-To' header [C-c C-f C-f]
   _n_: 'Newsgroups' header [C-c C-f C-n]
 "
-    ("t" message-goto-to)
-    ("o" message-goto-from)
-    ("b" message-goto-bcc)
-    ("c" message-goto-cc)
-    ("s" message-goto-subject)
-    ("r" message-goto-reply-to)
-    ("f" message-goto-followup-to)
-    ("n" message-goto-newsgroups)
-    ("a" message-generate-unsubscribed-mail-followup-to)
-    ("S" message-change-subject)
-    ("w" message-insert-signature)
-    ("x" message-cross-post-followup-to)
-    ("A" mml-attach-file)
-    ("i" mml-secure-message-sign-pgpmime)
-    ("e" mml-secure-message-encrypt-pgpmime)
-    ("p" mml-preview)
-    ("W" message-insert-wide-reply)))
+  ("t" message-goto-to)
+  ("o" message-goto-from)
+  ("b" message-goto-bcc)
+  ("c" message-goto-cc)
+  ("s" message-goto-subject)
+  ("r" message-goto-reply-to)
+  ("f" message-goto-followup-to)
+  ("n" message-goto-newsgroups)
+  ("a" message-generate-unsubscribed-mail-followup-to)
+  ("S" message-change-subject)
+  ("w" message-insert-signature)
+  ("x" message-cross-post-followup-to)
+  ("A" mml-attach-file)
+  ("i" mml-secure-message-sign-pgpmime)
+  ("e" mml-secure-message-encrypt-pgpmime)
+  ("p" mml-preview)
+  ("W" message-insert-wide-reply))
+
+(bind-key "C-c C-." #'message-hydra/body message-mode-map)
 
 ;;; Find mail by message-id
 ;;; http://www.emacswiki.org/emacs/FindMailByMessageId
@@ -368,7 +348,8 @@ have (e.g. Message-ID)."
 ;;; citation
 (require 'supercite)
 
-(setq sc-auto-fill-region-p nil
+(setq message-default-headers "X-Attribution: SRC"
+      sc-auto-fill-region-p nil
       sc-preferred-attribution-list
       '("x-attribution" "initials" "firstname" "lastname"))
 

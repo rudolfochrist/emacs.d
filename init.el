@@ -813,7 +813,29 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; bbdb
 
 (use-package bbdb
-  :command (bbdb bbdb-create))
+  :commands (bbdb bbdb-create)
+  :init
+  (setq bbdb-file "~/org/contacts.bbdb"
+        bbdb-offer-save 'auto
+        bbdb-notice-auto-save-file t
+        bbdb-expand-mail-aliases t
+        bbdb-canonicalize-redundant-nets-p t
+        bbdb-always-add-addresses t
+        bbdb-complete-mail-allow-cycling t
+        ;; don't handle anniversaries in BBDB.
+        bbdb-anniv-alist nil)
+  :config
+  (bbdb-initialize 'gnus 'message 'anniv))
+
+(use-package bbdb-vcard
+  :after bbdb
+  :commands (bbdb-vcard-export bbdb-vcard-import-file))
+
+
+;;; gnus
+
+(use-package dot-gnus
+  :bind ("C-. m" . start-gnus))
 
 
 ;;; Text scaling, window resizing (hydra)
