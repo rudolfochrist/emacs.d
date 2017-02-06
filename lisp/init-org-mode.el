@@ -1,8 +1,3 @@
-;;; local orgmode
-;; (add-to-list 'load-path "~/prj/org-mode/lisp/")
-;; (add-to-list 'load-path "~/prj/org-mode/contrib/lisp/")
-;; (require 'org)
-
 (require-package 'org-plus-contrib
                  :require 'org)
 (require 'ox-latex)
