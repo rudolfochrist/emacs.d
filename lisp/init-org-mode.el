@@ -1,5 +1,4 @@
-(require-package 'org-plus-contrib
-                 :require 'org)
+(require 'org)
 (require 'ox-latex)
 (require 'ox-koma-letter)
 (require 'ox-md)
@@ -133,6 +132,7 @@ ADDED: %U"
 
 (require-package 'german-holidays)
 (setq calendar-holidays holiday-german-holidays)
+
 
 ;;; custom agenda views
 (setq org-agenda-custom-commands
