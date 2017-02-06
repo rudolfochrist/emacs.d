@@ -810,6 +810,19 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
               ("C-. C-," . imenu-anywhere)))
 
 
+;;; info
+
+(use-package info
+  :commands (info)
+  :bind (("C-h a" . apropos)
+         ("C-h A" . apropos))
+  :init
+  (setq Info-additional-directory-list '("~/info/"))
+  :config
+  (use-package info-look
+    :bind (("C-h S" . info-lookup-symbol))))
+
+
 ;;; bbdb
 
 (use-package bbdb
@@ -928,14 +941,6 @@ _0_: default text size                _j_
                           (show-children))))))
 
 (bind-key "C-. k" #'search-kb)
-
-
-;;; info
-(require 'info-look)
-
-(add-to-list 'Info-directory-list "~/info")
-(bind-key "C-h a" #'apropos)
-(bind-key "C-h A" #'info-apropos)
 
 
 ;;; check for parens after save
