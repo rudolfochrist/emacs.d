@@ -853,7 +853,11 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 ;;; org-mode
 
-(use-package org-mode)
+(use-package org-mode
+  :bind (("C-c l" . org-store-link)
+         ("C-. a" . org-agenda)
+         :map org-mode-map
+         ("C-c C-r" . org-refile-web-capture)))
 
 
 ;;; Text scaling, window resizing (hydra)

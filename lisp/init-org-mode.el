@@ -130,9 +130,8 @@ ADDED: %U"
       org-agenda-include-diary t)
 (calendar-set-date-style 'iso)
 
-(require-package 'german-holidays)
-(setq calendar-holidays holiday-german-holidays)
-
+(use-package german-holiday
+  :init (setq calendar-holidays holiday-german-holidays))
 
 ;;; custom agenda views
 (setq org-agenda-custom-commands
@@ -159,14 +158,7 @@ ADDED: %U"
           (org-agenda-skip-function
            '(org-agenda-skip-entry-if 'timestamp))))))
 
-;;; org keybindings
-(global-set-key (kbd "C-c l") 'org-store-link)
-(global-set-key (kbd "<f12>") 'org-agenda)
-
-(defun fyi-org-keybindings ()
-  (define-key org-mode-map (kbd "C-c C-r") #'org-refile-web-capture))
-(add-hook 'org-mode-hook #'fyi-org-keybindings)
-
+;;; enable visual-line-mode
 (add-hook 'org-mode-hook 'visual-line-mode)
 
 ;;; latex export customization
