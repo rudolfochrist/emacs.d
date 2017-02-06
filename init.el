@@ -851,6 +851,11 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :bind ("C-. m" . start-gnus))
 
 
+;;; org-mode
+
+(use-package org-mode)
+
+
 ;;; Text scaling, window resizing (hydra)
 
 ;;; copied from https://github.com/abo-abo/hydra/blob/master/hydra-examples.el
