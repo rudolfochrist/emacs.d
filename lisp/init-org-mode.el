@@ -257,10 +257,11 @@ hypersetup to include colorlinks=true."
                          :export 'org-bdsk-export)
 
 ;;; org-download
-(require-package 'org-download)
-(setq org-download-image-dir "~/org/org-download-images/"
-      org-download-heading-lvl nil
-      org-download-image-width 200)
+(use-package org-download
+  :init
+  (setq org-download-image-dir "~/org/org-download-images/"
+        org-download-heading-lvl nil
+        org-download-image-width 200))
 
 ;;; limit the width
 (defun fyi-org-width ()
