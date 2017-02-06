@@ -150,9 +150,10 @@
 
 ;;; libs
 
-(use-package f    :defer t)
-(use-package d    :defer t)
-(use-package dash :defer t)
+(use-package f     :defer t)
+(use-package d     :defer t)
+(use-package dash  :defer t)
+(use-package async :defer t)
 
 
 ;;; avy
