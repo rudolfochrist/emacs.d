@@ -53,77 +53,14 @@
 
 ;;; org files
 (setq org-directory "~/org/"
-      org-agenda-files '("~/org/tasks/personal.org"
-                         "~/org/tasks/m-creations.org")
+      org-agenda-files '("~/org/tasks/todo.org")
       org-web-capture-file "~/org/web.org"
       org-kb-file "~/org/kb.org")
-
-(global-set-key
- (kbd "C-x t j")
- (defhydra hydra-prominent-files (:color blue
-                                         :hint nil)
-   "
-Quickly jump to files:
-_b_ooks
-_f_inances
-_k_nowledge base
-_B_ug Knowledge Base
-_a_nnual book expenses
-"
-   ("b" (find-file "~/org/books.org"))
-   ("B" (find-file "~/org/bug-kb.org"))
-   ("f" (find-file (format "~/archive/Finances/%s/%s.ledger"
-                           (nth 2 (calendar-current-date))
-                           (nth 2 (calendar-current-date)))))
-   ("k" (find-file "~/org/kb.org"))
-   ("a" (find-file (format "~/archive/Finances/%s/book-expenses.org"
-                           (nth 2 (calendar-current-date)))))))
 
 ;;; todos setup
 (setq org-todo-keywords
       '((sequence "TODO(t)" "PROJECT(p)" "WAITING(w)" "DELEGATED(k)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)"))
-      org-stuck-projects '("TODO=\"PROJECT\"" ("TODO" "WAITING" "DELEGATED") nil "")
-      org-todo-keyword-faces
-      '(("PROJECT" :weight bold :foreground "dark magenta")
-        ("DONE" :weight bold :foreground "forest green")
-        ("CANCELED" :wight bold :foreground "forest green")
-        ("SOMEDAY" :weight bold :foreground "dark goldenrod")
-        ("TODO" :weight bold :foreground "medium blue")
-        ("APPT" :weight bold :foreground "medium blue")
-        ("WAITING" :weight bold :foreground "red")
-        ("DELEGATED" :weight bold :foreground "red")))
-
-;;; archiving DONE tasks
-;;; https://github.com/jwiegley/dot-emacs/blob/master/dot-org.el#L330
-(defvar org-archive-expiry-days 9
-  "The number of days after which a completed task should be auto-archived.
-This can be zero for immediate or a floating point value.")
-
-(defun org-archive-expired-tasks ()
-  "Archive task with a completion date after `org-archive-expiry-days'."
-  (interactive)
-  (flet ((prop (property element)
-               (org-element-property property element))
-         (completep (headline)
-                    (member (prop :todo-type headline)
-                            '(done canceled)))
-         (expirep (headline)
-                  (>= (time-to-number-of-days
-                       (time-subtract (current-time)
-                                      (org-time-string-to-time
-                                       (prop :raw-value (prop :closed headline)))))
-                      org-archive-expiry-days))
-         (level-2-p (headline)
-                    (= 2 (prop :level headline))))
-    (save-excursion
-      (goto-char (point-min))
-      (org-element-map (org-element-parse-buffer) 'headline
-        (lambda (headline)
-          (when (and (level-2-p headline)
-                     (completep headline)
-                     (expirep headline))
-            (goto-char (prop :begin headline))
-            (org-archive-subtree)))))))
+      org-stuck-projects '("TODO=\"PROJECT\"" ("TODO" "WAITING" "DELEGATED") nil ""))
 
 ;;; agenda
 (setq org-log-done 'time
@@ -177,16 +114,6 @@ ADDED: %U"
       org-refile-targets
       '((org-agenda-files . (:level . 1))
         (org-agenda-files . (:todo . "PROJECT"))))
-
-(defun fyi-projectize-new-refile-targets (parent child)
-  (save-excursion
-    (save-restriction
-      (widen)
-      (goto-char
-       (org-find-exact-headline-in-buffer child (current-buffer) t))
-      (org-todo "PROJECT"))))
-
-(advice-add 'org-refile-new-child :after #'fyi-projectize-new-refile-targets)
 
 (defun org-refile-web-capture ()
   "Refile link from `org-web-capture-file' to `org-kb-file'."
@@ -248,24 +175,6 @@ ADDED: %U"
 (add-hook 'org-mode-hook 'visual-line-mode)
 
 ;;; latex export customization
-(add-to-list 'org-latex-classes
-             '("fyi-article"
-               "\\documentclass[11pt,a4paper]{article}
-                                  [DEFAULT-PACKAGES]
-                                  [PACKAGES]
-                                  \\usepackage{titling}
-                                  \\usepackage{fancyhdr}
-                                  [EXTRA]
-                                  \\pagestyle{fancy}
-                                  \\lhead{\\thetitle}
-                                  \\rhead{\\theauthor}
-                                  \\renewcommand{\\headrulewidth}{0.0}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
 (add-to-list 'org-latex-classes
              '("lecture-article"
                "\\documentclass[11pt,a4paper]{article}
@@ -331,10 +240,16 @@ hypersetup to include colorlinks=true."
       org-footnote-auto-label t    ; generate numbered footnotes like [fn:1]
       org-latex-hyperref-template (toggle-org-latex-hyperref-colorlinks 'force))
 
-(add-to-list 'org-latex-packages-alist '("" "color" nil))
+;;; use xelatex with bibtex
+(setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
+                              "bibtex %b"
+                              "makeindex %b"
+                              "PATH=\"/usr/bin:$PATH\" makeglossaries %b"  ; use system perl for makeglossaries
+                              "xelatex -interaction nonstopmode %f"
+                              "xelatex -interaction nonstopmode %f"))
 
-
-(setq org-startup-indented t)           ; Use clean view
+;;; clean view
+(setq org-startup-indented t)
 
 ;;; display inline images on startup
 (setq org-image-actual-width '(450))
@@ -355,43 +270,6 @@ hypersetup to include colorlinks=true."
 (org-link-set-parameters "x-bdsk"
                          :follow 'org-bdsk-open
                          :export 'org-bdsk-export)
-
-;;; message links
-(defun org-message-store-link ()
-  (when (memq major-mode '(gnus-summary-mode gnus-article-mode))
-    (let* ((group (car gnus-article-current))
-           (article (cdr gnus-article-current))
-           (data (gnus-data-find-list article))
-           (header (gnus-data-header (car data)))
-           (message-id (mail-header-message-id header))
-           (raw-subject (mail-header-subject header))
-           (subject (and raw-subject (rfc2047-decode-string raw-subject))))
-      (org-store-link-props
-       :type "message"
-       :link (format "message://%s/%s"
-                     (base64-encode-string group)
-                     (substring message-id 1 -1))
-       :description (subst-char-in-string
-                     ?\[ ?\{ (subst-char-in-string
-                              ?\] ?\} subject))))))
-
-(defun org-message-open (path)
-  (cl-destructuring-bind (group message-id)
-      (split-string (substring path 2) "/")
-    (gnus-goto-article (base64-decode-string group)
-                       message-id)))
-
-(org-link-set-parameters "message"
-                         :store 'org-message-store-link
-                         :follow 'org-message-open)
-
-;;; use xelatex with bibtex
-(setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
-                              "bibtex %b"
-                              "makeindex %b"
-                              "PATH=\"/usr/bin:$PATH\" makeglossaries %b"  ; use system perl for makeglossaries
-                              "xelatex -interaction nonstopmode %f"
-                              "xelatex -interaction nonstopmode %f"))
 
 ;;; org-download
 (require-package 'org-download)
@@ -427,14 +305,6 @@ hypersetup to include colorlinks=true."
   (add-to-list 'ispell-skip-region-alist '("=" "="))
   (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC")))
 (add-hook 'org-mode-hook #'fyi-org-ispell)
-
-;;; adjust ispell dictionary based on export language
-(defun fyi-org-adjust-ispell ()
-  (let ((language (plist-get (org-export-get-environment) :language)))
-    (ispell-change-dictionary (if (string-equal language "de")
-                                  "german8"
-                                "en_US"))))
-(add-hook 'org-mode-hook 'fyi-org-adjust-ispell)
 
 ;;; org export filters
 (defvar org-export-latex-add-link-footnotes nil
