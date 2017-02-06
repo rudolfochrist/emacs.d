@@ -489,6 +489,9 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-hook 'text-mode-hook #'disable-linum-on-huge-file)
   (add-hook 'eshell-mode-hook (lambda () (linum-mode -1)))
   (add-hook 'slime-repl-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'gnus-topic-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'gnus-summary-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'gnus-article-mode-hook (lambda () (linum-mode -1)))
   :config
   (global-linum-mode 1))
 
@@ -853,8 +856,10 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; gnus
 
 (use-package dot-gnus
-  :commands (gnus)
-  :bind ("C-. m" . start-gnus))
+  :bind (("C-. m" . gnus)
+         ("C-. M" . gnus-other-frame))
+  :init
+  (setq gnus-init-file (expand-file-name "dot-gnus" lisp-directory)))
 
 
 ;;; org-mode
