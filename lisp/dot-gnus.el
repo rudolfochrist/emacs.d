@@ -2,7 +2,7 @@
 (require 'nnir)
 (require 'org)
 (require 'hydra)
-(require 'bind-keys)
+(require 'bind-key)
 
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
 ;;; Settings highly influenced by John Wiegley (https://github.com/jwiegley/dot-emacs/)
