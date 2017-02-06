@@ -9,7 +9,7 @@
 ;; use CL features
 (require 'cl-lib)
 
-;;; site-lisp setup
+;;; load-path
 (setq  site-lisp-directory (expand-file-name "site-lisp/" user-emacs-directory))
 (add-to-list 'load-path site-lisp-directory)
 (let ((default-directory site-lisp-directory))
@@ -849,12 +849,14 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; gnus
 
 (use-package dot-gnus
+  :commands (gnus)
   :bind ("C-. m" . start-gnus))
 
 
 ;;; org-mode
 
-(use-package org-mode
+(use-package dot-org
+  :commands (org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-. a" . org-agenda)
          :map org-mode-map
