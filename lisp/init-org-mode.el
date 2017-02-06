@@ -248,12 +248,10 @@ hypersetup to include colorlinks=true."
                               "xelatex -interaction nonstopmode %f"
                               "xelatex -interaction nonstopmode %f"))
 
-;;; clean view
-(setq org-startup-indented t)
-
-;;; display inline images on startup
-(setq org-image-actual-width '(450))
-(setq org-startup-with-inline-images t)
+;;; org buffer niceties.
+(setq org-startup-indented t
+      org-image-actual-width '(450)
+      org-startup-with-inline-images t)
 
 ;;; bibdexk/bibtex/citation links
 (defun org-bdsk-open (path)
