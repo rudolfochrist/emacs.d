@@ -368,4 +368,18 @@ hypersetup to include colorlinks=true."
                          :follow 'org-texinfo-ref-open
                          :export 'org-texinfo-pxref-export)
 
+;;; org-babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp .t)
+   (js . t)
+   (lisp . t)
+   (latex . t)
+   (shell . t)))
+
+(setq org-confirm-babel-evaluate nil
+      org-src-fontify-natively t        
+      org-src-tab-acts-natively t
+      org-src-preserve-indentation t)   
+
 (provide 'init-org-mode)
