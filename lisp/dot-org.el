@@ -369,4 +369,37 @@ hypersetup to include colorlinks=true."
       org-src-tab-acts-natively t
       org-src-preserve-indentation t)   
 
-(provide 'init-org-mode)
+;;; org-ref
+
+(use-package org-ref
+  :bind ((:map
+          org-mode-map
+          ("C-c f" . org-ref-hydra)))
+  :preface
+  (defun fyi-get-pdf-filename (key)
+    "Resolves the pdf path for key"
+    (format "%s0-%s.pdf"
+            (file-name-as-directory org-ref-pdf-directory)
+            key))
+  (defhydra org-ref-hydra (:color teal)
+    "org-ref"
+    ("f" org-ref-helm-insert-cite-link "add citation link")
+    ("r" org-ref-helm-insert-ref-link "add ref link")
+    ("l" org-ref-helm-insert-label-link "add label link")
+    ("g" org-ref-insert-glossary-link "add glossary link"))
+  :init
+  (setq org-ref-default-bibliography reftex-default-bibliography
+        org-ref-pdf-directory "~/Dropbox/Papers/Library/"
+        org-ref-default-citation-link "citep"
+        org-ref-get-pdf-filename-function #'fyi-get-pdf-filename)
+  :config
+  ;; load the rest
+  (dolist (pkg '(org-ref-url-utils
+                 org-ref-pdf
+                 org-ref-bibtex
+                 org-ref-arxiv
+                 org-ref-isbn
+                 org-ref-helm-bibtex
+                 doi-utils
+                 bibtex-completetion))
+    (require pkg)))
