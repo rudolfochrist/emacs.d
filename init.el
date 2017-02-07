@@ -598,10 +598,15 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'slime-repl-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook #'enable-paredit-mode)
-  (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
   (add-hook 'ielm-mode-hook #'enable-paredit-mode)
   :config
   (add-to-list 'paredit-space-for-delimiter-predicates #'paredit-adjust-spacing-p))
+
+(use-package paredit-everywhere
+  :commands (paredit-everywhere-mode)
+  :init
+  (add-hook 'prog-mode-hook 'paredit-everywhere-mode))
+
 
 
 ;;; redshank
