@@ -172,13 +172,12 @@
 (use-package ace-link
   :commands (ace-link-gnus)
   :init
-  ;; setup gnusn
   (add-hook 'gnus-article-mode-hook
             (lambda ()
-              (bind-key "M-o" 'ace-link-gnus 'gnus-article-mode-map)))
+              (bind-key "M-o" #'ace-link-gnus gnus-article-mode-map)))
   (add-hook 'gnus-summary-mode-hook
             (lambda ()
-              (bind-key "M-o" 'ace-link-gnus 'gnus-summary-mode-map))) 
+              (bind-key "M-o" #'ace-link-gnus gnus-summary-mode-map)))
   :config
   (ace-link-setup-default))
 
