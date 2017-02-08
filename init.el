@@ -944,6 +944,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 (use-package dot-org
   :load-path ("site-lisp/org-mode/lisp" "site-lisp/org-mode/contrib/lisp")
+  :defer 5
   :commands (org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-. a" . org-agenda)
