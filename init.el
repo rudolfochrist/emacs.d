@@ -1,6 +1,6 @@
 ;;; My emacs config.
 
-;; Added by Package.el.  This must come before configurations of
+;; Added by Package.el.  This t come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
@@ -10,14 +10,12 @@
 (require 'cl-lib)
 
 ;;; load-path
-(setq lisp-directory (expand-file-name "lisp/" user-emacs-directory)
-      site-lisp-directory (expand-file-name "site-lisp/" user-emacs-directory))
+(setq lisp-directory (expand-file-name "lisp" user-emacs-directory)
+      site-lisp-directory (expand-file-name "site-lisp" user-emacs-directory))
 
 (add-to-list 'load-path lisp-directory)
 (add-to-list 'load-path site-lisp-directory)
-
-(let ((default-directory site-lisp-directory))
-  (normal-top-level-add-subdirs-to-load-path))
+(add-to-list 'load-path (expand-file-name "use-package" site-lisp-directory))
 
 ;;; prefer newer files
 (setq load-prefer-newer t)
@@ -26,10 +24,6 @@
 ;;; http://irreal.org/blog/?p=3765
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
-
-;;; setup paths
-(require 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
 
 ;;; setup use-package
 (setq use-package-enable-imenu-support t)
@@ -62,6 +56,13 @@
 ;;; set up environment details.
 ;;; especially Perl is bitchy about it if you run commands from within
 ;;; Emacs
+
+;;; setup paths
+(use-package exec-path-from-shell
+  :load-path "site-lisp/exec-path-from-shell"
+  :config
+  (exec-path-from-shell-initialize))
+
 (setenv "LANG" "en_US.UTF-8")
 (setenv "LC_ALL" "en_US.UTF-8")
 
@@ -160,15 +161,16 @@
 
 ;;; libs
 
-(use-package f     :defer t)
-(use-package d     :defer t)
-(use-package dash  :defer t)
-(use-package async :defer t)
+(use-package f     :defer t :load-path "site-lisp/f")
+(use-package s     :defer t :load-path "site-lisp/s")
+(use-package dash  :defer t :load-path "site-lisp/dash")
+(use-package async :defer t :load-path "site-lisp-async")
 
 
 ;;; avy
 
 (use-package avy
+  :load-path "site-lisp/avy"
   :bind (("M-g w" . avy-goto-word-1)))
 
 
@@ -176,6 +178,7 @@
 ;;; ace-link
 
 (use-package ace-link
+  :load-path "site-lisp/ac-link"
   :commands (ace-link-gnus)
   :init
   (add-hook 'gnus-article-mode-hook
@@ -191,11 +194,13 @@
 ;;; ag
 
 (use-package ag
+  :load-path "site-lisp/ag"
   :init
   (setq ag-reuse-buffers t
         ag-reuse-window t)
   :config
   (use-package wgrep-ag
+    :load-path "site-lisp/wgrep"
     :commands (wgrep-ag-setup)
     :init
     (add-hook 'ag-mode-hook 'wgrep-ag-setup)))
@@ -204,6 +209,7 @@
 ;;; company-mode
 
 (use-package company
+  :load-path "site-lisp/company"
   :commands (global-company-mode)
   :bind (("C-. C-." . company-complete)
          :map company-active-map
@@ -218,6 +224,7 @@
 ;;; dired
 
 (use-package dired
+  :load-path "site-lisp/dired"
   :commands (dired-jump)
   :bind (("C-. d" . dired-jump)
          ("C-. D" . dired-jump-elsewhere)
@@ -253,13 +260,14 @@
     (setq insert-directory-program "/usr/local/bin/gls"))
   :config
   (use-package dired-x)
-  (use-package dired-details
+  (use-package dired-details 
     :init
     ;; inspired by https://github.com/magnars/.emacs.d/
     (setq dired-details-hidden-string "--- ")
     :config
     (dired-details-install))
   (use-package dired-narrow
+    :load-path "site-lisp/dired-hacks"
     :commands (dired-narrow)
     :bind (:map dired-mode-map
                 ("/" . dired-narrow))))
@@ -267,6 +275,7 @@
 ;;; easy-kill
 
 (use-package easy-kill
+  :load-path "site-lisp/easy-kill"
   :bind (([remap kill-ring-save] . easy-kill)))
 
 
@@ -283,6 +292,7 @@
 ;;; erc
 
 (use-package erc
+  :commands (erc erc-tls)
   :init
   (setq erc-nick "rudolfochrist"
         erc-prompt-for-password nil
@@ -308,11 +318,11 @@
               ("<escape>" . erc-mark-as-read))
   :config
   (use-package erc-log
+    :commands (erc-log-enable)
     :init
     (setq erc-log-channels-directory "~/.erc/logs/"
-          erc-save-buffer-on-part t)
-    :config
-    (erc-log-enable)))
+          erc-save-buffer-on-part t))
+  (erc-log-enable))
 
 
 ;;; eshell
@@ -347,35 +357,42 @@
 ;;; feature-mode
 
 (use-package feature-mode
+  :load-path "site-lisp/feature-mode"
   :mode "\\.feature\\'")
 
 
 ;;; goto-last-change
 
 (use-package goto-last-change
+  :load-path "site-lisp/goto-last-change"
   :bind (("C-. C--" . goto-last-change)))
 
 
 ;;; hydra
 
-(use-package hydra)
+(use-package hydra
+  :load-path "site-lisp/hydra")
+
 
 
 ;;; iedit
 
 (use-package iedit
+  :load-path "site-lisp/iedit"
   :bind (("C-. '" . iedit-mode)))
 
 
 ;;; interleave
 
 (use-package interleave
+  :load-path "site-lisp/interleave"
   :init (setq interleave-org-notes-dir-list nil))
 
 
 ;;; irony-mode
 
 (use-package irony
+  :load-path "site-lisp/irony"
   :bind (:map irony-mode-map
               ([remap completion-at-point] . irony-completion-at-point-async)
               ([remap complete-symbol] . irony-completion-at-point-async))
@@ -383,10 +400,12 @@
   (dolist (hook '(c++-mode-hook objc-mode-hook c-mode-hook))
     (add-hook hook #'irony-mode))
   (use-package company-irony
-    :commands (company-irony)
+    :load-path "site-lisp/company-irony"
+    :demand t
     :init (add-to-list 'company-backends #'company-irony))
   (use-package irony-eldoc
-    :commands (irony-eldoc)
+    :load-path "site-lisp/irnoy-eldoc"
+    :demand t
     :init (add-hook 'irony-mode-hook #'irony-eldoc)))
 
 
@@ -399,9 +418,11 @@
 ;;; swiper, ivy, counsel
 
 (use-package ivy
+  :load-path "site-lisp/swiper"
   :demand t
   :preface
-  (use-package smex)
+  (use-package smex
+    :load-path "site-lisp/smex")
   ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
   (defvar ivy-prominent-directories
     '("~/PR/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
@@ -438,6 +459,7 @@ With prefix argument SHOW-FILES-P also offer to find files."
   (ivy-mode 1))
 
 (use-package counsel
+  :load-path "site-lisp/swiper"
   :after ivy
   :bind (("C-. s" . counsel-ag)
          ("C-h f" . counsel-describe-function)
@@ -450,24 +472,29 @@ With prefix argument SHOW-FILES-P also offer to find files."
 ;;; js2-mode
 
 (use-package js2-mode
+  :load-path "site-lisp/js2-mode" 
   :mode (("\\.js\\'" . js2mode)
-         ("\\.json\\'" . js2mode)))
+         ("\\.json\\'" . js2mode))
+  :init (setq js2-basic-offset 2))
 
 
 ;;; auctex
 
 (use-package auctex
+  :load-path "site-lisp/auctex"
   :init
   (setq TeX-auto-save t
         TeX-parse-self t)
   :config
   (use-package latex-preview-pane
+    :load-path "site-lisp/latex-preview-pane"
     :init (setq latex-preview-pane "xelatex")))
 
 
 ;;; ledger-mode
 
 (use-package ledger-mode
+  :load-path "site-lisp/ledger-mode"
   :mode "\\.ledger\\'"
   :init
   (setq ledger-use-iso-dates t
@@ -505,6 +532,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; macrostep
 
 (use-package macrostep
+  :load-path "site-lisp/macrostep"
   :bind (:map emacs-lisp-mode-map
               ("C-c M-e" . macrostep-expand)))
 
@@ -512,6 +540,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; magit
 
 (use-package magit
+  :load-path "site-lisp/magit/lisp"
   :bind (("C-. gg" . magit-status)
          ("C-. GG" . magit-status-with-prefix)
          ("C-. gl" . magit-list-repositories)
@@ -521,21 +550,28 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
     (interactive)
     (let ((current-prefix-arg '(4)))
       (call-interactively #'magit-status)))
+  (use-package with-editor
+    :load-path "site-lisp/with-editor"
+    :demand t)
   :init
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
         magit-repository-directories '(("~/.emacs.d/" . 0)
                                        ("~/prj/" . 1)))
   (use-package git-timemachine
+    :load-path "site-lisp/git-timemachine"
     :commands (git-timemachine))
   :config
   (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty))
   (use-package magithub
+    :load-path "site-lisp/magithub"
+    :demand t
     :config (magithub-feature-autoinject t)))
 
 
 ;;; markdown-mode
 
 (use-package markdown-mode
+  :load-path "site-lisp/markdown-mode"
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.mdown\\'" . markdown-mode))
   :init
@@ -545,6 +581,17 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; multiple-cursors
 
 (use-package multiple-cursors
+  :load-path "site-lisp/multiple-cursors"
+  :commands (mc/edit-lines
+             mc/mark-all-like-this
+             mc/mark-next-like-this
+             mc/skip-to-next-like-this
+             mc/unmark-next-like-this
+             mc/mark-previous-like-this
+             mc/skip-to-previous-like-this
+             mc/unmark-previous-like-this
+             mc/insert-numbers
+             mc/insert-letters)
   :bind (("C-<" . mc-hydra/body))
   :init
   (defhydra mc-hydra (:hint nil)
@@ -574,12 +621,14 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; page-break-lines
 
 (use-package page-break-lines
+  :load-path "site-lisp/page-break-lines"
   :config (global-page-break-lines-mode))
 
 
 ;;; paredit
 
 (use-package paredit
+  :load-path "site-lisp/paredit"
   :bind (:map paredit-mode-map
               ("[" . paredit-open-round)
               ("]" . paredit-close-round)
@@ -609,6 +658,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-to-list 'paredit-space-for-delimiter-predicates #'paredit-adjust-spacing-p))
 
 (use-package paredit-everywhere
+  :load-path "site-lisp/paredit-everywhere"
   :commands (paredit-everywhere-mode)
   :init
   (add-hook 'prog-mode-hook 'paredit-everywhere-mode))
@@ -618,6 +668,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; redshank
 
 (use-package redshank-loader
+  :load-path "site-lisp/redshank-loader"
   :bind (:map redshank-mode-map
               ("C-. v" . redshank-hydra/body))
   :preface
@@ -656,12 +707,14 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; undo-tree
 
 (use-package undo-tree
+  :load-path "site-lisp/undo-tree"
   :commands (undo-tree-visualize))
 
 
 ;;; which-key
 
 (use-package which-key
+  :load-path "site-lisp/which-key"
   :config (which-key-mode))
 
 
@@ -676,12 +729,15 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 ;;; yaml-mode
 
-(use-package yaml-mode)
+(use-package yaml-mode
+  :load-path "site-lisp/yaml-mode")
 
 
 ;;; yasnippet
 
 (use-package yasnippet
+  :load-path "site-lisp/yasnippet"
+  :commands (yas-expand yas-minor-mode)
   :init
   (dolist (hook '(text-mode-hook prog-mode-hook))
     (add-hook hook #'yas-minor-mode))
@@ -692,6 +748,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; ztree
 
 (use-package ztree
+  :load-path "site-lisp/ztree"
   :commands (ztree-diff))
 
 
@@ -719,6 +776,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; slime
 
 (use-package slime
+  :load-path "site-lisp/slime"
   :mode (("\\.asd\\'" . lisp-mode))
   :commands (slime)
   :bind (:map
@@ -795,13 +853,16 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :config
   ;; HyperSpec/Documentation
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
-  (use-package quicklisp-docs
+  (use-package quicklisp-docs 
     :load-path "~/quicklisp/local-projects/quicklisp-docs/"
+    :demand t
     :init (setq ql-docs-browser-function #'eww-browse-url)
     :config (ql-docs-reload-docs))
 
   ;; company backend
   (use-package slime-company
+    :load-path "site-lisp/slime-company"
+    :demand t
     :commands (slime-company))
 
   ;; quicklisp REPL command
@@ -817,6 +878,8 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; aggressive-indent
 
 (use-package aggressive-indent
+  :load-path "site-lisp/aggressive-indent"
+  :demand t
   :config
   (dolist (mode '(slime-repl-mode feature-mode))
     (add-to-list 'aggressive-indent-excluded-modes mode))
@@ -826,6 +889,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; imenu-anywhere
 
 (use-package imenu-anywhere
+  :load-path "site-lisp/imenu-anywhere"
   :bind (:map prog-mode-map
               ("C-. C-," . imenu-anywhere)))
 
@@ -846,6 +910,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; bbdb
 
 (use-package bbdb
+  :load-path "site-lisp/bbdb/lisp"
   :commands (bbdb bbdb-create)
   :init
   (setq bbdb-file "~/org/contacts.bbdb"
@@ -861,6 +926,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (bbdb-initialize 'gnus 'message 'anniv))
 
 (use-package bbdb-vcard
+  :load-path "site-lisp/bbdb-vcard"
   :after bbdb
   :commands (bbdb-vcard-export bbdb-vcard-import-file))
 
@@ -877,6 +943,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; org-mode
 
 (use-package dot-org
+  :load-path ("site-lisp/org-mode/lisp" "site-lisp/org-mode/contrib/lisp")
   :commands (org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-. a" . org-agenda)

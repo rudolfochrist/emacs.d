@@ -1,6 +1,5 @@
 (require 'org)
 (require 'org-agenda)
-(require 'ox-latex)
 (require 'ox-koma-letter)
 (require 'ox-md)
 (require 'ox-texinfo)
@@ -131,6 +130,7 @@ ADDED: %U"
 (calendar-set-date-style 'iso)
 
 (use-package german-holiday
+  :load-path "site-lisp/german-holidays"
   :demand t
   :config (setq calendar-holidays holiday-german-holidays))
 
@@ -259,6 +259,7 @@ hypersetup to include colorlinks=true."
 
 ;;; org-download
 (use-package org-download
+  :load-path "site-lisp/org-download"
   :demand t
   :init
   (setq org-download-image-dir "~/org/org-download-images/"
@@ -375,6 +376,7 @@ hypersetup to include colorlinks=true."
 ;;; org-ref
 
 (use-package org-ref
+  :load-path "site-lisp/org-ref"
   :demand t
   :bind ((:map
           org-mode-map
