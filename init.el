@@ -32,6 +32,7 @@
 (exec-path-from-shell-initialize)
 
 ;;; setup use-package
+(setq use-package-enable-imenu-support t)
 (require 'bind-key)
 (require 'use-package)
 
