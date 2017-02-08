@@ -1,4 +1,5 @@
 (require 'org)
+(require 'org-agenda)
 (require 'ox-latex)
 (require 'ox-koma-letter)
 (require 'ox-md)
@@ -130,7 +131,8 @@ ADDED: %U"
 (calendar-set-date-style 'iso)
 
 (use-package german-holiday
-  :init (setq calendar-holidays holiday-german-holidays))
+  :demand t
+  :config (setq calendar-holidays holiday-german-holidays))
 
 ;;; custom agenda views
 (setq org-agenda-custom-commands
@@ -257,6 +259,7 @@ hypersetup to include colorlinks=true."
 
 ;;; org-download
 (use-package org-download
+  :demand t
   :init
   (setq org-download-image-dir "~/org/org-download-images/"
         org-download-heading-lvl nil
@@ -372,6 +375,7 @@ hypersetup to include colorlinks=true."
 ;;; org-ref
 
 (use-package org-ref
+  :demand t
   :bind ((:map
           org-mode-map
           ("C-c f" . org-ref-hydra)))
