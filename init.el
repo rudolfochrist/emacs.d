@@ -142,7 +142,6 @@
 (bind-key "C-x C-k" #'kill-region)
 
 ;;; buffer switching
-(bind-key "C-x C-b" #'ivy-switch-buffer)
 (bind-key "C-c C-b" #'ibuffer)
 
 ;;; fullscreen
@@ -151,6 +150,12 @@
 ;;; bury buffers instead of killing (that's so mean....)
 ;;; and most of the time I realized that I need the buffer again after killing it.
 (bind-key "C-x k" #'bury-buffer)
+
+;;; reverting
+(defun revert-buffer-no-confirm ()
+  (interactive)
+  (revert-buffer t t))
+(bind-key "C-c C-r" #'revert-buffer-no-confirm)
 
 
 ;;; libs
@@ -348,7 +353,7 @@
 ;;; goto-last-change
 
 (use-package goto-last-change
-  :bind (("C-. -" . goto-last-changhe)))
+  :bind (("C-. C--" . goto-last-change)))
 
 
 ;;; hydra
@@ -394,14 +399,9 @@
 ;;; swiper, ivy, counsel
 
 (use-package ivy
+  :demand t
   :preface
-  (require 'recentf)
   (use-package smex)
-  (use-package counsel
-    :commands (counsel-ag
-               counsel-describe-function counsel-describe-variable
-               counsel-M-x
-               counsel-more-chars))
   ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
   (defvar ivy-prominent-directories
     '("~/PR/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
@@ -429,16 +429,22 @@ With prefix argument SHOW-FILES-P also offer to find files."
        (ivy-completing-read "Open directory: "
                             completions 'ignored nil ""))))
 
-  :bind (("C-. s" . counsel-ag)
-         ("C-h f" . counsel-describe-function)
-         ("C-h v" . counsel-describe-variable)
-         ("C-. i" . ivy-resume)
-         ("M-x" . counsel-M-x)
+  :bind (("C-. C-r" . ivy-resume)
+         ("C-x C-b" . ivy-switch-buffer)
          ("C-x C-d" . ivy-visit-prominent-directory))
   :init
   (setq ivy-display-style 'fancy)
   :config
   (ivy-mode 1))
+
+(use-package counsel
+  :after ivy
+  :bind (("C-. s" . counsel-ag)
+         ("C-h f" . counsel-describe-function)
+         ("C-h v" . counsel-describe-variable)
+         ("M-x" . counsel-M-x)
+         ("C-c C-f" . counsel-recentf))
+  :commands (counsel-more-chars))
 
 
 ;;; js2-mode
@@ -714,6 +720,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 (use-package slime
   :mode (("\\.asd\\'" . lisp-mode))
+  :commands (slime)
   :bind (:map
          slime-mode-map
          ("RET" . slime-autodoc-newline)
