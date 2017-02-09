@@ -164,7 +164,22 @@
 (use-package f     :defer t :load-path "site-lisp/f")
 (use-package s     :defer t :load-path "site-lisp/s")
 (use-package dash  :defer t :load-path "site-lisp/dash")
-(use-package async :defer t :load-path "site-lisp-async")
+(use-package async :defer t :load-path "site-lisp/async")
+(use-package hydra :load-path "site-lisp/hydra")
+
+
+
+;;; org-mode
+
+(use-package dot-org
+  :load-path ("site-lisp/org-mode/lisp" "site-lisp/org-mode/contrib/lisp")
+  :demand t
+  :commands (org-mode)
+  :bind (("C-c l" . org-store-link)
+         ("C-. a" . org-agenda)
+         ("C-. c" . org-smart-capture)
+         :map org-mode-map
+         ("C-c C-r" . org-refile-web-capture)))
 
 
 ;;; avy
@@ -366,13 +381,6 @@
 (use-package goto-last-change
   :load-path "site-lisp/goto-last-change"
   :bind (("C-. C--" . goto-last-change)))
-
-
-;;; hydra
-
-(use-package hydra
-  :load-path "site-lisp/hydra")
-
 
 
 ;;; iedit
@@ -938,19 +946,6 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
          ("C-. M" . gnus-other-frame))
   :init
   (setq gnus-init-file (expand-file-name "dot-gnus" lisp-directory)))
-
-
-;;; org-mode
-
-(use-package dot-org
-  :load-path ("site-lisp/org-mode/lisp" "site-lisp/org-mode/contrib/lisp")
-  :defer 5
-  :commands (org-mode)
-  :bind (("C-c l" . org-store-link)
-         ("C-. a" . org-agenda)
-         ("C-. c" . org-smart-capture)
-         :map org-mode-map
-         ("C-c C-r" . org-refile-web-capture)))
 
 
 ;;; Text scaling, window resizing (hydra)

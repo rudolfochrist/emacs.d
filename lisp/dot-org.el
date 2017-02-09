@@ -5,6 +5,7 @@
 (require 'ox-texinfo)
 (require 'org-checklist)
 
+(require 'server)
 (unless (server-running-p)
   (server-start))
 (require 'org-protocol)
@@ -139,9 +140,7 @@ ADDED: %U"
       '(("i" "Inbox" tags "CATEGORY=\"Inbox\"&LEVEL=2&TODO<>{DONE\\|CANCELED}"
          ((org-agenda-overriding-header "Inbox:")))
         ("p" "Personal Agenda" agenda ""
-         ((org-agenda-category-filter-preset '("-Inbox" "-Work"))))
-        ("w" "Work Agenda" agenda ""
-         ((org-agenda-category-filter-preset '("+Work"))))
+         ((org-agenda-category-filter-preset '("-Inbox"))))
         ("f" "Follow up" tags "fu&email&TODO<>{DONE\\|CANCELED}"
          ((org-agenda-overriding-header "Follow up:")))
         ("A" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"Inbox\""
@@ -394,18 +393,28 @@ hypersetup to include colorlinks=true."
     ("l" org-ref-helm-insert-label-link "add label link")
     ("g" org-ref-insert-glossary-link "add glossary link"))
   :init
+  (use-package reftex)
+  (use-package parsebib
+    :load-path "site-lisp/parsebib")
+  (use-package biblio
+    :load-path "site-lisp/biblio")
+  (use-package helm
+    :load-path "site-lisp/helm"
+    :config
+    (use-package helm-bibtex
+      :load-path "site-lisp/helm-bibtex"))
+ 
   (setq org-ref-default-bibliography reftex-default-bibliography
         org-ref-pdf-directory "~/Dropbox/Papers/Library/"
         org-ref-default-citation-link "citep"
         org-ref-get-pdf-filename-function #'fyi-get-pdf-filename)
   :config
-  ;; load the rest
-  (dolist (pkg '(org-ref-url-utils
-                 org-ref-pdf
-                 org-ref-bibtex
-                 org-ref-arxiv
-                 org-ref-isbn
-                 org-ref-helm-bibtex
-                 doi-utils
-                 bibtex-completetion))
-    (require pkg)))
+   ;; load the rest
+  (dolist (util '(org-ref-utils
+                  org-ref-latex
+                  org-ref-bibtex
+                  org-ref-helm-bibtex
+                  bibtex-completion))
+    (require util)))
+
+(provide 'dot-org)
