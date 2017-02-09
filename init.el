@@ -357,7 +357,7 @@
 ;;; feature-mode
 
 (use-package feature-mode
-  :load-path "site-lisp/feature-mode"
+  :load-path "site-lisp/cucumber"
   :mode "\\.feature\\'")
 
 
@@ -480,7 +480,7 @@ With prefix argument SHOW-FILES-P also offer to find files."
 
 ;;; auctex
 
-(use-package auctex
+(use-package tex-site
   :load-path "site-lisp/auctex"
   :init
   (setq TeX-auto-save t
