@@ -193,7 +193,7 @@
 ;;; ace-link
 
 (use-package ace-link
-  :load-path "site-lisp/ac-link"
+  :load-path "site-lisp/ace-link"
   :commands (ace-link-gnus)
   :init
   (add-hook 'gnus-article-mode-hook
