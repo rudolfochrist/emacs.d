@@ -90,7 +90,7 @@
 
 (when (display-graphic-p)
   (set-face-attribute 'default nil :font
-                      (select-font-candidate "Input-12:weight=bold" "Monospace-13")))
+                      (select-font-candidate "Source Code Pro-12:weight=semibold" "Input-12:weight=bold")))
 
 ;;; tabs, spaces, indentation, parens
 (setq-default indent-tabs-mode nil)
