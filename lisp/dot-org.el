@@ -73,7 +73,7 @@
 (setq org-gnus-prefer-web-links t
       org-capture-templates
       '(("a" "Add task" entry
-         (file+headline "~/org/tasks/personal.org" "Inbox")
+         (file+headline "~/org/tasks/todo.org" "Inbox")
          "* TODO %?
 SCHEDULED: %t
 ADDED: %U"
@@ -139,7 +139,7 @@ ADDED: %U"
 (setq org-agenda-custom-commands
       '(("i" "Inbox" tags "CATEGORY=\"Inbox\"&LEVEL=2&TODO<>{DONE\\|CANCELED}"
          ((org-agenda-overriding-header "Inbox:")))
-        ("p" "Personal Agenda" agenda ""
+        ("w" "Week Agenda" agenda ""
          ((org-agenda-category-filter-preset '("-Inbox"))))
         ("f" "Follow up" tags "fu&email&TODO<>{DONE\\|CANCELED}"
          ((org-agenda-overriding-header "Follow up:")))
