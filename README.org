@@ -4,14 +4,14 @@ My Emacs configuration files
 
 * Prerequisites
 
-1. Install [[http://www.sbcl.org/][SBCL]] (or any other CL implementation)
+1. Install [[http://ccl.clozure.com/][CCL]]
 2. Install [[http://www.quicklisp.org/][Quicklisp]]
 3. Install [[http://quickdocs.org/clhs/][clhs]]
-4. Clone [[https://github.com/rudolfochrist/quicklisp-docs][rudolfochrist/quicklisp-docs]]
-5. Install [[http://input.fontbureau.com/][Input Font]]
+4. (Optionally) install [[https://github.com/adobe-fonts/source-code-pro][Source Code Pro]] or [[http://input.fontbureau.com/][Input]]
 
 * Installation
 
 : $ cd $HOME
 : $ git clone https://github.com/rudolfochrist/emacs.d.git .emacs.d
+: $ make  # this compiles site-lisp
 : $ emacs
