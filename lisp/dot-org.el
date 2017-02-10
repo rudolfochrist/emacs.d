@@ -130,7 +130,7 @@ ADDED: %U"
       org-agenda-include-diary t)
 (calendar-set-date-style 'iso)
 
-(use-package german-holiday
+(use-package german-holidays
   :load-path "site-lisp/german-holidays"
   :demand t
   :config (setq calendar-holidays holiday-german-holidays))
