@@ -123,10 +123,6 @@
 
 ;;; UTILITIES
 
-(defun window-system-p ()
-  "Returns non-nil if current Emacs is running with a window-system."
-  window-system)
-
 (defun system-macos-p ()
   "Returns non-nil if `system-type' is 'darwin"
   (eql 'darwin system-type))
