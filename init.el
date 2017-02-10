@@ -76,6 +76,22 @@
 (set-background-color "white smoke")
 (add-to-list 'default-frame-alist '(background-color . "white smoke"))
 
+;;; frame setup
+(add-to-list 'default-frame-alist '(width . 170))
+(add-to-list 'default-frame-alist '(height . 50))
+
+;;; font's
+;;; https://www.emacswiki.org/emacs/SetFonts
+(defun select-font-candidate (&rest fonts)
+  "Selects the first installed font among FONTS."
+  (find-if (lambda (font)
+             (find-font (font-spec :name font)))
+           fonts))
+
+(when (display-graphic-p)
+  (set-face-attribute 'default nil :font
+                      (select-font-candidate "Input-12:weight=bold" "Monospace-13")))
+
 ;;; tabs, spaces, indentation, parens
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2
