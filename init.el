@@ -873,11 +873,6 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :config
   ;; HyperSpec/Documentation
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
-  (use-package quicklisp-docs 
-    :load-path "~/quicklisp/local-projects/quicklisp-docs/"
-    :demand t
-    :init (setq ql-docs-browser-function #'eww-browse-url)
-    :config (ql-docs-reload-docs))
 
   ;; company backend
   (use-package slime-company
