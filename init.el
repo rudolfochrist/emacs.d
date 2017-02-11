@@ -90,7 +90,7 @@
 
 (when (display-graphic-p)
   (set-face-attribute 'default nil :font
-                      (select-font-candidate "Source Code Pro-12:weight=semibold" "Input-12:weight=bold")))
+                      (select-font-candidate "Input-12")))
 
 ;;; tabs, spaces, indentation, parens
 (setq-default indent-tabs-mode nil)
@@ -545,6 +545,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-hook 'gnus-topic-mode-hook (lambda () (linum-mode -1)))
   (add-hook 'gnus-summary-mode-hook (lambda () (linum-mode -1)))
   (add-hook 'gnus-article-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'org-agenda-mode-hook (lambda () (linum-mode -1)))
   :config
   (global-linum-mode 1))
 
