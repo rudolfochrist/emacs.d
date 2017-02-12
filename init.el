@@ -77,8 +77,8 @@
 (add-to-list 'default-frame-alist '(background-color . "white smoke"))
 
 ;;; frame setup
-(add-to-list 'default-frame-alist '(width . 170))
-(add-to-list 'default-frame-alist '(height . 50))
+(add-to-list 'default-frame-alist '(width . 140))
+(add-to-list 'default-frame-alist '(height . 55))
 
 ;;; font's
 ;;; https://www.emacswiki.org/emacs/SetFonts
