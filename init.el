@@ -111,13 +111,11 @@
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
 
-(setq default-input-method "latin-9-prefix")
-(defun input-method-hook ()
-  (if (eql 'darwin system-type)
-      (set-input-method default-input-method)
-    (set-input-method nil)))
-(add-hook 'text-mode-hook #'input-method-hook)
-(add-hook 'prog-mode-hook (lambda () (set-input-method nil)))
+;;; macOS lacks a compose key, so we're setting the input-method
+(when (eql 'darwin system-type)
+  (add-hook 'text-mode-hook
+            (lambda ()
+              (set-input-method "latin-9-prefix"))))
 
 
 
