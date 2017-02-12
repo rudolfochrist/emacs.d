@@ -182,9 +182,8 @@
 ;;; org-mode
 
 (use-package dot-org
-  :load-path ("site-lisp/org-mode/lisp" "site-lisp/org-mode/contrib/lisp")
-  :demand t
-  :commands (org-mode)
+  :load-path ("site-lisp/org-mode/lisp" "site-lisp/org-mode/contrib/lisp") 
+  :defer 10
   :bind (("C-c l" . org-store-link)
          ("C-. a" . org-agenda)
          ("C-. c" . org-smart-capture)
@@ -196,7 +195,7 @@
 
 (use-package avy
   :load-path "site-lisp/avy"
-  :bind (("M-g w" . avy-goto-word-1)))
+  :bind (("C-S-s" . avy-goto-word-1)))
 
 
 
@@ -443,7 +442,7 @@
     :load-path "site-lisp/smex")
   ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
   (defvar ivy-prominent-directories
-    '("~/PR/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
+    '("~/prj/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
     "List of prominent directories.")
 
   (defun ivy-visit-prominent-directory (show-files-p)
