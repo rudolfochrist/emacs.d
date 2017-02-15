@@ -3,6 +3,9 @@
 (require 'org)
 (require 'hydra)
 (require 'bind-key)
+(require 'bbdb)
+(require 'bbdb-gnus)
+(require 'bbdb-message)
 
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
 ;;; Settings highly influenced by John Wiegley (https://github.com/jwiegley/dot-emacs/)

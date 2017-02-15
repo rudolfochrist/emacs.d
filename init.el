@@ -922,7 +922,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 ;;; bbdb
 
-(use-package bbdb
+(use-package bbdb-loaddefs
   :load-path "site-lisp/bbdb/lisp"
   :commands (bbdb bbdb-create)
   :init
