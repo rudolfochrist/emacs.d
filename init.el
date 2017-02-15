@@ -953,6 +953,13 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (setq gnus-init-file (expand-file-name "dot-gnus" lisp-directory)))
 
 
+;;; restclient
+
+(use-package restclient
+  :load-path "site-lisp/restclient"
+  :commands (restclient-mode))
+
+
 ;;; Text scaling, window resizing (hydra)
 
 ;;; copied from https://github.com/abo-abo/hydra/blob/master/hydra-examples.el
