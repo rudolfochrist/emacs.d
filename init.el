@@ -797,12 +797,11 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :load-path "site-lisp/slime"
   :mode (("\\.asd\\'" . lisp-mode))
   :commands (slime)
-  :bind (:map
-         slime-mode-map
+  :bind (("C-. l" . slime)
+         :map slime-mode-map
          ("RET" . slime-autodoc-newline)
          ("C-c C-d s" . slime-documentation-in-minibuffer)
-         :map
-         slime-repl-mode-map
+         :map slime-repl-mode-map
          ("C-l" . slime-repl-clear-buffer)
          ("SPC" . slime-autodoc-space)
          ("C-j" . slime-autodoc-newline)
