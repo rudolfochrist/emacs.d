@@ -557,12 +557,15 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 ;;; magit
 
+(use-package git-timemachine
+  :load-path "site-lisp/git-timemachine"
+  :bind (("C-. gt" . git-timemachine)))
+
 (use-package magit
   :load-path "site-lisp/magit/lisp"
   :bind (("C-. gg" . magit-status)
          ("C-. GG" . magit-status-with-prefix)
-         ("C-. gl" . magit-list-repositories)
-         ("C-. gt" . git-timemachine))
+         ("C-. gl" . magit-list-repositories))
   :preface
   (defun magit-status-with-prefix ()
     (interactive)
@@ -575,9 +578,6 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
         magit-repository-directories '(("~/.emacs.d/" . 0)
                                        ("~/prj/" . 1)))
-  (use-package git-timemachine
-    :load-path "site-lisp/git-timemachine"
-    :commands (git-timemachine))
   :config
   (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty))
   (use-package magithub
