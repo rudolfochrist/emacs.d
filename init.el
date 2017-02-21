@@ -964,6 +964,15 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :load-path "site-lisp/restclient"
   :commands (restclient-mode))
 
+
+;;; paperless
+
+(use-package paperless
+  :load-path "site-lisp/paperless"
+  :commands (paperless)
+  :init
+  (setq paperless-capture-directory "~/PDF-CAPTURE"
+        paperless-root-directory "~/archive"))
 
 
 
