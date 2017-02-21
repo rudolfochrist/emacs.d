@@ -177,6 +177,19 @@
 (use-package async :defer t :load-path "site-lisp/async")
 (use-package hydra :load-path "site-lisp/hydra")
 
+
+;;; info
+
+(use-package info
+  :commands (info)
+  :bind (("C-h a" . apropos)
+         ("C-h A" . apropos))
+  :demand t
+  :init
+  (setq Info-additional-directory-list '("~/info/"))
+  :config
+  (use-package info-look
+    :bind (("C-h S" . info-lookup-symbol))))
 
 
 ;;; org-mode
@@ -188,7 +201,10 @@
          ("C-. a" . org-agenda)
          ("C-. c" . org-smart-capture)
          :map org-mode-map
-         ("C-c C-r" . org-refile-web-capture)))
+         ("C-c C-r" . org-refile-web-capture))
+  :config
+  (add-to-list 'Info-additional-directory-list
+               (expand-file-name "org-mode/doc" site-lisp-directory)))
 
 
 ;;; avy
@@ -203,7 +219,7 @@
 
 (use-package ace-link
   :load-path "site-lisp/ace-link"
-  :commands (ace-link-gnus)
+  :demand t
   :init
   (add-hook 'gnus-article-mode-hook
             (lambda ()
@@ -579,11 +595,14 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
         magit-repository-directories '(("~/.emacs.d/" . 0)
                                        ("~/prj/" . 1)))
   :config
-  (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty))
+  (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)) 
   (use-package magithub
     :load-path "site-lisp/magithub"
     :demand t
-    :config (magithub-feature-autoinject t)))
+    :config (magithub-feature-autoinject t))
+  ;; install info
+  (add-to-list 'Info-additional-directory-list
+               (expand-file-name "magit/Documentation" site-lisp-directory)))
 
 
 ;;; markdown-mode
@@ -906,19 +925,6 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
               ("C-. C-," . imenu-anywhere)))
 
 
-;;; info
-
-(use-package info
-  :commands (info)
-  :bind (("C-h a" . apropos)
-         ("C-h A" . apropos))
-  :init
-  (setq Info-additional-directory-list '("~/info/"))
-  :config
-  (use-package info-look
-    :bind (("C-h S" . info-lookup-symbol))))
-
-
 ;;; bbdb
 
 (use-package bbdb-loaddefs
@@ -957,6 +963,11 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 (use-package restclient
   :load-path "site-lisp/restclient"
   :commands (restclient-mode))
+
+
+
+
+;;; packages end here
 
 
 ;;; Text scaling, window resizing (hydra)
