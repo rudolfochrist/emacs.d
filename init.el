@@ -156,7 +156,7 @@
 (bind-key "C-c C-b" #'ibuffer)
 
 ;;; fullscreen
-(bind-key "C-x F" #'toggle-frame-fullscreen)
+(bind-key "C-. f" #'toggle-frame-fullscreen)
 
 ;;; bury buffers instead of killing (that's so mean....)
 ;;; and most of the time I realized that I need the buffer again after killing it.
@@ -559,6 +559,8 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-hook 'gnus-summary-mode-hook (lambda () (linum-mode -1)))
   (add-hook 'gnus-article-mode-hook (lambda () (linum-mode -1)))
   (add-hook 'org-agenda-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'doc-view-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'paperless-mode-hook (lambda () (linum-mode -1)))
   :config
   (global-linum-mode 1))
 
