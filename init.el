@@ -1014,7 +1014,30 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
     ("a" smerge-keep-all "Keep all")
     ("q" nil "quit" :color blue)))
 
+
+;;; cperl-mode
 
+(use-package cperl-mode
+  :mode "\\.\\([pP][Llm]\\|al\\)\\'"
+  :interpreter (("perl" . cperl-mode)
+                ("perl5" . cperl-mode)
+                ("miniperl" . cperl-mode))
+  :preface
+  ;; https://www.emacswiki.org/emacs/CPerlMode#toc10
+  (defun my-cperl-eldoc-documentation-function ()
+    "Return meaningful doc string for `eldoc-mode'."
+    (car
+     (let ((cperl-message-on-help-error nil))
+       (cperl-get-help))))
+  :init
+  (setq cperl-hairy t
+        cperl-clobber-lisp-bindings nil
+        cperl-info-on-command-no-prompt nil)
+  (add-hook 'cperl-mode-hook
+            (lambda ()
+              (setq eldoc-documentation-function #'my-cperl-eldoc-documentation-function))
+            nil
+            t))
 
 ;;; packages end here
 
