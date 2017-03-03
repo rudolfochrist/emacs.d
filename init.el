@@ -413,7 +413,7 @@
 
 (use-package iedit
   :load-path "site-lisp/iedit"
-  :bind (("C-. '" . iedit-mode)))
+  :bind (("C-. C-'" . iedit-mode)))
 
 
 ;;; interleave
@@ -499,7 +499,7 @@ With prefix argument SHOW-FILES-P also offer to find files."
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
          ("M-x" . counsel-M-x)
-         ("C-c C-f" . counsel-recentf))
+         ("C-x C-S-f" . counsel-recentf))
   :commands (counsel-more-chars))
 
 
@@ -819,7 +819,8 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :load-path "site-lisp/slime"
   :mode (("\\.asd\\'" . lisp-mode))
   :commands (slime)
-  :bind (("C-. l" . slime)
+  :bind (("C-. l" . switch-to-slime)
+         ("C-. ," . slime-selector)
          :map slime-mode-map
          ("RET" . slime-autodoc-newline)
          ("C-c C-d s" . slime-documentation-in-minibuffer)
@@ -867,6 +868,18 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
                           max-mini-window-height))))
           (message "%s" doc)
         (slime-documentation symbol))))
+
+  ;; switch to slime
+  (defun switch-to-slime ()
+    (interactive)
+    (let ((slime-repl (find-if (lambda (buffer)
+                                 (with-current-buffer buffer
+                                   (when (eql 'slime-repl-mode major-mode)
+                                     buffer)))
+                               (buffer-list))))
+      (if slime-repl
+          (pop-to-buffer slime-repl)
+        (call-interactively #'slime))))
   
   :init
   (setq slime-complete-symbol*-fancy t
