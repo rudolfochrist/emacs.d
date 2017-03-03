@@ -994,6 +994,26 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (setq paperless-capture-directory "~/PDF-CAPTURE"
         paperless-root-directory "~/archive"))
 
+
+;;; smerge-mode
+
+;;; smerge-mode
+(use-package smerge-mode
+  :commands (smerge-mode)
+  :bind (:map
+         smerge-mode-map
+         ("C-c C-." . hydra-smerge-mode/body))
+  :preface
+  (defhydra hydra-smerge-mode ()
+    "smerge commands"
+    ("n" smerge-next "Next diff")
+    ("p" smerge-prev "Previous diff")
+    ("b" smerge-keep-base "Keep base")
+    ("m" smerge-keep-mine "Keep mine")
+    ("o" smerge-keep-other "Keep other")
+    ("a" smerge-keep-all "Keep all")
+    ("q" nil "quit" :color blue)))
+
 
 
 ;;; packages end here
