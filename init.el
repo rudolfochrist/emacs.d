@@ -60,6 +60,7 @@
 ;;; setup paths
 (use-package exec-path-from-shell
   :load-path "site-lisp/exec-path-from-shell"
+  :demand t
   :config
   (exec-path-from-shell-initialize))
 
