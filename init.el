@@ -562,6 +562,9 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-hook 'org-agenda-mode-hook (lambda () (linum-mode -1)))
   (add-hook 'doc-view-mode-hook (lambda () (linum-mode -1)))
   (add-hook 'paperless-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'slime-inspector-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'slime-fuzzy-completions-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'Man-mode-hook (lambda () (linum-mode -1)))
   :config
   (global-linum-mode 1))
 
@@ -596,7 +599,8 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :init
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
         magit-repository-directories '(("~/.emacs.d/" . 0)
-                                       ("~/prj/" . 1)))
+                                       ("~/prj/" . 1)
+                                       ("~/quicklisp/local-projects/")))
   :config
   (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)) 
   (use-package magithub
@@ -984,7 +988,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 ;;; paperless
 
 (use-package paperless
-  :load-path "site-lisp/paperless"
+  :load-path "~/prj/paperless"
   :commands (paperless)
   :init
   (setq paperless-capture-directory "~/PDF-CAPTURE"
