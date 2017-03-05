@@ -897,9 +897,14 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
   (setq slime-contribs
         '(slime-fancy
-          slime-banner slime-asdf slime-company
-          slime-tramp slime-xref-browser slime-highlight-edits
-          slime-sprof slime-macrostep slime-indentation))
+          slime-banner
+          slime-asdf
+          slime-company
+          slime-tramp
+          slime-xref-browser
+          slime-highlight-edits
+          slime-sprof
+          slime-indentation))
   
   (add-hook 'lisp-mode-hook #'slime-mode)
   (add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
