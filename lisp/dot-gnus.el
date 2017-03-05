@@ -362,6 +362,8 @@ have (e.g. Message-ID)."
 (setq nnmail-split-methods
       '(("list.lisp-hug" "To:.*lisp-hug@lispworks.com.*")
         ("list.lisp-hug" "Cc:.*lisp-hug@lispworks.com.*")
+        ("list.elsconf" "To:.*elsconf@european-lisp-symposium.org.*")
+        ("list.elsconf" "Cc:.*elsconf@european-lisp-symposium.org.*")
         ("mail.inbox" "")))
 
 ;;; attachment reminder
