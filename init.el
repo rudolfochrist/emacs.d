@@ -565,6 +565,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-hook 'slime-inspector-mode-hook (lambda () (linum-mode -1)))
   (add-hook 'slime-fuzzy-completions-mode-hook (lambda () (linum-mode -1)))
   (add-hook 'Man-mode-hook (lambda () (linum-mode -1)))
+  (add-hook 'ledger-report-mode-hook (lambda () (linum-mode -1)))
   :config
   (global-linum-mode 1))
 
