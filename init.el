@@ -533,7 +533,8 @@ With prefix argument SHOW-FILES-P also offer to find files."
   :init
   (setq ledger-use-iso-dates t
         ledger-reconcile-default-commodity "EUR"
-        ledger-reconcile-default-date-format "%Y-%m-%d"))
+        ledger-reconcile-default-date-format "%Y-%m-%d")
+  (add-hook 'ledger-report-mode-hook #'hl-line-mode))
 
 
 ;;; linum
