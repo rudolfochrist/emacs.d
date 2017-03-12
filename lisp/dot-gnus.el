@@ -364,6 +364,8 @@ have (e.g. Message-ID)."
         ("list.lisp-hug" "Cc:.*lisp-hug@lispworks.com.*")
         ("list.elsconf" "To:.*elsconf@european-lisp-symposium.org.*")
         ("list.elsconf" "Cc:.*elsconf@european-lisp-symposium.org.*")
+        ("list.elsconf" "To:.*elsconf@lrde.epita.fr.*")
+        ("list.elsconf" "Cc:.*elsconf@lrde.epita.fr.*")
         ("mail.inbox" "")))
 
 ;;; attachment reminder
