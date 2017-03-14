@@ -147,9 +147,6 @@
 (define-prefix-command 'ctl-period-map)
 (bind-key "C-." #'ctl-period-map)
 
-;;; easier other-window
-(bind-key* "<C-return>" #'other-window)
-
 ;;; killing the whole region
 (bind-key "C-x C-k" #'kill-region)
 
