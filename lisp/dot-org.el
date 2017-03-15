@@ -256,6 +256,16 @@ hypersetup to include colorlinks=true."
                          :follow 'org-bdsk-open
                          :export 'org-bdsk-export)
 
+;;; message links
+(defun org-message-open (path)
+  (cl-destructuring-bind (group message-id)
+      (split-string (substring path 2) "/")
+    (gnus-goto-article (base64-decode-string group)
+                       message-id)))
+
+(org-link-set-parameters "message"
+                         :follow 'org-message-open)
+
 ;;; org-download
 (use-package org-download
   :load-path "site-lisp/org-download"
