@@ -7,7 +7,8 @@ My Emacs configuration files
 1. Install [[http://ccl.clozure.com/][CCL]]
 2. Install [[http://www.quicklisp.org/][Quicklisp]]
 3. Install [[http://quickdocs.org/clhs/][clhs]]
-4. Install font [[http://input.fontbureau.com/][Input]] with theses settings:
+4. Install [[https://github.com/7max/log4cl][log4cl/log4slime]]
+5. Install font [[http://input.fontbureau.com/][Input]] with theses settings:
    
    #+ATTR_HTML: :width 5px
    [[file:./img/input-font-settings.png]]
