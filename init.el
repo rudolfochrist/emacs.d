@@ -201,7 +201,7 @@
          :map org-mode-map
          ("C-c C-r" . org-refile-web-capture))
   :config
-  (add-to-list 'Info-additional-directory-list
+  (add-to-list 'Info-directory-list
                (expand-file-name "org-mode/doc" site-lisp-directory)))
 
 
