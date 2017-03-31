@@ -914,10 +914,6 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   ;; HyperSpec/Documentation
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
 
-  ;; log4slime
-  (when (load (expand-file-name "~/quicklisp/log4slime-setup.el") t)
-    (global-log4slime-mode 1))
-
   ;; company backend
   (use-package slime-company
     :load-path "site-lisp/slime-company"
