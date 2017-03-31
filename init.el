@@ -823,7 +823,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :mode (("\\.asd\\'" . lisp-mode))
   :commands (slime)
   :bind (("C-. l" . switch-to-slime)
-         ("C-. ," . slime-selector)
+         ("C-. C-/" . slime-selector)
          :map slime-mode-map
          ("RET" . slime-autodoc-newline)
          ("C-c C-d s" . slime-documentation-in-minibuffer)
