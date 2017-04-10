@@ -143,6 +143,10 @@
 ;;; C-. prefix map is for personal bindings
 
 ;;; C-.
+;;; unbind in flyspell-mode
+(with-eval-after-load 'flyspell
+  (unbind-key "C-." flyspell-mode-map))
+
 (defvar ctl-period-map nil)
 (define-prefix-command 'ctl-period-map)
 (bind-key "C-." #'ctl-period-map)
@@ -178,13 +182,15 @@
 
 ;;; info
 
+(setq Info-directory-list
+      (append (list (expand-file-name "~/info"))
+              Info-default-directory-list))
+
 (use-package info
   :commands (info)
   :bind (("C-h a" . apropos)
          ("C-h A" . apropos))
   :demand t
-  :init
-  (setq Info-additional-directory-list '("~/info/"))
   :config
   (use-package info-look
     :bind (("C-h S" . info-lookup-symbol))))
@@ -200,7 +206,7 @@
          ("C-. c" . org-smart-capture)
          :map org-mode-map
          ("C-c C-r" . org-refile-web-capture))
-  :config
+  :init
   (add-to-list 'Info-directory-list
                (expand-file-name "org-mode/doc" site-lisp-directory)))
 
@@ -600,15 +606,15 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
         magit-repository-directories '(("~/.emacs.d/" . 0)
                                        ("~/prj/" . 1)
                                        ("~/quicklisp/local-projects/")))
+  ;; install info
+  (add-to-list 'Info-directory-list
+               (expand-file-name "magit/Documentation" site-lisp-directory))
   :config
   (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)) 
   (use-package magithub
     :load-path "site-lisp/magithub"
     :demand t
-    :config (magithub-feature-autoinject t))
-  ;; install info
-  (add-to-list 'Info-additional-directory-list
-               (expand-file-name "magit/Documentation" site-lisp-directory)))
+    :config (magithub-feature-autoinject t)))
 
 
 ;;; markdown-mode
@@ -827,6 +833,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
          :map slime-mode-map
          ("RET" . slime-autodoc-newline)
          ("C-c C-d s" . slime-documentation-in-minibuffer)
+         ("C-c C-d i" . slime-insert-file-header)
          :map slime-repl-mode-map
          ("C-l" . slime-repl-clear-buffer)
          ("SPC" . slime-autodoc-space)
@@ -883,6 +890,17 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
       (if slime-repl
           (pop-to-buffer slime-repl)
         (call-interactively #'slime))))
+
+  (defun slime-insert-file-header ()
+    "Inserts the current file name into the buffer.
+
+Later renditions should locate the asd file and insert the whole
+subpath."
+    (interactive)
+    (let ((file-name (file-name-nondirectory (buffer-file-name))))
+      (goto-char (point-min))
+      (insert
+       (format ";;; %s\n\n" file-name))))
   
   :init
   (setq slime-complete-symbol*-fancy t
@@ -913,6 +931,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :config
   ;; HyperSpec/Documentation
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
+
 
   ;; company backend
   (use-package slime-company
@@ -953,7 +972,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 (use-package bbdb-loaddefs
   :load-path "site-lisp/bbdb/lisp"
-  :commands (bbdb bbdb-create)
+  :commands (bbdb bbdb-create bbdb-snarf)
   :init
   (setq bbdb-file "~/org/contacts.bbdb"
         bbdb-offer-save 'auto

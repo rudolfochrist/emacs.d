@@ -413,18 +413,32 @@ hypersetup to include colorlinks=true."
     :config
     (use-package helm-bibtex
       :load-path "site-lisp/helm-bibtex"))
- 
+  
   (setq org-ref-default-bibliography reftex-default-bibliography
         org-ref-pdf-directory "~/Dropbox/Papers/Library/"
         org-ref-default-citation-link "citep"
         org-ref-get-pdf-filename-function #'fyi-get-pdf-filename)
   :config
-   ;; load the rest
+  ;; load the rest
   (dolist (util '(org-ref-utils
                   org-ref-latex
                   org-ref-bibtex
                   org-ref-helm-bibtex
                   bibtex-completion))
     (require util)))
+
+;;; code block wrapping
+(defun wrap-code-block ()
+  (interactive)
+  (if (not (region-active-p))
+      (user-error "No region selected.")
+    (let ((beg (region-beginning))
+          (end (region-end)))
+      (goto-char end)
+      (insert "#+END_SRC\n")
+      (goto-char beg)
+      (insert "#+BEGIN_SRC "))))
+
+(bind-key "C-<" #'wrap-code-block org-mode-map)
 
 (provide 'dot-org)
