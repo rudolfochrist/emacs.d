@@ -239,6 +239,14 @@
 
 (use-package ag
   :load-path "site-lisp/ag"
+  :commands (ag ag-regexp ag-project ag-project-regexp)
+  :bind (("C-. S" . hydra-ag/body))
+  :preface
+  (defhydra hydra-ag (:color blue)
+    ("s" ag-project "Search project")
+    ("r" ag-regexp "Search regexp")
+    ("p" ag-project-regexp "Search project regexp")
+    ("q" nil "quit"))
   :init
   (setq ag-reuse-buffers t
         ag-reuse-window t)
