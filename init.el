@@ -403,7 +403,7 @@
   (add-hook 'eshell-mode-hook
             (lambda ()
               (add-to-list 'eshell-visual-commands "htop")
-              (add-to-lsit 'eshell-visual-commands "svn"))))
+              (add-to-list 'eshell-visual-commands "svn"))))
 
 
 ;;; feature-mode
