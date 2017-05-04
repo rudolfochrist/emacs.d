@@ -8,7 +8,7 @@
 #+OPTIONS: foldmarks:t email:t subject:titled
 #+LATEX_CLASS: default-koma-letter
 #+LATEX_CLASS_OPTIONS: [a4paper]
-#+LCO: ${1:$$(yas-choose-value "de" "en")} me ${2:$$(yas-choose-value "lambda-letter" "business-letter")}
+#+LCO: ${1:$$(yas-choose-value "de" "en")} me ${2:$$(yas-choose-value "lambda-letter" "business-letter" "elegant-letter")}
 #+PLACE: $3
 ${4:#+SUBJECT: ${5: A letter for you}}
 #+BIND: org-export-date-timestamp-format "%x"

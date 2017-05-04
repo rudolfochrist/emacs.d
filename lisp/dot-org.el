@@ -188,12 +188,27 @@ ADDED: %U"
                [no-default-packages]
                [no-packages]
                [extra]"
-               ("\\chapter{%s}" . "\\chapter*{%s}")
+                           \\rhead{\\theauthor}
+                                  \\renewcommand{\\headrulewidth}{0.0}
+                                  \\newenvironment{exam}{\\begin{center}\\begin{mdframed}[backgroundcolor=yellow]}{\\end{mdframed}\\end{center}}"
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(add-to-list 'org-latex-classes
+             '("scrbook"
+               "\\documentclass[12pt,a4paper]{scrbook}
+               [no-default-packages]
+               [no-packages]
+                      ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
 
 ;;; extend latex "log" files
 (setq org-latex-logfiles-extensions
@@ -227,13 +242,15 @@ hypersetup to include colorlinks=true."
       org-footnote-auto-label t    ; generate numbered footnotes like [fn:1]
       org-latex-hyperref-template (toggle-org-latex-hyperref-colorlinks 'force))
 
-;;; use xelatex with bibtex
-(setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
-                              "bibtex %b"
+
+;;; latex compiler settings
+(setq org-latex-compiler "xelatex"
+      org-latex-pdf-process '("%latex -interaction nonstopmode %f"
+                              "%bib %b"
                               "makeindex %b"
                               "PATH=\"/usr/bin:$PATH\" makeglossaries %b"  ; use system perl for makeglossaries
-                              "xelatex -interaction nonstopmode %f"
-                              "xelatex -interaction nonstopmode %f"))
+                              "%latex -interaction nonstopmode %f"
+                              "%latex -interaction nonstopmode %f"))
 
 ;;; org buffer niceties.
 (setq org-startup-indented t
