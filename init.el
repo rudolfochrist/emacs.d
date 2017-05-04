@@ -162,7 +162,12 @@
 
 ;;; bury buffers instead of killing (that's so mean....)
 ;;; and most of the time I realized that I need the buffer again after killing it.
-(bind-key "C-x k" #'bury-buffer)
+(defun bury-or-kill-buffer (arg)
+  (interactive "P")
+  (if arg
+      (call-interactively #'kill-buffer)
+    (bury-buffer)))
+(bind-key "C-x k" #'bury-or-kill-buffer)
 
 ;;; reverting
 (defun revert-buffer-no-confirm ()
@@ -194,6 +199,25 @@
   :config
   (use-package info-look
     :bind (("C-h S" . info-lookup-symbol))))
+
+
+;;; flyspell
+
+(use-package flyspell
+  :commands (flyspell-prog-mode flyspell-mode)
+  :bind (("C-. \\" . toggle-en-de-dictionary))
+  :preface
+  (defun toggle-en-de-dictionary ()
+    (interactive)
+    (let ((dict ispell-current-dictionary))
+      (cond
+       ((equal dict "english")
+        (ispell-change-dictionary "german8"))
+       ((equal dict "german8")
+        (ispell-change-dictionary "english")))))
+  :init
+  (add-hook 'text-mode-hook #'flyspell-mode)
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode))
 
 
 ;;; org-mode
@@ -598,6 +622,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 (use-package magit
   :load-path "site-lisp/magit/lisp"
+  :commands (magit-clone)
   :bind (("C-. gg" . magit-status)
          ("C-. GG" . magit-status-with-prefix)
          ("C-. gl" . magit-list-repositories))
@@ -936,10 +961,12 @@ subpath."
   (add-hook 'lisp-mode-hook
             (lambda ()
               (setq-local lisp-indent-function #'common-lisp-indent-function)))
+  ;; slime docs
+  (add-to-list 'Info-directory-list
+               (expand-file-name "slime/doc" site-lisp-directory))
   :config
   ;; HyperSpec/Documentation
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
-
 
   ;; company backend
   (use-package slime-company
@@ -991,6 +1018,8 @@ subpath."
         bbdb-complete-mail-allow-cycling t
         ;; don't handle anniversaries in BBDB.
         bbdb-anniv-alist nil)
+  (add-to-list 'Info-directory-list
+               (expand-file-name "bbdb/doc" site-lisp-directory))
   :config
   (bbdb-initialize 'gnus 'message 'anniv))
 
