@@ -1045,19 +1045,8 @@ subpath."
   :commands (restclient-mode))
 
 
-;;; paperless
-
-(use-package paperless
-  :load-path "~/prj/paperless"
-  :commands (paperless)
-  :init
-  (setq paperless-capture-directory "~/PDF-CAPTURE"
-        paperless-root-directory "~/archive"))
-
-
 ;;; smerge-mode
 
-;;; smerge-mode
 (use-package smerge-mode
   :commands (smerge-mode)
   :bind (:map
