@@ -991,7 +991,7 @@ subpath."
   :load-path "site-lisp/aggressive-indent"
   :demand t
   :config
-  (dolist (mode '(slime-repl-mode feature-mode))
+  (dolist (mode '(slime-repl-mode feature-mode cperl))
     (add-to-list 'aggressive-indent-excluded-modes mode))
   (global-aggressive-indent-mode 1))
 
