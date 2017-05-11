@@ -458,4 +458,8 @@ hypersetup to include colorlinks=true."
 
 (bind-key "C-<" #'wrap-code-block org-mode-map)
 
+;;; org-clock
+(require 'org-clock)
+(setq org-clock-idle-time 10)
+
 (provide 'dot-org)
