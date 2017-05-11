@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: basic
-# key: basic_
+# key: _basic
 # --
 #+TITLE: $1${2:
 #+AUTHOR: ${3:Sebastian Christ}}${4:
