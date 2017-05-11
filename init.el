@@ -531,7 +531,7 @@ With prefix argument SHOW-FILES-P also offer to find files."
   :load-path "site-lisp/swiper"
   :after ivy
   :bind (("C-. s" . counsel-ag)
-         ("C-c C-f" . counsel-locate)
+         ("C-x C-g" . counsel-locate)
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
          ("M-x" . counsel-M-x)
