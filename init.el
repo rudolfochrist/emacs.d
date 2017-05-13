@@ -646,11 +646,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   (add-to-list 'Info-directory-list
                (expand-file-name "magit/Documentation" site-lisp-directory))
   :config
-  (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)) 
-  (use-package magithub
-    :load-path "site-lisp/magithub"
-    :demand t
-    :config (magithub-feature-autoinject t)))
+  (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)))
 
 
 ;;; markdown-mode
