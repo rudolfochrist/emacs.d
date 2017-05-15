@@ -859,7 +859,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 (use-package slime
   :load-path "site-lisp/slime"
   :mode (("\\.asd\\'" . lisp-mode))
-  :commands (slime)
+  :commands (slime slime-mode slime-repl-mode)
   :bind (("C-. l" . switch-to-slime)
          ("C-. C-/" . slime-selector)
          :map slime-mode-map
