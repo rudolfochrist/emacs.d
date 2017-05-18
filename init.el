@@ -1087,6 +1087,14 @@ subpath."
             nil
             t))
 
+
+;;; dockerfile-mode
+
+(use-package dockerfile-mode
+  :load-path "site-lisp/dockerfile-mode"
+  :mode "Dockerfile'\\" 
+  :commands (dockerfile-mode))
+
 ;;; packages end here
 
 
