@@ -158,7 +158,7 @@
 (bind-key "C-c C-b" #'ibuffer)
 
 ;;; fullscreen
-(bind-key "C-. f" #'toggle-frame-fullscreen)
+(bind-key "C-. y" #'toggle-frame-fullscreen)
 
 ;;; bury buffers instead of killing (that's so mean....)
 ;;; and most of the time I realized that I need the buffer again after killing it.
@@ -1094,6 +1094,15 @@ subpath."
   :load-path "site-lisp/dockerfile-mode"
   :mode "Dockerfile'\\" 
   :commands (dockerfile-mode))
+
+
+;;; find-file-in-project
+
+(use-package find-file-in-project
+  :load-path "site-lisp/find-file-in-project"
+  :bind (("C-. ff" . find-file-in-project)
+         ("C-. fd" . ffip-show-diff)
+         ("C-. fc" . ffip-create-project-file)))
 
 ;;; packages end here
 
