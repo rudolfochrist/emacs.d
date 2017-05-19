@@ -1092,6 +1092,16 @@ subpath."
          ("C-. fd" . ffip-show-diff)
          ("C-. fc" . ffip-create-project-file)))
 
+
+;;; rich-minority
+
+(use-package rich-minority
+  :load-path "site-lisp/rich-minority"
+  :commands (rich-minority-mode)
+  :init
+  (setq rm-whitelist "\\[.*\\]")        ; just showing slime-mode: [package lisp-impl]
+  (rich-minority-mode 1))
+
 ;;; packages end here
 
 
