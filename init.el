@@ -81,18 +81,6 @@
 (add-to-list 'default-frame-alist '(width . 140))
 (add-to-list 'default-frame-alist '(height . 55))
 
-;;; font's
-;;; https://www.emacswiki.org/emacs/SetFonts
-(defun select-font-candidate (&rest fonts)
-  "Selects the first installed font among FONTS."
-  (find-if (lambda (font)
-             (find-font (font-spec :name font)))
-           fonts))
-
-(when (display-graphic-p)
-  (set-face-attribute 'default nil :font
-                      (select-font-candidate "Input-12")))
-
 ;;; tabs, spaces, indentation, parens
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2
