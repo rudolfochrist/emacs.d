@@ -1092,7 +1092,7 @@ subpath."
 
 (use-package dockerfile-mode
   :load-path "site-lisp/dockerfile-mode"
-  :mode "Dockerfile'\\" 
+  :mode "Dockerfile\\'" 
   :commands (dockerfile-mode))
 
 
