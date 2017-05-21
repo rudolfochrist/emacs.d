@@ -1088,9 +1088,20 @@ subpath."
 
 (use-package find-file-in-project
   :load-path "site-lisp/find-file-in-project"
+  :preface
+  (defun fyi-save-all-project-buffers (path)
+    (interactive (list (ffip-project-root)))
+    (when (null path)
+      (user-error "Cannot save project buffers outside of a project."))
+    (let ((buffers (cl-remove-if-not (lambda (buffer)
+                                       (cl-search (expand-file-name path)
+                                                  (buffer-file-name buffer)))
+                                     (buffer-list))))
+      (mapc #'save-buffer buffers))) 
   :bind (("C-. ff" . find-file-in-project)
          ("C-. fd" . ffip-show-diff)
-         ("C-. fc" . ffip-create-project-file)))
+         ("C-. fc" . ffip-create-project-file)
+         ("C-. fs" . fyi-save-all-project-buffers)))
 
 
 ;;; rich-minority
