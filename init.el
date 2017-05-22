@@ -171,6 +171,7 @@
 (use-package dash  :defer t :load-path "site-lisp/dash")
 (use-package async :defer t :load-path "site-lisp/async")
 (use-package hydra :load-path "site-lisp/hydra")
+(use-package popup :defer t :load-path "site-lisp/popup")
 
 
 ;;; info
