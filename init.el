@@ -1100,7 +1100,8 @@ subpath."
                                      (buffer-list))))
       (mapc #'save-buffer buffers))) 
   :bind (("C-. ff" . find-file-in-project)
-         ("C-. fd" . ffip-show-diff)
+         ("C-. fd" . ffip-show-diff-by-description)
+         ("C-. fD" . ffip-show-diff)
          ("C-. fc" . ffip-create-project-file)
          ("C-. fs" . fyi-save-all-project-buffers)))
 
