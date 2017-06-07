@@ -1127,6 +1127,14 @@ subpath."
          ("M-g z" . dumb-jump-go-prefer-external-other-window))
   :config (setq dumb-jump-selector 'ivy))
 
+
+;;; es-mode
+
+(use-package es-mode
+  :load-path "site-lisp/es-mode"
+  :mode "\\.es\\'"
+  :commands (es-mode es-command-center))
+
 ;;; packages end here
 
 
