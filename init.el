@@ -1130,6 +1130,8 @@ subpath."
 
 ;;; es-mode
 
+(use-package spark :load-path "site-lisp/park" :defer t)
+
 (use-package es-mode
   :load-path "site-lisp/es-mode"
   :mode "\\.es\\'"
