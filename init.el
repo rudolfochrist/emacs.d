@@ -1130,12 +1130,18 @@ subpath."
 
 ;;; es-mode
 
-(use-package spark :load-path "site-lisp/park" :defer t)
+(use-package spark :load-path "site-lisp/spark" :defer t)
+(use-package requets :load-path "site-lisp/request" :defer t)
 
 (use-package es-mode
   :load-path "site-lisp/es-mode"
   :mode "\\.es\\'"
-  :commands (es-mode es-command-center))
+  :commands (es-mode))
+
+(use-package es-cc
+  :load-path "site-lisp/es-mode"
+  :commands (es-command-center)
+  :after es-mode)
 
 ;;; packages end here
 
