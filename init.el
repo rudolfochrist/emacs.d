@@ -972,7 +972,22 @@ subpath."
                 (interactive (list (slime-read-system-name)))
                 (insert (format "(ql:quickload '%s)" systems))
                 (slime-repl-send-input t)))
-    (:one-liner "cl:quickload system")))
+    (:one-liner "cl:quickload system"))
+
+  ;;; https://github.com/daimrod/Emacs-config/blob/master/config/config-slime.el
+  ;; Add a directory to asdf:*central-registry*
+  (defslime-repl-shortcut slime-repl-add-to-central-registry
+    ("add-to-central-registry" "+a" "add")
+    (:handler (lambda (directory)
+                (interactive
+                 (list (expand-file-name (file-name-as-directory
+                                          (read-directory-name
+                                           "Add directory: "
+                                           (slime-eval '(swank:default-directory))
+                                           nil nil "")))))
+                (insert "(cl:pushnew (cl:truename #P\"" directory "\") asdf:*central-registry* :test #'equal)")
+                (slime-repl-send-input t)))
+    (:one-liner "Add a directory to asdf:*central-registry*")))
 
 
 ;;; aggressive-indent
