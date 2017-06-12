@@ -148,6 +148,9 @@
 ;;; fullscreen
 (bind-key "C-. y" #'toggle-frame-fullscreen)
 
+;;; compiling
+(bind-key "C-. b" #'compile)
+
 ;;; bury buffers instead of killing (that's so mean....)
 ;;; and most of the time I realized that I need the buffer again after killing it.
 (defun bury-or-kill-buffer (arg)
