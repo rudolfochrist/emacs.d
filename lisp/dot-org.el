@@ -460,6 +460,10 @@ hypersetup to include colorlinks=true."
 
 ;;; org-clock
 (require 'org-clock)
-(setq org-clock-idle-time 10)
+(setq org-clock-idle-time 10
+      org-clock-persist t
+      org-clock-out-remove-zero-time-clocks t
+      org-clock-in-resume t)
+(org-clock-persistence-insinuate)
 
 (provide 'dot-org)
