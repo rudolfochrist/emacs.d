@@ -3,4 +3,5 @@
 # key: slot
 # --
 (${1:name} :initarg :$1
-           :accessor $1)$0
+           :accessor $1
+           :initform ${2:nil})$0
