@@ -4,10 +4,6 @@
 (require 'ox-md)
 (require 'ox-texinfo)
 (require 'org-checklist)
-
-(require 'server)
-(unless (server-running-p)
-  (server-start))
 (require 'org-protocol)
 
 ;;; Don't use cache to prevent arbitrary crashes

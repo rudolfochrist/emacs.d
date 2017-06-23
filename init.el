@@ -107,6 +107,13 @@
               (set-input-method "latin-9-prefix"))))
 
 
+;;; SERVER
+
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
+
 
 ;;; UTILITIES
 
