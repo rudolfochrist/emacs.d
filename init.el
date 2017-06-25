@@ -862,13 +862,6 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 ;;; slime
 
-(defmacro slime-define-lisp-implementations (&rest mappings)
-  "Sets `slime-lisp-implementations' with roswell implementation mappings."
-  `(setq slime-lisp-implementations
-         ',(mapcar (lambda (mapping)
-                     `(,(car mapping) ("ros" "+Q" "-L" ,(cadr mapping) "-l" "~/.rc.lisp" "run")))
-                   mappings)))
-
 (use-package slime
   :load-path "site-lisp/slime"
   :mode (("\\.asd\\'" . lisp-mode))
@@ -953,10 +946,10 @@ subpath."
         slime-startup-animation t
         slime-net-coding-system 'utf-8-unix)
 
-  (slime-define-lisp-implementations
-   (ccl "ccl-bin")
-   (sbcl "sbcl-bin")
-   (abcl "abcl-bin"))
+  ;; Lisps
+  (setq slime-lisp-implementations
+        '((ccl ("ccl64"))
+          (sbcl ("sbcl"))))
 
   (setq slime-contribs
         '(slime-fancy
