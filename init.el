@@ -483,14 +483,22 @@
   :init (setq gdb-many-windows t))
 
 
+;;; smex
+
+(use-package smex
+  :load-path "site-lisp/smex"
+  :bind (("M-x" . smex))
+  :commands (smex-major-mode-commands)
+  :config
+  (smex-initialize))
+
+
 ;;; swiper, ivy, counsel
 
 (use-package ivy
   :load-path "site-lisp/swiper"
   :demand t
-  :preface
-  (use-package smex
-    :load-path "site-lisp/smex")
+  :preface  
   ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
   (defvar ivy-prominent-directories
     '("~/prj/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
@@ -533,7 +541,6 @@ With prefix argument SHOW-FILES-P also offer to find files."
          ("C-x C-g" . counsel-locate)
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
-         ("M-x" . counsel-M-x)
          ("C-x C-S-f" . counsel-recentf))
   :commands (counsel-more-chars))
 
