@@ -549,8 +549,8 @@ With prefix argument SHOW-FILES-P also offer to find files."
 
 (use-package js2-mode
   :load-path "site-lisp/js2-mode" 
-  :mode (("\\.js\\'" . js2mode)
-         ("\\.json\\'" . js2mode))
+  :mode (("\\.js\\'" . js2-mode)
+         ("\\.json\\'" . js2-mode))
   :init (setq js2-basic-offset 2))
 
 
