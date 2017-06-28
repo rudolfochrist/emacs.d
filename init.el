@@ -483,17 +483,11 @@
   :init (setq gdb-many-windows t))
 
 
-;;; smex
+;;; swiper, ivy, counsel
 
 (use-package smex
   :load-path "site-lisp/smex"
-  :bind (("M-x" . smex))
-  :commands (smex-major-mode-commands)
-  :config
-  (smex-initialize))
-
-
-;;; swiper, ivy, counsel
+  :defer t)
 
 (use-package ivy
   :load-path "site-lisp/swiper"
@@ -541,7 +535,8 @@ With prefix argument SHOW-FILES-P also offer to find files."
          ("C-x C-g" . counsel-locate)
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
-         ("C-x C-S-f" . counsel-recentf))
+         ("C-x C-S-f" . counsel-recentf)
+         ("M-x" . counsel-M-x))
   :commands (counsel-more-chars))
 
 
