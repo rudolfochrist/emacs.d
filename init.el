@@ -649,6 +649,11 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :config
   (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)))
 
+(use-package ssh-agency
+  :load-path "site-lisp/ssh-agency"
+  :if (eq window-system 'w32)
+  :after magit)
+
 
 ;;; markdown-mode
 
