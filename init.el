@@ -1310,6 +1310,14 @@ is already narrowed."
 (bind-key "n" 'narrow-or-widen-dwim ctl-x-map)
 
 
+;;; Load machine-local configuration file
+
+(let* ((sys-name (system-name))
+       (machine-rc (concat "~/.emacs." sys-name)))
+  (when (file-exists-p machine-rc)
+    (load machine-rc)))
+
+
 ;;; enable disabled commands
 (put 'erase-buffer 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
