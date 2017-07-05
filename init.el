@@ -238,7 +238,10 @@
 
 (use-package avy
   :load-path "site-lisp/avy"
-  :bind (("C-S-s" . avy-goto-word-1)))
+  :bind (("M-g s" . avy-goto-char-timer)
+         ("M-g M-s" . avy-goto-char-timer)
+         ("M-g a" . avy-goto-line)
+         ("M-g M-a" . avy-goto-line)))
 
 
 
