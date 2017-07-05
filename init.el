@@ -580,6 +580,7 @@ With prefix argument SHOW-FILES-P also offer to find files."
 ;;; linum
 
 (use-package linum
+  :disabled t
   :preface
   (defun disable-linum-on-huge-file ()
     "Disable linum if buffer contains more than 5000 lines.
