@@ -6,6 +6,7 @@
 (require 'bbdb)
 (require 'bbdb-gnus)
 (require 'bbdb-message)
+(require 'bind-key)
 
 ;;; see http://blog.binchen.org/posts/notes-on-using-gnus.html
 ;;; Settings highly influenced by John Wiegley (https://github.com/jwiegley/dot-emacs/)
@@ -194,11 +195,6 @@
       smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587
       smtp-debug-info t)
-
-;;; global key bindings
-
-(global-set-key (kbd "<f11>") #'start-gnus)
-(global-set-key (kbd "M-<f11>") 'gnus-other-frame)
 
 ;;; wash GWENE
 (defun my-gwene-wash-html ()
@@ -414,5 +410,15 @@ there are no attachments."
 
 (add-hook 'message-send-hook #'my-message-warn-if-no-attachments)
 
+;;; Add mail to BBDB
+;;; https://emacs.stackexchange.com/a/10434
+(defun gnus-bbdb-snarf-sender ()
+  (interactive)
+  (gnus-with-article-buffer
+    (let ((from (mail-fetch-field "from")))
+      (bbdb-snarf from 'mail))))
+
+(bind-key "C-c C-c" #'gnus-bbdb-snarf-sender gnus-summary-mode-map)
+(bind-key "C-c C-c" #'gnus-bbdb-snarf-sender gnus-article-mode-map)
 
 (provide 'init-gnus)
