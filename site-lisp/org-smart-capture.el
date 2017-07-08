@@ -27,6 +27,7 @@
 
 ;; I use: (define-key global-map [(meta ?m)] 'org-smart-capture)
 
+(require 'cl-lib)
 (require 'gnus-sum)
 (require 'org-capture)
 
@@ -115,10 +116,10 @@
             (insert new-subject))))
 
     (when body
-      (flet ((trim-string
-              (str)
-              (replace-regexp-in-string
-               "\\(\\`[[:space:]\n]*\\|[[:space:]\n]*\\'\\)" "" str)))
+      (cl-flet ((trim-string
+                 (str)
+                 (replace-regexp-in-string
+                  "\\(\\`[[:space:]\n]*\\|[[:space:]\n]*\\'\\)" "" str)))
         (save-excursion
           (forward-line 2)
           (insert body))))
