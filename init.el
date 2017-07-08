@@ -959,12 +959,20 @@ subpath."
       (goto-char (point-min))
       (insert
        (format ";;; %s\n\n" file-name))))
+
+  ;; custom slime-documentation-function
+  (defun slime-eww-hyperspec-lookup ()
+    "Opens the hyperspec in EWW inside Emacs."
+    (interactive)
+    (let ((browse-url-browser-function #'eww-browse-url))
+      (call-interactively #'slime-hyperspec-lookup)))
   
   :init
   (setq slime-complete-symbol*-fancy t
         slime-complete-symbol-function #'slime-fuzzy-complete-symbol
         slime-startup-animation t
-        slime-net-coding-system 'utf-8-unix)
+        slime-net-coding-system 'utf-8-unix
+        slime-documentation-lookup-function #'slime-eww-hyperspec-lookup)
 
   ;; Lisps
   (setq slime-lisp-implementations
