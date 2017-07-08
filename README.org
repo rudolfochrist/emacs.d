@@ -7,7 +7,6 @@ My Emacs configuration files
 1. Install [[http://ccl.clozure.com/][CCL]]
 2. Install [[http://www.quicklisp.org/][Quicklisp]]
 3. Install [[http://quickdocs.org/clhs/][clhs]]
-4. Install [[https://github.com/7max/log4cl][log4cl/log4slime]]
    
 * Installation
 
