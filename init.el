@@ -295,8 +295,24 @@
          ("C-p" . company-select-previous)
          ("C-h" . company-show-doc-buffer)
          ("M-." . company-show-location))
+
+  :preface
+  (defun company-bbdb-alias-candidates (candidates-fn arg)
+    "Advice to resolve candidates for company-bbdb.
+
+We're adding mail-aliases as well here. 
+
+ARG is the one arguments taken by company bbdb candiates function."
+    (let ((candidates (funcall candidates-fn arg))
+          (aliases (eval '(bbdb-get-mail-aliases))))
+      (append (cl-remove-if-not (lambda (alias)
+                                  (string-match arg alias))
+                                aliases)
+              candidates)))
   :init
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (advice-add 'company-bbdb--candidates :around #'company-bbdb-alias-candidates))
 
 
 ;;; dired
@@ -1041,6 +1057,7 @@ subpath."
         bbdb-canonicalize-redundant-nets-p t
         bbdb-always-add-addresses t
         bbdb-complete-mail-allow-cycling t
+        bbdb-completion-display-record nil
         ;; don't handle anniversaries in BBDB.
         bbdb-anniv-alist nil)
   (add-to-list 'Info-directory-list
