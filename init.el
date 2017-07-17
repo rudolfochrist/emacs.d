@@ -351,20 +351,26 @@ ARG is the one arguments taken by company bbdb candiates function."
         dired-recursive-copies 'always
         dired-recursive-deletes 'top)
   (when (system-macos-p)
-    (setq insert-directory-program "/usr/local/bin/gls"))
+    (setq insert-directory-program "/usr/local/bin/gls")))
+
+(use-package dired-x
+  :after dired)
+
+(use-package dired-details
+  :after dired
+  :init
+  ;; inspired by https://github.com/magnars/.emacs.d/
+  (setq dired-details-hidden-string "--- ")
   :config
-  (use-package dired-x)
-  (use-package dired-details 
-    :init
-    ;; inspired by https://github.com/magnars/.emacs.d/
-    (setq dired-details-hidden-string "--- ")
-    :config
-    (dired-details-install))
-  (use-package dired-narrow
-    :load-path "site-lisp/dired-hacks"
-    :commands (dired-narrow)
-    :bind (:map dired-mode-map
-                ("/" . dired-narrow))))
+  (dired-details-install))
+
+(use-package dired-narrow
+  :load-path "site-lisp/dired-hacks"
+  :after dired
+  :commands (dired-narrow)
+  :bind (:map dired-mode-map
+              ("/" . dired-narrow)))
+
 
 ;;; easy-kill
 
