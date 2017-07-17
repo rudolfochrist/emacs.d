@@ -554,7 +554,7 @@ With prefix argument SHOW-FILES-P also offer to find files."
          ("C-x C-g" . counsel-locate)
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
-         ("C-x C-S-f" . counsel-recentf)
+         ("C-x C-r" . counsel-recentf)
          ("M-x" . counsel-M-x))
   :commands (counsel-more-chars))
 
@@ -1161,7 +1161,7 @@ subpath."
                                                   (buffer-file-name buffer)))
                                      (buffer-list))))
       (mapc #'save-buffer buffers))) 
-  :bind (("C-. ff" . find-file-in-project)
+  :bind (("C-x C-S-f" . find-file-in-project)
          ("C-. fd" . ffip-show-diff-by-description)
          ("C-. fD" . ffip-show-diff)
          ("C-. fc" . ffip-create-project-file)
