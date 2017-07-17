@@ -54,7 +54,8 @@
       org-stuck-projects '("TODO=\"PROJECT\"" ("TODO" "WAITING" "DELEGATED") nil ""))
 
 ;;; agenda
-(setq org-log-done 'time
+(setq org-log-done 'time                ; create a time stamp when task is DONE!
+      org-log-repeat nil                ; don't log time stamps for repeated items 
       org-agenda-span 'week
       org-agenda-start-on-weekday nil   ; start agenda on current day
       org-agenda-skip-deadline-if-done t
