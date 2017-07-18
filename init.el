@@ -1212,6 +1212,12 @@ subpath."
   :commands (es-command-center)
   :after es-mode)
 
+
+;;; sgml-mode
+
+(use-package sgml-mode
+  :commands (sgml-mode sgml-pretty-print))
+
 ;;; packages end here
 
 
