@@ -320,9 +320,8 @@ ARG is the one arguments taken by company bbdb candiates function."
 (use-package dired
   :load-path "site-lisp/dired"
   :commands (dired-jump)
-  :bind (("C-. d" . dired-jump)
-         ("C-. D" . dired-jump-elsewhere)
-         :map dired-mode-map
+  :bind (:map
+         dired-mode-map
          ("M-!" . async-shell-command)
          ("l" . dired-up-alternate-directory)
          ("RET" . dired-find-alternate-file)
@@ -354,7 +353,9 @@ ARG is the one arguments taken by company bbdb candiates function."
     (setq insert-directory-program "/usr/local/bin/gls")))
 
 (use-package dired-x
-  :after dired)
+  :after dired
+  :bind (("C-. d" . dired-jump)
+         ("C-. D" . dired-jump-elsewhere)))
 
 (use-package dired-details
   :after dired
