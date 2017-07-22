@@ -521,7 +521,7 @@ ARG is the one arguments taken by company bbdb candiates function."
   :preface  
   ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
   (defvar ivy-prominent-directories
-    '("~/prj/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
+    '("~/prj/" "~/code/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
     "List of prominent directories.")
 
   (defun ivy-visit-prominent-directory (show-files-p)
