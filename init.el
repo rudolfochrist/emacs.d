@@ -75,8 +75,13 @@
 
 ;;; default theme with custom background
 ;;; see http://irreal.org/blog/?p=3900
-(set-background-color "white smoke")
-(add-to-list 'default-frame-alist '(background-color . "white smoke"))
+;; (set-background-color "white smoke")
+;; (add-to-list 'default-frame-alist '(background-color . "white smoke"))
+
+(use-package minimal-light-theme
+  :load-path "site-lisp/minimal-theme"
+  :config
+  (load-theme 'minimal-light t))
 
 ;;; frame setup
 (add-to-list 'default-frame-alist '(width . 140))
