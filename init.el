@@ -35,6 +35,7 @@
 ;;; BASICS
 
 (setq inhibit-startup-message t
+      initial-scratch-message nil
       system-uses-terminfo nil                ; use Emacs terminfo
       backup-inhibited t                      ; disable backups
       auto-save-default nil                   ; no auto-save files
