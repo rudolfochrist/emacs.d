@@ -965,7 +965,7 @@ subpath."
     (let ((file-name (file-name-nondirectory (buffer-file-name))))
       (goto-char (point-min))
       (insert
-       (format ";;; %s\n\n" file-name))))
+       (format ";;;; %s\n\n" file-name))))
 
   ;; custom slime-documentation-function
   (defun slime-eww-hyperspec-lookup ()
@@ -1217,16 +1217,6 @@ subpath."
 
 (use-package sgml-mode
   :commands (sgml-mode sgml-pretty-print))
-
-
-;;; emacs-dashboard
-
-(use-package dashboard
-  :load-path "site-lisp/emacs-dashboard"
-  :init
-  (setq dashboard-banner-logo-title "Hacks and Glory Await!")
-  :config
-  (dashboard-setup-startup-hook))
 
 ;;; packages end here
 
