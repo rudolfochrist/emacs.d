@@ -81,7 +81,17 @@
 (use-package minimal-light-theme
   :load-path "site-lisp/minimal-theme"
   :config
-  (load-theme 'minimal-light t))
+  (load-theme 'minimal-light t)
+  (set-face-background 'mode-line "black")
+  (set-face-foreground 'mode-line "white")
+  (set-face-foreground 'which-func "white")
+  ;; reset org 
+  (set-face-attribute 'org-level-1 nil :height 1 :bold t)
+  (set-face-attribute 'org-level-2 nil :height 1 :bold t)
+  (set-face-attribute 'org-level-3 nil :height 1 :bold t)
+  (set-face-attribute 'org-level-4 nil :height 1 :bold t)
+  (set-face-attribute 'org-level-5 nil :height 1 :bold t)
+  (set-face-attribute 'org-level-6 nil :height 1 :bold t))
 
 ;;; frame setup
 (add-to-list 'default-frame-alist '(width . 140))
