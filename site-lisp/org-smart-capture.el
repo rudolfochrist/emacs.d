@@ -143,7 +143,7 @@
       (message "Captured: (%s) %s" fname subject))
 
     ;; Add email tag
-    (org-set-tags-to "email")))
+    (org-set-tags-to "@email")))
 
 ;;;###autoload
 (defun org-smart-capture (&optional arg)

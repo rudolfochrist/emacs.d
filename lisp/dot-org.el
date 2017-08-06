@@ -44,52 +44,39 @@
 
 ;;; org files
 (setq org-directory "~/org/"
-      org-agenda-files '("~/org/tasks/todo.org")
+      org-agenda-files '("~/org/tasks/inbox.org"
+                         "~/org/tasks/projects.org"
+                         "~/org/tasks/tickler.org")
       org-web-capture-file "~/org/web.org"
       org-kb-file "~/org/kb.org")
 
 ;;; todos setup
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "PROJECT(p)" "WAITING(w)" "DELEGATED(k)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)"))
+      '((sequence "TODO(t)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELED(c@)"))
       org-stuck-projects '("TODO=\"PROJECT\"" ("TODO" "WAITING" "DELEGATED") nil ""))
-
-;;; agenda
-(setq org-log-done 'time                ; create a time stamp when task is DONE!
-      org-log-repeat nil                ; don't log time stamps for repeated items 
-      org-agenda-span 'week
-      org-agenda-start-on-weekday nil   ; start agenda on current day
-      org-agenda-skip-deadline-if-done t
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-todo-ignore-scheduled 'all
-      org-agenda-todo-ignore-deadlines 'near
-      org-agenda-skip-scheduled-if-deadline-is-shown t
-      org-agenda-skip-deadline-prewarning-if-scheduled t
-      org-deadline-warning-days 7)
 
 ;;; org-capture
 (setq org-gnus-prefer-web-links t
       org-capture-templates
       '(("a" "Add task" entry
-         (file+headline "~/org/tasks/todo.org" "Inbox")
+         (file+headline "~/org/tasks/inbox.org" "Inbox")
          "* TODO %?
-SCHEDULED: %t
-ADDED: %U"
-         :prepend t)
+:PROPERTIES:
+:CREATED: %U
+:END:")
+        ("t" "Add tickler" entry
+         (file+headline "~/org/tasks/tickler.org" "Tickler File")
+         "* %?
+SCHEDULED: %^t
+:PROPERTIES:
+:CREATED: %U 
+:END:")
         ("n" "Add note to kb" entry
          (file "~/org/kb.org")
          "* %?
 :PROPERTIES:
 :CREATED: %U
 :END:\n\n"
-         :prepend t :empty-lines 1)
-        ("b" "Add bookmark" entry
-         (file "~/org/kb.org")
-         "* %?  :bookmark:
-:PROPERTIES:
-:CREATED: %U
-:URL:
-:END:
-"
          :prepend t :empty-lines 1)
         ("w" "Capture website" entry
          (file "~/org/web.org")
@@ -102,9 +89,8 @@ ADDED: %U"
 
 ;;; refile
 (setq org-refile-allow-creating-parent-nodes 'confirm
-      org-refile-targets
-      '((org-agenda-files . (:level . 1))
-        (org-agenda-files . (:todo . "PROJECT"))))
+      org-refile-targets '((("~/org/tasks/tickler.org" "~/org/tasks/someday.org")  :level . 1)
+                           ("~/org/tasks/projects.org" :maxlevel . 2)))
 
 (defun org-refile-web-capture ()
   "Refile link from `org-web-capture-file' to `org-kb-file'."
@@ -132,28 +118,92 @@ ADDED: %U"
   :demand t
   :config (setq calendar-holidays holiday-german-holidays))
 
-;;; custom agenda views
+;;; agenda
+(setq org-log-done 'time                ; create a time stamp when task is DONE!
+      org-log-repeat nil                ; don't log time stamps for repeated items
+      org-log-into-drawer t             ; this is a lot cleaner
+      org-agenda-span 'week
+      org-agenda-start-on-weekday nil   ; start agenda on current day
+      org-agenda-skip-deadline-if-done t
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-todo-ignore-scheduled 'all
+      org-agenda-todo-ignore-deadlines 'near
+      org-agenda-skip-scheduled-if-deadline-is-shown t
+      org-agenda-skip-deadline-prewarning-if-scheduled t
+      org-deadline-warning-days 7)
+
+;;; https://github.com/NicolasPetton/emacs.d/blob/master/hosts/blueberry/init-org.el#L135
+(defun org-agenda-select-next-action ()
+  (let (should-skip-entry)
+    (unless (org-current-todo-p)
+      (setq should-skip-entry t))
+    (save-excursion
+      (while (and (not should-skip-entry) (org-goto-sibling t))
+        (when (or (org-current-todo-p)
+                  ;; if we find a task that is waiting we can't
+                  ;; actually proceed to the next action, because
+                  ;; we've to wait for the outcome.
+                  (org-current-waiting-p))
+          (setq should-skip-entry t))))
+    (when should-skip-entry
+      (or (outline-next-heading)
+          (goto-char (point-max))))))
+
+(defun org-current-todo-p ()
+  (string= "TODO" (org-get-todo-state)))
+
+(defun org-current-waiting-p ()
+  (string= "WAITING" (org-get-todo-state)))
+
 (setq org-agenda-custom-commands
-      '(("i" "Inbox" tags "CATEGORY=\"Inbox\"&LEVEL=2&TODO<>{DONE\\|CANCELED}"
-         ((org-agenda-overriding-header "Inbox:")))
-        ("w" "Week Agenda" agenda ""
-         ((org-agenda-category-filter-preset '("-Inbox"))))
-        ("f" "Follow up" tags "fu&email&TODO<>{DONE\\|CANCELED}"
+      '(("z" "Today"
+         ((agenda "" ((org-agenda-span 'day)))
+          (alltodo
+           ""
+           ((org-agenda-files '("~/org/tasks/projects.org"))
+            (org-agenda-overriding-header "Next Actions:")
+            (org-agenda-skip-function #'org-agenda-select-next-action)))))
+        ("b" "Burning"
+         ((agenda "" ((org-agenda-entry-types '(:deadline))
+                      (org-deadline-warning-days 0)
+                      (org-agenda-overriding-header "Burning!")
+                      (org-agenda-span 14)))))
+        ("i" "Show inbox"
+         ((alltodo
+           ""
+           ((org-agenda-files '("~/org/tasks/inbox.org"))
+            (org-agenda-overriding-header "Inbox:")))))
+        ("n" "Show next actions"
+         ((alltodo
+           ""
+           ((org-agenda-files '("~/org/tasks/projects.org"))
+            (org-agenda-overriding-header "Next Actions:")
+            (org-agenda-skip-function #'org-agenda-select-next-action)))))
+        ("w" "Show delegated tasks" todo "WAITING"
+         ((org-agenda-overriding-header "Waiting for:")))
+        ("f" "Show follow ups" tags-todo "fu"
          ((org-agenda-overriding-header "Follow up:")))
-        ("A" "All TODOs" tags "TODO=\"TODO\"&CATEGORY<>\"Inbox\""
-         ((org-agenda-overriding-header "All TODOs"))) 
-        ("W" "Waiting/Delegated tasks" tags "TODO=\"WAITING\"|TODO=\"DELEGATED\""
-         ((org-agenda-overriding-header "Waiting/Delegated tasks:")))
-        ("P" "Active projects" tags "TODO=\"PROJECT\""
-         ((org-agenda-overriding-header "Active Projects:")))
-        ("Y" "Someday/Maybe tasks" todo "SOMEDAY"
-         ((org-agenda-overriding-header "Someday/Maybe tasks:")))
-        ("R" "Review Done/Canceled tasks" tags "TODO={DONE\\|CANCELED}"
-         ((org-agenda-overriding-header "Review Done/Canceled tasks:")))
-        ("U" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|SOMEDAY\\|PROJECT\\|CANCELED}"
-         ((org-agenda-overriding-header "Unscheduled tasks:")
-          (org-agenda-skip-function
-           '(org-agenda-skip-entry-if 'timestamp))))))
+        ("@" . "Contexts")
+        ("@h" "@home"
+         ((tags-todo "@home"
+                     ((org-agenda-overriding-header "@home:")
+                      (org-agenda-skip-function #'org-agenda-select-next-action)))))
+        ("@o" "@office"
+         ((tags-todo "@office"
+                     ((org-agenda-overriding-header "@office:")
+                      (org-agenda-skip-function #'org-agenda-select-next-action)))))
+        ("@e" "@email"
+         ((tags-todo "@email"
+                     ((org-agenda-overriding-header "@email:")
+                      (org-agenda-skip-function #'org-agenda-select-next-action)))))
+        ("@r" "@errands"
+         ((tags-todo "@errands"
+                     ((org-agenda-overriding-header "@errands:")
+                      (org-agenda-skip-function #'org-agenda-select-next-action)))))
+        ("@a" "@anywhere"
+         ((tags-todo "@anywhere"
+                     ((org-agenda-overriding-header "@anywhere:")
+                      (org-agenda-skip-function #'org-agenda-select-next-action)))))))
 
 ;;; enable visual-line-mode
 (add-hook 'org-mode-hook 'visual-line-mode)
@@ -453,7 +503,7 @@ hypersetup to include colorlinks=true."
       (goto-char beg)
       (insert "#+BEGIN_SRC "))))
 
-(bind-key "C-<" #'wrap-code-block org-mode-map)
+(bind-key "C-M-<" #'wrap-code-block org-mode-map)
 
 ;;; org-clock
 (require 'org-clock)
