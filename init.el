@@ -90,27 +90,11 @@
       display-time-day-and-date t
       display-battery-mode t)
 (display-time-mode 1)
-(which-function-mode 1)
 
 ;;; default theme with custom background
 ;;; see http://irreal.org/blog/?p=3900
-;; (set-background-color "white smoke")
-;; (add-to-list 'default-frame-alist '(background-color . "white smoke"))
-
-(use-package minimal-light-theme
-  :load-path "site-lisp/minimal-theme"
-  :config
-  (load-theme 'minimal-light t)
-  (custom-set-faces
-   '(mode-line ((t (:background "black" :foreground "white"))))
-   '(which-func ((t (:foreground "white"))))
-   ;; org reset
-   '(org-level-1 ((t (:height 1 :bold t))))
-   '(org-level-2 ((t (:height 1 :bold t))))
-   '(org-level-3 ((t (:height 1 :bold t))))
-   '(org-level-4 ((t (:height 1 :bold t))))
-   '(org-level-5 ((t (:height 1 :bold t))))
-   '(org-level-6 ((t (:height 1 :bold t))))))
+(set-background-color "white smoke")
+(add-to-list 'default-frame-alist '(background-color . "white smoke"))
 
 ;;; make scripts executable if shebang present
 (add-hook 'after-save-hook
