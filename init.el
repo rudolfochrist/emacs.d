@@ -1234,6 +1234,14 @@ subpath."
 (use-package sgml-mode
   :commands (sgml-mode sgml-pretty-print))
 
+
+;;; beginend
+
+(use-package beginend
+  :load-path "site-lisp/beginend"
+  :config
+  (beginend-global-mode))
+
 ;;; packages end here
 
 
