@@ -261,27 +261,12 @@
   (ace-link-setup-default))
 
 
-;;; ag
+;;; wgrep
 
-(use-package ag
-  :load-path "site-lisp/ag"
-  :commands (ag ag-regexp ag-project ag-project-regexp)
-  :bind (("C-. S" . hydra-ag/body))
-  :preface
-  (defhydra hydra-ag (:color blue)
-    ("s" ag-project "Search project")
-    ("r" ag-regexp "Search regexp")
-    ("p" ag-project-regexp "Search project regexp")
-    ("q" nil "quit"))
-  :init
-  (setq ag-reuse-buffers t
-        ag-reuse-window t)
-  :config
-  (use-package wgrep-ag
-    :load-path "site-lisp/wgrep"
-    :commands (wgrep-ag-setup)
-    :init
-    (add-hook 'ag-mode-hook 'wgrep-ag-setup)))
+(use-package wgrep-ag
+  :load-path "site-lisp/wgrep"
+  :commands (wgrep-change-to-wgrep-mode)
+  :init (setq wgrep-auto-save-buffer t))
 
 
 ;;; company-mode
