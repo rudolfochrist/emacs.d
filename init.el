@@ -265,7 +265,7 @@
 
 (use-package wgrep-ag
   :load-path "site-lisp/wgrep"
-  :commands (wgrep-change-to-wgrep-mode)
+  :commands (wgrep-change)
   :init (setq wgrep-auto-save-buffer t))
 
 
@@ -542,13 +542,24 @@ With prefix argument SHOW-FILES-P also offer to find files."
 (use-package counsel
   :load-path "site-lisp/swiper"
   :after ivy
-  :bind (("C-. s" . counsel-ag)
+  :bind (("C-. s" . counsel-rg-current-directory)
+         ("C-. S" . counsel-rg-project)
          ("C-x C-g" . counsel-locate)
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
          ("C-x C-r" . counsel-recentf)
          ("M-x" . counsel-M-x))
-  :commands (counsel-more-chars))
+  :commands (counsel-more-chars)
+  :preface
+  (defun counsel-rg-current-directory (dir)
+    (interactive (list default-directory))
+    (counsel-rg "" dir))
+  
+  (defun counsel-rg-project (project-root)
+    (interactive (list (ffip-project-root)))
+    (if project-root
+        (counsel-rg "" project-root)
+      (user-error "Not in a project!"))))
 
 
 ;;; js2-mode
@@ -1143,6 +1154,12 @@ subpath."
 
 (use-package find-file-in-project
   :load-path "site-lisp/find-file-in-project"
+  :bind (("C-x C-S-f" . find-file-in-project)
+         ("C-. fd" . ffip-show-diff-by-description)
+         ("C-. fD" . ffip-show-diff)
+         ("C-. fc" . ffip-create-project-file)
+         ("C-. fs" . fyi-save-all-project-buffers))
+  :commands (ffip-project-root)
   :preface
   (defun fyi-save-all-project-buffers (path)
     (interactive (list (ffip-project-root)))
@@ -1152,12 +1169,7 @@ subpath."
                                        (cl-search (expand-file-name path)
                                                   (buffer-file-name buffer)))
                                      (buffer-list))))
-      (mapc #'save-buffer buffers))) 
-  :bind (("C-x C-S-f" . find-file-in-project)
-         ("C-. fd" . ffip-show-diff-by-description)
-         ("C-. fD" . ffip-show-diff)
-         ("C-. fc" . ffip-create-project-file)
-         ("C-. fs" . fyi-save-all-project-buffers)))
+      (mapc #'save-buffer buffers))))
 
 
 ;;; rich-minority
