@@ -559,7 +559,9 @@ With prefix argument SHOW-FILES-P also offer to find files."
     (interactive (list (ffip-project-root)))
     (if project-root
         (counsel-rg "" project-root)
-      (user-error "Not in a project!"))))
+      (user-error "Not in a project!")))
+  :init
+  (setq counsel-rg-base-command "rg -i --no-heading --line-number --max-columns 150 --color never --hidden %s ."))
 
 
 ;;; js2-mode
