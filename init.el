@@ -238,7 +238,8 @@
 
 (use-package avy
   :load-path "site-lisp/avy"
-  :bind (("M-g s" . avy-goto-char-timer)
+  :bind (("C-S-s" . avy-goto-char-timer)
+         ("M-g s" . avy-goto-char-timer)
          ("M-g M-s" . avy-goto-char-timer)
          ("M-g a" . avy-goto-line)
          ("M-g M-a" . avy-goto-line)))
@@ -1374,9 +1375,9 @@ is already narrowed."
 
 ;;; enable disabled commands
 (put 'erase-buffer 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(put 'dired-find-alternate-file 'disabled nil)
