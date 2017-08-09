@@ -665,6 +665,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :init
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
         magit-repository-directories '(("~/.emacs.d/" . 0)
+                                       ("~/code/" . 1)
                                        ("~/prj/" . 1)
                                        ("~/quicklisp/local-projects/" . 1)
                                        ;; eclipse (necessary sometimes)
