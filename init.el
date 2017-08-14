@@ -358,6 +358,13 @@ ARG is the one arguments taken by company bbdb candiates function."
   :bind (:map dired-mode-map
               ("/" . dired-narrow)))
 
+(use-package dired-collapse
+  :load-path "site-lisp/dired-hacks"
+  :after dired
+  :commands (dired-collapse-mode)
+  :init
+  (add-hook 'dired-mode-hook #'dired-collapse-mode))
+
 
 ;;; easy-kill
 
