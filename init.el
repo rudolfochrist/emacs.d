@@ -343,14 +343,6 @@ ARG is the one arguments taken by company bbdb candiates function."
   :bind (("C-. d" . dired-jump)
          ("C-. D" . dired-jump-elsewhere)))
 
-(use-package dired-details
-  :after dired
-  :init
-  ;; inspired by https://github.com/magnars/.emacs.d/
-  (setq dired-details-hidden-string "--- ")
-  :config
-  (dired-details-install))
-
 (use-package dired-narrow
   :load-path "site-lisp/dired-hacks"
   :after dired
