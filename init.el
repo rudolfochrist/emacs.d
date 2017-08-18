@@ -1037,7 +1037,15 @@ subpath."
                                            nil nil "")))))
                 (insert "(cl:pushnew (cl:truename #P\"" directory "\") asdf:*central-registry* :test #'equal)")
                 (slime-repl-send-input t)))
-    (:one-liner "Add a directory to asdf:*central-registry*")))
+    (:one-liner "Add a directory to asdf:*central-registry*"))
+
+  ;; open system directory in dired
+  (defslime-repl-shortcut slime-dired-system-source-directory
+    ("dired-system-source-directory" "dired-system" "ds")
+    (:handler (lambda (system)
+                (interactive (list (slime-read-system-name)))
+                (let ((path (slime-eval `(cl:namestring (asdf:system-source-directory ,system)))))
+                  (dired path))))))
 
 
 ;;; aggressive-indent
