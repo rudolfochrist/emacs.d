@@ -304,19 +304,14 @@ ARG is the one arguments taken by company bbdb candiates function."
 ;;; dired
 
 (use-package dired
-  :load-path "site-lisp/dired"
-  :commands (dired-jump)
   :bind (:map
          dired-mode-map
          ("M-!" . async-shell-command)
          ("l" . dired-up-alternate-directory)
          ("RET" . dired-find-alternate-file)
-         ("M-RET" . dired-open-natively))
+         ("M-RET" . dired-open-natively)
+         ("F" . find-name-dired))
   :preface
-  (defun dired-jump-elsewhere ()
-    (interactive)
-    (let ((current-prefix-arg '(4)))
-      (call-interactively #'dired-jump)))
   (defun dired-open-natively ()
     "Opens file with the native app."
     (interactive)
@@ -341,7 +336,12 @@ ARG is the one arguments taken by company bbdb candiates function."
 (use-package dired-x
   :after dired
   :bind (("C-. d" . dired-jump)
-         ("C-. D" . dired-jump-elsewhere)))
+         ("C-. D" . dired-jump-elsewhere))
+  :preface
+  (defun dired-jump-elsewhere ()
+    (interactive)
+    (let ((current-prefix-arg '(4)))
+      (call-interactively #'dired-jump))))
 
 (use-package dired-narrow
   :load-path "site-lisp/dired-hacks"
@@ -349,13 +349,6 @@ ARG is the one arguments taken by company bbdb candiates function."
   :commands (dired-narrow)
   :bind (:map dired-mode-map
               ("/" . dired-narrow)))
-
-(use-package dired-collapse
-  :load-path "site-lisp/dired-hacks"
-  :after dired
-  :commands (dired-collapse-mode)
-  :init
-  (add-hook 'dired-mode-hook #'dired-collapse-mode))
 
 
 ;;; easy-kill
@@ -1234,6 +1227,18 @@ subpath."
   :load-path "site-lisp/beginend"
   :config
   (beginend-global-mode))
+
+
+;;; helm-dash
+
+(use-package helm-dash
+  :load-path "site-lisp/helm-dash"
+  :after helm
+  :bind (("C-. h" . helm-dash))
+  :init (setq helm-dash-docsets-path
+              (expand-file-name "~/docs/docsets/")
+              helm-dash-common-docsets
+              '("AllegroLisp")))
 
 ;;; packages end here
 
