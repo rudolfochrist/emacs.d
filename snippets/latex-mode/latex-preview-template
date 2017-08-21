@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: latex-preview-template
+# key: latex-preview
+# --
+\documentclass{article}
+
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontspec}
+
+\begin{document}
+
+$0
+
+\end{document}

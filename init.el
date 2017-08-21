@@ -575,11 +575,11 @@ With prefix argument SHOW-FILES-P also offer to find files."
   :load-path "site-lisp/auctex"
   :init
   (setq TeX-auto-save t
-        TeX-parse-self t)
-  :config
-  (use-package latex-preview-pane
-    :load-path "site-lisp/latex-preview-pane"
-    :init (setq latex-preview-pane "xelatex")))
+        TeX-parse-self t))
+
+(use-package latex-preview-pane
+  :load-path "site-lisp/latex-preview-pane"
+  :init (setq latex-preview-pane "xelatex"))
 
 
 ;;; ledger-mode

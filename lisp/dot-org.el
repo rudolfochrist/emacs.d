@@ -439,7 +439,8 @@ hypersetup to include colorlinks=true."
    (js . t)
    (lisp . t)
    (latex . t)
-   (shell . t)))
+   (shell . t)
+   (dot . t)))
 
 (setq org-confirm-babel-evaluate nil
       org-src-fontify-natively t        
