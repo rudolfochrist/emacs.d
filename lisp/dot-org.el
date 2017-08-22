@@ -168,11 +168,6 @@ SCHEDULED: %^t
                       (org-deadline-warning-days 0)
                       (org-agenda-overriding-header "Burning!")
                       (org-agenda-span 14)))))
-        ("i" "Show inbox"
-         ((alltodo
-           ""
-           ((org-agenda-files '("~/org/tasks/inbox.org"))
-            (org-agenda-overriding-header "Inbox:")))))
         ("n" "Show next actions"
          ((alltodo
            ""
