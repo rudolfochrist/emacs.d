@@ -1242,6 +1242,14 @@ subpath."
               helm-dash-common-docsets
               '("AllegroLisp")))
 
+
+;;; editorconfig
+
+(use-package editorconfig
+  :load-path "site-lisp/editorconfig-emacs"
+  :config
+  (editorconfig-mode 1))
+
 ;;; packages end here
 
 
