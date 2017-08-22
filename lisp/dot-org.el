@@ -58,9 +58,9 @@
 ;;; org-capture
 (setq org-gnus-prefer-web-links t
       org-capture-templates
-      '(("a" "Add task" entry
+      '(("a" "Add to inbox" entry
          (file+headline "~/org/tasks/inbox.org" "Inbox")
-         "* TODO %?
+         "* %?
 :PROPERTIES:
 :CREATED: %U
 :END:")
