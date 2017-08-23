@@ -1255,10 +1255,11 @@ subpath."
 
 (use-package commit-msg-prefix
   :load-path "site-lisp/commit-msg-prefix"
-  :commands (commit-msg-prefix)
+  :bind (:map
+         git-commit-mode-map
+         ("C-. C-i" . commit-msg-prefix))
   :init
-  (setq commit-msg-prefix-input-method #'ivy-read)
-  (add-hook 'git-commit-mode-hook #'commit-msg-prefix))
+  (setq commit-msg-prefix-input-method #'ivy-read))
 
 ;;; packages end here
 
