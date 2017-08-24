@@ -206,7 +206,7 @@
 
 (use-package flyspell
   :commands (flyspell-prog-mode flyspell-mode)
-  :bind (("C-. \\" . toggle-en-de-dictionary))
+  :bind (("C-. ]" . toggle-en-de-dictionary))
   :preface
   (defun toggle-en-de-dictionary ()
     (interactive)
@@ -215,7 +215,12 @@
        ((equal dict "english")
         (ispell-change-dictionary "german8"))
        ((equal dict "german8")
-        (ispell-change-dictionary "english")))))
+        (ispell-change-dictionary "english"))
+       (t
+        (ispell-change-dictionary "english")))
+      (message
+       (format "Ispell dictionary set to: %s"
+               ispell-current-dictionary))))
   :init
   (add-hook 'text-mode-hook #'flyspell-mode)
   (add-hook 'prog-mode-hook #'flyspell-prog-mode))
