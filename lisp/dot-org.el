@@ -198,6 +198,10 @@ SCHEDULED: %^t
         ("@a" "@anywhere"
          ((tags-todo "@anywhere"
                      ((org-agenda-overriding-header "@anywhere:")
+                      (org-agenda-skip-function #'org-agenda-select-next-action)))))
+        ("@m" "@Marbella"
+         ((tags-todo "@marbella"
+                     ((org-agenda-overriding-header "@Marbella:")
                       (org-agenda-skip-function #'org-agenda-select-next-action)))))))
 
 ;;; enable visual-line-mode
