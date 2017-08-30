@@ -1266,6 +1266,13 @@ subpath."
   :init
   (setq commit-msg-prefix-input-method #'ivy-read))
 
+
+;;; pass
+
+(use-package pass
+  :load-path "site-lisp/pass"
+  :commands (pass))
+
 ;;; packages end here
 
 
