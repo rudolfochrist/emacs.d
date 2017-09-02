@@ -179,12 +179,15 @@
 
 ;;; libs
 
-(use-package f     :defer t :load-path "site-lisp/f")
-(use-package s     :defer t :load-path "site-lisp/s")
-(use-package dash  :defer t :load-path "site-lisp/dash")
-(use-package async :defer t :load-path "site-lisp/async")
-(use-package hydra :load-path "site-lisp/hydra")
-(use-package popup :defer t :load-path "site-lisp/popup")
+(use-package f          :defer t :load-path "site-lisp/f")
+(use-package s          :defer t :load-path "site-lisp/s")
+(use-package dash       :defer t :load-path "site-lisp/dash")
+(use-package async      :defer t :load-path "site-lisp/async")
+(use-package popup      :defer t :load-path "site-lisp/popup")
+(use-package list-utils :defer t :load-path "site-lisp/list-utils")
+
+;;; no deferred loading
+(use-package hydra :demand t :load-path "site-lisp/hydra")
 
 
 ;;; info
