@@ -38,6 +38,7 @@
       initial-scratch-message nil
       system-uses-terminfo nil                ; use Emacs terminfo
       backup-inhibited t                      ; disable backups
+      auto-save-default nil                   ; Nice feature, but annoying as well. Disable it.
       ring-bell-function 'ignore              ; don't ring the bell
       scroll-preserve-screen-position 'always
       confirm-kill-emacs 'yes-or-no-p)
