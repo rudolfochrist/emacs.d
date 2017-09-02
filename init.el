@@ -185,6 +185,7 @@
 (use-package async      :defer t :load-path "site-lisp/async")
 (use-package popup      :defer t :load-path "site-lisp/popup")
 (use-package list-utils :defer t :load-path "site-lisp/list-utils")
+(use-package loop       :defer t :load-path "site-lisp/loop")
 
 ;;; no deferred loading
 (use-package hydra :demand t :load-path "site-lisp/hydra")
