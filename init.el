@@ -546,8 +546,6 @@ With prefix argument SHOW-FILES-P also offer to find files."
   :bind (("C-. s" . counsel-rg-current-directory)
          ("C-. S" . counsel-rg-project)
          ("C-x C-g" . counsel-locate)
-         ("C-h f" . counsel-describe-function)
-         ("C-h v" . counsel-describe-variable)
          ("C-x C-r" . counsel-recentf)
          ("M-x" . counsel-M-x))
   :commands (counsel-more-chars)
@@ -1280,6 +1278,12 @@ subpath."
 (use-package elisp-refs
   :load-path "site-lisp/elisp-refs"
   :defer t)
+
+(use-package helpful
+  :load-path "site-lisp/helpful"
+  :bind ( ("C-h f" . helpful-function)
+          ("C-h v" . helpful-variable)
+          ("C-h ." . helpful-at-point)))
 
 ;;; packages end here
 
