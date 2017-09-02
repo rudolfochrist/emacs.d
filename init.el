@@ -1274,6 +1274,13 @@ subpath."
   :load-path "site-lisp/pass"
   :commands (pass))
 
+
+;;; helpful
+
+(use-package elisp-refs
+  :load-path "site-lisp/elisp-refs"
+  :defer t)
+
 ;;; packages end here
 
 
