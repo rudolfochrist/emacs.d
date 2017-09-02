@@ -4,7 +4,7 @@
 # --
 (in-package :asdf-user)
 
-(defsystem #:${1:system-name}${2:
+(defsystem "${1:system-name}"${2:
   :version "${3:0.1.0}"}${4:
   :description "${5:description}"}${6:
   :author "${7:`user-full-name` <`user-mail-address`>}"}${8:
@@ -14,6 +14,7 @@
   :bug-tracker "${16:URL}"}${17:
   :license "${18:$$(yas-choose-value '("MIT" "BSD Simplified" "LLGPL"))}"}${19:
   :serial t}${20:
-  :components (${21:(:file "package")})}${22:
-  :depends-on (${22::alexandria})})
+  :pathname "${21:src/}"}${22:
+  :components (${23:(:file "package")})}${24:
+  :depends-on (${25:"alexandria"})})
 $0

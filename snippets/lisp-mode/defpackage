@@ -1,14 +1,13 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # name: defpackage
-# key: defpackage
+# key: pkg
 # --
-(in-package :cl-user)
 (defpackage #:${1:package}${2:
   (:nicknames ${3:nicks})}
-  (:use :cl${5: packages})${6:
-  (:shadow ${7:packages})}${8:
-  (:export ${9:packages})}${10:
-  (:documentation "${11:doc}")})
-${12:
+  (:use :cl${4: packages})${5:
+  (:shadow ${6:packages})}${7:
+  (:export ${8:packages})}${9:
+  (:documentation "${10:doc}")})
+${11:
 (in-package :$1)}
 $0
