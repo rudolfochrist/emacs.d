@@ -1267,6 +1267,17 @@ subpath."
   (add-hook 'lisp-mode-hook #'easy-escape-minor-mode)
   (add-hook 'emacs-lisp-mode-hook #'easy-escape-minor-mode))
 
+
+;;; highlight-quoted
+;; https://github.com/Fanael/highlight-quoted
+
+(use-package highlight-quoted
+  :load-path "site-lisp/highlight-quoted"
+  :commands (highlight-quoted-mode)
+  :init
+  (add-hook 'lisp-mode-hook #'highlight-quoted-mode)
+  (add-hook 'emacs-lisp-mode-hook #'highlight-quoted-mode))
+
 ;;; packages end here
 
 
