@@ -1278,6 +1278,18 @@ subpath."
   (add-hook 'lisp-mode-hook #'highlight-quoted-mode)
   (add-hook 'emacs-lisp-mode-hook #'highlight-quoted-mode))
 
+
+;;; adjust-parens
+;; https://elpa.gnu.org/packages/adjust-parens.html
+
+(use-package adjust-parens
+  :load-path "site-lisp/adjust-parens"
+  :commands (adjust-parens-mode)
+  :init
+  (add-hook 'lisp-mode-hook #'adjust-parens-mode)
+  (add-hook 'emacs-lisp-mode-hook #'adjust-parens-mode))
+
+
 ;;; packages end here
 
 
