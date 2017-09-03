@@ -1157,9 +1157,10 @@ subpath."
 
 (use-package rich-minority
   :load-path "site-lisp/rich-minority"
-  :commands (rich-minority-mode)
+  :demand t
   :init
   (setq rm-whitelist "\\[.*\\]")        ; just showing slime-mode: [package lisp-impl]
+  :config
   (rich-minority-mode 1))
 
 
