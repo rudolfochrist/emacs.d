@@ -895,19 +895,17 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
   :load-path "site-lisp/slime"
   :mode (("\\.asd\\'" . lisp-mode)
          ("\\.cl\\'" . lisp-mode))
-  :commands (slime slime-mode slime-repl-mode)
-  :bind (("C-. l" . switch-to-slime)
+  :commands (slime-mode slime-repl-mode)
+  :bind (("C-. l" . slime)
          ("C-. C-/" . slime-selector)
          :map slime-mode-map
          ("RET" . slime-autodoc-newline)
-         ("C-c C-d s" . slime-documentation-in-minibuffer)
          ("C-c C-d i" . slime-insert-file-header)
          :map slime-repl-mode-map
          ("C-l" . slime-repl-clear-buffer)
          ("SPC" . slime-autodoc-space)
          ("C-j" . slime-autodoc-newline)
-         ("C-c O" . slime-repl-inspect-last-expression)
-         ("C-c C-d s" . slime-documentation-in-minibuffer))
+         ("C-c O" . slime-repl-inspect-last-expression))
   :preface
   ;; show autodoc also on newline.
   (defun slime-autodoc-newline ()
@@ -925,39 +923,6 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
     "Inspects the last expression."
     (interactive)
     (slime-repl-inspect "*"))
-
-  ;; docstring in minibuffer
-  (defun slime-documentation-in-minibuffer (symbol)
-    (interactive
-     (let ((s-a-p (slime-symbol-at-point)))
-       (cond
-        ((or current-prefix-arg
-             (not s-a-p))
-         (list (slime-read-symbol-name "Symbol: ")))
-        (t
-         (list s-a-p)))))
-    (let ((doc (slime-eval `(swank:documentation-symbol ,symbol))))
-      ;; calculate if it fits into the echo areas
-      ;; see: `display-message-or-buffer'
-      (if (<= (count-lines-string doc)
-              (typecase max-mini-window-height
-                (integer max-mini-window-height)
-                (float (* (frame-height)
-                          max-mini-window-height))))
-          (message "%s" doc)
-        (slime-documentation symbol))))
-
-  ;; switch to slime
-  (defun switch-to-slime ()
-    (interactive)
-    (let ((slime-repl (find-if (lambda (buffer)
-                                 (with-current-buffer buffer
-                                   (when (eql 'slime-repl-mode major-mode)
-                                     buffer)))
-                               (buffer-list))))
-      (if slime-repl
-          (pop-to-buffer slime-repl)
-        (call-interactively #'slime))))
 
   (defun slime-insert-file-header ()
     "Inserts the current file name into the buffer.
@@ -987,7 +952,8 @@ subpath."
   ;; Lisps
   (setq slime-lisp-implementations
         '((ccl ("ccl64"))
-          (sbcl ("sbcl"))))
+          (sbcl ("sbcl"))
+          (alisp ("alisp"))))
 
   (setq slime-contribs
         '(slime-fancy
