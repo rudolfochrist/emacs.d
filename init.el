@@ -547,22 +547,11 @@ With prefix argument SHOW-FILES-P also offer to find files."
 (use-package counsel
   :load-path "site-lisp/swiper"
   :after ivy
-  :bind (("C-. s" . counsel-rg-current-directory)
-         ("C-. S" . counsel-rg-project)
+  :bind (("C-. s" . counsel-rg)
          ("C-x C-g" . counsel-locate)
          ("C-x C-r" . counsel-recentf)
          ("M-x" . counsel-M-x))
   :commands (counsel-more-chars)
-  :preface
-  (defun counsel-rg-current-directory (dir)
-    (interactive (list default-directory))
-    (counsel-rg "" dir))
-  
-  (defun counsel-rg-project (project-root)
-    (interactive (list (ffip-project-root)))
-    (if project-root
-        (counsel-rg "" project-root)
-      (user-error "Not in a project!")))
   :init
   (setq counsel-rg-base-command "rg -i --no-heading --line-number --max-columns 150 --color never --hidden %s ."))
 
