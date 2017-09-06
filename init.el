@@ -562,9 +562,15 @@ With prefix argument SHOW-FILES-P also offer to find files."
   :load-path "site-lisp/js2-mode" 
   :mode (("\\.js\\'" . js2-mode)
          ("\\.json\\'" . js2-mode))
+  :preface
+  (defun enable-json-lax-semi-warnings ()
+    (when (string= (file-name-extension (buffer-file-name))
+                   "json")
+      (setq js2-strict-missing-semi-warning nil)))
   :init
   (setq js2-basic-offset 2
-        js-indent-level 2))
+        js-indent-level 2)
+  (add-hook 'js2-mode-hook #'enable-json-lax-semi-warnings))
 
 
 ;;; auctex
