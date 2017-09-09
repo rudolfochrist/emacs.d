@@ -341,7 +341,8 @@ ARG is the one arguments taken by company bbdb candiates function."
         "\\.idx\\|\\.run\\.xml$\\|\\.bbl$\\|\\.bcf$\\|.blg$\\|-blx.bib$\\|.nav$\\|.snm$\\|.out$\\|.synctex.gz$\\|\\(?:\\.\\(?:aux\\|bak\\|dvi\\|log\\|orig\\|rej\\|toc\\|pyg\\)\\)\\'"
         dired-listing-switches "-alvh"
         dired-recursive-copies 'always
-        dired-recursive-deletes 'top)
+        dired-recursive-deletes 'top
+        dired-dwim-target t)
   (when (system-macos-p)
     (setq insert-directory-program "/usr/local/bin/gls")))
 
