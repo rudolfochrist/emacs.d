@@ -134,20 +134,27 @@ SCHEDULED: %^t
 
 ;;; https://github.com/NicolasPetton/emacs.d/blob/master/hosts/blueberry/init-org.el#L135
 (defun org-agenda-select-next-action ()
-  (let (should-skip-entry)
-    (unless (org-current-todo-p)
-      (setq should-skip-entry t))
-    (save-excursion
-      (while (and (not should-skip-entry) (org-goto-sibling t))
-        (when (or (org-current-todo-p)
-                  ;; if we find a task that is waiting we can't
-                  ;; actually proceed to the next action, because
-                  ;; we've to wait for the outcome.
-                  (org-current-waiting-p))
-          (setq should-skip-entry t))))
-    (when should-skip-entry
-      (or (outline-next-heading)
-          (goto-char (point-max))))))
+  ;; if the project is of type parallel, we consider all actions to be
+  ;; next actions.
+  (unless (parallel-project-p)
+    (let (should-skip-entry)
+      (unless (org-current-todo-p)
+        (setq should-skip-entry t))
+      (save-excursion
+        (while (and (not should-skip-entry) (org-goto-sibling t))
+          (when (or (org-current-todo-p)
+                    ;; if we find a task that is waiting we can't
+                    ;; actually proceed to the next action, because
+                    ;; we've to wait for the outcome.
+                    (org-current-waiting-p))
+            (setq should-skip-entry t))))
+      (when should-skip-entry
+        (or (outline-next-heading)
+            (goto-char (point-max)))))))
+
+(defun parallel-project-p ()
+  (string= "PARALLEL"
+           (org-entry-get nil "PROJECT_TYPE" t)))
 
 (defun org-current-todo-p ()
   (string= "TODO" (org-get-todo-state)))
