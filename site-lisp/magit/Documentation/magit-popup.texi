@@ -1,19 +1,12 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
-@setfilename ./magit-popup.info
+@setfilename magit-popup.info
 @settitle Magit-Popup User Manual
 @documentencoding UTF-8
 @documentlanguage en
 @c %**end of header
 
 @copying
-@ifnottex
-Taking inspiration from regular prefix commands and prefix arguments,
-this library implements a similar abstraction; a new kind of prefix
-command that is associated with a specific set of infix arguments and
-suffix commands.
-@end ifnottex
-
 @quotation
 Copyright (C) 2015-2017 Jonas Bernoulli <jonas@@bernoul.li>
 
@@ -37,7 +30,7 @@ General Public License for more details.
 @finalout
 @titlepage
 @title Magit-Popup User Manual
-@subtitle for version 2.10
+@subtitle for version 2.11
 @author Jonas Bernoulli
 @page
 @vskip 0pt plus 1filll
@@ -49,7 +42,25 @@ General Public License for more details.
 @ifnottex
 @node Top
 @top Magit-Popup User Manual
-@insertcopying
+
+Taking inspiration from regular prefix commands and prefix arguments,
+this library implements a similar abstraction; a new kind of prefix
+command that is associated with a specific set of infix arguments and
+suffix commands.
+
+@quotation
+Copyright (C) 2015-2017 Jonas Bernoulli <jonas@@bernoul.li>
+
+You can redistribute this document and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+This document is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+@end quotation
 @end ifnottex
 
 @menu
@@ -75,8 +86,6 @@ Defining Prefix and Suffix Commands
 @end detailmenu
 @end menu
 
-
-
 @node Introduction
 @chapter Introduction
 
@@ -87,7 +96,7 @@ suffix commands.
 
 Invoking such a prefix command displays a popup buffer which lists the
 associated infix arguments and suffix commands.  In that buffer each
-argument is prefixes with the key sequence that can be used to toggle
+argument is prefixed with the key sequence that can be used to toggle
 it or change its value.  Likewise each suffix command is prefixed with
 the key used to invoke it.  Such a popup buffer might look like this:
 
@@ -112,7 +121,7 @@ The user could then for example type @code{-l} to toggle the @code{--graph} @str
 change the value of the @strong{option} @code{--grep}.
 
 Once all arguments are as desired one invokes a suffix command, which
-causes the popup buffer to disappears.  The suffix command should then
+causes the popup buffer to disappear.  The suffix command should then
 retrieve the infix arguments in its @code{interactive} form like this is done
 for prefix arguments.
 
@@ -122,7 +131,7 @@ This should illustrate the most basic differences:
 
 @itemize
 @item
-A regular prefix commands
+A regular prefix command
 
 @example
         /- command1
@@ -137,7 +146,7 @@ Prefix arguments
 @example
          /- command1
 C-u ... --- command2
-         \- well *any* command
+         \- well any command
 @end example
 
 
@@ -154,8 +163,8 @@ prefix----- argument2 --+-- suffix2
 @end example
 @end itemize
 
-This library was written as a replacement for @code{magit-key-mode} which was
-used in Magit releases before 2.1.0.  It is used to implement all
+This library was written as a replacement for @code{magit-key-mode}, which
+was used in Magit releases before 2.1.0.  It is used to implement all
 "popups" in the current Magit release but a future release will switch
 to yet another implementation.
 
@@ -248,7 +257,7 @@ prefix argument is used in which case the popup remains open.
 
 It is also possible to add additional arguments and commands to an
 existing popup, but that cannot be done directly from the popup (or
-the Custom interface).  See @ref{Customizing Existing Popups,Customizing Existing Popups}.
+the Custom interface).  See @ref{Customizing Existing Popups}.
 
 Documentation about a popup's arguments and commands can be shown
 directly from the popup.
@@ -340,6 +349,11 @@ displayed in the popup.
 If optional VALUE is non-nil then the option is on by default, and
 VALUE is its default value.
 
+READER is used to read a value from the user when the option is
+invoked and does not currently have a value.  It should take one
+argument and use it as the prompt.  If this is nil, then
+@code{read-from-minibuffer} is used.
+
 OPTION is inserted after all other options already defined for
 POPUP, unless optional PREPEND is non-nil, in which case it is
 placed first.  If optional AT is non-nil then it should be the KEY
@@ -410,7 +424,7 @@ is to be unbound.
 @end defun
 
 It is also possible to change other aspects of a popup by setting a
-property using @code{plist-put}.  See @ref{Defining Prefix Commands,Defining Prefix Commands} for valid
+property using @code{plist-put}.  See @ref{Defining Prefix Commands} for valid
 properties.  The most likely change Magit users might want to make
 is:
 
@@ -450,7 +464,7 @@ Ignore prefix arguments.
 This option can be overridden for individual popups.
 @code{magit-show-refs-popup} for example defaults to invoking the default
 action directly.  It only shows the popup buffer when a prefix
-argument is used.  See @ref{Customizing Existing Popups,Customizing Existing Popups}.
+argument is used.  See @ref{Customizing Existing Popups}.
 @end defopt
 
 @defopt magit-popup-manpage-package
@@ -613,7 +627,8 @@ prefix argument.
 Controls when to display the popup buffer and when to invoke the
 default action (if any) directly.  This overrides the global
 default set using @code{magit-popup-use-prefix-argument}.  The value, if
-specified, should be one of @code{default} or @code{prefix}.
+specified, should be one of @code{default} or @code{prefix}, or a function that
+is called with no arguments and returns one of these symbols.
 
 
 @item

@@ -8,7 +8,7 @@ TOP := $(dir $(lastword $(MAKEFILE_LIST)))
 # You might also want to set LOAD_PATH.  If you do, then it must
 # contain "-L .".
 #
-# If you don't do so then the default is set in the "Load-Path"
+# If you don't do so, then the default is set in the "Load-Path"
 # section below.  The default assumes that all dependencies are
 # installed either at "../<DEPENDENCY>", or when using package.el
 # at "ELPA_DIR/<DEPENDENCY>-<HIGHEST-VERSION>".
@@ -79,6 +79,8 @@ ELS += magit-subtree.el
 ELS += magit-ediff.el
 ELS += magit-extras.el
 ELS += git-rebase.el
+ELS += magit-imenu.el
+ELS += magit-bookmark.el
 ELCS = $(ELS:.el=.elc)
 ELMS = magit.el $(filter-out $(addsuffix .el,$(PACKAGES)),$(ELS))
 ELGS = magit-autoloads.el magit-version.el
@@ -93,18 +95,18 @@ VERSION := $(shell \
   (load-file \"magit-version.el\")\
   (princ magit-version))")
 
-MAGIT_VERSION       = 2.10
-ASYNC_VERSION       = 1.9
+MAGIT_VERSION       = 2.11
+ASYNC_VERSION       = 1.9.2
 DASH_VERSION        = 2.13.0
-WITH_EDITOR_VERSION = 2.5.9
-GIT_COMMIT_VERSION  = 2.10.0
-MAGIT_POPUP_VERSION = 2.10.0
+WITH_EDITOR_VERSION = 2.6.0
+GIT_COMMIT_VERSION  = 2.10.3
+MAGIT_POPUP_VERSION = 2.10.3
 
-ASYNC_MELPA_SNAPSHOT       = 20161103.1036
-DASH_MELPA_SNAPSHOT        = 20161121.55
-WITH_EDITOR_MELPA_SNAPSHOT = 20170111.609
-GIT_COMMIT_MELPA_SNAPSHOT  = 20170112.334
-MAGIT_POPUP_MELPA_SNAPSHOT = 20170104.924
+ASYNC_MELPA_SNAPSHOT       = 20170823
+DASH_MELPA_SNAPSHOT        = 20170810
+WITH_EDITOR_MELPA_SNAPSHOT = 20170817
+GIT_COMMIT_MELPA_SNAPSHOT  = 20170823
+MAGIT_POPUP_MELPA_SNAPSHOT = 20170824
 
 EMACS_VERSION = 24.4
 

@@ -118,9 +118,9 @@ This discards all changes made since the sequence started."
   :switches '((?s "Add Signed-off-by lines"            "--signoff")
               (?e "Edit commit messages"               "--edit")
               (?x "Reference cherry in commit message" "-x")
-              (?F "Attempt fast-forward"               "--ff")
-              (?m "Reply merge relative to parent"     "--mainline="))
-  :options  '((?s "Strategy" "--strategy="))
+              (?F "Attempt fast-forward"               "--ff"))
+  :options  '((?s "Strategy"                        "--strategy=")
+              (?m "Replay merge relative to parent" "--mainline="))
   :actions  '((?A "Cherry Pick"  magit-cherry-pick)
               (?a "Cherry Apply" magit-cherry-apply))
   :sequence-actions '((?A "Continue" magit-sequencer-continue)
@@ -141,10 +141,11 @@ Prompt for a commit, defaulting to the commit at point.  If
 the region selects multiple commits, then pick all of them,
 without prompting."
   (interactive (magit-cherry-pick-read-args "Cherry-pick"))
-  (magit-assert-one-parent (car (if (listp commit)
-                                    commit
-                                  (split-string commit "\\.\\.")))
-                           "cherry-pick")
+  (unless (--any (string-prefix-p "--mainline" it) args)
+    (magit-assert-one-parent (car (if (listp commit)
+                                      commit
+                                    (split-string commit "\\.\\.")))
+                             "cherry-pick"))
   (magit-run-git-sequencer "cherry-pick" args commit))
 
 ;;;###autoload
@@ -154,7 +155,8 @@ Prompt for a commit, defaulting to the commit at point.  If
 the region selects multiple commits, then apply all of them,
 without prompting."
   (interactive (magit-cherry-pick-read-args "Apply changes from commit"))
-  (magit-assert-one-parent commit "cherry-pick")
+  (unless (--any (string-prefix-p "--mainline" it) args)
+    (magit-assert-one-parent commit "cherry-pick"))
   (magit-run-git-sequencer "cherry-pick" "--no-commit"
                            (remove "--ff" args) commit))
 
@@ -170,7 +172,8 @@ without prompting."
   :man-page "git-revert"
   :switches '((?s "Add Signed-off-by lines" "--signoff"))
   :options  '((?s "Strategy"       "--strategy=")
-              (?S "Sign using gpg" "--gpg-sign=" magit-read-gpg-secret-key))
+              (?S "Sign using gpg" "--gpg-sign=" magit-read-gpg-secret-key)
+              (?m "Replay merge relative to parent" "--mainline="))
   :actions  '((?V "Revert commit(s)" magit-revert)
               (?v "Revert changes"   magit-revert-no-commit))
   :sequence-actions '((?V "Continue" magit-sequencer-continue)
@@ -190,7 +193,8 @@ Prompt for a commit, defaulting to the commit at point.  If
 the region selects multiple commits, then revert all of them,
 without prompting."
   (interactive (magit-revert-read-args "Revert commit"))
-  (magit-assert-one-parent commit "revert")
+  (unless (--any (string-prefix-p "--mainline" it) args)
+    (magit-assert-one-parent commit "revert"))
   (magit-run-git-sequencer "revert" args commit))
 
 ;;;###autoload
@@ -200,7 +204,8 @@ Prompt for a commit, defaulting to the commit at point.  If
 the region selects multiple commits, then revert all of them,
 without prompting."
   (interactive (magit-revert-read-args "Revert changes"))
-  (magit-assert-one-parent commit "revert")
+  (unless (--any (string-prefix-p "--mainline" it) args)
+    (magit-assert-one-parent commit "revert"))
   (magit-run-git-sequencer "revert" "--no-commit" args commit))
 
 (defun magit-revert-in-progress-p ()
@@ -288,12 +293,13 @@ This discards all changes made since the sequence started."
 (magit-define-popup magit-rebase-popup
   "Key menu for rebasing."
   :man-page "git-rebase"
-  :switches '((?k "Keep empty commits"    "--keep-empty")
-              (?p "Preserve merges"       "--preserve-merges")
-              (?c "Lie about author date" "--committer-date-is-author-date")
-              (?a "Autosquash"            "--autosquash")
-              (?A "Autostash"             "--autostash")
-              (?i "Interactive"           "--interactive"))
+  :switches '((?k "Keep empty commits"       "--keep-empty")
+              (?p "Preserve merges"          "--preserve-merges")
+              (?c "Lie about committer date" "--committer-date-is-author-date")
+              (?a "Autosquash"               "--autosquash")
+              (?A "Autostash"                "--autostash")
+              (?i "Interactive"              "--interactive")
+              (?h "Disable hooks"            "--no-verify"))
   :actions  '((lambda ()
                 (concat (propertize "Rebase " 'face 'magit-popup-heading)
                         (propertize (or (magit-get-current-branch) "HEAD")
@@ -348,7 +354,7 @@ If that variable is unset, then rebase onto `remote.pushDefault'."
 ;;;###autoload
 (defun magit-rebase (target args)
   "Rebase the current branch onto a branch read in the minibuffer.
-All commits that are reachable from head but not from the
+All commits that are reachable from `HEAD' but not from the
 selected branch TARGET are being rebased."
   (interactive (list (magit-read-other-branch-or-commit "Rebase onto")
                      (magit-rebase-arguments)))
@@ -358,7 +364,7 @@ selected branch TARGET are being rebased."
 
 ;;;###autoload
 (defun magit-rebase-subset (newbase start args)
-  "Rebase a subset of the current branches history onto a new base.
+  "Rebase a subset of the current branch's history onto a new base.
 Rebase commits from START to `HEAD' onto NEWBASE.
 START has to be selected from a list of recent commits."
   (interactive (list (magit-read-other-branch-or-commit
@@ -521,8 +527,8 @@ If no such sequence is in progress, do nothing."
       (let ((patches (nreverse (magit-rebase-patches)))
             patch commit)
         (while patches
-          (setq patch (pop patches)
-                commit (magit-rev-verify-commit
+          (setq patch (pop patches))
+          (setq commit (magit-rev-verify-commit
                         (cadr (split-string (magit-file-line patch)))))
           (cond ((and commit patches)
                  (magit-sequence-insert-commit
@@ -571,7 +577,8 @@ If no such sequence is in progress, do nothing."
                                  (or (magit-get "core.commentChar") "#")))
                         line)
       (magit-bind-match-strings (action hash) line
-        (magit-sequence-insert-commit action hash 'magit-sequence-pick))))
+        (unless (equal action "exec")
+          (magit-sequence-insert-commit action hash 'magit-sequence-pick)))))
   (magit-sequence-insert-sequence
    (magit-file-line (magit-git-dir "rebase-merge/stopped-sha"))
    onto

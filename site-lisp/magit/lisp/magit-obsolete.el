@@ -119,7 +119,15 @@ use `magit-pre-refresh-hook', `magit-post-refresh-hook',
 ;;; Obsolete since v2.9.1
 
 (define-obsolete-function-alias 'magit-checkout-file
-  'magit-file-checkout "Magit 2.6.0")
+  'magit-file-checkout "Magit 2.9.1")
+
+;;; Obsolete since v2.11.0
+
+(define-obsolete-function-alias 'magit-modified-files
+  'magit-unstaged-files "Magit 2.11.0")
+
+(define-obsolete-function-alias 'magit-insert-submodules
+  'magit-insert-modules-overview "Magit 2.11.0")
 
 (provide 'magit-obsolete)
 ;;; magit-obsolete.el ends here

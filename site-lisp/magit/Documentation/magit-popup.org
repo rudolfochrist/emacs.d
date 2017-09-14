@@ -7,27 +7,18 @@
 #+TEXINFO_DIR_CATEGORY: Emacs
 #+TEXINFO_DIR_TITLE: Magit-Popup: (magit-popup).
 #+TEXINFO_DIR_DESC: Infix arguments with feedback
-#+SUBTITLE: for version 2.10
+#+SUBTITLE: for version 2.11
 
 #+TEXINFO_DEFFN: t
-#+TEXINFO_CLASS: info+
-#+OPTIONS: H:4 num:nil toc:2
+#+OPTIONS: H:4 num:4 toc:2
 
-* Copying
-:PROPERTIES:
-:COPYING:    t
-:END:
-
-#+BEGIN_EXPORT texinfo
-@ifnottex
 Taking inspiration from regular prefix commands and prefix arguments,
 this library implements a similar abstraction; a new kind of prefix
 command that is associated with a specific set of infix arguments and
 suffix commands.
-@end ifnottex
 
-@quotation
-Copyright (C) 2015-2017 Jonas Bernoulli <jonas@@bernoul.li>
+#+BEGIN_QUOTE
+Copyright (C) 2015-2017 Jonas Bernoulli <jonas@bernoul.li>
 
 You can redistribute this document and/or modify it under the terms
 of the GNU General Public License as published by the Free Software
@@ -38,8 +29,7 @@ This document is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 General Public License for more details.
-@end quotation
-#+END_EXPORT
+#+END_QUOTE
 
 * Introduction
 
@@ -50,7 +40,7 @@ suffix commands.
 
 Invoking such a prefix command displays a popup buffer which lists the
 associated infix arguments and suffix commands.  In that buffer each
-argument is prefixes with the key sequence that can be used to toggle
+argument is prefixed with the key sequence that can be used to toggle
 it or change its value.  Likewise each suffix command is prefixed with
 the key used to invoke it.  Such a popup buffer might look like this:
 
@@ -75,7 +65,7 @@ The user could then for example type ~-l~ to toggle the ~--graph~ *switch*
 change the value of the *option* ~--grep~.
 
 Once all arguments are as desired one invokes a suffix command, which
-causes the popup buffer to disappears.  The suffix command should then
+causes the popup buffer to disappear.  The suffix command should then
 retrieve the infix arguments in its ~interactive~ form like this is done
 for prefix arguments.
 
@@ -83,7 +73,7 @@ While such "prefix-infix-suffix" combos were inspired by regular
 prefix commands and prefix arguments, they are also quite different.
 This should illustrate the most basic differences:
 
-- A regular prefix commands
+- A regular prefix command
 
   #+BEGIN_EXAMPLE
           /- command1
@@ -96,7 +86,7 @@ This should illustrate the most basic differences:
   #+BEGIN_EXAMPLE
            /- command1
   C-u ... --- command2
-           \- well *any* command
+           \- well any command
   #+END_EXAMPLE
 
 - A Prefix-Infix-Suffix combo
@@ -110,8 +100,8 @@ This should illustrate the most basic differences:
       (refresh buffer)
    #+END_EXAMPLE
 
-This library was written as a replacement for ~magit-key-mode~ which was
-used in Magit releases before 2.1.0.  It is used to implement all
+This library was written as a replacement for ~magit-key-mode~, which
+was used in Magit releases before 2.1.0.  It is used to implement all
 "popups" in the current Magit release but a future release will switch
 to yet another implementation.
 
@@ -121,6 +111,7 @@ in packages that are not related to Magit.  But keep in mind that it
 will be deprecated eventually.
 
 * Usage
+** _ :ignore:
 
 Every popup buffers created with a prefix command contains a section
 named "Actions" listing the available suffix commands.  Most buffers
@@ -269,6 +260,11 @@ https://github.com/magit/magit/wiki/Additional-proposed-infix-arguments-and-suff
   If optional VALUE is non-nil then the option is on by default, and
   VALUE is its default value.
 
+  READER is used to read a value from the user when the option is
+  invoked and does not currently have a value.  It should take one
+  argument and use it as the prompt.  If this is nil, then
+  ~read-from-minibuffer~ is used.
+
   OPTION is inserted after all other options already defined for
   POPUP, unless optional PREPEND is non-nil, in which case it is
   placed first.  If optional AT is non-nil then it should be the KEY
@@ -373,7 +369,7 @@ is:
   The Emacs package used to display man-pages, one of ~man~ or ~woman~.
 
 - User Option: magit-popup-display-buffer-action
-  
+
   The option controls how the window used to display a popup buffer is
   created.  Popup buffers are displayed using ~display-buffer~ with the
   value of this option as ACTION argument.  You can also set this to
@@ -386,6 +382,7 @@ To emphasize the default action by making it bold use this:
 #+END_SRC
 
 * Defining Prefix and Suffix Commands
+** _ :ignore:
 
 If you write an extension for Magit then you should use this library
 now and later when ~transient~ is released port to that.
@@ -513,7 +510,8 @@ commands have to be defined separately using plain ~defun~.
     Controls when to display the popup buffer and when to invoke the
     default action (if any) directly.  This overrides the global
     default set using ~magit-popup-use-prefix-argument~.  The value, if
-    specified, should be one of ~default~ or ~prefix~.
+    specified, should be one of ~default~ or ~prefix~, or a function that
+    is called with no arguments and returns one of these symbols.
 
   - ~:max-action-columns~
 
@@ -625,6 +623,27 @@ Except when redefining the former, you should not use these directly.
   arguments that don't match any of the regexps are returned, or ~:only~
   which doesn't change the behavior.
 
+* _ Copying
+:PROPERTIES:
+:COPYING:    t
+:END:
+
+#+BEGIN_QUOTE
+Copyright (C) 2015-2017 Jonas Bernoulli <jonas@bernoul.li>
+
+You can redistribute this document and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+This document is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+#+END_QUOTE
+
+* _ :ignore:
+
 #  LocalWords:  ARG DESC KEY's LocalWords Magit OPTVAL POPUP PREPEND
 #  LocalWords:  Popup SHORTNAME args desc magit manpage popup popup's
 #  LocalWords:  popups pre prepend
@@ -633,4 +652,7 @@ Except when redefining the former, you should not use these directly.
 # eval: (require 'magit-utils nil t)
 # eval: (require 'org-man     nil t)
 # eval: (require 'ox-texinfo+ nil t)
+# eval: (and (require 'ox-extra nil t) (ox-extras-activate '(ignore-headlines)))
+# indent-tabs-mode: nil
+# org-src-preserve-indentation: nil
 # End:

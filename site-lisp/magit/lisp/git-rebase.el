@@ -55,6 +55,7 @@
 ;;   f        Like "s" but don't also edit the commit message.
 ;;   x        Add a script to be run with the commit at point
 ;;            being checked out.
+;;   z        Add noop action at point.
 ;;
 ;;   SPC      Show the commit at point in another buffer.
 ;;   RET      Show the commit at point in another buffer and
@@ -162,6 +163,7 @@
     (define-key map (kbd "s") 'git-rebase-squash)
     (define-key map (kbd "x") 'git-rebase-exec)
     (define-key map (kbd "y") 'git-rebase-insert)
+    (define-key map (kbd "z") 'git-rebase-noop)
     (define-key map (kbd "SPC")     'git-rebase-show-or-scroll-up)
     (define-key map (kbd "DEL")     'git-rebase-show-or-scroll-down)
     (define-key map (kbd "C-x C-t") 'git-rebase-move-line-up)
@@ -207,7 +209,9 @@
     (git-rebase-show-commit
      . "show the commit at point in another buffer and select its window")
     (undo                         . "undo last change")
-    (git-rebase-kill-line         . "drop the commit at point")))
+    (git-rebase-kill-line         . "drop the commit at point")
+    (git-rebase-insert            . "insert a line for an arbitrary commit")
+    (git-rebase-noop              . "add noop action at point")))
 
 ;;; Commands
 
@@ -242,7 +246,7 @@
 (defun git-rebase-set-action (action)
   (goto-char (line-beginning-position))
   (if (and (looking-at git-rebase-line)
-           (not (string-match-p "\\(e\\|exec\\)$" (match-string 1))))
+           (not (string-match-p "\\(e\\|exec\\|noop\\)$" (match-string 1))))
       (let ((inhibit-read-only t))
         (replace-match action t t nil 1)
         (when git-rebase-auto-advance
@@ -330,7 +334,8 @@ current line."
   (when (and (looking-at git-rebase-line)
              (not (eq (char-after) (string-to-char comment-start))))
     (let ((inhibit-read-only t))
-      (insert comment-start))
+      (insert comment-start)
+      (insert " "))
     (when git-rebase-auto-advance
       (forward-line))))
 
@@ -372,6 +377,31 @@ remove the command on the current line, if any."
        (if git-rebase-auto-advance
            (forward-line)
          (goto-char (line-beginning-position)))))))
+
+(defun git-rebase-noop (&optional arg)
+  "Add noop action at point.
+
+If the current line already contains a a noop action, leave it
+unchanged.  If there is a commented noop action present, remove
+the comment.  Otherwise add a new noop action.  With a prefix
+argument insert a new noop action regardless what is already
+present on the current line.
+
+A noop action can be used to make git perform a rebase even if
+no commits are selected.  Without the noop action present, git
+would see an empty file and therefore do nothing."
+  (interactive "P")
+  (goto-char (line-beginning-position))
+  ;; The extra space at the end is only there to make the action
+  ;; consistent with the others (action argument). This keeps
+  ;; the regexp `git-rebase-line' from getting complicated.
+  (let ((noop-string "noop \n"))
+    (when (or arg (not (looking-at noop-string)))
+      (let ((inhibit-read-only t))
+        (if (and (not arg)
+                 (looking-at (concat comment-start noop-string)))
+            (delete-char 1)
+          (insert noop-string))))))
 
 (defun git-rebase-undo (&optional arg)
   "Undo some previous changes.
@@ -421,7 +451,7 @@ buffer down."
   "Move N lines backward (forward if N is negative).
 Like `forward-line' but go into the opposite direction."
   (interactive "p")
-  (forward-line (- n)))
+  (forward-line (- (or n 1))))
 
 ;;; Mode
 
@@ -437,8 +467,8 @@ running 'man git-rebase' at the command line) for details."
   (setq comment-start (or (magit-get "core.commentChar") "#"))
   (setq git-rebase-comment-re (concat "^" (regexp-quote comment-start)))
   (setq git-rebase-line
-        (concat "^\\(" (regexp-quote comment-start) "?"
-                "\\(?:[fprse]\\|pick\\|reword\\|edit\\|squash\\|fixup\\|exec\\)\\) "
+        (concat "^\\(" (regexp-quote comment-start) "? *"
+                "\\(?:[fprse]\\|pick\\|reword\\|edit\\|squash\\|fixup\\|exec\\|noop\\)\\) "
                 "\\(?:\\([^ \n]+\\) \\(.*\\)\\)?"))
   (setq font-lock-defaults (list (git-rebase-mode-font-lock-keywords) t t))
   (unless git-rebase-show-instructions
@@ -452,6 +482,10 @@ running 'man git-rebase' at the command line) for details."
   (setq-local redisplay-unhighlight-region-function 'git-rebase-unhighlight-region)
   (add-hook 'with-editor-pre-cancel-hook  'git-rebase-autostash-save  nil t)
   (add-hook 'with-editor-post-cancel-hook 'git-rebase-autostash-apply nil t)
+  (setq imenu-prev-index-position-function
+        #'magit-imenu--rebase-prev-index-position-function)
+  (setq imenu-extract-index-name-function
+        #'magit-imenu--rebase-extract-index-name-function)
   (when (boundp 'save-place)
     (setq save-place nil)))
 
@@ -471,25 +505,25 @@ running 'man git-rebase' at the command line) for details."
 (defun git-rebase-match-comment-line (limit)
   (re-search-forward (concat git-rebase-comment-re ".*") limit t))
 
-(defun git-rebase-match-killed-action (limit)
-  (re-search-forward (concat git-rebase-comment-re "[^ \n].*") limit t))
-
 (defun git-rebase-mode-font-lock-keywords ()
   "Font lock keywords for Git-Rebase mode."
-  `(("^\\([efprs]\\|pick\\|reword\\|edit\\|squash\\|fixup\\) \\([^ \n]+\\) \\(.*\\)"
-     (1 'font-lock-keyword-face)
-     (2 'git-rebase-hash)
-     (3 'git-rebase-description))
-    ("^\\(exec\\) \\(.*\\)"
-     (1 'font-lock-keyword-face)
-     (2 'git-rebase-description))
-    (git-rebase-match-comment-line 0 'font-lock-comment-face)
-    (git-rebase-match-killed-action 0 'git-rebase-killed-action t)
-    (,(format "^%s Rebase \\([^ ]*\\) onto \\([^ ]*\\)" comment-start)
-     (1 'git-rebase-comment-hash t)
-     (2 'git-rebase-comment-hash t))
-    (,(format "^%s \\(Commands:\\)" comment-start)
-     (1 'git-rebase-comment-heading t))))
+  (let ((action-re "\
+\\([efprs]\\|pick\\|reword\\|edit\\|squash\\|fixup\\) \\([^ \n]+\\) \\(.*\\)"))
+    `((,(concat "^" action-re)
+       (1 'font-lock-keyword-face)
+       (2 'git-rebase-hash)
+       (3 'git-rebase-description))
+      ("^\\(exec\\) \\(.*\\)"
+       (1 'font-lock-keyword-face)
+       (2 'git-rebase-description))
+      (git-rebase-match-comment-line 0 'font-lock-comment-face)
+      (,(concat git-rebase-comment-re " *" action-re)
+       0 'git-rebase-killed-action t)
+      (,(format "^%s Rebase \\([^ ]*\\) onto \\([^ ]*\\)" comment-start)
+       (1 'git-rebase-comment-hash t)
+       (2 'git-rebase-comment-hash t))
+      (,(format "^%s \\(Commands:\\)" comment-start)
+       (1 'git-rebase-comment-heading t)))))
 
 (defun git-rebase-mode-show-keybindings ()
   "Modify the \"Commands:\" section of the comment Git generates

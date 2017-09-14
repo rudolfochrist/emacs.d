@@ -76,9 +76,9 @@ An empty REV stands for index."
                                       (buffer-name))))
                 revert)
         (setq magit-buffer-revision
-              (if (string= rev "") "{index}" (magit-rev-format "%H" rev))
-              magit-buffer-refname rev
-              magit-buffer-file-name (expand-file-name file topdir))
+              (if (string= rev "") "{index}" (magit-rev-format "%H" rev)))
+        (setq magit-buffer-refname rev)
+        (setq magit-buffer-file-name (expand-file-name file topdir))
         (setq default-directory
               (let ((dir (file-name-directory magit-buffer-file-name)))
                 (if (file-exists-p dir) dir topdir)))
@@ -335,7 +335,7 @@ Currently this only adds the following key bindings.
 
 (defun magit-file-rename (file newname)
   "Rename the FILE to NEWNAME.
-If FILE isn't tracked in Git fallback to using `rename-file'."
+If FILE isn't tracked in Git, fallback to using `rename-file'."
   (interactive
    (let* ((file (magit-read-file "Rename file"))
           (newname (read-file-name (format "Rename %s to file: " file))))
@@ -371,7 +371,7 @@ tree."
 With a prefix argument FORCE do so even when FILE has uncommitted
 changes.
 
-If FILE isn't tracked in Git fallback to using `delete-file'."
+If FILE isn't tracked in Git, fallback to using `delete-file'."
   (interactive (list (magit-read-file "Delete file")))
   (if (magit-file-tracked-p file)
       (magit-run-git "rm" (and force "--force") "--" file)
