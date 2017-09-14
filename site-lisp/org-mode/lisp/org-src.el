@@ -338,7 +338,7 @@ where BEG and END are buffer positions and CONTENTS is a string."
 		    (skip-chars-backward " \r\t\n")
 		    (line-beginning-position 1))
 	     (org-element-property :value datum)))
-      ((memq type '(fixed-width table))
+      ((memq type '(fixed-width latex-environment table))
        (let ((beg (org-element-property :post-affiliated datum))
 	     (end (progn (goto-char (org-element-property :end datum))
 			 (skip-chars-backward " \r\t\n")
@@ -424,11 +424,10 @@ Assume point is in the corresponding edit buffer."
       (buffer-string))))
 
 (defun org-src--edit-element
-    (datum name &optional major write-back contents remote)
+    (datum name &optional initialize write-back contents remote)
   "Edit DATUM contents in a dedicated buffer NAME.
 
-MAJOR is the major mode used in the edit buffer.  A nil value is
-equivalent to `fundamental-mode'.
+INITIALIZE is a function to call upon creating the buffer.
 
 When WRITE-BACK is non-nil, assume contents will replace original
 region.  Moreover, if it is a function, apply it in the edit
@@ -489,12 +488,13 @@ Leave point in edit buffer."
 	(unless preserve-ind (org-do-remove-indentation))
 	(set-buffer-modified-p nil)
 	(setq buffer-file-name nil)
-	;; Start major mode.
-	(if (not major) (fundamental-mode)
+	;; Initialize buffer.
+	(when (functionp initialize)
 	  (let ((org-inhibit-startup t))
-	    (condition-case e (funcall major)
-	      (error (message "Language mode `%s' fails with: %S"
-			      major (nth 1 e))))))
+	    (condition-case e
+		(funcall initialize)
+	      (error (message "Initialization fails with: %S"
+			      (error-message-string e))))))
 	;; Transmit buffer-local variables for exit function.  It must
 	;; be done after initializing major mode, as this operation
 	;; may reset them otherwise.
@@ -810,45 +810,49 @@ A coderef format regexp can only match at the end of a line."
 			(org-footnote-goto-definition label)
 			(backward-char)
 			(org-element-context)))
-	   (inline (eq (org-element-type definition) 'footnote-reference))
+	   (inline? (eq 'footnote-reference (org-element-type definition)))
 	   (contents
-	    (let ((c (org-with-wide-buffer
-		      (org-trim (buffer-substring-no-properties
-				 (org-element-property :begin definition)
-				 (org-element-property :end definition))))))
-	      (add-text-properties
-	       0
-	       (progn (string-match (if inline "\\`\\[fn:.*?:" "\\`.*?\\]") c)
-		      (match-end 0))
-	       '(read-only "Cannot edit footnote label" front-sticky t
-			   rear-nonsticky t)
-	       c)
-	      (when inline
-		(let ((l (length c)))
-		  (add-text-properties
-		   (1- l) l
-		   '(read-only "Cannot edit past footnote reference"
-			       front-sticky nil rear-nonsticky nil)
-		   c)))
-	      c)))
+	    (org-with-wide-buffer
+	     (buffer-substring-no-properties
+	      (or (org-element-property :post-affiliated definition)
+		  (org-element-property :begin definition))
+	      (cond
+	       (inline? (1+ (org-element-property :contents-end definition)))
+	       ((org-element-property :contents-end definition))
+	       (t (goto-char (org-element-property :post-affiliated definition))
+		  (line-end-position)))))))
+      (add-text-properties
+       0
+       (progn (string-match (if inline? "\\`\\[fn:.*?:" "\\`.*?\\]") contents)
+	      (match-end 0))
+       '(read-only "Cannot edit footnote label" front-sticky t rear-nonsticky t)
+       contents)
+      (when inline?
+	(let ((l (length contents)))
+	  (add-text-properties
+	   (1- l) l
+	   '(read-only "Cannot edit past footnote reference"
+		       front-sticky nil rear-nonsticky nil)
+	   contents)))
       (org-src--edit-element
        definition
        (format "*Edit footnote [%s]*" label)
-       #'org-mode
-       `(lambda ()
-	  (if ,(not inline) (delete-region (point) (search-forward "]"))
-	    (delete-region (point) (search-forward ":" nil t 2))
-	    (delete-region (1- (point-max)) (point-max))
-	    (when (re-search-forward "\n[ \t]*\n" nil t)
-	      (user-error "Inline definitions cannot contain blank lines"))
-	    ;; If footnote reference belongs to a table, make sure to
-	    ;; remove any newline characters in order to preserve
-	    ;; table's structure.
-	    (when ,(org-element-lineage definition '(table-cell))
-	      (while (search-forward "\n" nil t) (delete-char -1)))))
-       (concat contents
-	       (and (not (org-element-property :contents-begin definition))
-		    " "))
+       (let ((source (current-buffer)))
+	 (lambda ()
+	   (org-mode)
+	   (org-clone-local-variables source)))
+       (lambda ()
+	 (if (not inline?) (delete-region (point) (search-forward "]"))
+	   (delete-region (point) (search-forward ":" nil t 2))
+	   (delete-region (1- (point-max)) (point-max))
+	   (when (re-search-forward "\n[ \t]*\n" nil t)
+	     (user-error "Inline definitions cannot contain blank lines"))
+	   ;; If footnote reference belongs to a table, make sure to
+	   ;; remove any newline characters in order to preserve
+	   ;; table's structure.
+	   (when (org-element-lineage definition '(table-cell))
+	     (while (search-forward "\n" nil t) (replace-match "")))))
+       contents
        'remote))
     ;; Report success.
     t))
@@ -875,6 +879,28 @@ Throw an error when not at such a table."
      #'text-mode t)
     (when (bound-and-true-p flyspell-mode) (flyspell-mode -1))
     (table-recognize)
+    t))
+
+(defun org-edit-latex-environment ()
+  "Edit LaTeX environment at point.
+\\<org-src-mode-map>
+The LaTeX environment is copied into a new buffer.  Major mode is
+set to the one associated to \"latex\" in `org-src-lang-modes',
+or to `latex-mode' if there is none.
+
+When done, exit with `\\[org-edit-src-exit]'.  The edited text \
+will then replace
+the LaTeX environment in the Org mode buffer."
+  (interactive)
+  (let ((element (org-element-at-point)))
+    (unless (and (eq (org-element-type element) 'latex-environment)
+		 (org-src--on-datum-p element))
+      (user-error "Not in a LaTeX environment"))
+    (org-src--edit-element
+     element
+     (org-src--construct-edit-buffer-name (buffer-name) "LaTeX environment")
+     (org-src--get-lang-mode "latex")
+     t)
     t))
 
 (defun org-edit-export-block ()
@@ -1065,8 +1091,10 @@ Throw an error if there is no such buffer."
 	 (code (and write-back (org-src--contents-for-write-back))))
     (set-buffer-modified-p nil)
     ;; Switch to source buffer.  Kill sub-editing buffer.
-    (let ((edit-buffer (current-buffer)))
-      (org-src-switch-to-buffer (marker-buffer beg) 'exit)
+    (let ((edit-buffer (current-buffer))
+	  (source-buffer (marker-buffer beg)))
+      (unless source-buffer (error "Source buffer disappeared.  Aborting"))
+      (org-src-switch-to-buffer source-buffer 'exit)
       (kill-buffer edit-buffer))
     ;; Insert modified code.  Ensure it ends with a newline character.
     (org-with-wide-buffer
@@ -1085,7 +1113,7 @@ Throw an error if there is no such buffer."
       (cond
        ;; Block is hidden; move at start of block.
        ((cl-some (lambda (o) (eq (overlay-get o 'invisible) 'org-hide-block))
-		  (overlays-at (point)))
+		 (overlays-at (point)))
 	(beginning-of-line 0))
        (write-back (org-src--goto-coordinates coordinates beg end))))
     ;; Clean up left-over markers and restore window configuration.

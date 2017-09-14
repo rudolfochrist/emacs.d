@@ -40,7 +40,7 @@
 ;;; Code:
 (require 'ob)
 
-(declare-function org-time-string-to-time "org" (s &optional buffer pos))
+(declare-function org-time-string-to-time "org" (s &optional zone))
 (declare-function org-combine-plists "org" (&rest plists))
 (declare-function orgtbl-to-generic "org-table" (table params))
 (declare-function gnuplot-mode "ext:gnuplot-mode" ())
@@ -187,7 +187,7 @@ This function is called by `org-babel-execute-src-block'."
 		     script-file
 		     (if (member system-type '(cygwin windows-nt ms-dos))
 			 t nil)))))
-            (message output))
+            (message "%s" output))
         (with-temp-buffer
           (insert (concat body "\n"))
           (gnuplot-mode)

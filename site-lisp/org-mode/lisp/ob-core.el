@@ -82,7 +82,6 @@
 (declare-function org-reverse-string "org" (string))
 (declare-function org-set-outline-overlay-data "org" (data))
 (declare-function org-show-context "org" (&optional key))
-(declare-function org-split-string "org" (string &optional separators))
 (declare-function org-src-coderef-format "org-src" (element))
 (declare-function org-src-coderef-regexp "org-src" (fmt &optional label))
 (declare-function org-table-align "org-table" ())
@@ -177,6 +176,14 @@ This string must include a \"%s\" which will be replaced by the results."
   :type 'boolean
   :version "26.1"
   :package-version '(Org . "9.0")
+  :safe #'booleanp)
+
+(defcustom org-babel-uppercase-example-markers nil
+  "When non-nil, begin/end example markers will be inserted in upper case."
+  :group 'org-babel
+  :type 'boolean
+  :version "26.1"
+  :package-version '(Org . "9.1")
   :safe #'booleanp)
 
 (defun org-babel-noweb-wrap (&optional regexp)
@@ -1487,19 +1494,17 @@ balanced instances of \"[ \t]:\", set ALTS to ((32 9) . 58)."
 	      (push after partial)
 	      (goto-char (1+ origin)))))
 	 ((and (eq ?\" (char-after)) (not (eq ?\\ (char-before))))
-	  ;; Include everything between non-escaped double quotes.
-	  (push ?\" partial)
+	  ;; Include everything from current double quote to next
+	  ;; non-escaped double quote.
 	  (let ((origin (point)))
-	    (condition-case nil
-		;; Use `read' since it is fast and takes care of
-		;; escaped quotes already.
+	    (if (re-search-forward "[^\\]\"" nil t)
 		(setq partial
-		      (nconc (cons ?\"
-				   (nreverse (string-to-list
-					      (read (current-buffer)))))
+		      (nconc (nreverse (string-to-list
+					(buffer-substring origin (point))))
 			     partial))
-	      ;; No closing double quote found.  Backtrack.
-	      (end-of-file (goto-char (1+ origin))))))
+	      ;; No closing double quote.  Backtrack.
+	      (push ?\" partial)
+	      (forward-char))))
 	 (t (push (char-after) partial)
 	    (forward-char))))
       ;; Add pending parsing and return result.
@@ -1754,16 +1759,20 @@ NAME, or nil if no such block exists.  Set match data according
 to `org-babel-named-src-block-regexp'."
   (save-excursion
     (goto-char (point-min))
-    (ignore-errors
-      (org-next-block 1 nil (org-babel-named-src-block-regexp-for-name name)))))
+    (let ((regexp (org-babel-named-src-block-regexp-for-name name)))
+      (or (and (looking-at regexp)
+	       (progn (goto-char (match-beginning 1))
+		      (line-beginning-position)))
+	  (ignore-errors (org-next-block 1 nil regexp))))))
 
 (defun org-babel-src-block-names (&optional file)
   "Returns the names of source blocks in FILE or the current buffer."
   (when file (find-file file))
   (save-excursion
     (goto-char (point-min))
-    (let ((re (org-babel-named-src-block-regexp-for-name))
-	  names)
+    (let* ((re (org-babel-named-src-block-regexp-for-name))
+	   (names (and (looking-at re)
+		       (list (match-string-no-properties 9)))))
       (while (ignore-errors (org-next-block 1 nil re))
 	(push (match-string-no-properties 9) names))
       names)))
@@ -2271,21 +2280,22 @@ INFO may provide the values of these header arguments (in the
 		 ((member "prepend" result-params))) ; already there
 		(setq results-switches
 		      (if results-switches (concat " " results-switches) ""))
-		(let ((wrap (lambda (start finish &optional no-escape no-newlines
-				      inline-start inline-finish)
-			      (when inline
-				(setq start inline-start)
-				(setq finish inline-finish)
-				(setq no-newlines t))
-			      (goto-char end)
-			      (insert (concat finish (unless no-newlines "\n")))
-			      (goto-char beg)
-			      (insert (concat start (unless no-newlines "\n")))
-			      (unless no-escape
-				(org-escape-code-in-region (min (point) end) end))
-			      (goto-char end)
-			      (unless no-newlines (goto-char (point-at-eol)))
-			      (setq end (point-marker))))
+		(let ((wrap
+		       (lambda (start finish &optional no-escape no-newlines
+				 inline-start inline-finish)
+			 (when inline
+			   (setq start inline-start)
+			   (setq finish inline-finish)
+			   (setq no-newlines t))
+			 (let ((before-finish (marker-position end)))
+			   (goto-char end)
+			   (insert (concat finish (unless no-newlines "\n")))
+			   (goto-char beg)
+			   (insert (concat start (unless no-newlines "\n")))
+			   (unless no-escape
+			     (org-escape-code-in-region
+			      (min (point) before-finish) before-finish))
+			   (goto-char end))))
 		      (tabulablep
 		       (lambda (r)
 			 ;; Non-nil when result R can be turned into
@@ -2339,7 +2349,7 @@ INFO may provide the values of these header arguments (in the
 		    (insert (org-macro-escape-arguments
 			     (org-babel-chomp result "\n"))))
 		   (t (goto-char beg) (insert result)))
-		  (setq end (point-marker))
+		  (setq end (copy-marker (point) t))
 		  ;; possibly wrap result
 		  (cond
 		   ((assq :wrap (nth 2 info))
@@ -2376,11 +2386,12 @@ INFO may provide the values of these header arguments (in the
 		   ((and (not (funcall tabulablep result))
 			 (not (member "file" result-params)))
 		    (let ((org-babel-inline-result-wrap
-			   ;; Hard code {{{results(...)}}} on top of customization.
+			   ;; Hard code {{{results(...)}}} on top of
+			   ;; customization.
 			   (format "{{{results(%s)}}}"
 				   org-babel-inline-result-wrap)))
-		      (org-babel-examplify-region beg end results-switches inline)
-		      (setq end (point))))))
+		      (org-babel-examplify-region
+		       beg end results-switches inline)))))
 		;; Possibly indent results in par with #+results line.
 		(when (and (not inline) (numberp indent) (> indent 0)
 			   ;; In this case `table-align' does the work
@@ -2393,6 +2404,7 @@ INFO may provide the values of these header arguments (in the
 			(message "Code block returned no value.")
 		      (message "Code block produced no output."))
 		  (message "Code block evaluation complete.")))
+	    (set-marker end nil)
 	    (when outside-scope (narrow-to-region visible-beg visible-end))
 	    (set-marker visible-beg nil)
 	    (set-marker visible-end nil)))))))
@@ -2478,15 +2490,12 @@ file's directory then expand relative links."
 	      result)
 	    (if description (concat "[" description "]") ""))))
 
-(defvar org-babel-capitalize-example-region-markers nil
-  "Make true to capitalize begin/end example markers inserted by code blocks.")
-
 (defun org-babel-examplify-region (beg end &optional results-switches inline)
   "Comment out region using the inline `==' or `: ' org example quote."
   (interactive "*r")
   (let ((maybe-cap
 	 (lambda (str)
-	   (if org-babel-capitalize-example-region-markers (upcase str) str))))
+	   (if org-babel-uppercase-example-markers (upcase str) str))))
     (if inline
 	(save-excursion
 	  (goto-char beg)

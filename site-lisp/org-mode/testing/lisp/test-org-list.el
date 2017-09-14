@@ -756,7 +756,19 @@
 	  (org-test-with-temp-text "- it<point>em"
 	    (let ((org-M-RET-may-split-line  '((default . nil))))
 	      (org-insert-item))
-	    (buffer-string)))))
+	    (buffer-string))))
+  ;; Preserve list visibility when inserting an item.
+  (should
+   (equal
+    '(outline outline)
+    (org-test-with-temp-text "- A\n  - B\n- C\n  - D"
+      (let ((org-cycle-include-plain-lists t))
+	(org-cycle)
+	(forward-line 2)
+	(org-cycle)
+	(org-insert-item)
+	(list (get-char-property (line-beginning-position 0) 'invisible)
+	      (get-char-property (line-end-position 2) 'invisible)))))))
 
 (ert-deftest test-org-list/repair ()
   "Test `org-list-repair' specifications."
@@ -1000,6 +1012,74 @@
 	    (org-toggle-item t)
 	    (buffer-string)))))
 
+(ert-deftest test-org-list/sort ()
+  "Test `org-sort-list'."
+  ;; Sort alphabetically.
+  (should
+   (equal "- abc\n- def\n- xyz\n"
+	  (org-test-with-temp-text "- def\n- xyz\n- abc\n"
+	    (org-sort-list nil ?a)
+	    (buffer-string))))
+  (should
+   (equal "- xyz\n- def\n- abc\n"
+	  (org-test-with-temp-text "- def\n- xyz\n- abc\n"
+	    (org-sort-list nil ?A)
+	    (buffer-string))))
+  ;; Sort numerically.
+  (should
+   (equal "- 1\n- 2\n- 10\n"
+	  (org-test-with-temp-text "- 10\n- 1\n- 2\n"
+	    (org-sort-list nil ?n)
+	    (buffer-string))))
+  (should
+   (equal "- 10\n- 2\n- 1\n"
+	  (org-test-with-temp-text "- 10\n- 1\n- 2\n"
+	    (org-sort-list nil ?N)
+	    (buffer-string))))
+  ;; Sort by checked status.
+  (should
+   (equal "- [ ] xyz\n- [ ] def\n- [X] abc\n"
+	  (org-test-with-temp-text "- [X] abc\n- [ ] xyz\n- [ ] def\n"
+	    (org-sort-list nil ?x)
+	    (buffer-string))))
+  (should
+   (equal "- [X] abc\n- [ ] xyz\n- [ ] def\n"
+	  (org-test-with-temp-text "- [X] abc\n- [ ] xyz\n- [ ] def\n"
+	    (org-sort-list nil ?X)
+	    (buffer-string))))
+  ;; Sort by time stamp.
+  (should
+   (equal "- <2017-05-08 Mon>\n- <2017-05-09 Tue>\n- <2018-05-09 Wed>\n"
+	  (org-test-with-temp-text
+	      "- <2018-05-09 Wed>\n- <2017-05-09 Tue>\n- <2017-05-08 Mon>\n"
+	    (org-sort-list nil ?t)
+	    (buffer-string))))
+  (should
+   (equal "- <2018-05-09 Wed>\n- <2017-05-09 Tue>\n- <2017-05-08 Mon>\n"
+	  (org-test-with-temp-text
+	      "- <2018-05-09 Wed>\n- <2017-05-09 Tue>\n- <2017-05-08 Mon>\n"
+	    (org-sort-list nil ?T)
+	    (buffer-string))))
+  ;; Sort by custom function.
+  (should
+   (equal "- b\n- aa\n- ccc\n"
+	  (org-test-with-temp-text "- ccc\n- b\n- aa\n"
+	    (org-sort-list nil ?f
+			   (lambda ()
+			     (length (buffer-substring (point-at-bol)
+						       (point-at-eol))))
+			   #'<)
+	    (buffer-string))))
+  (should
+   (equal "- ccc\n- aa\n- b\n"
+	  (org-test-with-temp-text "- ccc\n- b\n- aa\n"
+	    (org-sort-list nil ?F
+			   (lambda ()
+			     (length (buffer-substring (point-at-bol)
+						       (point-at-eol))))
+			   #'<)
+	    (buffer-string)))))
+
 
 ;;; Radio Lists
 
@@ -1166,13 +1246,13 @@
     "level1 a\nlevel2 b"
     (org-test-with-temp-text "- a\n  - b"
       (org-list-to-generic (org-list-to-lisp)
-			   '(:istart (lambda (l) (format "level%d "l)))))))
+			   '(:istart (lambda (type l) (format "level%d "l)))))))
   (should
    (equal
     "a\nblevel2level1"
     (org-test-with-temp-text "- a\n  - b"
       (org-list-to-generic (org-list-to-lisp)
-			   '(:iend (lambda (l) (format "level%d" l)))))))
+			   '(:iend (lambda (type l) (format "level%d" l)))))))
   ;; Test `:icount' parameter.
   (should
    (equal
@@ -1196,7 +1276,7 @@
     (org-test-with-temp-text "1. [@3] a"
       (org-list-to-generic
        (org-list-to-lisp)
-       '(:icount (lambda (l c) (format "level:%d, counter:%d " l c)))))))
+       '(:icount (lambda (type l c) (format "level:%d, counter:%d " l c)))))))
   ;; Test `:isep' parameter.
   (should
    (equal
@@ -1212,8 +1292,17 @@
    (equal
     "a\n- 1 -\nb"
     (org-test-with-temp-text "- a\n- b"
-      (org-list-to-generic (org-list-to-lisp)
-			   '(:isep (lambda (l) (format "- %d -" l)))))))
+      (org-list-to-generic
+       (org-list-to-lisp)
+       '(:isep (lambda (type depth) (format "- %d -" depth)))))))
+  ;; Test `:ifmt' parameter.
+  (should
+   (equal
+    ">> a <<"
+    (org-test-with-temp-text "1. [@3] a"
+      (org-list-to-generic
+       (org-list-to-lisp)
+       '(:ifmt (lambda (type c) (format ">> %s <<" c)))))))
   ;; Test `:cbon', `:cboff', `:cbtrans'
   (should
    (equal
@@ -1325,6 +1414,39 @@
 		    (beginning-of-line)
 		    (skip-chars-backward " \r\t\n")
 		    (point)))))))
+
+(ert-deftest test-org-list/to-org ()
+  "Test `org-list-to-org' specifications."
+  ;; Un-ordered list.
+  (should
+   (equal "- a"
+	  (org-test-with-temp-text "- a"
+	    (org-list-to-org (org-list-to-lisp) nil))))
+  ;; Ordered list.
+  (should
+   (equal "1. a"
+	  (org-test-with-temp-text "1. a"
+	    (org-list-to-org (org-list-to-lisp) nil))))
+  ;; Descriptive list.
+  (should
+   (equal "- a :: b"
+	  (org-test-with-temp-text "- a :: b"
+	    (org-list-to-org (org-list-to-lisp) nil))))
+  ;; Nested list.
+  (should
+   (equal "- a\n  - b"
+	  (org-test-with-temp-text "- a\n  - b"
+	    (org-list-to-org (org-list-to-lisp) nil))))
+  ;; Item spanning over multiple lines.
+  (should
+   (equal "- a\n  b"
+	  (org-test-with-temp-text "- a\n  b"
+	    (org-list-to-org (org-list-to-lisp) nil))))
+  ;; Item with continuation text after a sub-list.
+  (should
+   (equal "- a\n  - b\n  c"
+	  (org-test-with-temp-text "- a\n  - b\n  c"
+	    (org-list-to-org (org-list-to-lisp) nil)))))
 
 
 (provide 'test-org-list)

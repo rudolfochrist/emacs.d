@@ -717,7 +717,15 @@ x
   ;; Handle un-balanced quotes.
   (should
    (equal '(":foo \"1" "bar 3")
-	  (org-babel-balanced-split ":foo \"1 :bar 3" '((32 9) . 58)))))
+	  (org-babel-balanced-split ":foo \"1 :bar 3" '((32 9) . 58))))
+  ;; Handle empty string.
+  (should
+   (equal '(":foo \"\"")
+	  (org-babel-balanced-split ":foo \"\"" '((32 9) . 58))))
+  ;; Handle control characters within double quotes.
+  (should
+   (equal '(":foo \"\\n\"")
+	  (org-babel-balanced-split ":foo \"\\n\"" '((32 9) . 58)))))
 
 (ert-deftest test-ob/commented-last-block-line-no-var ()
   (org-test-with-temp-text-in-file "
@@ -1397,7 +1405,57 @@ echo \"$data\"
       (org-babel-execute-src-block)
       (let ((case-fold-search t)) (search-forward "RESULTS"))
       (list (org-get-indentation)
-	    (progn (forward-line) (org-get-indentation)))))))
+	    (progn (forward-line) (org-get-indentation))))))
+  ;; Properly indent examplified blocks.
+  (should
+   (equal
+    "   #+begin_example
+   0
+   1
+   2
+   3
+   4
+   5
+   6
+   7
+   8
+   9
+   #+end_example
+"
+    (org-test-with-temp-text
+	"   #+begin_src emacs-lisp :results output
+   (dotimes (i 10) (princ i) (princ \"\\n\"))
+   #+end_src"
+      (org-babel-execute-src-block)
+      (search-forward "begin_example")
+      (downcase
+       (buffer-substring-no-properties (line-beginning-position)
+				       (point-max))))))
+  ;; Properly indent "org" blocks.
+  (should
+   (equal
+    "   #+begin_src org
+   0
+   1
+   2
+   3
+   4
+   5
+   6
+   7
+   8
+   9
+   #+end_src
+"
+    (org-test-with-temp-text
+	"   #+begin_src emacs-lisp :results output org
+   (dotimes (i 10) (princ i) (princ \"\\n\"))
+   #+end_src"
+      (org-babel-execute-src-block)
+      (search-forward "begin_src org")
+      (downcase
+       (buffer-substring-no-properties (line-beginning-position)
+				       (point-max)))))))
 
 (ert-deftest test-ob/safe-header-args ()
   "Detect safe and unsafe header args."
