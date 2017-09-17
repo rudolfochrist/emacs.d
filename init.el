@@ -362,6 +362,15 @@ ARG is the one arguments taken by company bbdb candiates function."
   :bind (:map dired-mode-map
               ("/" . dired-narrow)))
 
+(use-package dired-details
+  :load-path "site-lisp/dired-details"
+  :after dired
+  :init
+  (setq dired-details-initially-hide t
+        dired-details-hide-link-targets nil
+        dired-details-hidden-string " --- ")
+  :config
+  (dired-details-install))
 
 (use-package find-dired
   :bind (("C-. w" . find-name-dired)))
