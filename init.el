@@ -321,8 +321,7 @@ ARG is the one arguments taken by company bbdb candiates function."
          ("M-!" . async-shell-command)
          ("l" . dired-up-alternate-directory)
          ("RET" . dired-find-alternate-file)
-         ("M-RET" . dired-open-natively)
-         ("F" . find-name-dired))
+         ("M-RET" . dired-open-natively))
   :preface
   (defun dired-open-natively ()
     "Opens file with the native app."
@@ -362,6 +361,10 @@ ARG is the one arguments taken by company bbdb candiates function."
   :commands (dired-narrow)
   :bind (:map dired-mode-map
               ("/" . dired-narrow)))
+
+
+(use-package find-dired
+  :bind (("C-. w" . find-name-dired)))
 
 
 ;;; easy-kill
