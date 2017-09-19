@@ -761,17 +761,11 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
               ("(" . paredit-open-bracket)
               (")" . paredit-close-bracket))
   :preface
+  (defvar paredit-non-space-patterns '("#\+" "#-" "#." ",@"))
+  
   (defun paredit-adjust-spacing-p (endp delimiter)
     "Don't add space before splicing (,@) or reader macros."
-    (cond
-     ((or (looking-back "#\\+.*")
-          (looking-back "#-.*"))
-      t)
-     ((looking-back "#.*")
-      nil)
-     ((looking-back ",@")
-      nil)
-     (t t)))
+    (cl-notany #'looking-back paredit-non-space-patterns))
   :init
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
