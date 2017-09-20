@@ -662,7 +662,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 
 (use-package magit
   :load-path "site-lisp/magit/lisp"
-  :commands (magit-clone)
+  :commands (magit-clone magit-blame)
   :bind (("C-. gg" . magit-status)
          ("C-. GG" . magit-status-with-prefix)
          ("C-. gl" . magit-list-repositories))
