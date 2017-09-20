@@ -41,7 +41,8 @@
       auto-save-default nil                   ; Nice feature, but annoying as well. Disable it.
       ring-bell-function 'ignore              ; don't ring the bell
       scroll-preserve-screen-position 'always
-      confirm-kill-emacs 'yes-or-no-p)
+      confirm-kill-emacs 'yes-or-no-p
+      scroll-margin 2)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode 1)
