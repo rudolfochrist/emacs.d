@@ -1262,17 +1262,6 @@ subpath."
           ("C-h ." . helpful-at-point)))
 
 
-;;; easy-escape
-;; https://github.com/cpitclaudel/easy-escape
-
-(use-package easy-escape
-  :load-path "site-lisp/easy-escape"
-  :commands (easy-escape-minor-mode)
-  :init
-  (add-hook 'lisp-mode-hook #'easy-escape-minor-mode)
-  (add-hook 'emacs-lisp-mode-hook #'easy-escape-minor-mode))
-
-
 ;;; highlight-quoted
 ;; https://github.com/Fanael/highlight-quoted
 
