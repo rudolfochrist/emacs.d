@@ -92,13 +92,17 @@
       display-battery-mode t)
 (display-time-mode 1)
 
-;;; default theme with custom background
+;;; default themewith custom background
 ;;; see http://irreal.org/blog/?p=3900
-;;; load a different theme in terminal
-(if (not (display-graphic-p))
-    (load-theme 'whiteboard t)
-  (set-background-color "white smoke")
-  (add-to-list 'default-frame-alist '(background-color . "white smoke")))
+(set-background-color "white smoke")
+(add-to-list 'default-frame-alist '(background-color . "white smoke"))
+
+;;; reset font colors in terminsl
+(defun setup-terminal-colors (frame)
+  (unless (display-graphic-p frame)
+    (set-face-foreground 'default "black" frame)))
+
+(add-hook 'after-make-frame-functions #'setup-terminal-colors)
 
 ;;; make scripts executable if shebang present
 (add-hook 'after-save-hook
