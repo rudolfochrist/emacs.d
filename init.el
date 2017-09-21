@@ -133,6 +133,10 @@
        (eql major-mode mode)))
    (buffer-list)))
 
+(defun lookup-binding (command)
+  "Returns the keybinding for COMMAND."
+  (substitute-command-keys (format "\\[%s]" command)))
+
 
 
 ;;; KEYBINDINGS
@@ -906,11 +910,13 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
          :map slime-mode-map
          ("RET" . slime-autodoc-newline)
          ("C-c C-d i" . slime-insert-file-header)
+         ("C-c C-d w" . slime-who-hydra/body)
          :map slime-repl-mode-map
          ("C-l" . slime-repl-clear-buffer)
          ("SPC" . slime-autodoc-space)
          ("C-j" . slime-autodoc-newline)
-         ("C-c O" . slime-repl-inspect-last-expression))
+         ("C-c O" . slime-repl-inspect-last-expression)
+         ("C-c C-d w" . slime-who-hydra/body))
   :preface
   ;; show autodoc also on newline.
   (defun slime-autodoc-newline ()
@@ -1020,6 +1026,27 @@ subpath."
                 (interactive (list (slime-read-system-name)))
                 (let ((path (slime-eval `(cl:namestring (asdf:system-source-directory ,system)))))
                   (dired path))))))
+
+  (defhydra slime-who-hydra (:color blue :hint nil)
+    "
+
+Slime Who?
+
+[_c_]: slime-who-calls (%(lookup-binding \"slime-who-calls\"))       ^^^^^[_s_]: slime-who-sets (%(lookup-binding \"slime-who-sets \")
+[_w_]: slime-calls-who (%(lookup-binding \"slime-calls-who\"))       ^^^^^[_m_]: slime-who-macroexpands (%(lookup-binding \"slime-who-macroexpands\"))
+[_r_]: slime-who-references (%(lookup-binding \"slime-who-references\"))  [_p_]: slime-who-specializes (%(lookup-binding \"slime-who-specializes\"))
+[_b_]: slime-who-binds (%(lookup-binding \"slime-who-binds\"))       ^^^^^[_q_]: quit
+
+
+"
+    ("q" nil)
+    ("c" slime-who-calls)
+    ("w" slime-calls-who)
+    ("r" slime-who-references)
+    ("b" slime-who-binds)
+    ("s" slime-who-sets)
+    ("m" slime-who-macroexpands)
+    ("p" slime-who-specializes)))
 
 
 ;;; aggressive-indent
