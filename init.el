@@ -1025,8 +1025,8 @@ subpath."
     (:handler (lambda (system)
                 (interactive (list (slime-read-system-name)))
                 (let ((path (slime-eval `(cl:namestring (asdf:system-source-directory ,system)))))
-                  (dired path))))))
-
+                  (dired path)))))
+  
   (defhydra slime-who-hydra (:color blue :hint nil)
     "
 
