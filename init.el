@@ -1268,7 +1268,8 @@ Slime Who?
   :load-path "site-lisp/commit-msg-prefix"
   :after magit
   :bind (:map
-         magit-mode-map
+         ;; magit
+         with-editor-mode-map
          ("C-. C-;" . commit-msg-prefix))
   :init
   (setq commit-msg-prefix-input-method #'ivy-read))
