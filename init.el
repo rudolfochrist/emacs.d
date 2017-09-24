@@ -64,10 +64,8 @@
   :load-path "site-lisp/exec-path-from-shell"
   :demand t
   :config
-  (exec-path-from-shell-initialize))
-
-(setenv "LANG" "en_US.UTF-8")
-(setenv "LC_ALL" "en_US.UTF-8")
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-envs '("LANG" "LC_ALL")))
 
 ;;; disable GUI stuff
 (dolist (mode '(tool-bar-mode scroll-bar-mode))
