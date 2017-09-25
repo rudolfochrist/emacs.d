@@ -89,6 +89,8 @@
       display-time-day-and-date t
       display-battery-mode t)
 (display-time-mode 1)
+(line-number-mode 1)
+(column-number-mode 1)
 
 ;;; default themewith custom background
 ;;; see http://irreal.org/blog/?p=3900
