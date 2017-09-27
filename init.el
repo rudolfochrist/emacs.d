@@ -852,7 +852,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 (use-package whitespace
   :init
   (setq whitespace-line-column 120
-        whitespace-style '(face lines-tail tabs))
+        whitespace-style '(face lines-tail tabs trailing))
   (add-hook 'prog-mode-hook #'whitespace-mode))
 
 
