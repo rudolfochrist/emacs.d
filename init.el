@@ -1305,6 +1305,14 @@ Slime Who?
   (add-hook 'lisp-mode-hook #'highlight-quoted-mode)
   (add-hook 'emacs-lisp-mode-hook #'highlight-quoted-mode))
 
+
+;;; web-mode
+
+(use-package web-mode
+  :load-path "site-lisp/web-mode"
+  :init
+  (add-to-list 'auto-mode-alist '("\\.lsp\\'" . web-mode)))
+
 ;;; packages end here
 
 
