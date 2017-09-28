@@ -46,7 +46,7 @@
       gnus-treat-display-smileys nil
       gnus-gcc-mark-as-read t
       gnus-message-archive-group nil
-      gnus-topic-display-empty-topics nil)
+      gnus-topic-display-empty-topics t)
 
 ;;; starting/activating errors
 (defun activate-gnus ()
