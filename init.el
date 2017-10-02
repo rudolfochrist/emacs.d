@@ -1277,6 +1277,9 @@ Slime Who?
 
 ;;; pass
 
+(use-package password-store
+  :load-path "site-lisp/password-store")
+
 (use-package pass
   :load-path "site-lisp/pass"
   :commands (pass))
