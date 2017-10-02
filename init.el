@@ -325,7 +325,8 @@ ARG is the one arguments taken by company bbdb candiates function."
 ;;; dired
 
 (use-package dired
-  :bind (:map
+  :bind (("C-x D" . dired)
+         :map
          dired-mode-map
          ("M-!" . async-shell-command)
          ("l" . dired-up-alternate-directory)
@@ -356,13 +357,7 @@ ARG is the one arguments taken by company bbdb candiates function."
 
 (use-package dired-x
   :after dired
-  :bind (("C-. d" . dired-jump)
-         ("C-. D" . dired-jump-elsewhere))
-  :preface
-  (defun dired-jump-elsewhere ()
-    (interactive)
-    (let ((current-prefix-arg '(4)))
-      (call-interactively #'dired-jump))))
+  :bind (("C-x d" . dired-jump)))
 
 (use-package dired-narrow
   :load-path "site-lisp/dired-hacks"
@@ -980,7 +975,7 @@ subpath."
           slime-highlight-edits
           slime-sprof
           slime-indentation))
-  
+
   (add-hook 'lisp-mode-hook #'slime-mode)
   (add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
   (add-hook 'lisp-mode-hook
@@ -997,6 +992,7 @@ subpath."
   (use-package slime-company
     :load-path "site-lisp/slime-company"
     :demand t
+    :init (setq slime-company-completion 'fuzzy)
     :commands (slime-company))
 
   ;; quicklisp REPL command
@@ -1276,6 +1272,9 @@ Slime Who?
 
 
 ;;; pass
+
+(use-package password-store
+  :load-path "site-lisp/password-store")
 
 (use-package pass
   :load-path "site-lisp/pass"
