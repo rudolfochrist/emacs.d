@@ -325,7 +325,8 @@ ARG is the one arguments taken by company bbdb candiates function."
 ;;; dired
 
 (use-package dired
-  :bind (:map
+  :bind (("C-x D" . dired)
+         :map
          dired-mode-map
          ("M-!" . async-shell-command)
          ("l" . dired-up-alternate-directory)
@@ -356,13 +357,7 @@ ARG is the one arguments taken by company bbdb candiates function."
 
 (use-package dired-x
   :after dired
-  :bind (("C-. d" . dired-jump)
-         ("C-. D" . dired-jump-elsewhere))
-  :preface
-  (defun dired-jump-elsewhere ()
-    (interactive)
-    (let ((current-prefix-arg '(4)))
-      (call-interactively #'dired-jump))))
+  :bind (("C-x d" . dired-jump)))
 
 (use-package dired-narrow
   :load-path "site-lisp/dired-hacks"
