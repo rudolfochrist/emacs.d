@@ -975,7 +975,7 @@ subpath."
           slime-highlight-edits
           slime-sprof
           slime-indentation))
-  
+
   (add-hook 'lisp-mode-hook #'slime-mode)
   (add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
   (add-hook 'lisp-mode-hook
@@ -992,6 +992,7 @@ subpath."
   (use-package slime-company
     :load-path "site-lisp/slime-company"
     :demand t
+    :init (setq slime-company-completion 'fuzzy)
     :commands (slime-company))
 
   ;; quicklisp REPL command
