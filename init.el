@@ -567,7 +567,6 @@ With prefix argument SHOW-FILES-P also offer to find files."
   :after ivy
   :bind (("C-. s" . counsel-rg)
          ("C-x C-g" . counsel-locate)
-         ("C-x C-r" . counsel-recentf)
          ("M-x" . counsel-M-x))
   :commands (counsel-more-chars)
   :init
@@ -1300,6 +1299,19 @@ subpath."
   :load-path "site-lisp/web-mode"
   :init
   (add-to-list 'auto-mode-alist '("\\.lsp\\'" . web-mode)))
+
+
+;;; zel
+
+(use-package a        :load-path "site-lisp/a")
+(use-package frecency :load-path "site-lisp/frecency")
+
+(use-package zel
+  :load-path "~/code/zel"
+  :demand t
+  :bind (("C-x C-r" . zel-find-file-frecent))
+  :config
+  (zel-install))
 
 ;;; packages end here
 
