@@ -1027,27 +1027,15 @@ subpath."
                 (interactive (list (slime-read-system-name)))
                 (let ((path (slime-eval `(cl:namestring (asdf:system-source-directory ,system)))))
                   (dired path)))))
-  
   (defhydra slime-who-hydra (:color blue :hint nil)
-    "
-
-Slime Who?
-
-[_c_]: slime-who-calls (%(lookup-binding \"slime-who-calls\"))       ^^^^^[_s_]: slime-who-sets (%(lookup-binding \"slime-who-sets \")
-[_w_]: slime-calls-who (%(lookup-binding \"slime-calls-who\"))       ^^^^^[_m_]: slime-who-macroexpands (%(lookup-binding \"slime-who-macroexpands\"))
-[_r_]: slime-who-references (%(lookup-binding \"slime-who-references\"))  [_p_]: slime-who-specializes (%(lookup-binding \"slime-who-specializes\"))
-[_b_]: slime-who-binds (%(lookup-binding \"slime-who-binds\"))       ^^^^^[_q_]: quit
-
-
-"
     ("q" nil)
-    ("c" slime-who-calls)
-    ("w" slime-calls-who)
-    ("r" slime-who-references)
-    ("b" slime-who-binds)
-    ("s" slime-who-sets)
-    ("m" slime-who-macroexpands)
-    ("p" slime-who-specializes)))
+    ("c" slime-who-calls "who calls")
+    ("w" slime-calls-who "calls who")
+    ("r" slime-who-references "who references")
+    ("b" slime-who-binds "who-binds")
+    ("s" slime-who-sets "who-sets")
+    ("m" slime-who-macroexpands "who macroexpands")
+    ("p" slime-who-specializes "who specializes")))
 
 
 ;;; aggressive-indent
