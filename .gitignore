@@ -24,3 +24,4 @@ bin/
 history
 /tramp
 /org-clock-save.el
+/zel-history

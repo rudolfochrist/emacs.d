@@ -881,9 +881,9 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
 (use-package emacs-lisp-mode
   :mode (("Cask\\'" . emacs-lisp-mode))
   :init
-  ;; emacs-lisp indentation 
+  ;; emacs-lisp indentation
   (add-hook 'emacs-lisp-mode-hook
-            (lambda () 
+            (lambda ()
               (setq-local lisp-indent-function #'lisp-indent-function))))
 
 
@@ -905,6 +905,7 @@ Ref: http://blog.binchen.org/posts/turn-off-linum-mode-when-file-is-too-big.html
          ("\\.cl\\'" . lisp-mode))
   :commands (slime-mode slime-repl-mode)
   :bind (("C-. l" . slime)
+         ("C-. L" . slime-connect)
          ("C-. C-/" . slime-selector)
          :map slime-mode-map
          ("RET" . slime-autodoc-newline)
