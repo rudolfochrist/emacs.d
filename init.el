@@ -1314,6 +1314,13 @@ subpath."
   :config
   (zel-install))
 
+
+;;; acw-window
+
+(use-package ace-window
+  :load-path "site-lisp/ace-window"
+  :bind (("C-. j" . ace-window)))
+
 ;;; packages end here
 
 
