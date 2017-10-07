@@ -1321,6 +1321,14 @@ subpath."
   :load-path "site-lisp/ace-window"
   :bind (("C-. j" . ace-window)))
 
+
+;;; package-lint
+
+(use-package package-lint
+  :load-path "site-lisp/package-lint"
+  :commands (package-lint-current-buffer
+             package-lint-buffer))
+
 ;;; packages end here
 
 
