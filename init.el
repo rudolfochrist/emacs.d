@@ -253,7 +253,7 @@ With prefix argument SHOW-FILES-P also offer to find files."
   :bind (("C-. s" . counsel-rg)
          ("C-x C-g" . counsel-locate)
          ("M-x" . counsel-M-x))
-  :commands (counsel-more-chars)
+  :commands (counsel-more-chars counsel-esh history)
   :init
   (setq counsel-rg-base-command "rg -i --no-heading --line-number --max-columns 150 --color never --hidden %s ."))
 
@@ -494,7 +494,13 @@ ARG is the one arguments taken by company bbdb candiates function."
 ;;; eshell
 
 (use-package eshell
-  :bind (("C-. t" . switch-eshell))
+  :bind (("C-. t" . switch-eshell)
+         :map
+         eshell-mode-map
+         ("C-l" . eshell/clear))
+  :bind* (:map
+          eshell-mode-map
+          ("M-p" . counsel-esh-history))
   :preface
   (defun switch-eshell ()
     "Switch to eshell buffer or hide it if current buffer"
@@ -504,18 +510,19 @@ ARG is the one arguments taken by company bbdb candiates function."
       (eshell)))
 
   (defun eshell/clear ()
-    "Clears the eshell buffer"
+    "Clears the eshell buffer by recenter to top."
     (interactive)
-    (let ((inhibit-read-only t))
-      (erase-buffer)
-      (eshell-send-input)))
+    (goto-char (point-max))
+    (recenter-top-bottom 1))
   :init
   (setq eshell-ls-use-colors t
         eshell-hist-ignoredups t
-        eshell-destroy-buffer-when-process-dies t)
+        eshell-destroy-buffer-when-process-dies t
+        eshell-scroll-show-maximum-output nil)
   :config
-  (push "htop" eshell-visual-commands)
-  (push "svn" eshell-visual-commands))
+  (with-eval-after-load "ehsell"
+    (push "htop" eshell-visual-commands)
+    (push "svn" eshell-visual-commands)))
 
 (use-package eshell-prompt-extras
   :load-path "site-lisp/eshell-prompt-extras"
@@ -532,7 +539,7 @@ ARG is the one arguments taken by company bbdb candiates function."
   :after eshell
   :preface
   (defun eshell-bash-completion ()
-    (while (pcomplete
+    (while (pcomplete-here
             (nth 2
                  (bash-completion-dynamic-complete-nocomint
                   (save-excursion
@@ -1304,6 +1311,7 @@ subpath."
 (use-package helpful
   :load-path "site-lisp/helpful"
   :bind ( ("C-h f" . helpful-function)
+          ("C-h F" . helpful-macro)
           ("C-h v" . helpful-variable)
           ("C-h ." . helpful-at-point)))
 
