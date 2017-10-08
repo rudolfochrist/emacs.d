@@ -516,7 +516,8 @@ ARG is the one arguments taken by company bbdb candiates function."
     (bind-key "M-p" 'counsel-esh-history eshell-mode-map))
 
   (defun eshell-hook ()
-    (eshell-cmpl-initialize))
+    (eshell-cmpl-initialize)
+    (eshell-hist-initialize))
   :init
   (setq eshell-ls-use-colors t
         eshell-hist-ignoredups t
