@@ -525,6 +525,24 @@ ARG is the one arguments taken by company bbdb candiates function."
   (setq eshell-highlight-prompt nil
         eshell-prompt-function #'epe-theme-lambda))
 
+;;; https://github.com/Ambrevar/dotfiles/blob/master/.emacs.d/lisp/init-eshell.el#L171
+;;; https://github.com/Ambrevar/dotfiles/blob/master/.emacs.d/lisp/init-eshell.el#L171
+(use-package bash-completion
+  :load-path "site-lisp/emacs-bash-completion"
+  :after eshell
+  :preface
+  (defun eshell-bash-completion ()
+    (while (pcomplete
+            (nth 2
+                 (bash-completion-dynamic-complete-nocomint
+                  (save-excursion
+                    (eshell-bol)
+                    (point))
+                  (point))))))
+  :init
+  (setq bash-completion-nospace t
+        eshell-default-completion-function #'eshell-bash-completion))
+
 
 ;;; feature-mode
 
