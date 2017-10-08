@@ -494,13 +494,7 @@ ARG is the one arguments taken by company bbdb candiates function."
 ;;; eshell
 
 (use-package eshell
-  :bind (("C-. t" . switch-eshell)
-         :map
-         eshell-mode-map
-         ("C-l" . eshell/clear))
-  :bind* (:map
-          eshell-mode-map
-          ("M-p" . counsel-esh-history))
+  :bind (("C-. t" . switch-eshell))
   :preface
   (defun switch-eshell ()
     "Switch to eshell buffer or hide it if current buffer"
@@ -509,20 +503,27 @@ ARG is the one arguments taken by company bbdb candiates function."
         (switch-to-buffer (second (buffer-list)))
       (eshell)))
 
-  (defun eshell/clear ()
+  (defun eshell/cls ()
     "Clears the eshell buffer by recenter to top."
     (interactive)
     (goto-char (point-max))
     (recenter-top-bottom 1))
+
+  (defun setup-eshell-hook ()
+    (push "htop" eshell-visual-commands)
+    (push "svn" eshell-visual-commands)
+    (bind-key "C-l" 'eshell/cls eshell-mode-map)
+    (bind-key "M-p" 'counsel-esh-history eshell-mode-map))
+
+  (defun eshell-hook ()
+    (eshell-cmpl-initialize))
   :init
   (setq eshell-ls-use-colors t
         eshell-hist-ignoredups t
         eshell-destroy-buffer-when-process-dies t
         eshell-scroll-show-maximum-output nil)
-  :config
-  (with-eval-after-load "ehsell"
-    (push "htop" eshell-visual-commands)
-    (push "svn" eshell-visual-commands)))
+  (add-hook 'eshell-first-time-mode-hook #'setup-eshell-hook)
+  (add-hook 'eshell-mode-hook #'eshell-hook))
 
 (use-package eshell-prompt-extras
   :load-path "site-lisp/eshell-prompt-extras"
@@ -549,6 +550,7 @@ ARG is the one arguments taken by company bbdb candiates function."
   :init
   (setq bash-completion-nospace t
         eshell-default-completion-function #'eshell-bash-completion))
+
 
 
 ;;; feature-mode
