@@ -513,18 +513,36 @@ ARG is the one arguments taken by company bbdb candiates function."
     (push "htop" eshell-visual-commands)
     (push "svn" eshell-visual-commands)
     (bind-key "C-l" 'eshell/cls eshell-mode-map)
-    (bind-key "M-p" 'counsel-esh-history eshell-mode-map))
+    (bind-key "M-r" 'counsel-esh-history eshell-mode-map))
 
   (defun eshell-hook ()
-    (eshell-cmpl-initialize)
-    (eshell-hist-initialize))
+    (eshell-cmpl-initialize))
+
+  ;; remove ANSI escape sequences
+  ;; happens sometimes with docker
+  ;; https://emacs.stackexchange.com/questions/18457/stripping-stray-ansi-escape-sequences-from-eshell
+  (defvar fyi-ansi-escape-re
+    (rx (or ?\233 (and ?\e ?\[))
+        (zero-or-more (char (?0 . ?\?)))
+        (zero-or-more (char ?\s ?- ?\/))
+        (char (?@ . ?~))))
+
+  (defun fyi-nuke-ansi-escapes (beg end)
+    (save-excursion
+      (goto-char beg)
+      (while (re-search-forward fyi-ansi-escape-re end t)
+        (replace-match ""))))
+
+  (defun eshell-nuke-ansi-escapes ()
+    (fyi-nuke-ansi-escapes eshell-last-output-start eshell-last-output-end))
   :init
   (setq eshell-ls-use-colors t
         eshell-hist-ignoredups t
         eshell-destroy-buffer-when-process-dies t
         eshell-scroll-show-maximum-output nil)
   (add-hook 'eshell-first-time-mode-hook #'setup-eshell-hook)
-  (add-hook 'eshell-mode-hook #'eshell-hook))
+  (add-hook 'eshell-mode-hook #'eshell-hook)
+  (add-hook 'eshell-output-filter-functions #'eshell-nuke-ansi-escapes))
 
 (use-package eshell-prompt-extras
   :load-path "site-lisp/eshell-prompt-extras"
