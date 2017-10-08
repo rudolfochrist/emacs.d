@@ -119,7 +119,8 @@
 ;;; SERVER
 
 (require 'server)
-(unless (server-running-p)
+(when (and (not (getenv "EMACS_NO_SERVER"))
+           (not (server-running-p)))
   (server-start))
 
 
