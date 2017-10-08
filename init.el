@@ -202,6 +202,62 @@
 (use-package hydra :demand t :load-path "site-lisp/hydra")
 
 
+;;; swiper, ivy, counsel
+
+(use-package smex
+  :load-path "site-lisp/smex"
+  :defer t)
+
+(use-package ivy
+  :load-path "site-lisp/swiper"
+  :demand t
+  :preface
+  ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
+  (defvar ivy-prominent-directories
+    '("~/prj/" "~/code/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
+    "List of prominent directories.")
+
+  (defun ivy-visit-prominent-directory (show-files-p)
+    "Offers all directories inside a set of directories.
+
+See `ivy-prominent-directories' for the list of directories to use.
+With prefix argument SHOW-FILES-P also offer to find files."
+    (interactive "P")
+    (let ((completions
+           (mapcar #'abbreviate-file-name
+                   (cl-remove-if-not
+                    (if show-files-p #'file-readable-p
+                      #'file-directory-p)
+                    (apply #'append
+                           (mapcar (lambda (x)
+                                     (when (file-exists-p x)
+                                       (directory-files
+                                        (expand-file-name x)
+                                        t "^[^\.].*" t)))
+                                   ivy-prominent-directories))))))
+      (dired
+       (ivy-completing-read "Open directory: "
+                            completions 'ignored nil ""))))
+
+  :bind (("C-. C-r" . ivy-resume)
+         ("C-x C-b" . ivy-switch-buffer)
+         ("C-x C-d" . ivy-visit-prominent-directory))
+  :init
+  (setq ivy-display-style 'fancy)
+  :config
+  (ivy-mode 1))
+
+(use-package counsel
+  :load-path "site-lisp/swiper"
+  :after ivy
+  :bind (("C-. s" . counsel-rg)
+         ("C-x C-g" . counsel-locate)
+         ("M-x" . counsel-M-x))
+  :commands (counsel-more-chars)
+  :init
+  (setq counsel-rg-base-command "rg -i --no-heading --line-number --max-columns 150 --color never --hidden %s ."))
+
+
 ;;; info
 
 (setq Info-directory-list
@@ -524,62 +580,6 @@ ARG is the one arguments taken by company bbdb candiates function."
 
 (use-package gdb-mi
   :init (setq gdb-many-windows t))
-
-
-;;; swiper, ivy, counsel
-
-(use-package smex
-  :load-path "site-lisp/smex"
-  :defer t)
-
-(use-package ivy
-  :load-path "site-lisp/swiper"
-  :demand t
-  :preface  
-  ;; http://endlessparentheses.com/visit-directory-inside-a-set-of-directories.html
-  (defvar ivy-prominent-directories
-    '("~/prj/" "~/code/" "~/archive/" "~/.emacs.d/" "~/quicklisp/local-projects/")
-    "List of prominent directories.")
-
-  (defun ivy-visit-prominent-directory (show-files-p)
-    "Offers all directories inside a set of directories.
-
-See `ivy-prominent-directories' for the list of directories to use. 
-With prefix argument SHOW-FILES-P also offer to find files."
-    (interactive "P")
-    (let ((completions
-           (mapcar #'abbreviate-file-name
-                   (cl-remove-if-not
-                    (if show-files-p #'file-readable-p
-                      #'file-directory-p)
-                    (apply #'append
-                           (mapcar (lambda (x)
-                                     (when (file-exists-p x)
-                                       (directory-files
-                                        (expand-file-name x)
-                                        t "^[^\.].*" t)))
-                                   ivy-prominent-directories))))))
-      (dired
-       (ivy-completing-read "Open directory: "
-                            completions 'ignored nil ""))))
-
-  :bind (("C-. C-r" . ivy-resume)
-         ("C-x C-b" . ivy-switch-buffer)
-         ("C-x C-d" . ivy-visit-prominent-directory))
-  :init
-  (setq ivy-display-style 'fancy)
-  :config
-  (ivy-mode 1))
-
-(use-package counsel
-  :load-path "site-lisp/swiper"
-  :after ivy
-  :bind (("C-. s" . counsel-rg)
-         ("C-x C-g" . counsel-locate)
-         ("M-x" . counsel-M-x))
-  :commands (counsel-more-chars)
-  :init
-  (setq counsel-rg-base-command "rg -i --no-heading --line-number --max-columns 150 --color never --hidden %s ."))
 
 
 ;;; js2-mode
