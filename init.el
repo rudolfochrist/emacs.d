@@ -512,6 +512,9 @@ ARG is the one arguments taken by company bbdb candiates function."
   (defun setup-eshell-hook ()
     (push "htop" eshell-visual-commands)
     (push "svn" eshell-visual-commands)
+    (push "perldoc" eshell-visual-commands)
+    (push '("git" "log") eshell-visual-subcommands)
+    (push '("docker" "run") eshell-visual-subcommands)
     (bind-key "C-l" 'eshell/cls eshell-mode-map)
     (bind-key "M-r" 'counsel-esh-history eshell-mode-map))
 
