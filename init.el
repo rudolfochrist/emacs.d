@@ -513,11 +513,9 @@ ARG is the one arguments taken by company bbdb candiates function."
   (setq eshell-ls-use-colors t
         eshell-hist-ignoredups t
         eshell-destroy-buffer-when-process-dies t)
-
-  (add-hook 'eshell-mode-hook
-            (lambda ()
-              (add-to-list 'eshell-visual-commands "htop")
-              (add-to-list 'eshell-visual-commands "svn"))))
+  :config
+  (push "htop" eshell-visual-commands)
+  (push "svn" eshell-visual-commands))
 
 (use-package eshell-prompt-extras
   :load-path "site-lisp/eshell-prompt-extras"
