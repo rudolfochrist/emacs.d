@@ -454,14 +454,22 @@ ARG is the one arguments taken by company bbdb candiates function."
       (erase-buffer)
       (eshell-send-input)))
   :init
-  (setq eshell-where-to-jump 'begin
-        eshell-review-quick-commands nil
-        eshell-smart-space-goes-to-end t)
+  (setq eshell-ls-use-colors t
+        eshell-hist-ignoredups t
+        eshell-destroy-buffer-when-process-dies t)
 
   (add-hook 'eshell-mode-hook
             (lambda ()
               (add-to-list 'eshell-visual-commands "htop")
               (add-to-list 'eshell-visual-commands "svn"))))
+
+(use-package eshell-prompt-extras
+  :load-path "site-lisp/eshell-prompt-extras"
+  :after eshell
+  :commands (epe-theme-lambda)
+  :init
+  (setq eshell-highlight-prompt nil
+        eshell-prompt-function #'epe-theme-lambda))
 
 
 ;;; feature-mode
