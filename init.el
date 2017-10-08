@@ -66,7 +66,7 @@
   :demand t
   :config
   (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs '("LANG" "LC_ALL")))
+  (exec-path-from-shell-copy-envs '("LANG" "LC_ALL" "TERM")))
 
 ;;; disable GUI stuff
 (dolist (mode '(tool-bar-mode scroll-bar-mode))
