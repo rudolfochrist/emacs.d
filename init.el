@@ -1377,7 +1377,7 @@ subpath."
 
 (use-package ace-window
   :load-path "site-lisp/ace-window"
-  :bind (("C-. j" . ace-window)))
+  :bind (("C-x O" . ace-window)))
 
 
 ;;; package-lint
