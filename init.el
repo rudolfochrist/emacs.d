@@ -541,7 +541,14 @@ ARG is the one arguments taken by company bbdb candiates function."
   (add-hook 'eshell-first-time-mode-hook #'setup-eshell-hook)
   (add-hook 'eshell-mode-hook #'eshell-hook))
 
-;;; https://github.com/Ambrevar/dotfiles/blob/master/.emacs.d/lisp/init-eshell.el#L171
+(use-package eshell-prompt-extras
+  :load-path "site-lisp/eshell-prompt-extras"
+  :after eshell
+  :commands (epe-theme-lambda)
+  :init
+  (setq eshell-highlight-prompt nil
+        eshell-prompt-function #'epe-theme-lambda))
+
 ;;; https://github.com/Ambrevar/dotfiles/blob/master/.emacs.d/lisp/init-eshell.el#L171
 (use-package bash-completion
   :load-path "site-lisp/emacs-bash-completion"
