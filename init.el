@@ -513,6 +513,7 @@ ARG is the one arguments taken by company bbdb candiates function."
     (push "htop" eshell-visual-commands)
     (push "svn" eshell-visual-commands)
     (push "perldoc" eshell-visual-commands)
+    (push "aws" eshell-visual-commands)
     (push '("git" "log") eshell-visual-subcommands)
     (push '("docker" "run" "pull" "push") eshell-visual-subcommands)
     (push '("brew" "install") eshell-visual-subcommands)
