@@ -190,16 +190,20 @@
 
 ;;; libs
 
-(use-package f          :defer t :load-path "site-lisp/f")
-(use-package s          :defer t :load-path "site-lisp/s")
-(use-package dash       :defer t :load-path "site-lisp/dash")
-(use-package async      :defer t :load-path "site-lisp/async")
-(use-package popup      :defer t :load-path "site-lisp/popup")
-(use-package list-utils :defer t :load-path "site-lisp/list-utils")
-(use-package loop       :defer t :load-path "site-lisp/loop")
+(use-package f           :defer t :load-path "site-lisp/f")
+(use-package s           :defer t :load-path "site-lisp/s")
+(use-package dash        :defer t :load-path "site-lisp/dash")
+(use-package async       :defer t :load-path "site-lisp/async")
+(use-package popup       :defer t :load-path "site-lisp/popup")
+(use-package list-utils  :defer t :load-path "site-lisp/list-utils")
+(use-package loop        :defer t :load-path "site-lisp/loop")
 
-;;; no deferred loading
+;;; no deferred loading. I treat them as libs, but they aren't
+;;; `require'd basically.
 (use-package hydra :demand t :load-path "site-lisp/hydra")
+(use-package xterm-color
+  :load-path "site-lisp/xterm-color"
+  :config (setenv "TERM" "xterm-256color"))
 
 
 ;;; swiper, ivy, counsel
@@ -510,52 +514,32 @@ ARG is the one arguments taken by company bbdb candiates function."
     (recenter-top-bottom 1))
 
   (defun setup-eshell-hook ()
+    ;; xterm-colors
+    (setq eshell-output-filter-functions
+          (remove 'eshell-handle-ansi-color eshell-output-filter-functions))
+    (add-to-list 'eshell-preoutput-filter-functions 'xterm-color-filter)
+    ;; visual commands
     (push "htop" eshell-visual-commands)
     (push "svn" eshell-visual-commands)
     (push "perldoc" eshell-visual-commands)
     (push "aws" eshell-visual-commands)
     (push '("git" "log") eshell-visual-subcommands)
-    (push '("docker" "run" "pull" "push") eshell-visual-subcommands)
+    (push '("docker" "pull" "push") eshell-visual-subcommands)
     (push '("brew" "install") eshell-visual-subcommands)
+    ;; key overwrites
     (bind-key "C-l" 'eshell/cls eshell-mode-map)
     (bind-key "M-r" 'counsel-esh-history eshell-mode-map))
 
   (defun eshell-hook ()
+    (setq xterm-color-preserve-properties t)
     (eshell-cmpl-initialize))
-
-  ;; remove ANSI escape sequences
-  ;; happens sometimes with docker
-  ;; https://emacs.stackexchange.com/questions/18457/stripping-stray-ansi-escape-sequences-from-eshell
-  (defvar fyi-ansi-escape-re
-    (rx (or ?\233 (and ?\e ?\[))
-        (zero-or-more (char (?0 . ?\?)))
-        (zero-or-more (char ?\s ?- ?\/))
-        (char (?@ . ?~))))
-
-  (defun fyi-nuke-ansi-escapes (beg end)
-    (save-excursion
-      (goto-char beg)
-      (while (re-search-forward fyi-ansi-escape-re end t)
-        (replace-match ""))))
-
-  (defun eshell-nuke-ansi-escapes ()
-    (fyi-nuke-ansi-escapes eshell-last-output-start eshell-last-output-end))
   :init
   (setq eshell-ls-use-colors t
         eshell-hist-ignoredups t
         eshell-destroy-buffer-when-process-dies t
         eshell-scroll-show-maximum-output nil)
   (add-hook 'eshell-first-time-mode-hook #'setup-eshell-hook)
-  (add-hook 'eshell-mode-hook #'eshell-hook)
-  (add-hook 'eshell-output-filter-functions #'eshell-nuke-ansi-escapes))
-
-(use-package eshell-prompt-extras
-  :load-path "site-lisp/eshell-prompt-extras"
-  :after eshell
-  :commands (epe-theme-lambda)
-  :init
-  (setq eshell-highlight-prompt nil
-        eshell-prompt-function #'epe-theme-lambda))
+  (add-hook 'eshell-mode-hook #'eshell-hook))
 
 ;;; https://github.com/Ambrevar/dotfiles/blob/master/.emacs.d/lisp/init-eshell.el#L171
 ;;; https://github.com/Ambrevar/dotfiles/blob/master/.emacs.d/lisp/init-eshell.el#L171
