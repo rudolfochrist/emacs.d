@@ -172,14 +172,10 @@
 ;;; compiling
 (bind-key "C-. b" #'compile)
 
-;;; bury buffers instead of killing (that's so mean....)
-;;; and most of the time I realized that I need the buffer again after killing it.
-(defun bury-or-kill-buffer (arg)
-  (interactive "P")
-  (if arg
-      (call-interactively #'kill-buffer)
-    (bury-buffer)))
-(bind-key "C-x k" #'bury-or-kill-buffer)
+;;; killing a buffer actually should bury it.
+(bind-key "C-x k" #'bury-buffer)
+;;; except you mean it
+(bind-key "C-x K" #'kill-buffer)
 
 ;;; reverting
 (defun revert-buffer-no-confirm ()
