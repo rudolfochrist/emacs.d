@@ -520,7 +520,7 @@ ARG is the one arguments taken by company bbdb candiates function."
     (push "perldoc" eshell-visual-commands)
     (push "aws" eshell-visual-commands)
     (push '("git" "log") eshell-visual-subcommands)
-    (push '("docker" "pull" "push") eshell-visual-subcommands)
+    (push '("docker" "pull" "push" "exec") eshell-visual-subcommands)
     (push '("brew" "install") eshell-visual-subcommands)
     ;; key overwrites
     (bind-key "C-l" 'eshell/cls eshell-mode-map)
@@ -1344,8 +1344,14 @@ subpath."
 
 (use-package web-mode
   :load-path "site-lisp/web-mode"
+  :preface
+  (defun web-mode-lsp-bindings ()
+    (bind-key "M-." #'slime-edit-definition web-mode-map)
+    (bind-key "M-," #'slime-pop-find-definition-stack web-mode-map))
   :init
-  (add-to-list 'auto-mode-alist '("\\.lsp\\'" . web-mode)))
+  (add-to-list 'auto-mode-alist '("\\.lsp\\'" . web-mode))
+  :config
+  (add-hook 'web-mode-hook #'web-mode-lsp-bindings))
 
 
 ;;; zel

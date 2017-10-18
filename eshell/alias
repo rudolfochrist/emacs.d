@@ -3,4 +3,5 @@ alias la ls -la $*
 alias ll ls -l $*
 alias fresh-emacs open -na Emacs
 alias x exit
-alias d dired $*
+alias d dired $1
+alias ff find-file $1
