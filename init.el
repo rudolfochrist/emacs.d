@@ -998,7 +998,6 @@ subpath."
     (interactive)
     (let ((browse-url-browser-function #'eww-browse-url))
       (call-interactively #'slime-hyperspec-lookup)))
-  
   :init
   (setq slime-complete-symbol*-fancy t
         slime-complete-symbol-function #'slime-fuzzy-complete-symbol
@@ -1081,7 +1080,11 @@ subpath."
     ("b" slime-who-binds "who-binds")
     ("s" slime-who-sets "who-sets")
     ("m" slime-who-macroexpands "who macroexpands")
-    ("p" slime-who-specializes "who specializes")))
+    ("p" slime-who-specializes "who specializes"))
+  ;; save the buffer after compilation
+  (add-hook 'slime-compilation-finished-hook
+            (lambda (&rest ignore)
+              (save-buffer))))
 
 
 ;;; aggressive-indent
