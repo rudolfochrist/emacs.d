@@ -93,17 +93,20 @@
 (line-number-mode 1)
 (column-number-mode 1)
 
-;;; default themewith custom background
-;;; see http://irreal.org/blog/?p=3900
-(set-background-color "white smoke")
-(add-to-list 'default-frame-alist '(background-color . "white smoke"))
+;; ;;; reset font colors in termins
+;; (defun setup-terminal-colors (frame)
+;;   (unless (display-graphic-p frame)
+;;     (set-face-foreground 'default "white" frame)
+;;     (set-face-background 'default "black" frame)))
 
-;;; reset font colors in terminsl
-(defun setup-terminal-colors (frame)
-  (unless (display-graphic-p frame)
-    (set-face-foreground 'default "black" frame)))
+;; (add-hook 'after-make-frame-functions #'setup-terminal-colors)
 
-(add-hook 'after-make-frame-functions #'setup-terminal-colors)
+;; ;;; default theme with custom background. Only in GUI Emacs.
+;; ;;; see http://irreal.org/blog/?p=3900
+;; (when (display-graphic-p)
+;;   (set-background-color "white smoke")
+;;   (add-to-list 'default-frame-alist '(background-color . "white smoke")))
+
 
 ;;; make scripts executable if shebang present
 (add-hook 'after-save-hook
