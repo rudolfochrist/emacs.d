@@ -586,7 +586,12 @@ ARG is the one arguments taken by company bbdb candiates function."
 
 (use-package iedit
   :load-path "site-lisp/iedit"
-  :bind (("C-. C-'" . iedit-mode)))
+  :bind (("C-. C-'" . iedit-mode)
+         ("C-. C-\"" . iedit-mode-defun))
+  :preface
+  (defun iedit-mode-defun ()
+    (interactive)
+    (iedit-mode '(0))))
 
 
 ;;; interleave
