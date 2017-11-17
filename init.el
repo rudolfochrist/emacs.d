@@ -524,7 +524,8 @@ ARG is the one arguments taken by company bbdb candiates function."
     (push "aws" eshell-visual-commands)
     (push "ncdu" eshell-visual-commands)
     (push '("git" "log") eshell-visual-subcommands)
-    (push '("docker" "pull" "push" "exec") eshell-visual-subcommands)
+    (push '("docker" "pull" "push") eshell-visual-subcommands)
+    (push '("docker" "-it") eshell-visual-options)
     (push '("brew" "install") eshell-visual-subcommands)
     ;; key overwrites
     (bind-key "C-l" 'eshell/cls eshell-mode-map)
@@ -1101,7 +1102,7 @@ subpath."
   :load-path "site-lisp/aggressive-indent"
   :demand t
   :config
-  (dolist (mode '(slime-repl-mode feature-mode cperl))
+  (dolist (mode '(slime-repl-mode feature-mode cperl dockerfile-mode))
     (add-to-list 'aggressive-indent-excluded-modes mode))
   (global-aggressive-indent-mode 1))
 
