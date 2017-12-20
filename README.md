@@ -5,6 +5,38 @@ much more contextual information.
 
 ![screenshot](screenshots/helpful.png)
 
+## Usage
+
+Install from MELPA, then call one of the following commands:
+
+* `helpful-callable`
+* `helpful-function`
+* `helpful-macro`
+* `helpful-command`
+* `helpful-key`
+* `helpful-variable`
+* `helpful-at-point`
+
+If you want to replace the default Emacs help keybindings, you can do
+so:
+
+``` emacs-lisp
+;; Note that the built-in `describe-function' includes both functions
+;; and macros. `helpful-function' is functions only, so we provide
+;; `helpful-callable' as a drop-in replacement.
+(global-set-key (kbd "C-h f") #'helpful-callable)
+
+(global-set-key (kbd "C-h v") #'helpful-variable)
+(global-set-key (kbd "C-h k") #'helpful-key)
+```
+
+I also recommend you configure `helpful-at-point` to a convenient
+keybinding:
+
+``` emacs-lisp
+(global-set-key (kbd "C-c C-.") #'helpful-at-point)
+```
+
 ## Features
 
 ### Source code
@@ -28,8 +60,14 @@ Helpful will show you where a function is being called!
 Docstrings in helpful:
 
 * Highlight the summary (the first sentence)
-* Include cross-references
-* Hide superfluous puncuation
+* Include cross-references to other functions/variables
+* Linkify references to Info nodes
+* Hide superfluous punctuation
+
+![screenshot](screenshots/helpful_view_in_manual.png)
+
+If a symbol is also documented in the Info manual, helpful will
+provide a link to the relevant section too.
 
 ### Symbol Properties
 
@@ -38,6 +76,8 @@ Docstrings in helpful:
 Helpful will show you the properties that have been applied to the
 current symbol. This provides visibility of features
 like edebug or byte-code optimisation.
+
+Helpful will also highlight any symbol aliases.
 
 ### Describe Commands
 
