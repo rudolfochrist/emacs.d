@@ -1,7 +1,7 @@
 EMACS ?= emacs
 EMACSFLAGS := -Q --batch
 
-SITELISP = $(wildcard site-lisp/**/*.el)
+SITELISP = $(shell find site-lisp -name "*.el")
 SITELISPDIR = $(PWD)/site-lisp
 
 all: compile-site-lisp
