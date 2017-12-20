@@ -1354,9 +1354,9 @@ subpath."
 
 (use-package helpful
   :load-path "site-lisp/helpful"
-  :bind ( ("C-h f" . helpful-function)
-          ("C-h F" . helpful-macro)
+  :bind ( ("C-h f" . helpful-callable)
           ("C-h v" . helpful-variable)
+          ("C-h k" . helpful-key)
           ("C-h ." . helpful-at-point)))
 
 
