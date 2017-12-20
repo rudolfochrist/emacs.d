@@ -1203,12 +1203,18 @@ subpath."
             t))
 
 
-;;; dockerfile-mode
+;;; Docker
 
 (use-package dockerfile-mode
   :load-path "site-lisp/dockerfile-mode"
-  :mode "Dockerfile\\'" 
+  :mode "Dockerfile\\'"
   :commands (dockerfile-mode))
+
+
+(use-package docker-compose-mode
+  :load-path "site-lisp/docker-compose-mode"
+  :mode "docker-compose.yml"
+  :commands (docker-compose-mode))
 
 
 ;;; find-file-in-project
