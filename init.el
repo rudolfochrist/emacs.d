@@ -189,13 +189,14 @@
 
 ;;; libs
 
-(use-package f           :defer t :load-path "site-lisp/f")
-(use-package s           :defer t :load-path "site-lisp/s")
-(use-package dash        :defer t :load-path "site-lisp/dash")
-(use-package async       :defer t :load-path "site-lisp/async")
-(use-package popup       :defer t :load-path "site-lisp/popup")
-(use-package list-utils  :defer t :load-path "site-lisp/list-utils")
-(use-package loop        :defer t :load-path "site-lisp/loop")
+(use-package f          :defer t :load-path "site-lisp/f")
+(use-package s          :defer t :load-path "site-lisp/s")
+(use-package dash       :defer t :load-path "site-lisp/dash")
+(use-package async      :defer t :load-path "site-lisp/async")
+(use-package popup      :defer t :load-path "site-lisp/popup")
+(use-package list-utils :defer t :load-path "site-lisp/list-utils")
+(use-package loop       :defer t :load-path "site-lisp/loop")
+(use-package shut-up    :defer t :load-path "site-lisp/shut-up")
 
 ;;; no deferred loading. I treat them as libs, but they aren't
 ;;; `require'd basically.
