@@ -568,6 +568,11 @@ ARG is the one arguments taken by company bbdb candiates function."
   (setq bash-completion-nospace t
         eshell-default-completion-function #'eshell-bash-completion))
 
+(use-package eshell-bookmark
+  :load-path "site-lisp/eshell-bookmark"
+  :config
+  (add-hook 'eshell-mode-hook #'eshell-bookmark-setup))
+
 
 
 ;;; feature-mode
@@ -649,6 +654,7 @@ ARG is the one arguments taken by company bbdb candiates function."
 ;;; auctex
 
 (use-package tex-site
+  :disabled t
   :load-path "site-lisp/auctex"
   :init
   (setq TeX-auto-save t
