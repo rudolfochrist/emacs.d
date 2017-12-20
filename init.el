@@ -206,6 +206,7 @@
 
 
 ;;; swiper, ivy, counsel
+;;; https://github.com/abo-abo/swiper
 
 (use-package smex
   :load-path "site-lisp/smex"
