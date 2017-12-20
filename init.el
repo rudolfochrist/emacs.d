@@ -1216,6 +1216,11 @@ subpath."
   :mode "docker-compose.yml"
   :commands (docker-compose-mode))
 
+
+(use-package docker-tramp
+  :load-path "site-lisp/docker-tramp"
+  :demand t)
+
 
 ;;; find-file-in-project
 
