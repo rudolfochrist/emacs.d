@@ -526,7 +526,7 @@ ARG is the one arguments taken by company bbdb candiates function."
     (push "aws" eshell-visual-commands)
     (push "ncdu" eshell-visual-commands)
     (push '("git" "log") eshell-visual-subcommands)
-    (push '("docker" "pull" "push") eshell-visual-subcommands)
+    (push '("docker" "pull" "push" "attach") eshell-visual-subcommands)
     (push '("docker" "-it") eshell-visual-options)
     (push '("brew" "install") eshell-visual-subcommands)
     ;; key overwrites
