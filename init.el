@@ -1117,10 +1117,14 @@ subpath."
 
 ;;; imenu-anywhere
 
+(use-package imenu
+  :bind (:map prog-mode-map
+              ("C-. C-," . imenu)))
+
 (use-package imenu-anywhere
   :load-path "site-lisp/imenu-anywhere"
   :bind (:map prog-mode-map
-              ("C-. C-," . imenu-anywhere)))
+              ("C-. M-," . imenu-anywhere)))
 
 
 ;;; bbdb
