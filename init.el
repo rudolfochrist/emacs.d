@@ -1117,9 +1117,69 @@ subpath."
 
 ;;; imenu-anywhere
 
+(defun lisp-imenu-defmethod-matcher ()
+  "Matches a Lisp defmethod and sets `match-data' accordingly."
+  (when (re-search-backward "defmethod" nil t)
+    (ignore-errors
+      (let ((data '()))
+        (save-excursion
+          ;; skip defmethod
+          (forward-sexp)
+          (forward-char)
+          ;; beginning of index name
+          (push (point-marker) data)
+          ;; forward method name and lambda list
+          (forward-sexp 2)
+          ;; end of index name
+          (push (point-marker) data))
+        (set-match-data (append (match-data) (nreverse data)))
+        ;; indicate success
+        t))))
+
 (use-package imenu
   :bind (:map prog-mode-map
-              ("C-. C-," . imenu)))
+              ("C-. C-," . imenu))
+  :init
+  ;; don't replace space
+  (setq imenu-space-replacement nil)
+  ;; overwrite how imenu handles defmethods. I want to see the
+  ;; specializers for defmethod
+  (with-eval-after-load 'lisp-mode
+    (setq lisp-imenu-generic-expression
+          (append
+           ;; first remove current defmethod match expression
+           (cl-remove nil lisp-imenu-generic-expression :key #'car)
+           ;; add defmethod-specializer expression
+           (list
+            (list nil
+                  #'lisp-imenu-defmethod-matcher
+                  1)
+            (list nil
+                  (purecopy (concat "^\\s-*("
+                                    (eval-when-compile
+                                      (regexp-opt
+                                       '("defun" "defmacro"
+                                         ;; Elisp.
+                                         "defun*" "defsubst" "define-inline"
+                                         "define-advice" "defadvice" "define-skeleton"
+                                         "define-compilation-mode" "define-minor-mode"
+                                         "define-global-minor-mode"
+                                         "define-globalized-minor-mode"
+                                         "define-derived-mode" "define-generic-mode"
+                                         "ert-deftest"
+                                         "cl-defun" "cl-defsubst" "cl-defmacro"
+                                         "cl-define-compiler-macro" "cl-defgeneric"
+                                         "cl-defmethod"
+                                         ;; CL.
+                                         "define-compiler-macro" "define-modify-macro"
+                                         "defsetf" "define-setf-expander"
+                                         "define-method-combination"
+                                         ;; CLOS and EIEIO
+                                         ;; Look Ma! No defmethod here!
+                                         "defgeneric")
+                                       t))
+                                    "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
+                  2))))))
 
 (use-package imenu-anywhere
   :load-path "site-lisp/imenu-anywhere"
