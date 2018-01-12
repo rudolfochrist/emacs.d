@@ -1024,8 +1024,8 @@ subpath."
 
   ;; Lisps
   (setq slime-lisp-implementations
-        '((ccl ("ccl64"))
-          (sbcl ("sbcl"))
+        '((sbcl ("sbcl"))
+          (ccl ("ccl64"))
           (alisp ("alisp"))))
 
   (setq slime-contribs
