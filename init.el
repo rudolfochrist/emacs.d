@@ -1441,12 +1441,12 @@ subpath."
 
 (use-package web-mode
   :load-path "site-lisp/web-mode"
+  :mode "\\.lsp\\'"
+  :mode "\\.ep\\'"
   :preface
   (defun web-mode-lsp-bindings ()
     (bind-key "M-." #'slime-edit-definition web-mode-map)
     (bind-key "M-," #'slime-pop-find-definition-stack web-mode-map))
-  :init
-  (add-to-list 'auto-mode-alist '("\\.lsp\\'" . web-mode))
   :config
   (add-hook 'web-mode-hook #'web-mode-lsp-bindings))
 
