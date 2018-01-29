@@ -506,7 +506,7 @@ ARG is the one arguments taken by company bbdb candiates function."
     (interactive)
     (if (eq major-mode 'eshell-mode)
         (switch-to-buffer (second (buffer-list)))
-      (eshell)))
+      (call-interactively #'eshell)))
 
   (defun eshell/cls ()
     "Clears the eshell buffer by recenter to top."
