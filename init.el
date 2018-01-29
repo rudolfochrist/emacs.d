@@ -1253,6 +1253,7 @@ subpath."
 
 (use-package cperl-mode
   :mode "\\.\\([pP][Llm]\\|al\\)\\'"
+  :mode "cpanfile"
   :interpreter (("perl" . cperl-mode)
                 ("perl5" . cperl-mode)
                 ("miniperl" . cperl-mode))
