@@ -25,3 +25,5 @@ history
 /tramp
 /org-clock-save.el
 /zel-history
+/abbrev_defs
+/smex-items
