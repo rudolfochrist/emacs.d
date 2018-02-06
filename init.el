@@ -1457,7 +1457,7 @@ subpath."
 (use-package frecency :load-path "site-lisp/frecency")
 
 (use-package zel
-  :load-path "~/code/zel"
+  :load-path "site-lisp/zel"
   :demand t
   :bind (("C-x C-r" . zel-find-file-frecent))
   :config
