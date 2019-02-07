@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: idefvar
-# key: idefvar
-# --
-#+TEXINFO: @anchor{Variable $3}
-#+ATTR_TEXINFO: :options {${3:name}}
-#+BEGIN_defvar
-$0
-#+END_defvar

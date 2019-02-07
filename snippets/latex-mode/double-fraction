@@ -1,5 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: double faction
-# key: \df
-# --
-\dfrac{$1}{$2}$0

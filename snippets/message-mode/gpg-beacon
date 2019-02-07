@@ -1,6 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: gpg-beacon
-# key: secure
-# --
-<#secure method=pgpmime mode=encrypt>
-$0

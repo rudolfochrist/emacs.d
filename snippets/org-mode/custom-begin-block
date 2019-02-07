@@ -1,6 +1,0 @@
-# key: begin_
-# name: custom begin-block
-# --
-#+BEGIN_${1:envirnoment}
-$0
-#+END_$1

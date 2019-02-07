@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: idefspec
-# key: idefspec
-# --
-#+TEXINFO: @anchor{Special Form $1}
-#+ATTR_TEXINFO: :options {${1:name}} ${2:arguments}
-#+BEGIN_defspec
-$0
-#+END_defspec

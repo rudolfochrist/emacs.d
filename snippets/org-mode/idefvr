@@ -1,8 +1,0 @@
-# key: idefvr
-# name: idefvr
-# --
-#+TEXINFO: @anchor{$2 $3}
-#+ATTR_TEXINFO: :options {${2:category}} {${3:name}}
-#+BEGIN_defvr
-$0
-#+END_defvr

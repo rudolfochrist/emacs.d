@@ -1,6 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: interleave-section
-# key: sec
-# binding: direct-keybinding
-# --
-*#${page}*$0

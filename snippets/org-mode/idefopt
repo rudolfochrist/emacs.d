@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: idefopt
-# key: idefopt
-# --
-#+TEXINFO: @anchor{User Option $1}
-#+ATTR_TEXINFO: :options {${1:name}}
-#+BEGIN_defopt
-$0
-#+END_defopt

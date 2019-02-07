@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: json-property
-# key: :
-# --
-"${1:key}": $0

@@ -1,9 +1,0 @@
-# Compiled
-*.elc
-
-# Packaging
-.cask
-/test.org
-/tm1.pdf
-/.DS_Store
-/.ecukes-failing-scenarios

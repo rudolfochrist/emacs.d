@@ -1,8 +1,0 @@
-# key: ideffn
-# name: ideffn
-# --
-#+TEXINFO: @anchor{$2 $3}
-#+ATTR_TEXINFO: :options {${2:category}} {${3:name}} ${4:arguments...}
-#+BEGIN_deffn
-$0
-#+END_deffn
