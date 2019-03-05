@@ -1,6 +1,12 @@
+;;; init.el --- My Emacs Initialization File
 ;;; My emacs config.
 
 ;;; Enable package management
+
+;;; Commentary:
+;; Nothing special here.
+
+;;; Code:
 (require 'package)
 (if (not (gnutls-available-p))
     (warn "Packages cannot use HTTPS. Please install gnutls")
@@ -12,12 +18,9 @@
 (require 'cl-lib)
 
 ;;; load-path
-(setq lisp-directory (expand-file-name "lisp" user-emacs-directory)
-      site-lisp-directory (expand-file-name "site-lisp" user-emacs-directory))
-
-(add-to-list 'load-path lisp-directory)
+(defvar site-lisp-directory
+  (expand-file-name "site-lisp" user-emacs-directory))
 (add-to-list 'load-path site-lisp-directory)
-(add-to-list 'load-path (expand-file-name "use-package" site-lisp-directory))
 
 ;;; prefer newer files
 (setq load-prefer-newer t)
@@ -30,10 +33,9 @@
 ;;; setup use-package
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
-(setq use-package-enable-imenu-support t)
+(defvar use-package-enable-imenu-support t)
 (require 'bind-key)
 (require 'use-package)
-
 
 
 ;;; BASICS
@@ -47,7 +49,6 @@
       scroll-preserve-screen-position 'always
       confirm-kill-emacs 'yes-or-no-p
       scroll-margin 2
-      checkdoc-package-keywords-flag t
       mac-command-modifier 'control    ; so much nicer on MacOS
       mac-control-modifier 'command)
 
@@ -85,6 +86,7 @@
 (add-to-list 'default-frame-alist '(height . 55))
 
 ;;; tabs, spaces, indentation, parens
+(require 'paren)
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2
       require-final-newline t
@@ -92,6 +94,7 @@
 (show-paren-mode 1)
 
 ;;; mode-line
+(require 'time)
 (setq display-time-24hr-format t
       display-time-default-load-average nil
       display-time-day-and-date t
@@ -138,11 +141,11 @@
 ;;; UTILITIES
 
 (defun system-macos-p ()
-  "Returns non-nil if `system-type' is 'darwin"
+  "Return non-nil if `system-type' is 'darwin."
   (eql 'darwin system-type))
 
 (defun mode-buffer-list (mode)
-  "Returns a list of buffers with major mode MODE."
+  "Return a list of buffers with major mode MODE."
   (cl-remove-if-not
    (lambda (buffer)
      (with-current-buffer buffer
@@ -150,24 +153,11 @@
    (buffer-list)))
 
 (defun lookup-binding (command)
-  "Returns the keybinding for COMMAND."
+  "Return the keybinding for COMMAND."
   (substitute-command-keys (format "\\[%s]" command)))
 
-(defun make-bookmarklet ()
-  (interactive)
-  (let ((bkl-buffer (get-buffer-create "*bookmarklet*"))
-        (js-buffer (current-buffer)))
-    (with-current-buffer bkl-buffer
-      (erase-buffer)
-      (insert "javascript: (function () { ")
-      (insert-buffer-substring-no-properties js-buffer)
-      (insert " })();")
-      (while (re-search-backward "
-" nil t)
-        (replace-match "")))
-    (display-buffer-pop-up-window bkl-buffer nil)))
-
 (defun ansi-colorize-buffer ()
+  "Replace ANSI color markers with colored text."
   (interactive)
   (ansi-color-apply-on-region (point-min) (point-max)))
 
@@ -208,6 +198,7 @@
 
 ;;; reverting
 (defun revert-buffer-no-confirm ()
+  "Revert current buffer but don't nag."
   (interactive)
   (revert-buffer t t))
 (bind-key "C-c C-r" #'revert-buffer-no-confirm)
@@ -648,7 +639,7 @@ subpath."
 ;;; imenu
 
 (defun lisp-imenu-defmethod-matcher ()
-  "Matches a Lisp defmethod and sets `match-data' accordingly."
+  "Match a Lisp defmethod and set `match-data' accordingly."
   (when (re-search-backward "defmethod" nil t)
     (ignore-errors
       (let ((data '()))
@@ -715,9 +706,7 @@ subpath."
 (use-package dot-gnus
   :disabled t
   :bind (("C-. m" . gnus)
-         ("C-. M" . gnus-other-frame))
-  :init
-  (setq gnus-init-file (expand-file-name "dot-gnus" lisp-directory)))
+         ("C-. M" . gnus-other-frame)))
 
 
 ;;; cperl-mode
@@ -917,6 +906,12 @@ subpath."
          ("M-s p" . rg-project)
          ("M-s t" . rg-literal)))
 
+;;; checkdoc
+
+(use-package checkdoc
+  :init
+  (setq checkdoc-package-keywords-flag t))
+
 ;;; packages end here
 
 
@@ -926,7 +921,8 @@ subpath."
 (require 'windmove)
 
 (defun fyi-move-splitter-left (arg)
-  "Move window splitter left."
+  "Move window splitter left.
+Argument ARG number of units."
   (interactive "p")
   (if (let ((windmove-wrap-around))
         (windmove-find-other-window 'right))
@@ -934,7 +930,8 @@ subpath."
     (enlarge-window-horizontally arg)))
 
 (defun fyi-move-splitter-right (arg)
-  "Move window splitter right."
+  "Move window splitter right.
+Argument ARG number of units."
   (interactive "p")
   (if (let ((windmove-wrap-around))
         (windmove-find-other-window 'right))
@@ -942,7 +939,8 @@ subpath."
     (shrink-window-horizontally arg)))
 
 (defun fyi-move-splitter-up (arg)
-  "Move window splitter up."
+  "Move window splitter up.
+Argument ARG number of units."
   (interactive "p")
   (if (let ((windmove-wrap-around))
         (windmove-find-other-window 'up))
@@ -950,7 +948,8 @@ subpath."
     (shrink-window arg)))
 
 (defun fyi-move-splitter-down (arg)
-  "Move window splitter down."
+  "Move window splitter down.
+Argument ARG number of units."
   (interactive "p")
   (if (let ((windmove-wrap-around))
         (windmove-find-other-window 'up))
@@ -961,6 +960,7 @@ subpath."
 ;;; check for parens after save
 
 (defun check-parens-hook ()
+  "Hook that check for parens in Lisp modes."
   (when (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
     (check-parens)))
 
@@ -972,7 +972,7 @@ subpath."
 (defun narrow-or-widen-dwim (p)
   "Widen if buffer is narrowed, narrow-dwim otherwise.
 Dwim means: region, org-src-block, org-subtree, or
-defun, whichever applies first. Narrowing to
+defun, whichever applies first.  Narrowing to
 org-src-block actually calls `org-edit-src-code'.
 
 With prefix P, don't widen, just narrow even if buffer
@@ -1006,10 +1006,12 @@ is already narrowed."
 ;;; this means scroll wihtout moving the point. This is usually best when the point is centered.
 
 (defun scroll-down-inplace ()
+  "Scroll down but leave point where it is."
   (interactive)
   (scroll-down '(4)))
 
 (defun scroll-up-inplace ()
+  "Soll up but leave point where it is."
   (interactive)
   (scroll-up '(4)))
 
@@ -1029,3 +1031,11 @@ is already narrowed."
 (put 'narrow-to-page 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
+
+(provide 'init)
+
+;;; init.el ends here
+
+;; Local Variables:
+;; flycheck-disabled-checkers: (emacs-lisp emacs-lisp-checkdoc)
+;; End:

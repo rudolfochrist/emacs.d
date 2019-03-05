@@ -1,16 +1,3 @@
 # emacs.d
 
 My Emacs configuration files
-
-* Prerequisites
-
-1. Install [[http://ccl.clozure.com/][CCL]]
-2. Install [[http://www.quicklisp.org/][Quicklisp]]
-3. Install [[http://quickdocs.org/clhs/][clhs]]
-   
-* Installation
-
-: $ cd $HOME
-: $ git clone https://github.com/rudolfochrist/emacs.d.git .emacs.d
-: $ make  # this compiles site-lisp
-: $ emacs
