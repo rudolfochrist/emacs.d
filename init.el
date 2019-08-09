@@ -914,6 +914,13 @@ subpath."
   :init
   (setq checkdoc-package-keywords-flag t))
 
+;;; anzu
+
+(use-package anzu
+  :ensure t
+  :bind (("M-%" . anzu-query-replace)
+         ("C-M-%" . anzu-query-replace-regexp)))
+
 ;;; packages end here
 
 
