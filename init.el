@@ -8,6 +8,8 @@
 
 ;;; Code:
 (require 'package)
+(setf package-enable-at-startup nil
+      package-user-dir "~/.emacs-packages")
 (if (not (gnutls-available-p))
     (warn "Packages cannot use HTTPS. Please install gnutls")
   (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
