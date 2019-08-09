@@ -58,6 +58,10 @@
 (global-auto-revert-mode 1)
 (delete-selection-mode 1)
 
+;;; Use ISO calendar (YYYY-MM-DD)
+(use-package calendar
+  :config (calendar-set-date-style 'iso))
+
 ;;; encoding
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8-unix)
@@ -270,18 +274,7 @@
 ;;; org-mode
 
 (use-package dot-org
-  :disabled t
-  :load-path ("site-lisp/org-mode/lisp" "site-lisp/org-mode/contrib/lisp")
-  :defer 10
-  :bind (("C-c l" . org-store-link)
-         ("C-. a" . org-agenda)
-         ("C-. c" . org-smart-capture)
-         :map org-mode-map
-         ("C-c C-r" . org-refile-web-capture))
-  :init
-  (add-to-list 'Info-directory-list
-               (expand-file-name "org-mode/doc" site-lisp-directory)))
-
+  :load-path ("site-lisp"))
 
 ;;; wgrep
 
@@ -920,6 +913,13 @@ subpath."
   :ensure t
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp)))
+
+;;; german holidays
+
+(use-package german-holidays
+  :ensure t
+  :demand t
+  :config (setq calendar-holidays holiday-german-holidays))
 
 ;;; packages end here
 
