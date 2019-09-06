@@ -50,9 +50,7 @@
       ring-bell-function 'ignore       ; don't ring the bell
       scroll-preserve-screen-position 'always
       confirm-kill-emacs 'yes-or-no-p
-      scroll-margin 2
-      mac-command-modifier 'control    ; so much nicer on MacOS
-      mac-control-modifier 'command)
+      scroll-margin 2)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode 1)
@@ -109,21 +107,6 @@
 (line-number-mode 1)
 (column-number-mode 1)
 
-;; ;;; reset font colors in termins
-;; (defun setup-terminal-colors (frame)
-;;   (unless (display-graphic-p frame)
-;;     (set-face-foreground 'default "white" frame)
-;;     (set-face-background 'default "black" frame)))
-
-;; (add-hook 'after-make-frame-functions #'setup-terminal-colors)
-
-;; ;;; default theme with custom background. Only in GUI Emacs.
-;; ;;; see http://irreal.org/blog/?p=3900
-;; (when (display-graphic-p)
-;;   (set-background-color "white smoke")
-;;   (add-to-list 'default-frame-alist '(background-color . "white smoke")))
-
-
 ;;; make scripts executable if shebang present
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
@@ -133,7 +116,6 @@
   (add-hook 'text-mode-hook
             (lambda ()
               (set-input-method "latin-9-prefix"))))
-
 
 ;;; SERVER
 
@@ -227,9 +209,8 @@
   :demand t
   :bind (("C-. C-r" . ivy-resume)
          ("C-x C-b" . ivy-switch-buffer))
-  :init
-  (setq ivy-display-style 'fancy)
   :config
+  (setq ivy-display-style 'fancy)
   (ivy-mode 1))
 
 (use-package counsel
@@ -250,10 +231,11 @@
   :commands (info)
   :bind (("C-h a" . apropos)
          ("C-h A" . apropos))
-  :demand t
-  :config
-  (use-package info-look
-    :bind (("C-h S" . info-lookup-symbol))))
+  :demand t)
+
+(use-package info-look
+  :after info
+  :bind (("C-h S" . info-lookup-symbol)))
 
 
 ;;; flyspell
@@ -261,7 +243,6 @@
 (use-package flyspell
   :unless (eq window-system 'w32)
   :commands (flyspell-prog-mode flyspell-mode)
-  :init
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)))
 
@@ -281,7 +262,7 @@
 (use-package wgrep-ag
   :ensure t
   :commands (wgrep-change)
-  :init (setq wgrep-auto-save-buffer t))
+  :config (setq wgrep-auto-save-buffer t))
 
 
 ;;; company-mode
@@ -300,6 +281,20 @@
 
 ;;; dired
 
+(defun dired-open-natively ()
+  "Opens file with the native app."
+  (interactive)
+  (let ((cmd (if (eql system-type 'darwin)
+                 "open"
+               "xdg-open")))
+    (shell-command (format "%s %s"
+                           cmd
+                           (shell-quote-argument (dired-get-file-for-visit))))))
+
+(defun dired-up-alternate-directory ()
+  (interactive)
+  (find-alternate-file ".."))
+
 (use-package dired
   :bind (("C-x D" . dired)
          :map
@@ -308,20 +303,7 @@
          ("l" . dired-up-alternate-directory)
          ("RET" . dired-find-alternate-file)
          ("M-RET" . dired-open-natively))
-  :preface
-  (defun dired-open-natively ()
-    "Opens file with the native app."
-    (interactive)
-    (let ((cmd (if (eql system-type 'darwin)
-                   "open"
-                 "xdg-open")))
-      (shell-command (format "%s %s"
-                             cmd
-                             (shell-quote-argument (dired-get-file-for-visit))))))
-  (defun dired-up-alternate-directory ()
-    (interactive)
-    (find-alternate-file ".."))
-  :init
+  :config
   (setq dired-garbage-files-regexp
         "\\.idx\\|\\.run\\.xml$\\|\\.bbl$\\|\\.bcf$\\|.blg$\\|-blx.bib$\\|.nav$\\|.snm$\\|.out$\\|.synctex.gz$\\|\\(?:\\.\\(?:aux\\|bak\\|dvi\\|log\\|orig\\|rej\\|toc\\|pyg\\)\\)\\'"
         dired-listing-switches "-alvh"
@@ -349,7 +331,7 @@
 ;;; ediff
 
 (use-package ediff
-  :init
+  :config
   (setq ediff-window-setup-function #'ediff-setup-windows-plain
         ediff-split-window-function #'split-window-horizontally
         ;; ignores certain changes
@@ -358,22 +340,21 @@
 
 ;;; iedit
 
+(defun iedit-mode-defun ()
+  (interactive)
+  (iedit-mode '(0)))
+
 (use-package iedit
   :ensure t
   :bind (("C-. C-'" . iedit-mode)
-         ("C-. C-\"" . iedit-mode-defun))
-  :preface
-  (defun iedit-mode-defun ()
-    (interactive)
-    (iedit-mode '(0))))
-
+         ("C-. C-\"" . iedit-mode-defun)))
 
 ;;; js2-mode
 
 (use-package js2-mode
   :ensure t
   :mode (("\\.js\\'" . js2-mode))
-  :init
+  :config
   (setq js2-basic-offset 2
         js-indent-level 2))
 
@@ -388,48 +369,39 @@
 
 ;;; magit
 
+(defun magit-status-with-prefix ()
+  (interactive)
+  (let ((current-prefix-arg '(4)))
+    (call-interactively #'magit-status)))
+
 (use-package magit
   :ensure t
   :commands (magit-clone magit-blame)
   :bind (("C-. gg" . magit-status)
          ("C-. GG" . magit-status-with-prefix)
          ("C-. gl" . magit-list-repositories))
-  :preface
-  (defun magit-status-with-prefix ()
-    (interactive)
-    (let ((current-prefix-arg '(4)))
-      (call-interactively #'magit-status)))
-  :init
+  :config
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
         magit-repository-directories '(("~/.emacs.d/" . 0)
                                        ("~/code/" . 1)
-                                       ("~/prj/" . 1)
-                                       ("~/quicklisp/local-projects/" . 1)
-                                       ;; eclipse (necessary sometimes)
-                                       ("~/workspace/" . 1)))
+                                       ("~/quicklisp/local-projects/" . 1)))
   ;; install info
   (add-to-list 'Info-directory-list
                (expand-file-name "magit/Documentation" site-lisp-directory))
-  :config
   (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)))
 
 
 ;;; paredit
 
+(defvar paredit-non-space-patterns '("#\+" "#-" "#." ",@"))
+
+(defun paredit-adjust-spacing-p (endp delimiter)
+  "Don't add space before splicing (,@) or reader macros."
+  (cl-notany #'looking-back paredit-non-space-patterns))
+
 (use-package paredit
   :ensure t
   :commands (enable-paredit-mode)
-  :bind (:map paredit-mode-map
-              ("[" . paredit-open-round)
-              ("]" . paredit-close-round)
-              ("(" . paredit-open-bracket)
-              (")" . paredit-close-bracket))
-  :preface
-  (defvar paredit-non-space-patterns '("#\+" "#-" "#." ",@"))
-
-  (defun paredit-adjust-spacing-p (endp delimiter)
-    "Don't add space before splicing (,@) or reader macros."
-    (cl-notany #'looking-back paredit-non-space-patterns))
   :hook ((emacs-lisp-mode . enable-paredit-mode)
          (eval-expression-minibuffer-setup . enable-paredit-mode)
          (lisp-mode . enable-paredit-mode)
@@ -453,10 +425,10 @@
 ;;; whitespace
 
 (use-package whitespace
-  :init
+  :hook (prog-mode . whitespace-mode)
+  :config
   (setq whitespace-line-column 120
-        whitespace-style '(face lines-tail tabs trailing))
-  :hook (prog-mode . whitespace-mode))
+        whitespace-style '(face lines-tail tabs trailing)))
 
 
 ;;; yasnippet
@@ -474,7 +446,7 @@
 
 (use-package emacs-lisp-mode
   :mode (("Cask\\'" . emacs-lisp-mode))
-  :init
+  :config
   ;; emacs-lisp indentation
   (add-hook 'emacs-lisp-mode-hook
             (lambda ()
@@ -492,6 +464,48 @@
 
 ;;; slime
 
+;; company backend
+(use-package slime-company
+  :ensure t
+  :commands (slime-company)
+  :init
+  (setq slime-company-completion 'fuzzy))
+
+;; show autodoc also on newline.
+(defun slime-autodoc-newline ()
+  (interactive)
+  (if (eq major-mode 'slime-repl-mode)
+      (slime-repl-newline-and-indent)
+    (newline-and-indent))
+  (let ((doc (slime-autodoc t)))
+    (when doc
+      (eldoc-message "%s" doc))))
+(eldoc-add-command 'slime-autodoc-newline)
+
+;; Inspect last expresssion
+(defun slime-repl-inspect-last-expression ()
+  "Inspects the last expression."
+  (interactive)
+  (slime-repl-inspect "*"))
+
+(defun slime-insert-file-header ()
+  "Inserts the current file name into the buffer.
+
+Later renditions should locate the asd file and insert the whole
+subpath."
+  (interactive)
+  (let ((file-name (file-name-nondirectory (buffer-file-name))))
+    (goto-char (point-min))
+    (insert
+     (format ";;;; %s\n\n" file-name))))
+
+;; custom slime-documentation-function
+(defun slime-eww-hyperspec-lookup ()
+  "Opens the hyperspec in EWW inside Emacs."
+  (interactive)
+  (let ((browse-url-browser-function #'eww-browse-url))
+    (call-interactively #'slime-hyperspec-lookup)))
+
 (use-package slime
   :ensure t
   :mode (("\\.asd\\'" . lisp-mode)
@@ -508,44 +522,16 @@
          ("SPC" . slime-autodoc-space)
          ("C-j" . slime-autodoc-newline)
          ("C-c O" . slime-repl-inspect-last-expression))
-  :preface
-  ;; show autodoc also on newline.
-  (defun slime-autodoc-newline ()
-    (interactive)
-    (if (eq major-mode 'slime-repl-mode)
-        (slime-repl-newline-and-indent)
-      (newline-and-indent))
-    (let ((doc (slime-autodoc t)))
-      (when doc
-        (eldoc-message "%s" doc))))
-  (eldoc-add-command 'slime-autodoc-newline)
-
-  ;; Inspect last expresssion
-  (defun slime-repl-inspect-last-expression ()
-    "Inspects the last expression."
-    (interactive)
-    (slime-repl-inspect "*"))
-
-  (defun slime-insert-file-header ()
-    "Inserts the current file name into the buffer.
-
-Later renditions should locate the asd file and insert the whole
-subpath."
-    (interactive)
-    (let ((file-name (file-name-nondirectory (buffer-file-name))))
-      (goto-char (point-min))
-      (insert
-       (format ";;;; %s\n\n" file-name))))
-
-  ;; custom slime-documentation-function
-  (defun slime-eww-hyperspec-lookup ()
-    "Opens the hyperspec in EWW inside Emacs."
-    (interactive)
-    (let ((browse-url-browser-function #'eww-browse-url))
-      (call-interactively #'slime-hyperspec-lookup)))
   :hook ((lisp-mode . slime-mode)
          (inferior-lisp-mode . inferior-slime-mode))
   :init
+  (add-hook 'lisp-mode-hook
+            (lambda ()
+              (setq-local lisp-indent-function #'common-lisp-indent-function)))
+  ;; slime docs
+  (add-to-list 'Info-directory-list
+               (expand-file-name "slime/doc" site-lisp-directory))
+  :config
   (setq slime-complete-symbol*-fancy t
         slime-complete-symbol-function #'slime-fuzzy-complete-symbol
         slime-startup-animation t
@@ -569,22 +555,8 @@ subpath."
           slime-sprof
           slime-indentation))
 
-  (add-hook 'lisp-mode-hook
-            (lambda ()
-              (setq-local lisp-indent-function #'common-lisp-indent-function)))
-  ;; slime docs
-  (add-to-list 'Info-directory-list
-               (expand-file-name "slime/doc" site-lisp-directory))
-  :config
   ;; HyperSpec/Documentation
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
-
-  ;; company backend
-  (use-package slime-company
-    :ensure t
-    :demand t
-    :init (setq slime-company-completion 'fuzzy)
-    :commands (slime-company))
 
   ;; quicklisp REPL command
   (defslime-repl-shortcut slime-repl-quicklisp-quickload
@@ -630,7 +602,6 @@ subpath."
                                 system-name))
                 (slime-repl-send-input t)))))
 
-
 ;;; imenu
 
 (defun lisp-imenu-defmethod-matcher ()
@@ -653,7 +624,7 @@ subpath."
         t))))
 
 (use-package imenu
-  :init
+  :config
   ;; don't replace space
   (setq imenu-space-replacement nil)
   ;; overwrite how imenu handles defmethods. I want to see the
@@ -706,20 +677,20 @@ subpath."
 
 ;;; cperl-mode
 
+;; https://www.emacswiki.org/emacs/CPerlMode#toc10
+(defun my-cperl-eldoc-documentation-function ()
+  "Return meaningful doc string for `eldoc-mode'."
+  (car
+   (let ((cperl-message-on-help-error nil))
+     (cperl-get-help))))
+
 (use-package cperl-mode
   :mode "\\.\\([pP][Llm]\\|al\\)\\'"
   :mode "cpanfile"
   :interpreter (("perl" . cperl-mode)
                 ("perl5" . cperl-mode)
                 ("miniperl" . cperl-mode))
-  :preface
-  ;; https://www.emacswiki.org/emacs/CPerlMode#toc10
-  (defun my-cperl-eldoc-documentation-function ()
-    "Return meaningful doc string for `eldoc-mode'."
-    (car
-     (let ((cperl-message-on-help-error nil))
-       (cperl-get-help))))
-  :init
+  :config
   (setq cperl-hairy t
         cperl-clobber-lisp-bindings nil
         cperl-info-on-command-no-prompt nil)
@@ -770,7 +741,7 @@ subpath."
          ;; magit
          with-editor-mode-map
          ("C-. C-;" . git-msg-prefix))
-  :init
+  :config
   (setq git-msg-prefix-input-method #'ivy-read))
 
 
@@ -785,22 +756,20 @@ subpath."
 
 ;;; web-mode
 
+(defun web-mode-lsp-bindings ()
+  (bind-key "M-." #'slime-edit-definition web-mode-map)
+  (bind-key "M-," #'slime-pop-find-definition-stack web-mode-map))
+
 (use-package web-mode
   :ensure t
   :mode "\\.lsp\\'"
   :mode "\\.ep\\'"
-  :preface
-  (defun web-mode-lsp-bindings ()
-    (bind-key "M-." #'slime-edit-definition web-mode-map)
-    (bind-key "M-," #'slime-pop-find-definition-stack web-mode-map))
   :hook (web-mode . web-mode-lsp-bindings))
-
 
 ;;; zel
 
 (use-package zel
   :ensure t
-  :demand t
   :bind (("C-x C-r" . zel-find-file-frecent))
   :config
   (zel-install))
@@ -874,8 +843,8 @@ subpath."
 
 (use-package find-file-in-project
   :ensure t
-  :bind (("C-. C-f" . find-file-in-project)
-         ("C-. F" . find-file-in-project-by-selected)))
+  :bind (("M-s M-f" . find-file-in-project)
+         ("M-s F" . find-file-in-project-by-selected)))
 
 ;;; aggressive-indent
 
@@ -904,7 +873,7 @@ subpath."
 ;;; checkdoc
 
 (use-package checkdoc
-  :init
+  :config
   (setq checkdoc-package-keywords-flag t))
 
 ;;; anzu

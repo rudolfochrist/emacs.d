@@ -172,11 +172,6 @@ PATH is the reference headline."
       org-src-tab-acts-natively t
       org-src-preserve-indentation t)
 
-;;; org-ref (???. Don't know if I will need that anymore.)
-
-
-(provide 'dot-org)
-
 (provide 'dot-org)
 
 ;;; dot-org.el ends here
