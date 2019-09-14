@@ -107,7 +107,7 @@ subpath."
 
 ;;; REPL setup
 (bind-key "C-l" #'slime-repl-clear-buffer slime-repl-mode-map)
-;; (bind-key "SPC" #'slime-autodoc-space slime-repl-mode-map)
+(bind-key "SPC" #'slime-autodoc-space slime-repl-mode-map)
 (bind-key "C-j" #'slime-autodoc-newline slime-repl-mode-map)
 (bind-key "C-c O" #'slime-repl-inspect-last-expression slime-repl-mode-map)
 
