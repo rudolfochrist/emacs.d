@@ -6,12 +6,12 @@
 
 ;;; Code:
 
+(use-package slime :ensure t)
 (use-package slime-company
   :ensure t
+  :after (slime company-mode)
   :config
   (setq slime-company-completion 'fuzzy))
-
-(use-package slime :ensure t)
 (require 'slime-repl)
 (require 'slime-fuzzy)
 (require 'slime-banner)
@@ -92,11 +92,32 @@ subpath."
      (format ";;;; %s\n\n" file-name))))
 
 
+;;; show hyperspec in EWW
 (defun slime-eww-hyperspec-lookup ()
-  "Opens the hyperspec in EWW inside Emacs."
+  "Open the hyperspec in EWW inside Emacs."
   (interactive)
   (let ((browse-url-browser-function #'eww-browse-url))
     (call-interactively #'slime-hyperspec-lookup)))
+
+(defun my-common-lisp-hyperspec-format ()
+  "Open format directives in EWW."
+  (interactive)
+  (let ((browse-url-browser-function #'eww-browse-url))
+    (call-interactively #'common-lisp-hyperspec-format)))
+(bind-key "C-c C-d ~" #'my-common-lisp-hyperspec-format slime-doc-map)
+
+(defun my-common-lisp-hyperspec-glossary-term ()
+  "Open glossary in EWW."
+  (let ((browse-url-browser-function #'eww-browse-url))
+    (call-interactively #'common-lisp-hyperspec-glossary-term)))
+(bind-key "C-c C-d g" #'my-common-lisp-hyperspec-glossary-term slime-doc-map)
+
+(defun my-common-lisp-hyperspec-lookup-reader-macro ()
+  "Open reader macros in EWW."
+  (interactive)
+  (let ((browse-url-browser-function #'eww-browse-url))
+    (call-interactively #'common-lisp-hyperspec-lookup-reader-macro)))
+(bind-key "C-c C-d #" #'my-common-lisp-hyperspec-lookup-reader-macro slime-doc-map)
 
 
 (bind-key "RET" #'slime-autodoc-newline slime-mode-map)

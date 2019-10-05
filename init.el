@@ -268,8 +268,8 @@
 
 ;;; company-mode
 
-(use-package company
-  :load-path "site-lisp/company-mode"
+(use-package company-mode
+  :ensure company
   :commands (global-company-mode)
   :bind (("C-. C-." . company-complete)
          :map company-active-map
