@@ -268,8 +268,8 @@
 
 ;;; company-mode
 
-(use-package company-mode
-  :ensure company
+(use-package company
+  :ensure t
   :commands (global-company-mode)
   :bind (("C-. C-." . company-complete)
          :map company-active-map
