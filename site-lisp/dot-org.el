@@ -6,7 +6,8 @@
 
 ;;; Code:
 
-(use-package org :demand t)
+(use-package org
+  :ensure org-plus-contrib)
 (use-package ox-md :after org)
 (use-package ox-texinfo :after org)
 
