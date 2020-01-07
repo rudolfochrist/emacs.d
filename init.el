@@ -51,7 +51,8 @@
       ring-bell-function 'ignore       ; don't ring the bell
       scroll-preserve-screen-position 'always
       confirm-kill-emacs 'yes-or-no-p
-      scroll-margin 2)
+      scroll-margin 2
+      mac-command-modifier 'control)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode 1)
