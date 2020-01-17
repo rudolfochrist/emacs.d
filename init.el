@@ -311,9 +311,7 @@
         dired-listing-switches "-alvh"
         dired-recursive-copies 'always
         dired-recursive-deletes 'top
-        dired-dwim-target t)
-  (when (system-macos-p)
-    (setq insert-directory-program "/usr/local/bin/gls")))
+        dired-dwim-target t))
 
 (use-package dired-x
   :after dired
