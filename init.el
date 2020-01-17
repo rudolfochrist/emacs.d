@@ -756,6 +756,23 @@
   :demand t
   :config (setq calendar-holidays holiday-german-holidays))
 
+;;; evil-swap-keys
+
+(use-package evil-swap-keys
+  :ensure t
+  :commands (global-evil-swap-keys-mode)
+  :hook ((prog-mode . evil-swap-parens)
+         (text-mode . evil-swap-parens))
+  :config (global-evil-swap-keys-mode))
+
+(defun evil-swap-parens ()
+  (evil-swap-keys-add-mapping "[" "(")
+  (evil-swap-keys-add-mapping "]" ")")
+  (evil-swap-keys-add-mapping "{" "[")
+  (evil-swap-keys-add-mapping "}" "]")
+  (evil-swap-keys-add-mapping "(" "{")
+  (evil-swap-keys-add-mapping ")" "}"))
+
 ;;; packages end here
 
 
