@@ -21,17 +21,12 @@
 (setq slime-complete-symbol*-fancy t
       slime-startup-animation t
       slime-net-coding-system 'utf-8-unix
-      slime-documentation-lookup-function #'slime-eww-hyperspec-lookup)
+      slime-documentation-lookup-function #'slime-eww-hyperspec-lookup
+      inferior-lisp-program "sbcl")
 
 (setq slime-completion-at-point-functions
       '(slime-filename-completion
         slime-fuzzy-complete-symbol))
-
-;; Lisps
-(setq slime-lisp-implementations
-      '((sbcl ("sbcl"))
-        (ccl ("ccl64"))
-        (alisp ("alisp"))))
 
 (setq slime-contribs
       '(slime-fancy
@@ -175,10 +170,19 @@ subpath."
                               system))
               (slime-repl-send-input t))))
 
+(use-package slime-docker
+  :ensure t
+  :after (slime)
+  :commands (slime-docker)
+  :config
+  (setq slime-docker-implemenetation '((sbcl ("sbcl")
+                                             :docker-machine "docker-desktop"
+                                             :slime-mount-path "~/.emacs-packages/slime-20200115.1313"))))
+
 (defun my-start-slime ()
   "Start slime."
   (interactive)
-  (slime))
+  (slime-docker))
 
 (provide 'dot-slime)
 
