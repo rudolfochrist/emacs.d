@@ -170,19 +170,10 @@ subpath."
                               system))
               (slime-repl-send-input t))))
 
-(use-package slime-docker
-  :ensure t
-  :after (slime)
-  :commands (slime-docker)
-  :config
-  (setq slime-docker-implemenetation '((sbcl ("sbcl")
-                                             :docker-machine "docker-desktop"
-                                             :slime-mount-path "~/.emacs-packages/slime-20200115.1313"))))
-
 (defun my-start-slime ()
   "Start slime."
   (interactive)
-  (slime-docker))
+  (slime))
 
 (provide 'dot-slime)
 
