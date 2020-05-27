@@ -761,8 +761,9 @@
 (use-package evil-swap-keys
   :ensure t
   :commands (global-evil-swap-keys-mode)
-  :hook ((prog-mode . evil-swap-parens)
-         (text-mode . evil-swap-parens))
+  :hook ((lisp-mode . evil-swap-parens)
+         (slime-repl-mode . evil-swap-parens)
+         (emacs-lisp-mode . evil-swap-parens))
   :config (global-evil-swap-keys-mode))
 
 (defun evil-swap-parens ()
