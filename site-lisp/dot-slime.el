@@ -159,12 +159,13 @@ subpath."
 
 
 (defslime-repl-shortcut slime-load-local-system
-  ("load-local-system" "load-local")
+  ("load-local-system" "load-local" "ll")
   (:handler (lambda (asd system)
               (interactive
-               (list
-                (read-file-name "ASD File: " nil nil t)
-                (read-minibuffer "System Name: ")))
+               (let ((file (read-file-name "ASD File: " nil nil t nil
+                                           (lambda (f) (string= (file-name-extension f) "asd")))))
+                 (list file
+                       (read-minibuffer "System Name: " (file-name-base file)))))
               (insert (format "(progn (asdf:load-asd \"%s\") (asdf:load-system \"%s\"))"
                               asd
                               system))
