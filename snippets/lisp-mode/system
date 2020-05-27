@@ -1,0 +1,33 @@
+# key: _system
+# name: system
+# --
+(defsystem "${1:name}"
+  :author "Sebastian Christ <rudolfo.christ@pm.me>"
+  :maintainer "Sebastian Christ <rudolfo.christ@pm.me>"
+  :license "${2:LGPL}"${3:
+  :homepage "https://github.com/rudolfochrist/$1"}
+  :version "0.1.1"
+  :depends-on ()
+  :components ((:module "src"
+                :serial t
+                :components
+                ((:file "package"))))
+  :description "${4:description}"
+  :long-description
+  #.(uiop:read-file-string
+     (uiop:subpathname *load-pathname* "README.md"))${5:
+  :in-order-to ((test-op (test-op $1/test)))})
+
+${6:
+(defsystem "$1/test"
+  :depends-on ("uiop"
+               "rove"
+               "$1")
+  :components ((:module "t"
+                :serial t
+                :components
+                ((:file "package"))))
+  :perform (test-op (op c)
+              (uiop:symbol-call :rove :run :$1.tests)))}
+
+$0
