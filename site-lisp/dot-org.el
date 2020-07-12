@@ -6,10 +6,14 @@
 
 ;;; Code:
 
+;;; this has to be set before org.el is loaded
+(setq org-export-backends '(ascii html latex))
+
 (use-package org
   :ensure org-plus-contrib)
 (use-package ox-md :after org)
 (use-package ox-texinfo :after org)
+(use-package org-tempo :after org) ; brings back the easy-templates
 
 ;;; org basics
 (setq org-startup-indented t
@@ -46,11 +50,11 @@ hypersetup to include colorlinks=true."
                     "false")
                   suffix))))
 
-(setq org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
-      org-export-date-timestamp-format "%Y-%m-%d"
-      org-latex-prefer-user-labels t
-      org-footnote-auto-label t    ; generate numbered footnotes like [fn:1]
-      org-latex-hyperref-template (toggle-org-latex-hyperref-colorlinks t))
+(setq  org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
+       org-export-date-timestamp-format "%Y-%m-%d"
+       org-latex-prefer-user-labels t
+       org-footnote-auto-label t    ; generate numbered footnotes like [fn:1]
+       org-latex-hyperref-template (toggle-org-latex-hyperref-colorlinks t))
 
 
 ;;; latex compiler settings
