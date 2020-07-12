@@ -59,6 +59,37 @@
 (delete-selection-mode 1)
 
 ;;; Use ISO calendar (YYYY-MM-DD)
+
+(defvar init-last-local-map nil)
+
+(defun do-insert-iso-timestamp ()
+  (interactive)
+  (calendar-exit)
+  (use-local-map init-last-local-map)
+  (let ((date (with-current-buffer "*Calendar*"
+                (calendar-cursor-to-date t)))
+        (hour (cl-parse-integer (read-from-minibuffer "Hour: ") :junk-allowed t))
+        (minute (cl-parse-integer (read-from-minibuffer "Minute: ") :junk-allowed t)))
+    (cl-destructuring-bind (month day year) date
+      (insert (format-time-string
+               "%FT%T%z"
+               (encode-time 0
+                            (or minute 0)
+                            (or hour 0)
+                            day
+                            month
+                            year
+                            "GMT-2")
+               "GMT-2")))))
+
+(defun insert-iso-timestamp ()
+  "Insert a ISO 8601 timestamp."
+  (interactive)
+  (setq init-last-local-map (current-local-map))
+  (calendar)
+  (use-local-map (copy-keymap (current-local-map)))
+  (local-set-key (kbd "RET") #'do-insert-iso-timestamp))
+
 (use-package calendar
   :config (calendar-set-date-style 'iso))
 
@@ -763,7 +794,8 @@
   :commands (global-evil-swap-keys-mode)
   :hook ((lisp-mode . evil-swap-parens)
          (slime-repl-mode . evil-swap-parens)
-         (emacs-lisp-mode . evil-swap-parens))
+         (emacs-lisp-mode . evil-swap-parens)
+         (inferior-emacs-lisp-mode . evil-swap-parens))
   :config (global-evil-swap-keys-mode))
 
 (defun evil-swap-parens ()
@@ -877,8 +909,7 @@ is already narrowed."
   (interactive)
   (scroll-up '(4)))
 
-
-;;; Load machine-local configuration file
+;;; load machine-local configuration file
 
 (let* ((sys-name (system-name))
        (machine-rc (concat "~/.emacs." sys-name)))
