@@ -6,7 +6,7 @@
   :maintainer "Sebastian Christ <rudolfo.christ@pm.me>"
   :license "${2:LGPL}"${3:
   :homepage "https://github.com/rudolfochrist/$1"}
-  :version "0.1.1"
+  :version (:read-file-line "version")
   :depends-on ()
   :components ((:module "src"
                 :serial t

@@ -166,8 +166,10 @@ subpath."
                                            (lambda (f) (string= (file-name-extension f) "asd")))))
                  (list file
                        (read-minibuffer "System Name: " (file-name-base file)))))
-              (insert (format "(progn (asdf:load-asd \"%s\") (asdf:load-system \"%s\"))"
+              (insert (format "(progn (asdf:load-asd \"%s\") (ql:quickload \"%s\") (when (asdf:find-system \"%s/test\") (ql:quickload \"%s/test\")))"
                               asd
+                              system
+                              system
                               system))
               (slime-repl-send-input t))))
 
