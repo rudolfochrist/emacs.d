@@ -8,7 +8,7 @@
   :homepage "https://github.com/rudolfochrist/$1"}
   :version (:read-file-line "version")
   :depends-on ()
-  :components ((:module "src"
+  :components ((:module "lib"
                 :serial t
                 :components
                 ((:file "package"))))
@@ -21,13 +21,17 @@
 ${6:
 (defsystem "$1/test"
   :depends-on ("uiop"
-               "rove"
+               "fiasco"
                "$1")
   :components ((:module "t"
                 :serial t
                 :components
                 ((:file "package"))))
   :perform (test-op (op c)
-              (uiop:symbol-call :rove :run :$1.tests)))}
+                    (uiop:symbol-call
+                     :fiasco
+                     :run-package-tests
+                     :package :$1.tests
+                     :interactive (not (null (uiop:getenv "SHELLP"))))))}
 
 $0
