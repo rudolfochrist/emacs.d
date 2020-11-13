@@ -409,6 +409,8 @@
   :ensure t
   :commands (magit-clone magit-blame)
   :bind (("C-. gg" . magit-status)
+         ("C-. gi" . magit-init)
+         ("C-. gc" . magit-clone)
          ("C-. GG" . magit-status-with-prefix)
          ("C-. gl" . magit-list-repositories))
   :config
