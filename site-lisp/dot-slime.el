@@ -16,6 +16,8 @@
 (require 'slime-fuzzy)
 (require 'slime-banner)
 (require 'eldoc)
+(require 'find-file-in-project)
+(require 'ivy)
 
 ;;; some initialization
 (setq slime-complete-symbol*-fancy t
@@ -172,6 +174,22 @@ subpath."
                               system
                               system))
               (slime-repl-send-input t))))
+
+;;; slime-selector
+
+(defun slime-find-project-asd ()
+  "Find the project ASD file."
+  (let ((asds (directory-files (ffip-project-root) t ".asd")))
+    (cond
+     ((zerop (length asds))
+      (user-error "No ASD fiiles found!"))
+     ((= (length asds) 1)
+      (find-file (car asds)))
+     (t
+      (find-file (ivy-completing-read "ASD file: " asds nil t))))))
+
+(def-slime-selector-method ?a "Visit system definition (asd} buffer."
+  (slime-find-project-asd))
 
 (defun my-start-slime ()
   "Start slime."
