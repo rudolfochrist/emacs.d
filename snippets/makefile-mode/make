@@ -1,5 +1,6 @@
 # key: _make
 # name: make
+# expand-env: ((yas-indent-line 'fixed))
 # --
 # ${1:name}
 
