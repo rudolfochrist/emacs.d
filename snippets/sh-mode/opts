@@ -1,0 +1,55 @@
+# key: _opts
+# name: opts
+# --
+# helpers
+
+# meta
+version=${1:0.1.0}
+name=${2:name}
+
+assert_value ()
+{
+    if [ -z "\$2" ] || [ "\${2:0:1}" = "-" ]; then
+        echo "Error: Argument for $1 is missing" >&2
+        exit 1
+    fi
+}
+
+usage ()
+{
+    cat <<EOF
+Usage: $(basename \$0) [options]
+
+Options:
+  -v, --version                          Show version.
+  -h, --help                             Show help.
+EOF
+}
+
+# Parsing args
+params=""
+
+while (( "$#" )); do
+    case "\$1" in
+        -v|--version)
+            echo "$(basename \$0) v$version"
+            exit 0
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        -*|--*)
+            echo "Error: Unsupported flag \$1" >&2
+            exit 1
+            ;;
+        *)
+            params+="\$1 "
+            shift
+            ;;
+    esac
+done
+# set positional arguments in their proper place
+eval set -- "$params"
+
+$0

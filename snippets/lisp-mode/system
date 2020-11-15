@@ -8,14 +8,11 @@
   :homepage "https://github.com/rudolfochrist/$1"}
   :version (:read-file-line "version")
   :depends-on ()
-  :components ((:module "lib"
-                :serial t
-                :components
-                ((:file "package"))))
+  :components ()
   :description "${4:description}"
   :long-description
   #.(uiop:read-file-string
-     (uiop:subpathname *load-pathname* "README.md"))${5:
+     (uiop:subpathname *load-pathname* "README.txt"))${5:
   :in-order-to ((test-op (test-op $1/test)))})
 
 ${6:

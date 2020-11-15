@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: package
+# key: _pkg
+# --
+(defpackage #:${1:name}${2:
+  (:nicknames #:${3:nickname})}
+  (:use :cl${4: usage}))
+${5:
+(in-package #:$1)}
+$0

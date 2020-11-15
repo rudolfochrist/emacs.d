@@ -3,24 +3,16 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 #+STARTUP: showall
-#+OPTIONS: toc:nil
-
-# This is just the template README. Export to markdown to get the real README.
-
+#+OPTIONS: toc:nil author:nil
+# This is just the template README. Export to txt to get the real README.
 * NAME
 
-#+BEGIN_SRC lisp :exports results
-(let ((system (asdf:find-system "${1:system}")))
-  (format nil "~A --- ~A"
-    (asdf:component-name system)
-    (asdf:system-description system)))
-#+END_SRC
+${1:name} --- ${2:short description}
 
 * VERSION
 
-#+BEGIN_SRC lisp :exports results
-(format nil "Version ~A"
-        (asdf:component-version (asdf:find-system "$1")))
+#+BEGIN_SRC shell :exports results
+cat ../version
 #+END_SRC
 
 * SYNOPSIS
@@ -33,14 +25,15 @@
 
 * AUTHOR
 
-Sebastian Christ ([[mailto:rudolfo.christ@gmail.com]])${2:
+Sebastian Christ ([[mailto:rudolfo.christ@pm.me]])${3:
 
 * COPYRIGHT
 
-Copyright (c) ${3:year} Sebastian Christ (rudolfo.christ@gmail.com)}
+Copyright (c) ${4:year} Sebastian Christ (rudolfo.christ@pm.me)}
 
 * LICENSE
 
-Released under the ${4:LGPL} license.
+Released under the ${5:LGPL} license.${6:
 
 * SEE ALSO
+}

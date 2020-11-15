@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: ASDF test system
+# key: _tests
+# --
+(defsystem "${1:name}/test"
+  :depends-on ("uiop"
+               "fiasco"
+               "$1")
+  :components ((:module "t"
+                :serial t
+                :components
+                ((:file "package"))))
+  :perform (test-op (op c)
+                    (uiop:symbol-call
+                     :fiasco
+                     :run-package-tests
+                     :package :$1.tests
+                     :interactive (not (null (uiop:getenv "SHELLP"))))))
+
+$0

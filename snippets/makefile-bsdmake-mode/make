@@ -1,0 +1,56 @@
+# key: _make
+# name: make
+# --
+# ${1:name}
+
+.POSIX:
+.SUFFIXES:
+.SUFFIXES:
+
+VERSION=$(shell cat version)
+${1:$(replace-regexp-in-string "-" "_" (upcase yas-text))}=$1-$(VERSION)
+
+# variables
+DOTEMACS=$(HOME)/.emacs.d/init.el
+
+# paths
+scrdir=.
+
+prefix=/usr/local
+exec_prefix=$(prefix)
+bindir=$(exec_prefix)/bin
+libdir=$(exec_prefix)/lib
+libexecdir=$(bindir)/libexec/$(${1:$(replace-regexp-in-string "-" "_" (upcase yas-text))})
+lispdir=$(exec_prefix)/lisp
+
+datarootdir=$(prefix)/share
+datadir=$(datarootdir)/$(${1:$(replace-regexp-in-string "-" "_" (upcase yas-text))})
+docdir=$(datarootdir)/doc/$(${1:$(replace-regexp-in-string "-" "_" (upcase yas-text))})
+infodir=$(datarootdir)/info
+
+# programs
+INSTALL=/usr/bin/install
+
+all:
+
+clean:
+
+distclean: clean
+
+dist: distclean
+
+install: all installdirs
+
+uninstall:
+
+installdirs:
+
+info:
+
+README.txt: doc/README.org
+	emacs --batch -l $(DOTEMACS) --visit $< -f org-ascii-export-to-ascii
+	mv doc/README.txt .
+
+check:
+
+.PHONY: all clean distclean dist install installdirs uninstall info check
