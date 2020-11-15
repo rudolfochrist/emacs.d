@@ -928,6 +928,9 @@ is already narrowed."
 (put 'downcase-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 
+;;; got to $HOME
+(cd "~")
+
 (provide 'init)
 
 ;;; init.el ends here
