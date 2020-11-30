@@ -13,6 +13,12 @@
 (put '=destructure 'common-lisp-indent-function
      (get 'destructuring-bind 'common-lisp-indent-function))
 
+(put 'handle-command-line 'common-lisp-indent-function
+     (get 'defun 'common-lisp-indent-function))
+
+(put 'import 'common-lisp-indent-function
+     (get 'defun 'common-lisp-indent-function))
+
 (provide 'indentation-rules)
 
 ;;; indentation-rules.el ends here
