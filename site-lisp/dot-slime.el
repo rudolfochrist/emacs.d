@@ -9,12 +9,12 @@
 (use-package slime :ensure t)
 (use-package slime-company
   :ensure t
-  :after (slime company-mode)
+  :no-require t
+  :after (slime company)
   :config
-  (setq slime-company-completion 'fuzzy))
+  (setq slime-company-completion 'fuzzy
+        slime-company-after-completion 'slime-company-just-one-space))
 (require 'slime-repl)
-(require 'slime-fuzzy)
-(require 'slime-banner)
 (require 'eldoc)
 (require 'find-file-in-project)
 (require 'ivy)
