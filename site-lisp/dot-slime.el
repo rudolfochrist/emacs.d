@@ -12,8 +12,7 @@
   :no-require t
   :after (slime company)
   :config
-  (setq slime-company-completion 'fuzzy
-        slime-company-after-completion 'slime-company-just-one-space))
+  (setq slime-company-completion 'fuzzy))
 (require 'slime-repl)
 (require 'eldoc)
 (require 'find-file-in-project)
