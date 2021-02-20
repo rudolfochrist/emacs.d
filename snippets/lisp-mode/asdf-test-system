@@ -15,6 +15,6 @@
                     (uiop:symbol-call
                      :fiasco
                      :run-package-tests
-                     :package :$1.test
+                     :package :$1/test
                      :interactive *test-interactive*)))
 $0

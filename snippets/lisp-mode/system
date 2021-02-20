@@ -17,7 +17,7 @@
 
 ${6:
 (defvar *test-interactive* nil)
-(export '*test-interactive*)}
+(export '*test-interactive*)
 
 (defsystem "$1/test"
   :depends-on ("uiop"
@@ -29,6 +29,7 @@ ${6:
                     (uiop:symbol-call
                      :fiasco
                      :run-package-tests
-                     :package :$1.test
+                     :package :$1/test
                      :interactive *test-interactive*)))
+}
 $0

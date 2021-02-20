@@ -3,12 +3,12 @@
 # key: _texinfo
 # --
 #+MACRO: version (eval (progn (require 'f) (f-read-text "../version")))
+#+STARTUP: content
 
 #+TITLE: ${1:project} Manuel {{{version}}}
 #+AUTHOR: ${2:Sebastian Christ}
 #+EMAIL: ${3:rudolfo.christ@pm.me}
 #+OPTIONS: ':t author:t email:t toc:t
-
 
 #+TEXINFO_DIR_CATEGORY: ${4:Software Development}
 #+TEXINFO_DIR_TITLE: ${5:$1} (${6:$1})
@@ -34,6 +34,14 @@ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
 A copy of the license is included in the section entitled "GNU
 Free Documentation License".
 #+end_quote
+
+$0
+
+${9:
+* ${10:Directory}
+
+#+TEXINFO: @include ${11:dict.texi}
+}
 
 * GNU Free Documentation License
 :PROPERTIES:
@@ -489,6 +497,25 @@ situation.
 If your document contains nontrivial examples of program code, we
 recommend releasing these examples in parallel under your choice of
 free software license, such as the GNU General Public License,
-to permit their use in free software.
+to permit their use in free software. ${11:
 
+* Concept Index
+:PROPERTIES:
+:INDEX: cp
+:END:
 
+* Functions and Macro Index
+:PROPERTIES:
+:INDEX: fn
+:END:
+
+* Class and Type Index
+:PROPERTIES:
+:INDEX: tp
+:END:
+
+* Variable Index
+:PROPERTIES:
+:INDEX: vr
+:END:
+}

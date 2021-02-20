@@ -3,6 +3,7 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 #+STARTUP: showall
+#+EXPORT_FILE_NAME: ../README.txt
 #+OPTIONS: toc:nil author:nil
 # This is just the template README. Export to txt to get the real README.
 * NAME

@@ -37,28 +37,49 @@ infodir=$(datarootdir)/info
 
 # programs
 INSTALL=/usr/bin/install
-EMACS=/usr/local/bin/emacs
+INSTALL_PROGRAM=$(INSTALL)
+INSTALL_DATA=$(INSTALL) -m 644
 LS=/usr/local/bin/gls
+MAKEINFO=/usr/local/bin/makeinfo
 
 all:
 
-clean:
+clean:${4:
+	-rm **/*.fasl
+}
 
 distclean: clean
+	-rm $(PACKAGE).tar.gz
+
 
 dist: distclean
+	-rm -rf $(PACKAGE)
+        mkdir -p $(PACKAGE)
+        cp -R $(shell $(LS) --ignore$(PACKAGE)) $(PACKAGE)
+        tar czf $(PACKAGE).tar.gz $(PACKAGE)
+        -rm -rf $(PACKAGE)
 
-install: all installdirs
+do-install-info: $1.info installdirs
+	$(INSTALL_DATA) $< $(DESTDIR)$(infodir)/$<
+	# run install-info if available
+        if $(SHELL) -c 'install-info --version' \
+           >/dev/null 2>&1; then \
+           install-info --dir-file="$(DESTDIR)$(infodir)/dir" \
+                        "$(DESTDIR)$(infodir)/$<"; \
+        else true; fi
+
+
+install: all installdirs do-install-info
 
 uninstall:
 
 installdirs:
+        mkdir -p $(infodir)
 
-info:
+info: $1.info
 
-README.txt: doc/README.org
-	$(EMACS) --batch -l $(DOTEMACS) --visit $< -f org-ascii-export-to-ascii
-	mv doc/README.txt .
+$1.info: doc/$1.texi
+	$(MAKEINFO) $(srcdir)/$<
 
 check:
 
