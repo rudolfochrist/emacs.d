@@ -190,6 +190,21 @@ subpath."
 (def-slime-selector-method ?a "Visit system definition (asd} buffer."
   (slime-find-project-asd))
 
+;;; xref ivy completion
+
+(defun slime-package-symbols ()
+  (slime-eval `(swank-user:package-symbols ,(slime-current-package))))
+
+(defun slime-read-from-minibuffer (prompt &optional initial-value history)
+  "Like the original but with `ivy'."
+  (let ((minibuffer-setup-hook (slime-minibuffer-setup-hook)))
+    (ivy-completing-read prompt
+                         (slime-package-symbols)
+                         nil
+                         t
+                         initial-value
+                         (or history slime-minibuffer-history))))
+
 (defun my-start-slime ()
   "Start slime."
   (interactive)
