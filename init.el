@@ -251,7 +251,6 @@
   :after ivy
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
-         ("C-. C-," . counsel-imenu)
          ("C-. B" . counsel-bookmark)))
 
 ;;; info
@@ -566,6 +565,12 @@
                   2))))))
 
 
+(use-package imenu-anywhere
+  :ensure t
+  :after (imenu ivy)
+  :bind (("C-. C-," . ivy-imenu-anywhere)))
+
+
 ;;; gnus
 
 (use-package dot-gnus
@@ -808,6 +813,13 @@
   (evil-swap-keys-add-mapping "}" "]")
   (evil-swap-keys-add-mapping "(" "{")
   (evil-swap-keys-add-mapping ")" "}"))
+
+;;; ivy-xref
+
+(use-package ivy-xref
+  :ensure t
+  :after xref
+  :init (setq xref-show-definitions-function #'ivy-xref-show-defs))
 
 ;;; packages end here
 
