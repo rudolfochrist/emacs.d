@@ -19,6 +19,9 @@
 (put 'import 'common-lisp-indent-function
      (get 'defun 'common-lisp-indent-function))
 
+(put 'if-let 'common-lisp-indent-function
+     (get 'let 'common-lisp-indent-function))
+
 (provide 'indentation-rules)
 
 ;;; indentation-rules.el ends here
