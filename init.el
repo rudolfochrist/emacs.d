@@ -668,7 +668,10 @@
   :ensure t
   :mode "\\.lsp\\'"
   :mode "\\.ep\\'"
-  :hook (web-mode . web-mode-lsp-bindings))
+  :mode "\\.html.erb\\'"
+  :hook (web-mode . web-mode-lsp-bindings)
+  :config
+  (setq web-mode-auto-close-style 2))
 
 ;;; zel
 
