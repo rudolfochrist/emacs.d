@@ -22,8 +22,11 @@
 (setq slime-complete-symbol*-fancy t
       slime-startup-animation t
       slime-net-coding-system 'utf-8-unix
-      slime-documentation-lookup-function #'slime-eww-hyperspec-lookup
-      inferior-lisp-program "sbcl")
+      slime-documentation-lookup-function #'slime-eww-hyperspec-lookup)
+
+(setq slime-lisp-implementations
+      '((sbcl ("sbcl"))
+        (ccl ("ccl64"))))
 
 (setq slime-completion-at-point-functions
       '(slime-filename-completion
