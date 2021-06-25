@@ -824,6 +824,11 @@
   :after xref
   :init (setq xref-show-definitions-function #'ivy-xref-show-defs))
 
+;;; markdown
+
+(use-package markdown-mode
+  :ensure t)
+
 ;;; packages end here
 
 
