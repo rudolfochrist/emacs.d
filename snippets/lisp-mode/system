@@ -13,7 +13,7 @@
   :long-description
   #.(uiop:read-file-string
      (uiop:subpathname *load-pathname* "README.txt"))${5:
-  :in-order-to ((test-op (test-op $1/test)))})
+  :in-order-to ((test-op (load-op $1/test)))})
 
 ${6:
 (defvar *test-interactive* nil)
@@ -25,7 +25,7 @@ ${6:
                "$1")
   :pathname "t/"
   :components ((:file "tests"))
-  :perform (test-op (op c)
+  :perform (load-op (op c)
                     (uiop:symbol-call
                      :fiasco
                      :run-package-tests
