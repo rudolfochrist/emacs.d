@@ -21,11 +21,17 @@
 
 (unless (package-installed-p 'org)
   (use-package org
-    :ensure org-plus-contrib))
+    :ensure org-plus-contrib
+    :config
+    (add-to-list 'org-mode-hook
+                 (lambda ()
+                   (auto-fill-mode 1)
+                   (electric-pair-mode 0)))))
 (require 'ox)
 (require 'ox-md)
 (require 'ox-texinfo)
 (require 'ox-latex)
+(require 'ox-koma-letter)
 (require 'org-tempo) ; brings back the easy-templates
 
 ;;; org basics
