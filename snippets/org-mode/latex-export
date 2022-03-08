@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: latex-export
+# key: _latex
+# --
+#+SUBTITLE: ${1:Subtitle}
+#+DESCRIPTION: ${2:Description}
+#+LATEX_CLASS: ${3:article}
+#+LATEX_OPTIONS: a4paper
+#+LATEX_COMPILER: xelatex
+$0

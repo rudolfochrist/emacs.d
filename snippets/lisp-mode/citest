@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
-# name: ASDF test system
-# key: _test
+# name: ASDF CI Tests
+# key: _citest
 # --
-(defsystem "${1:name}/test"
+(defsystem "${1:name}/citest"
   :depends-on ("uiop"
                "fiasco"
                "$1")
@@ -13,5 +13,5 @@
                      :fiasco
                      :run-package-tests
                      :package :$1/test
-                     :interactive t)))
+                     :interactive nil)))
 $0

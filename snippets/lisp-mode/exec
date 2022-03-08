@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: exec
+# key: _exec
+# --
+(defsystem "${1:System}/executable"
+  :build-operation program-op
+  :build-pathname "${2:executable}" ;; shell name
+  :entry-point "$1::main" ;; thunk
+  :depends-on ("$1")
+  :components ((:file "main")))

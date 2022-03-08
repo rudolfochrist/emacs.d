@@ -4,21 +4,21 @@
 (defsystem "${1:name}"
   :author "Sebastian Christ <rudolfo.christ@pm.me>"
   :maintainer "Sebastian Christ <rudolfo.christ@pm.me>"
+  :mailto "rudolfo.christ@pm.me"
   :license "${2:LGPL}"${3:
-  :homepage "https://github.com/rudolfochrist/$1"}
+  :homepage "https://github.com/rudolfochrist/$1"}${4:
+  :bug-tracker "https://github.com/rudolfochrist/$1/issues"}${5:
+  :source-control (:git "https://github.com/rudolfochrist/$1.git")}
   :version (:read-file-line "version")
   :depends-on ()
   :components ()
-  :description "${4:description}"
+  :description "${6:description}"
   :long-description
   #.(uiop:read-file-string
-     (uiop:subpathname *load-pathname* "README.txt"))${5:
+     (uiop:subpathname *load-pathname* "README.txt"))${7:
   :in-order-to ((test-op (load-op $1/test)))})
 
-${6:
-(defvar *test-interactive* nil)
-(export '*test-interactive*)
-
+${8:
 (defsystem "$1/test"
   :depends-on ("uiop"
                "fiasco"
@@ -30,6 +30,6 @@ ${6:
                      :fiasco
                      :run-package-tests
                      :package :$1/test
-                     :interactive *test-interactive*)))
+                     :interactive t)))
 }
 $0

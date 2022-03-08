@@ -1,0 +1,16 @@
+# key: _letter
+# name: letter
+# --
+#+STARTUP: showall
+#+OPTIONS: after-closing-order:(ps encl cc) after-letter-order:(after_letter) backaddress:t
+#+OPTIONS: foldmarks:t email:t subject:titled phone:t url:t
+#+LATEX_CLASS: default-koma-letter
+#+LATEX_CLASS_OPTIONS: [a4paper]
+#+LCO: DIN ${1:$$(yas-choose-value '("de_DE" "en_GB"))} me ${2:$$(yas-choose-value (mapcar #'file-name-base (directory-files "~/lco-files/" nil "-letter")))}
+#+PLACE: ${3:Worms} ${4:
+#+SUBJECT: ${5: A letter to you}}
+#+BIND: org-export-date-timestamp-format "${6:$$(yas-choose-value '("%e. %B %Y" "%e %B %Y"))}"
+#+BIND: system-time-locale "$1.UTF-8"
+#+DATE: ${7:}
+
+$0

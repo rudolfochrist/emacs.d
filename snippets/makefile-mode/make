@@ -21,7 +21,7 @@ SRCS=\$(ASDSRCS) \$(LISPSRCS)
 }
 
 # paths
-scrdir=.
+srcdir=.
 
 prefix=/usr/local
 exec_prefix=$(prefix)

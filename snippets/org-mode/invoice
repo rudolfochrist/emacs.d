@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# name: invoice
+# key: _invoice
+# --
+#+STARTUP: showall
+#+OPTIONS: after-closing-order:(ps encl cc) after-letter-order:(after_letter) backaddress:t
+#+OPTIONS: foldmarks:t email:t subject:untitled phone:t url:t
+#+LATEX_CLASS: default-koma-letter
+#+LATEX_CLASS_OPTIONS: [a4paper]
+#+LATEX_HEADER: \usepackage{tabularx}
+#+LATEX_HEADER: \setlength\parindent{0pt}
+#+LCO: DIN de_DE me invoice
+#+SUBJECT: Rechnung Nr. ${1:Rechnungsnummer}
+#+BIND: org-export-date-timestamp-format "%e. %B %Y"
+#+BIND: system-time-locale "de_DE.UTF-8"
+#+DATE: ${2:Datum}
+
+* TO                                                                     :to:
+${3:customer}
+
+* ${4:Sehr geehrte Damen und Herren},
+
+vielen Dank für Ihre Buchung. Hiermit stelle ich folgende Leistungen in Rechnung:
+
+#+attr_latex: :environment tabularx :width \textwidth :align cXccc
+| Pos. | Bezeichung                                                                        | Menge    | Einzelpreis    | Gesamtpreis |
+|------+-----------------------------------------------------------------------------------+----------+----------------+-------------|
+|    1 | $0                                                                                |          |                |             |
+|------+-----------------------------------------------------------------------------------+----------+----------------+-------------|
+|      |                                                                                   |          |                |             |
+|      |                                                                                   |          | *Gesamtbetrag* |             |
+
+Umsatzsteuer wird nach § 19 Abs. 1 UStG nicht erhoben (Kleinunternehmerregelung).
+Zahlungsbedingung: zahlbar sofort ohne Abzug.
+
+
+* Mit freundlichen Grüßen,                                          :closing:
+
+

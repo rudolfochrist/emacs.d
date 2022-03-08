@@ -1,0 +1,10 @@
+# key: _basic
+# name: basic
+# --
+#+TITLE: ${1:Title}
+#+AUTHOR: ${2:Sebastian Christ}
+#+EMAIL: ${3:Mail address}
+#+DATE: ${4:Timestamp}
+#+LANGUAGE: ${5:Language}
+#+OPTIONS:  ':t author:t date:t email:t title:t toc:t
+$0

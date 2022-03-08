@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: ASDF conf
+# key: _asdfconf
+# --
+(:source-registry
+ (:directory (:here))
+ (:tree (:here "lib/software"))
+ :inherit-configuration)
