@@ -496,6 +496,10 @@
 
 ;;; slime
 
+(use-package lisp-mode
+  :mode "\\.lisp\\'"
+  :mode "\\.cl\\'")
+
 (use-package dot-slime
   :load-path "site-lisp"
   :bind (("C-. l" . my-start-slime)))
