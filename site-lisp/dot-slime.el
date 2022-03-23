@@ -17,6 +17,7 @@
 (require 'eldoc)
 (require 'find-file-in-project)
 (require 'ivy)
+(require 'font-lock)
 
 ;;; some initialization
 (setq slime-complete-symbol*-fancy t
@@ -26,6 +27,7 @@
 
 (setq slime-lisp-implementations
       '((sbcl ("sbcl"))
+        (alisp ("alisp"))
         (ccl ("ccl64"))))
 
 (setq slime-completion-at-point-functions
@@ -34,6 +36,7 @@
 
 (setq slime-contribs
       '(slime-fancy
+        slime-trace-dialog
         slime-banner
         slime-asdf
         slime-company
@@ -79,18 +82,6 @@
   (slime-repl-inspect "*"))
 
 
-(defun slime-insert-file-header ()
-  "Insert the current file name into the buffer.
-
-Later renditions should locate the asd file and insert the whole
-subpath."
-  (interactive)
-  (let ((file-name (file-name-nondirectory (buffer-file-name))))
-    (goto-char (point-min))
-    (insert
-     (format ";;;; %s\n\n" file-name))))
-
-
 ;;; show hyperspec in EWW
 (defun slime-eww-hyperspec-lookup ()
   "Open the hyperspec in EWW inside Emacs."
@@ -120,7 +111,6 @@ subpath."
 
 
 (bind-key "RET" #'slime-autodoc-newline slime-mode-map)
-(bind-key "C-c C-d i" #'slime-insert-file-header slime-mode-map)
 
 ;; HyperSpec/Documentation
 (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
@@ -162,21 +152,6 @@ subpath."
                 (dired path)))))
 
 
-(defslime-repl-shortcut slime-load-local-system
-  ("load-local-system" "load-local" "ll")
-  (:handler (lambda (asd system)
-              (interactive
-               (let ((file (read-file-name "ASD File: " nil nil t nil
-                                           (lambda (f) (string= (file-name-extension f) "asd")))))
-                 (list file
-                       (read-minibuffer "System Name: " (file-name-base file)))))
-              (insert (format "(progn (asdf:load-asd \"%s\") (ql:quickload \"%s\") (when (asdf:find-system \"%s/test\") (ql:quickload \"%s/test\")))"
-                              asd
-                              system
-                              system
-                              system))
-              (slime-repl-send-input t))))
-
 ;;; slime-selector
 
 (defun slime-find-project-asd ()
@@ -190,7 +165,7 @@ subpath."
      (t
       (find-file (ivy-completing-read "ASD file: " asds nil t))))))
 
-(def-slime-selector-method ?a "Visit system definition (asd} buffer."
+(def-slime-selector-method ?a "Visit system definition (asd) buffer."
   (slime-find-project-asd))
 
 ;;; xref ivy completion
@@ -207,6 +182,11 @@ subpath."
                          t
                          initial-value
                          (or history slime-minibuffer-history))))
+
+;;; Slime TRACE Dialog
+;;; For some reason the keys are not bound. Rebind them.
+(bind-key "C-c M-t" #'slime-trace-dialog-toggle-trace slime-mode-map)
+(bind-key "C-c T" #'slime-trace-dialog slime-mode-map)
 
 (defun my-start-slime ()
   "Start slime."
