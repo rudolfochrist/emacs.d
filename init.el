@@ -778,8 +778,14 @@
 
 ;;; electric-pair
 
-(use-package electric-pair
-  :hook (prog-mode . electric-pair-mode))
+(defvar fyi-inhibit-electric-pair-modes '(org-mode))
+
+(defun inhibit-electri-pair-mode-p (&rest _ignore)
+  (not (member major-mode fyi-inhibit-electric-pair-modes)))
+
+(use-package elec-pair
+  :config
+  (setq electric-pair-inhibit-predicate #'inhibit-electri-pair-mode-p))
 
 ;;; rg
 
