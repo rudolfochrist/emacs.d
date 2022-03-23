@@ -1056,6 +1056,21 @@ is already narrowed."
   (interactive)
   (scroll-up '(4)))
 
+;;; enable process killing in process list
+;;; https://stackoverflow.com/questions/10627289/emacs-internal-process-killing-any-command
+
+(defun fyi-kill-process-at-point ()
+  (interactive)
+  (let ((process (get-text-property (point) 'tabulated-list-id)))
+    (cond ((and process
+                (processp process))
+           (delete-process process)
+           (revert-buffer))
+          (t
+           (error "no process at point!")))))
+
+(bind-key "C-k" #'fyi-kill-process-at-point process-menu-mode-map)
+
 ;;; load machine-local configuration file
 
 (let* ((sys-name (system-name))
