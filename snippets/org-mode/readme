@@ -2,6 +2,8 @@
 # name: readme
 # expand-env: ((yas-indent-line 'fixed))
 # --
+# -*- mode: org; -*-
+#+MACRO: version (eval (with-temp-buffer (insert-file-contents-literally "../version" nil) (buffer-substring-no-properties (point-min) (point-max))))
 #+STARTUP: showall
 #+EXPORT_FILE_NAME: ../README.txt
 #+OPTIONS: toc:nil author:nil

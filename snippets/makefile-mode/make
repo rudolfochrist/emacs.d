@@ -12,13 +12,15 @@ VERSION=$(shell cat version)
 ${1:$(replace-regexp-in-string "-" "_" (upcase yas-text))}=$1
 PACKAGE=$1-$(VERSION)
 
-# variables
-DOTEMACS=$(HOME)/.emacs.d/init.el${3:
-
+# variables${3:
 ASDSRCS=\$(wildcard *.asd)
 LISPSRCS=\$(wildcard *.lisp)
 SRCS=\$(ASDSRCS) \$(LISPSRCS)
 }
+EMACSFLAGS=--batch -Q${4:
+LISPFLAGS=--no-userinit --non-interactive --noprint
+}
+
 
 # paths
 srcdir=.
@@ -37,50 +39,75 @@ infodir=$(datarootdir)/info
 
 # programs
 INSTALL=/usr/bin/install
-INSTALL_PROGRAM=$(INSTALL)
 INSTALL_DATA=$(INSTALL) -m 644
 LS=/usr/local/bin/gls
 MAKEINFO=/usr/local/bin/makeinfo
+EMACS=/usr/local/bin/emacs
+${5:LISP=/usr/local/bin/sbcl}
 
+.PHONY:
 all:
 
-clean:${4:
+.PHONY:
+check:
+
+.PHONY:
+clean:${6:
 	-rm **/*.fasl
 }
 
+.PHONY:
 distclean: clean
 	-rm $(PACKAGE).tar.gz
 
-
+.PHONY:
 dist: distclean
 	-rm -rf $(PACKAGE)
-        mkdir -p $(PACKAGE)
-        cp -R $(shell $(LS) --ignore$(PACKAGE)) $(PACKAGE)
-        tar czf $(PACKAGE).tar.gz $(PACKAGE)
-        -rm -rf $(PACKAGE)
+	mkdir -p $(PACKAGE)
+	cp -R $(shell $(LS) --ignore$(PACKAGE)) $(PACKAGE)
+	tar czf $(PACKAGE).tar.gz $(PACKAGE)
+	-rm -rf $(PACKAGE)
 
+.PHONY:
 do-install-info: $1.info installdirs
 	$(INSTALL_DATA) $< $(DESTDIR)$(infodir)/$<
 	# run install-info if available
-        if $(SHELL) -c 'install-info --version' \
-           >/dev/null 2>&1; then \
-           install-info --dir-file="$(DESTDIR)$(infodir)/dir" \
-                        "$(DESTDIR)$(infodir)/$<"; \
-        else true; fi
+	if $(SHELL) -c 'install-info --version' \
+	   >/dev/null 2>&1; then \
+	   install-info --dir-file="$(DESTDIR)$(infodir)/dir" \
+	                "$(DESTDIR)$(infodir)/$<"; \
+	else true; fi
 
-
+.PHONY:
 install: all installdirs do-install-info
 
+.PHONY:
 uninstall:
 
+.PHONY:
 installdirs:
-        mkdir -p $(infodir)
+	mkdir -p $(DESTDIR)$(infodir)
 
+.PHONY:
 info: $1.info
 
-$1.info: doc/$1.texi
+$1.info: doc/$1.texi doc/dict.texi
 	$(MAKEINFO) $(srcdir)/$<
 
-check:
+index.html: doc/$1.texi doc/dict.texi
+	$(MAKEINFO) --html --no-split -o $@ $<
 
-.PHONY: all clean distclean dist install installdirs uninstall info check
+doc/$1.texi: doc/$1.org version
+	-rm $@
+	$(EMACS) $< $(EMACSFLAGS) -l $(realpath doc/org-export.el) -f org-texinfo-export-to-texinfo
+
+doc/dict.texi: $(SRCS) version
+	$(LISP) $(LISPFLAGS) \
+	--load load.lisp \
+	--eval '(asdf:load-system "$1")' \
+	--eval '(asdf:load-system "sb-texinfo")' \
+	--eval '(sb-texinfo:document-package :$1 :output-file "$@" :standalone nil :write-backmatter nil :write-menu nil :exclude-node t)'
+
+README.txt: doc/README.org version
+	-rm $@
+	$(EMACS) $< $(EMACSFLAGS) -l $(realpath doc/org-export.el) -f org-ascii-export-to-ascii

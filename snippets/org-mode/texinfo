@@ -2,7 +2,8 @@
 # name: texinfo
 # key: _texinfo
 # --
-#+MACRO: version (eval (progn (require 'f) (f-read-text "../version")))
+# -*- mode: org; -*-
+#+MACRO: version (eval (with-temp-buffer (insert-file-contents-literally "../version" nil) (buffer-substring-no-properties (point-min) (point-max))))
 #+STARTUP: content
 
 #+TITLE: ${1:project} Manuel {{{version}}}
