@@ -752,10 +752,19 @@
 
 ;;; find-file-in-project
 
+(defun ffip-asd-project-root-p (dir)
+  "Non-nil if DIR contains ASD files."
+  (let ((asd (car (directory-files dir t "asd"))))
+    (when asd
+      (file-name-directory asd))))
+
 (use-package find-file-in-project
   :ensure t
   :bind (("M-s M-f" . find-file-in-project)
-         ("M-s F" . find-file-in-project-by-selected)))
+         ("M-s F" . find-file-in-project-by-selected))
+  :config
+  (add-to-list 'ffip-project-file #'ffip-asd-project-root-p)
+  (add-to-list 'ffip-ignore-filenames "*.fasl"))
 
 ;;; aggressive-indent
 
