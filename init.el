@@ -52,7 +52,9 @@
       scroll-preserve-screen-position 'always
       confirm-kill-emacs 'yes-or-no-p
       scroll-margin 2
-      mac-command-modifier 'control)
+      mac-command-modifier 'control
+      user-full-name "Sebastian Christ"
+      user-mail-address "rudolfo.christ@pm.me")
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode 1)
@@ -952,6 +954,20 @@ Return the number of uncleared xacts found."
         (if (> (ledger-reconcile-refresh) 0)
             (ledger-reconcile-change-target target))
         (ledger-display-balance)))))
+
+;;; skeletor
+
+(use-package skeletor
+  :ensure t
+  :after ivy
+  :config
+  (setq skeletor-project-directory "~/code/"
+        skeletor-completing-read-function #'ivy-completing-read
+        skeletor-init-with-git nil))
+
+(skeletor-define-template "lisp-init"
+  :no-license? t
+  :substitutions '(("__DESCRIPTION__" . (lambda () (read-string "Description: ")))))
 
 ;;; packages end here
 
