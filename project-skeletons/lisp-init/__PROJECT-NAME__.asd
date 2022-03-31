@@ -28,7 +28,7 @@
                "__PROJECT-NAME__")
   :pathname "t/"
   :components ((:file "tests"))
-  :perform (load-op (op c)
+  :perform (test-op (op c)
                     (unless (uiop:symbol-call :fiveam :run!)
                       (uiop:quit 1))))
 
