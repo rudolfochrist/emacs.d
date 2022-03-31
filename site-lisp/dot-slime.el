@@ -53,11 +53,6 @@
 (add-hook 'inferior-lisp-mode-hook #'inferior-slime-mode)
 
 (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode))
-(add-to-list 'auto-mode-alist '("\\.cl\\'" .lisp-mode))
-
-(add-hook 'lisp-mode-hook
-          (lambda ()
-            (setq-local lisp-indent-function #'common-lisp-indent-function)))
 
 (load "indentation-rules.el" t)
 
@@ -187,6 +182,68 @@
 ;;; For some reason the keys are not bound. Rebind them.
 (bind-key "C-c M-t" #'slime-trace-dialog-toggle-trace slime-mode-map)
 (bind-key "C-c T" #'slime-trace-dialog slime-mode-map)
+
+;;; test runner
+;;; inspired by:
+;;; https://salsa.debian.org/intrigeri/lunar-mode-line.el/-/blob/master/lunar-mode-line.el
+
+(defvar st-mode-directory (file-name-directory (or load-file-name buffer-file-name)))
+(defvar st-pass-image (concat st-mode-directory "images/st-pass.png"))
+(defvar st-fail-image (concat st-mode-directory "images/st-fail.png"))
+(defvar st-mode-line " st")
+
+(defun st-make-mode-line (file)
+  (propertize " st"
+              'display (create-image file 'png nil
+                                     :ascent 'center
+                                     :background (face-background 'mode-line))
+              'help-echo "St Mode Status"))
+
+(defun st-pass ()
+  (setq st-mode-line (st-make-mode-line st-pass-image))
+  (force-mode-line-update))
+
+(defun st-fail ()
+  (setq st-mode-line (st-make-mode-line st-fail-image))
+  (force-mode-line-update))
+
+(defun st-find-buffer-suite ()
+  (let ((regexp "(\\s-*\\(\\(it.bese.\\)?fiveam\\|5am\\)?:?in-suite\\*?\\s-+\\([^)]+\\)\\s-*)"))
+    (save-restriction
+      (widen)
+      (save-excursion
+        (when (or (re-search-backward regexp nil t)
+                  (re-search-forward regexp nil t))
+          (match-string-no-properties 3))))))
+
+
+(defun st-run-tests ()
+  (interactive)
+  (let ((suite (st-find-buffer-suite)))
+    (slime-eval-async `(fiveam:run! ,(slime-keywordify (make-symbol suite)))
+      (lambda (pass)
+        (if pass
+            (st-pass)
+          (st-fail))))))
+
+(bind-key "C-c C-d i" #'st-run-tests slime-mode-map)
+
+(defun st-mode-line-string ()
+  st-mode-line)
+
+(define-minor-mode st-mode
+  "Show test status in mode-line."
+  :lighter (:eval (st-mode-line-string)))
+
+(add-hook 'slime-mode-hook #'st-mode)
+
+;;; enable in all slime-mode buffers
+(dolist (buf (buffer-list))
+  (with-current-buffer buf
+    (when slime-mode
+      (st-mode 1))))
+
+;;; entry
 
 (defun my-start-slime ()
   "Start slime."

@@ -185,8 +185,6 @@
   (ansi-color-apply-on-region (point-min) (point-max)))
 
 
-
-
 ;;; KEYBINDINGS
 ;;;
 ;;; M-s is for search
@@ -500,7 +498,8 @@
 
 (use-package lisp-mode
   :mode "\\.lisp\\'"
-  :mode "\\.cl\\'")
+  :mode "\\.cl\\'"
+  :mode "\\.asd\\'")
 
 (use-package dot-slime
   :load-path "site-lisp"
@@ -631,7 +630,7 @@
   :ensure t
   :demand t
   :init
-  (setq rm-whitelist "\\[.*\\]")        ; just showing slime-mode: [package lisp-impl]
+  (setq rm-whitelist " \\[.*\\]\\| st")
   :config
   (rich-minority-mode 1))
 
