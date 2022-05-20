@@ -416,7 +416,7 @@
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
         magit-repository-directories '(("~/.emacs.d/" . 0)
                                        ("~/code/" . 1)
-                                       ("~/quicklisp/local-projects/" . 1)))
+                                       ("~/common-lisp/" . 1)))
   ;; install info
   (add-to-list 'Info-directory-list
                (expand-file-name "magit/Documentation" site-lisp-directory))
