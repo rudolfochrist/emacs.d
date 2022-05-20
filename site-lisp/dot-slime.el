@@ -208,13 +208,13 @@
   (force-mode-line-update))
 
 (defun st-find-buffer-suite ()
-  (let ((regexp "(\\s-*\\(\\(it.bese.\\)?fiveam\\|5am\\)?:?in-suite\\*?\\s-+\\([^)]+\\)\\s-*)"))
+  (let ((regexp "(\\s-*\\(\\(it.bese.\\)?fiveam\\|5am\\)?:?def-suite\\*?\\s-+\\([^)]+\\)\\s-*)"))
     (save-restriction
       (widen)
       (save-excursion
         (when (or (re-search-backward regexp nil t)
                   (re-search-forward regexp nil t))
-          (match-string-no-properties 3))))))
+          (car (split-string (match-string-no-properties 3))))))))
 
 
 (defun st-run-tests ()
