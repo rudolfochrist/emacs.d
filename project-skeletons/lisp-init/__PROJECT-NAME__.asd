@@ -29,7 +29,8 @@
   :pathname "t/"
   :components ((:file "tests"))
   :perform (test-op (op c)
-                    (unless (uiop:symbol-call :fiveam :run!)
+                    (when (and (not (uiop:symbol-call :fiveam :run! :__PROJECT-NAME__))
+                               (uiop:getenv "NON_INTERACTIVE_TESTS"))
                       (uiop:quit 1))))
 
 
