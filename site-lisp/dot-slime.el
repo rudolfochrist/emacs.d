@@ -226,7 +226,7 @@
             (st-pass)
           (st-fail))))))
 
-(bind-key "C-c C-d i" #'st-run-tests slime-mode-map)
+(bind-key "C-c C-d t" #'st-run-tests slime-mode-map)
 
 (defun st-mode-line-string ()
   st-mode-line)
@@ -242,6 +242,24 @@
   (with-current-buffer buf
     (when slime-mode
       (st-mode 1))))
+
+;;; common lisp info files quick-access
+
+(defun open-system-info (files)
+  (interactive
+   (list (let ((system (slime-read-system-name)))
+           (if (slime-eval `(cl:and (asdf:find-system ,system nil) t))
+               (slime-eval `(cl:mapcar #'cl:namestring
+                                       (uiop:directory-files
+                                        (asdf:system-source-directory ,system)
+                                        "**/*.info")))
+             (user-error "System %s not found" system)))))
+  (cl-case (length files)
+    (0 (message "No info files found!"))
+    (1 (info (car files)))
+    (t (info (ivy-completing-read "Select file: " files nil t)))))
+
+(bind-key "C-c C-d i" #'open-system-info slime-mode-map)
 
 ;;; entry
 
