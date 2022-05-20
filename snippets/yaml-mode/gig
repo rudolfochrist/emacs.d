@@ -1,0 +1,11 @@
+# key: _gig
+# name: gig
+# --
+- title: ${1:Title}
+  location: ${2:Location}${3:
+  ensemble: ${4:Ensemble}}
+  date: "${5:${6:Year}-${7:Month}-${8:Day}T${9:Hour}:${10:Minutes}:00}"${11:
+  link: ${12:Link}}${13:
+  note: >-
+    ${14:Note}}
+$0
