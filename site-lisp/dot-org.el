@@ -11,7 +11,8 @@
 (defvar org-export-backends '(ascii html latex))
 
 (use-package org
-  :ensure org-plus-contrib)
+  :ensure t)
+
 (require 'org-export
          (expand-file-name
           "site-lisp/org-export.el"
