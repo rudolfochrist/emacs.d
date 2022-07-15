@@ -57,6 +57,15 @@
   (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC")))
 (add-hook 'org-mode-hook #'fyi-org-ispell)
 
+;;; org-babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp .t)
+   (js . t)
+   (lisp . t)
+   (latex . t)
+   (shell . t)
+   (dot . t)))
 
 
 (provide 'dot-org)

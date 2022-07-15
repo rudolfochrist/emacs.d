@@ -142,6 +142,12 @@ Argument INFO - I have no idea what this does."
       (format "%s \\footnote{\\url{%s}} " text (match-string 1 text)))))
 (add-to-list 'org-export-filter-link-functions #'org-export-latex-link-footnote)
 
+;;; org-babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp .t)
+   (shell . t)))
+
 (provide 'org-export)
 
 ;;; org-export.el ends here
