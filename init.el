@@ -52,6 +52,7 @@
       confirm-kill-emacs 'yes-or-no-p
       scroll-margin 2
       mac-command-modifier 'control
+      mac-control-modifier 'super
       user-full-name "Sebastian Christ"
       user-mail-address "rudolfo.christ@pm.me")
 
@@ -247,10 +248,12 @@
 
 (use-package counsel
   :ensure t
+  :demand t
   :after ivy
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
-         ("C-. B" . counsel-bookmark)))
+         ("C-. B" . counsel-bookmark)
+         ("M-s g" . counsel-rg)))
 
 ;;; info
 
@@ -677,14 +680,17 @@
   :config
   (setq web-mode-auto-close-style 2))
 
-;;; zel
-
-(use-package zel
+(use-package emmet-mode
   :ensure t
-  :bind (("C-x C-r" . zel-find-file-frecent))
-  :config
-  (zel-install))
+  :after web-mode
+  :hook (html-mode web-mode)
+  :bind (:map web-mode-map
+              ("<tab>" . emmet-power-tab)))
 
+(defun emmet-power-tab (arg)
+  (interactive "P")
+  (emmet-expand-line arg)
+  (indent-for-tab-command arg))
 
 ;;; JSON
 
@@ -750,21 +756,13 @@
   :hook ((text-mode . abbrev-mode)
          (prog-mode . abbrev-mode)))
 
-;;; find-file-in-project
+;;; projectile
 
-(defun ffip-asd-project-root-p (dir)
-  "Non-nil if DIR contains ASD files."
-  (let ((asd (car (directory-files dir t "asd"))))
-    (when asd
-      (file-name-directory asd))))
-
-(use-package find-file-in-project
+(use-package projectile
   :ensure t
-  :bind (("M-s M-f" . find-file-in-project)
-         ("M-s F" . find-file-in-project-by-selected))
-  :config
-  (add-to-list 'ffip-project-file #'ffip-asd-project-root-p)
-  (add-to-list 'ffip-ignore-filenames "*.fasl"))
+  :bind (("s-t" . projectile-find-file)
+         :map projectile-mode-map
+         ("s-p" . projectile-command-map)))
 
 ;;; aggressive-indent
 
