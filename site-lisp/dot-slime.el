@@ -125,6 +125,15 @@
   (:one-liner "cl:quickload system"))
 
 
+(defslime-repl-shortcut slime-repl-project-loader-load-system
+  ("pl-load-system" "pl")
+  (:handler (lambda (system)
+              (interactive (list (slime-read-system-name)))
+              (insert (format "(pl:load-system \"%s\")" system))
+              (slime-repl-send-input t)))
+  (:one-liner "pl:load-system system"))
+
+
 (defslime-repl-shortcut slime-repl-add-to-central-registry
   ("add-to-central-registry" "+a" "add")
   (:handler (lambda (directory)
