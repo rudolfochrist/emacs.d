@@ -303,6 +303,8 @@
 
 (use-package company
   :ensure t
+  :init (setq company-minimum-prefix-length 1
+              company-idle-delay 0.0)
   :commands (global-company-mode)
   :bind (("C-. C-." . company-complete)
          :map company-active-map
@@ -312,6 +314,10 @@
          ("M-." . company-show-location))
   :hook (after-init . global-company-mode))
 
+;;; tailwindcss-company
+
+(use-package company-tailwindcss
+  :load-path "site-lisp")
 
 ;;; dired
 
