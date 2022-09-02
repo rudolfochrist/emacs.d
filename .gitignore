@@ -29,3 +29,4 @@ history
 /smex-items
 elpa/
 transient/
+*.extmap

@@ -4,16 +4,16 @@
 # --
 #+STARTUP: showall
 #+OPTIONS: after-closing-order:(ps encl cc) after-letter-order:(after_letter) backaddress:t
-#+OPTIONS: foldmarks:t email:t subject:untitled phone:t url:t
+#+OPTIONS: foldmarks:t email:t subject:untitled phone:t url:t \n:t
 #+LATEX_CLASS: default-koma-letter
 #+LATEX_CLASS_OPTIONS: [a4paper]
 #+LATEX_HEADER: \usepackage{tabularx}
 #+LATEX_HEADER: \setlength\parindent{0pt}
 #+LCO: DIN de_DE me invoice
 #+SUBJECT: Rechnung Nr. ${1:Rechnungsnummer}
-#+BIND: org-export-date-timestamp-format "%e. %B %Y"
-#+BIND: system-time-locale "de_DE.UTF-8"
-#+DATE: ${2:Datum}
+#+DATE:
+#+LATEX_HEADER: \newcommand{\invoicedate}{${5:invoice date}}
+#+LATEX_HEADER: \newcommand{\deliverydate}{${6:delivery date}
 
 * TO                                                                     :to:
 ${3:customer}

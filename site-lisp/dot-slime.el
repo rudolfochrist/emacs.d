@@ -172,20 +172,6 @@
 (def-slime-selector-method ?a "Visit system definition (asd) buffer."
   (slime-find-project-asd))
 
-;;; xref ivy completion
-
-(defun slime-package-symbols ()
-  (slime-eval `(swank-user:package-symbols ,(slime-current-package))))
-
-(defun slime-read-from-minibuffer (prompt &optional initial-value history)
-  "Like the original but with `ivy'."
-  (let ((minibuffer-setup-hook (slime-minibuffer-setup-hook)))
-    (ivy-completing-read prompt
-                         (slime-package-symbols)
-                         nil
-                         t
-                         initial-value
-                         (or history slime-minibuffer-history))))
 
 ;;; Slime TRACE Dialog
 ;;; For some reason the keys are not bound. Rebind them.
@@ -269,6 +255,7 @@
     (t (info (ivy-completing-read "Select file: " files nil t)))))
 
 (bind-key "C-c C-d i" #'open-system-info slime-mode-map)
+(bind-key "C-c C-d i" #'open-system-info slime-repl-mode-map)
 
 ;;; entry
 
