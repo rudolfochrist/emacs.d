@@ -22,6 +22,10 @@
 (put 'if-let 'common-lisp-indent-function
      (get 'let 'common-lisp-indent-function))
 
+;;; https://docs.stevelosh.com/adopt
+(put 'adopt:make-option 'common-lisp-indent-function
+     (get 'when 'common-lisp-indent-function))
+
 (provide 'indentation-rules)
 
 ;;; indentation-rules.el ends here
