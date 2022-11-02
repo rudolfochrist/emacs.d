@@ -5,7 +5,23 @@
 ;;; file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 (defpackage #:__PROJECT-NAME__-test
-  (:use :cl :fiveam))
+  (:use :cl :1am))
 
 (in-package #:__PROJECT-NAME__-test)
-(def-suite :__PROJECT-NAME__)
+
+(defvar *__PROJECT-NAME__-tests* nil)
+
+(defmacro deftest (name &body body)
+  `(progn
+     (test ,name
+       ,@body)
+     (pushnew ',name *__PROJECT-NAME__-tests*)
+     ',name))
+
+(defun run-tests (&optional (tests *__PROJECT-NAME__-tests*))
+  (1am:run tests))
+
+;;; Test cases
+
+
+

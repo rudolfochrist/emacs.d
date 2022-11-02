@@ -23,13 +23,18 @@
 
 
 (defsystem "__PROJECT-NAME__/test"
+  :author "__USER-NAME__ <__USER-MAIL-ADDRESS__>"
+  :maintainer "__USER-NAME__ <__USER-MAIL-ADDRESS__>"
+  :mailto "__USER-MAIL-ADDRESS__"
+  :license "MPL-2.0"
+  :descriptor "Tests for __PROJECT-NAME__"
   :depends-on ((:require "uiop")
-               "fiveam"
+               "1am"
                "__PROJECT-NAME__")
   :pathname "t/"
   :components ((:file "tests"))
   :perform (test-op (op c)
-                    (when (and (not (uiop:symbol-call :fiveam :run! :__PROJECT-NAME__))
+                    (when (and (not (uiop:symbol-call :__PROJECT-NAME__-test :run-tests))
                                (uiop:getenv "NON_INTERACTIVE_TESTS"))
                       (uiop:quit 1))))
 
