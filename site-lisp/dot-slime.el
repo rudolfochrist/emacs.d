@@ -155,6 +155,12 @@
               (let ((path (slime-eval `(cl:namestring (asdf:system-source-directory ,system)))))
                 (dired path)))))
 
+(advice-add 'slime-set-default-directory :after
+            (lambda (directory)
+              (when (slime-eval '(cl:member :clm cl:*features*))
+                (slime-eval `(cl:setf (clm:env) ,(slime-to-lisp-filename directory)))))
+            '((name . "set-clm-env")))
+
 
 ;;; slime-selector
 
