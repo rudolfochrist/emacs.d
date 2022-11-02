@@ -420,11 +420,12 @@
          ("C-. gc" . magit-clone)
          ("C-. GG" . magit-status-with-prefix)
          ("C-. gl" . magit-list-repositories))
-  :config
+  :init
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
         magit-repository-directories '(("~/.emacs.d/" . 0)
                                        ("~/code/" . 1)
                                        ("~/common-lisp/" . 1)))
+  :config
   ;; install info
   (add-to-list 'Info-directory-list
                (expand-file-name "magit/Documentation" site-lisp-directory))
