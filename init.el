@@ -779,7 +779,11 @@
   :ensure t
   :bind (("s-t" . projectile-find-file)
          :map projectile-mode-map
-         ("s-p" . projectile-command-map)))
+         ("s-p" . projectile-command-map))
+  :config
+  ;; https://github.com/bbatsov/projectile/issues/1148#issuecomment-515270488
+  (setq projectile-git-command
+        "comm -23 <(git ls-files -co --exclude-standard | sort) <(git ls-files -d | sort) | tr '\\n' '\\0'"))
 
 ;;; aggressive-indent
 
