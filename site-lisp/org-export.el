@@ -9,6 +9,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 'ox)
 (require 'ox-md)
 (require 'ox-texinfo)
@@ -136,9 +137,9 @@ Argument INFO - I have no idea what this does."
   (when (and org-export-latex-add-link-footnotes
              (org-export-derived-backend-p backend 'latex)
              (string-match "\\\\href{\\(.*\\)}{\\(.*\\)}" text))
-    (when (some (lambda (type)
-                  (string-prefix-p type (match-string 1 text)))
-                '("http" "https" "ftp" "mailto" "doi"))
+    (when (cl-some (lambda (type)
+                     (string-prefix-p type (match-string 1 text)))
+                   '("http" "https" "ftp" "mailto" "doi"))
       (format "%s \\footnote{\\url{%s}} " text (match-string 1 text)))))
 (add-to-list 'org-export-filter-link-functions #'org-export-latex-link-footnote)
 
