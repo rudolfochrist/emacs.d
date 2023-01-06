@@ -3,14 +3,13 @@
 # key: _test
 # --
 (defsystem "${1:name}/test"
-  :depends-on ("uiop"
-               "fiasco"
+  :depends-on ((:require "uiop")
+               "1am"
                "$1")
   :pathname "t/"
   :components ((:file "tests"))
   :perform (test-op (op c)
                     (uiop:symbol-call
-                     :fiasco
-                     :run-package-tests
-                     :package :$1/test)))
+                     :$1-test
+                     :run-tests)))
 $0

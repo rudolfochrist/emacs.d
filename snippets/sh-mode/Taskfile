@@ -1,0 +1,85 @@
+# -*- mode: snippet -*-
+# name: Taskfile
+# key: _taskfile
+# --
+#!/bin/bash
+
+# see https://github.com/adriancooney/Taskfile
+
+function psql {
+    command psql -h localhost -U "${1:user name}" "${2:database}" "$@"
+}
+
+function db:sync {
+    if [[ -e db/pre.sql ]]; then
+        echo "Applying pre hook"
+        psql -q -1 -f db/pre.sql
+    fi
+
+    local temp_db='${2}_temp'
+    psql -q -c "CREATE DATABASE ${temp_db};"
+    POSTGRES_DB="${temp_db}" psql -q -1 -f db/schema.sql
+    migra --unsafe \
+          "postgresql://${POSTGRES_USER}@localhost/${2}"\
+          "postgresql://${POSTGRES_USER}@localhost/${temp_db}" \
+          > db/pending.sql
+    psql -q -c "DROP DATABASE ${temp_db};"
+
+    if [[ -s db/pending.sql ]]; then
+        echo "PEDNING CHANGES:"
+        cat db/pending.sql
+        while true; do
+            read -r -p "Apply these changes? [y/n]: " yn
+            case "${yn}" in
+                [Yy]*)
+                    psql -q -1 -f db/pending.sql
+                    rm db/pending.sql
+                    if [[ -e db/post.sql ]]; then
+                        echo "Applying post hook"
+                        psql -q -1 -f db/post.sql
+                    fi
+                    exit 0
+                    ;;
+                [Nn]*)
+                    echo "Aborted."
+                    rm db/pending.sql
+                    exit 1
+                            ;;
+            esac
+        done
+    else
+        echo "Already synced."
+    fi
+}
+
+function make-readme {
+    emacs -Q --batch doc/README.org -l "$(realpath doc/org-export.el)"  -f org-ascii-export-to-ascii
+}
+
+function dc:up {
+    local profiles=dev
+
+    if (( $# > 0 )); then
+        local profiles="$1"
+        shift
+    fi
+
+    COMPOSE_PROFILES="$profiles" docker compose up -d "$@"
+}
+
+function dc:down {
+    docker compose down --remove-orphans
+}
+
+function d:proc {
+    docker ps "$@"
+}
+
+function help {
+    printf "%s <task> [args]\n\nTasks:\n" "${0}"
+    compgen -A function | grep -v "^_" | cat -n
+    printf "\nExtended help:\n  Each task has comments for general usage\n"
+}
+
+TIMEFORMAT="Task completed in %3lR"
+time "${@:-help}"
