@@ -45,8 +45,6 @@
 (setq inhibit-startup-message t
       initial-scratch-message nil
       system-uses-terminfo nil         ; use Emacs terminfo
-      backup-inhibited t               ; disable backups
-      auto-save-default nil            ; Nice feature, but annoying as well. Disable it.
       ring-bell-function 'ignore       ; don't ring the bell
       scroll-preserve-screen-position 'always
       confirm-kill-emacs 'yes-or-no-p
@@ -59,6 +57,18 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode 1)
 (delete-selection-mode 1)
+
+;;; auto-save + backups
+
+(defvar backup-dir (expand-file-name "backups/" user-emacs-directory))
+
+(setq backup-by-copying t      ; don't clobber symlinks
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t
+      backup-directory-alist `((".*" . ,backup-dir))
+      auto-save-file-name-transforms `((".*" ,backup-dir t)))
 
 ;;; Use ISO calendar (YYYY-MM-DD)
 
