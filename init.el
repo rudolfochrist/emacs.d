@@ -844,7 +844,8 @@
          (slime-repl-mode . evil-swap-parens)
          (emacs-lisp-mode . evil-swap-parens)
          (ielm-mode . evil-swap-parens)
-         (eval-expression-minibuffer-setup . evil-swap-parens))
+         (eval-expression-minibuffer-setup . evil-swap-parens)
+         (sql-mode . evil-swap-parens))
   :config (global-evil-swap-keys-mode))
 
 (defun evil-swap-parens ()
