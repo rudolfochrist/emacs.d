@@ -30,3 +30,4 @@ history
 elpa/
 transient/
 *.extmap
+/backups/

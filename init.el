@@ -324,11 +324,6 @@
          ("M-." . company-show-location))
   :hook (after-init . global-company-mode))
 
-;;; tailwindcss-company
-
-(use-package company-tailwindcss
-  :load-path "site-lisp")
-
 ;;; dired
 
 (defun dired-open-natively ()
@@ -747,26 +742,6 @@
                  (format . "TIMESTAMP LEVEL [NAME] (THREAD)")
                  (levels . "WILDFLY"))))
 
-
-;;; tide (TypeScript)
-
-(use-package typescript-mode
-  :ensure t
-  :mode "\\.ts\\'")
-
-(use-package tide
-  :ensure t
-  :after (typescript-mode)
-  :commands (tide-setup tide-hl-identifier-mode tide-format-before-save)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save))
-  :bind (:map tide-mode-map
-              ("C-c r" . tide-references)
-              ("C-c ." . tide-fix)
-              ("C-c o" . tide-organize-imports)
-              ("C-c p" . tide-project-errors)))
-
 ;;; abbrev
 
 (use-package abbrev
@@ -868,111 +843,6 @@
 (use-package markdown-mode
   :ensure t)
 
-;;; ledger
-
-(use-package ledger-mode
-  :ensure t
-  :config
-  (setq ledger-default-date-format ledger-iso-date-format
-        ledger-reconcile-default-commodity "€"
-        ledger-reconcile-insert-effective-date t))
-
-;;;; ledger overwrites (I should fork this)
-
-(defun ledger-do-reconcile (&optional sort target-date)
-  "SORT the uncleared transactions in the account and display them in the *Reconcile* buffer.
-Return a count of the uncleared transactions."
-  (let* ((buf ledger-buf)
-         (account ledger-acct)
-         (sort-by (if sort
-                      sort
-                    "(date)"))
-         (xacts
-          (with-temp-buffer
-            (if target-date
-                (ledger-exec-ledger buf (current-buffer)
-                                    "--uncleared" "--real" "emacs" "-e" target-date "--sort" sort-by account)
-              (ledger-exec-ledger buf (current-buffer)
-                                  "--uncleared" "--real" "emacs" "--sort" sort-by account))
-            (goto-char (point-min))
-            (unless (eobp)
-              (if (looking-at "(")
-                  (read (current-buffer))))))
-         (fmt (ledger-reconcile-compile-format-string ledger-reconcile-buffer-line-format)))
-    (if (> (length xacts) 0)
-        (progn
-          (if ledger-reconcile-buffer-header
-              (insert (format ledger-reconcile-buffer-header account)))
-          (dolist (xact xacts)
-            (ledger-reconcile-format-xact xact fmt))
-          (goto-char (point-max))
-          (delete-char -1)) ;gets rid of the extra line feed at the bottom of the list
-      (insert (concat "There are no uncleared entries for " account)))
-    (goto-char (point-min))
-    (set-buffer-modified-p nil)
-    (setq buffer-read-only t)
-
-    (length xacts)))
-
-
-(defun ledger-reconcile-refresh ()
-  "Force the reconciliation window to refresh.
-Return the number of uncleared xacts found."
-  (interactive)
-  (let ((inhibit-read-only t)
-        (line (count-lines (point-min) (point))))
-    (erase-buffer)
-    (prog1
-        (ledger-do-reconcile ledger-reconcile-sort-key
-                             (buffer-local-value 'ledger-end-date (current-buffer)))
-      (set-buffer-modified-p t)
-      (ledger-reconcile-ensure-xacts-visible)
-      (goto-char (point-min))
-      (forward-line line))))
-
-
-(defun ledger-reconcile (&optional account target target-date)
-  "Start reconciling, prompt for ACCOUNT."
-  (interactive)
-  (let ((account (or account (ledger-read-account-with-prompt "Account to reconcile")))
-        (buf (current-buffer))
-        (rbuf (get-buffer ledger-recon-buffer-name))
-        (t-date (or target-date (ledger-read-date "End date"))))
-
-    (when (ledger-reconcile-check-valid-account account)
-      (if rbuf ;; *Reconcile* already exists
-          (with-current-buffer rbuf
-            (set 'ledger-acct account) ;; already buffer local
-            (when (not (eq buf rbuf))
-              ;; called from some other ledger-mode buffer
-              (ledger-reconcile-quit-cleanup)
-              (setq ledger-buf buf)) ;; should already be buffer-local
-
-            (unless (get-buffer-window rbuf)
-              (ledger-reconcile-open-windows buf rbuf)))
-
-        ;; no recon-buffer, starting from scratch.
-
-        (with-current-buffer (setq rbuf
-                                   (get-buffer-create ledger-recon-buffer-name))
-          (ledger-reconcile-open-windows buf rbuf)
-          (ledger-reconcile-mode)
-          (make-local-variable 'ledger-target)
-          (set (make-local-variable 'ledger-buf) buf)
-          (set (make-local-variable 'ledger-acct) account)
-          (set (make-local-variable 'ledger-end-date) t-date)))
-
-      (add-hook 'after-save-hook 'ledger-reconcile-refresh-after-save nil t)
-
-      ;; Narrow the ledger buffer
-      (if ledger-narrow-on-reconcile
-          (ledger-occur (regexp-quote account)))
-
-      (with-current-buffer rbuf
-        (if (> (ledger-reconcile-refresh) 0)
-            (ledger-reconcile-change-target target))
-        (ledger-display-balance)))))
-
 ;;; skeletor
 
 (use-package skeletor
@@ -986,6 +856,17 @@ Return the number of uncleared xacts found."
 (skeletor-define-template "lisp-init"
   :no-license? t
   :substitutions '(("__DESCRIPTION__" . (lambda () (read-string "Description: ")))))
+
+;;; ztree
+
+(use-package ztree
+  :ensure t)
+
+;;; sql-upcase
+
+(use-package sql-upcase
+  :load-path "site-lisp"
+  :hook ((sql-mode . sql-upcase-mode)))
 
 ;;; packages end here
 
