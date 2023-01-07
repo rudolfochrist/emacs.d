@@ -1,4 +1,4 @@
-;;; init.el --- My Emacs Initialization File
+;;; init.el --- My Emacs Initialization File  -*- lexical-binding: t; -*-
 ;;; My emacs config.
 
 ;;; Enable package management
@@ -308,7 +308,6 @@
   :commands (wgrep-change)
   :config (setq wgrep-auto-save-buffer t))
 
-
 ;;; company-mode
 
 (use-package company
@@ -459,7 +458,11 @@
   (add-to-list 'paredit-space-for-delimiter-predicates #'paredit-adjust-spacing-p)
 
   ;; using this for extended search
-  (unbind-key "M-s" paredit-mode-map))
+  (unbind-key "M-s" paredit-mode-map)
+  ;; Version 25 changes
+  ;; https://paredit.org/cgit/paredit/plain/NEWS
+  (define-key paredit-mode-map (kbd "RET") nil)
+  (define-key paredit-mode-map (kbd "C-j") 'paredit-newline))
 
 ;;; which-key
 
