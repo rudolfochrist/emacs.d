@@ -517,7 +517,8 @@
 (use-package lisp-mode
   :mode "\\.lisp\\'"
   :mode "\\.cl\\'"
-  :mode "\\.asd\\'")
+  :mode "\\.asd\\'"
+  :hook ((lisp-mode . slime-mode)))
 
 (use-package dot-slime
   :load-path "site-lisp"
