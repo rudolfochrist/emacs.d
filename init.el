@@ -72,36 +72,6 @@
 
 ;;; Use ISO calendar (YYYY-MM-DD)
 
-(defvar init-last-local-map nil)
-
-(defun do-insert-iso-timestamp ()
-  (interactive)
-  (calendar-exit)
-  (use-local-map init-last-local-map)
-  (let ((date (with-current-buffer "*Calendar*"
-                (calendar-cursor-to-date t)))
-        (hour (cl-parse-integer (read-from-minibuffer "Hour: ") :junk-allowed t))
-        (minute (cl-parse-integer (read-from-minibuffer "Minute: ") :junk-allowed t)))
-    (cl-destructuring-bind (month day year) date
-      (insert (format-time-string
-               "%FT%T%z"
-               (encode-time 0
-                            (or minute 0)
-                            (or hour 0)
-                            day
-                            month
-                            year
-                            "GMT-2")
-               "GMT-2")))))
-
-(defun insert-iso-timestamp ()
-  "Insert a ISO 8601 timestamp."
-  (interactive)
-  (setq init-last-local-map (current-local-map))
-  (calendar)
-  (use-local-map (copy-keymap (current-local-map)))
-  (local-set-key (kbd "RET") #'do-insert-iso-timestamp))
-
 (use-package calendar
   :config (calendar-set-date-style 'iso))
 
@@ -897,48 +867,7 @@
 
 ;;; packages end here
 
-
-;;; Text scaling, window resizing
-
-;;; copied from https://github.com/abo-abo/hydra/blob/master/hydra-examples.el
-(require 'windmove)
-
-(defun fyi-move-splitter-left (arg)
-  "Move window splitter left.
-Argument ARG number of units."
-  (interactive "p")
-  (if (let ((windmove-wrap-around))
-        (windmove-find-other-window 'right))
-      (shrink-window-horizontally arg)
-    (enlarge-window-horizontally arg)))
-
-(defun fyi-move-splitter-right (arg)
-  "Move window splitter right.
-Argument ARG number of units."
-  (interactive "p")
-  (if (let ((windmove-wrap-around))
-        (windmove-find-other-window 'right))
-      (enlarge-window-horizontally arg)
-    (shrink-window-horizontally arg)))
-
-(defun fyi-move-splitter-up (arg)
-  "Move window splitter up.
-Argument ARG number of units."
-  (interactive "p")
-  (if (let ((windmove-wrap-around))
-        (windmove-find-other-window 'up))
-      (enlarge-window arg)
-    (shrink-window arg)))
-
-(defun fyi-move-splitter-down (arg)
-  "Move window splitter down.
-Argument ARG number of units."
-  (interactive "p")
-  (if (let ((windmove-wrap-around))
-        (windmove-find-other-window 'up))
-      (shrink-window arg)
-    (enlarge-window arg)))
-
+;;;
 
 ;;; check for parens after save
 
@@ -948,55 +877,6 @@ Argument ARG number of units."
     (check-parens)))
 
 (add-hook 'after-save-hook #'check-parens-hook)
-
-
-;;; custom narrowing
-;;; http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
-(defun narrow-or-widen-dwim (p)
-  "Widen if buffer is narrowed, narrow-dwim otherwise.
-Dwim means: region, org-src-block, org-subtree, or
-defun, whichever applies first.  Narrowing to
-org-src-block actually calls `org-edit-src-code'.
-
-With prefix P, don't widen, just narrow even if buffer
-is already narrowed."
-  (interactive "P")
-  (declare (interactive-only))
-  (cond ((and (buffer-narrowed-p) (not p))
-         (widen))
-        ((region-active-p)
-         (narrow-to-region (region-beginning)
-                           (region-end)))
-        ((derived-mode-p 'org-mode)
-         ;; `org-edit-src-code' is not a real narrowing
-         ;; command. Remove this first conditional if
-         ;; you don't want it.
-         (cond ((ignore-errors (org-edit-src-code) t)
-                (delete-other-windows))
-               ((ignore-errors (org-narrow-to-block) t)
-                )
-               (t
-                (org-narrow-to-subtree))))
-        ((derived-mode-p 'latex-mode)
-         (LaTeX-narrow-to-environment))
-        (t
-         (narrow-to-defun))))
-
-(bind-key "n" 'narrow-or-widen-dwim ctl-x-map)
-
-
-;;; in-place scrolling
-;;; this means scroll wihtout moving the point. This is usually best when the point is centered.
-
-(defun scroll-down-inplace ()
-  "Scroll down but leave point where it is."
-  (interactive)
-  (scroll-down '(4)))
-
-(defun scroll-up-inplace ()
-  "Soll up but leave point where it is."
-  (interactive)
-  (scroll-up '(4)))
 
 ;;; enable process killing in process list
 ;;; https://stackoverflow.com/questions/10627289/emacs-internal-process-killing-any-command
