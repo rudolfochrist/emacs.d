@@ -449,6 +449,7 @@
   :commands (enable-paredit-mode)
   :hook ((emacs-lisp-mode . enable-paredit-mode)
          (eval-expression-minibuffer-setup . enable-paredit-mode)
+         (minibuffer-setup . enable-paredit-mode)
          (lisp-mode . enable-paredit-mode)
          (lisp-interaction-mode . enable-paredit-mode)
          (slime-repl-mode . enable-paredit-mode)
@@ -751,17 +752,39 @@
   :hook ((text-mode . abbrev-mode)
          (prog-mode . abbrev-mode)))
 
-;;; projectile
+;;; project.el + super-t/command-t file finding
 
-(use-package projectile
+(use-package project
   :ensure t
-  :bind (("s-t" . projectile-find-file)
-         :map projectile-mode-map
-         ("s-p" . projectile-command-map))
+  :commands (project-root
+             project-files
+             project-ignores
+             project-external-roots)
   :config
-  ;; https://github.com/bbatsov/projectile/issues/1148#issuecomment-515270488
-  (setq projectile-git-command
-        "comm -23 <(git ls-files -co --exclude-standard | sort) <(git ls-files -d | sort) | tr '\\n' '\\0'"))
+  (add-to-list 'project-find-functions 'cl-project-search t))
+
+(defun cl-project-search (start)
+  (let ((asd-file (locate-dominating-file
+                   start
+                   (lambda (dir)
+                     (let ((files (directory-files dir t "\\.asd")))
+                       (unless (null files)
+                         (car files)))))))
+    (when asd-file
+      (cons 'common-lisp asd-file))))
+
+(cl-defmethod project-root ((project (head common-lisp)))
+  (cdr project))
+
+(cl-defmethod project-ignores ((project (head common-lisp)) dir) :qualifier :around
+  (let ((default-ignores (cl-call-next-method nil dir)))
+    (push ".clm/" default-ignores)))
+
+(defun super-t ()
+  (interactive)
+  (find-file (completing-read "File: " (project-files (project-current t)) nil t)))
+
+(bind-key "s-t" 'super-t)
 
 ;;; aggressive-indent
 

@@ -31,3 +31,4 @@ elpa/
 transient/
 *.extmap
 /backups/
+/projects
