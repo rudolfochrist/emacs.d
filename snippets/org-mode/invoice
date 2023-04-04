@@ -10,10 +10,10 @@
 #+LATEX_HEADER: \usepackage{tabularx}
 #+LATEX_HEADER: \setlength\parindent{0pt}
 #+LCO: DIN de_DE me invoice
-#+SUBJECT: Rechnung Nr. ${1:Rechnungsnummer}
+#+SUBJECT: Rechnungsnr. ${1:Rechnungsnummer}
 #+DATE:
 #+LATEX_HEADER: \newcommand{\invoicedate}{${5:invoice date}}
-#+LATEX_HEADER: \newcommand{\deliverydate}{${6:delivery date}
+#+LATEX_HEADER: \newcommand{\deliverydate}{${6:delivery date}}
 
 * TO                                                                     :to:
 ${3:customer}
