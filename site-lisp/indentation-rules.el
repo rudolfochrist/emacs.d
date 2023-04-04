@@ -26,6 +26,13 @@
 (put 'adopt:make-option 'common-lisp-indent-function
      (get 'when 'common-lisp-indent-function))
 
+;;; https://github.com/eudoxia0/cl-yaml
+(put 'with-emitter-to-string 'common-lisp-indent-function
+     (get 'when 'common-lisp-indent-function))
+
+(put 'with-emitter-to-stream 'common-lisp-indent-function
+     (get 'when 'common-lisp-indent-function))
+
 (provide 'indentation-rules)
 
 ;;; indentation-rules.el ends here
