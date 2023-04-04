@@ -1,5 +1,3 @@
-;;; __PROJECT-NAME__.asd
-
 ;;; This Source Code Form is subject to the terms of the Mozilla Public
 ;;; License, v. 2.0. If a copy of the MPL was not distributed with this
 ;;; file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -29,13 +27,14 @@
   :license "MPL-2.0"
   :description "Tests for __PROJECT-NAME__"
   :depends-on ((:require "uiop")
-               "1am"
+               "fiveam"
+               "fiveam-matchers"
                "__PROJECT-NAME__")
   :pathname "t/"
-  :components ((:file "tests"))
+  :components ((:file "package"))
   :perform (test-op (op c)
-                    (when (and (not (uiop:symbol-call :__PROJECT-NAME__/test :run-tests))
-                               (uiop:getenv "NON_INTERACTIVE_TESTS"))
+                    (when (and (not (uiop:symbol-call :fiveam :run! :__PROJECT-NAME__))
+                               (uiop:getenv "CI"))
                       (uiop:quit 1))))
 
 
