@@ -3,7 +3,7 @@
 ;;; file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 (defpackage #:__PROJECT-NAME__/test
-  (:use :cl :fiveam :fiveam-matchers :__PROJECT-NAME__))
+  (:use :cl :fiveam :fiveam-matchers))
 
 (in-package #:__PROJECT-NAME__/test)
 
