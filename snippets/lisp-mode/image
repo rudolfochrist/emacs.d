@@ -6,4 +6,4 @@
   :build-operation image-op
   :build-pathname "${2:image}" ;; shell name
   :depends-on ("$1")
-  :components ((:file "main")))
+  :components ((:file "image")))

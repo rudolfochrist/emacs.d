@@ -1,5 +1,0 @@
-# key: _ew
-# name: eval-when
-# --
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  $0)

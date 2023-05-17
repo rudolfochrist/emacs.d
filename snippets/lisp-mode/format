@@ -1,4 +1,0 @@
-# key: _fmt
-# name: format
-# --
-(format ${1:t} "~&${2:format-string}~%"$0)
