@@ -33,6 +33,10 @@
 (put 'with-emitter-to-stream 'common-lisp-indent-function
      (get 'when 'common-lisp-indent-function))
 
+;;; postmoderb
+(put ':create-table 'common-lisp-indent-function
+     (get 'defstruct 'common-lisp-indent-function))
+
 (provide 'indentation-rules)
 
 ;;; indentation-rules.el ends here
