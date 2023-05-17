@@ -394,7 +394,7 @@
          (minibuffer-setup . enable-paredit-mode)
          (lisp-mode . enable-paredit-mode)
          (lisp-interaction-mode . enable-paredit-mode)
-         (slime-repl-mode . enable-paredit-mode)
+         (sly-mrepl-mode . enable-paredit-mode)
          (scheme-mode . enable-paredit-mode)
          (ielm-mode . enable-paredit-mode))
   :config
@@ -467,6 +467,31 @@
   :disabled t
   :load-path "site-lisp"
   :bind (("C-. l" . my-start-slime)))
+
+;;; sly
+
+(use-package sly
+  :ensure t
+  :bind (("C-. l" . sly))
+  :init
+  (setq inferior-lisp-program "sbcl"))
+
+(use-package sly-asdf
+  :ensure t
+  :after sly)
+
+(use-package sly-quicklisp
+  :ensure t
+  :after sly)
+
+(use-package sly-named-readtables
+  :ensure t
+  :after sly)
+
+(use-package sly-macrostep
+  :ensure t
+  :after sly)
+
 
 ;;; imenu
 
@@ -629,8 +654,8 @@
 ;;; web-mode
 
 (defun web-mode-lsp-bindings ()
-  (bind-key "M-." #'slime-edit-definition web-mode-map)
-  (bind-key "M-," #'slime-pop-find-definition-stack web-mode-map))
+  (bind-key "M-." #'sly-edit-definition web-mode-map)
+  (bind-key "M-," #'sly-pop-find-definition-stack web-mode-map))
 
 (use-package web-mode
   :ensure t
@@ -737,7 +762,7 @@
   :ensure t
   :demand t
   :config
-  (dolist (mode '(slime-repl-mode cperl))
+  (dolist (mode '(sly-mrepl-mode cperl))
     (add-to-list 'aggressive-indent-excluded-modes mode))
   (global-aggressive-indent-mode 1))
 
@@ -780,7 +805,7 @@
   :ensure t
   :commands (global-evil-swap-keys-mode)
   :hook ((lisp-mode . evil-swap-parens)
-         (slime-repl-mode . evil-swap-parens)
+         (sly-mrepl-mode . evil-swap-parens)
          (emacs-lisp-mode . evil-swap-parens)
          (ielm-mode . evil-swap-parens)
          (eval-expression-minibuffer-setup . evil-swap-parens)
