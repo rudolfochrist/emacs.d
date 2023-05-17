@@ -1,5 +1,4 @@
 ;;; dot-slime.el --- My Slime config
-;; company backend
 
 ;;; Commentary:
 ;; Use at your own risk

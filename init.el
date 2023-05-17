@@ -140,31 +140,6 @@
   (server-start))
 
 
-
-;;; UTILITIES
-
-(defun system-macos-p ()
-  "Return non-nil if `system-type' is 'darwin."
-  (eql 'darwin system-type))
-
-(defun mode-buffer-list (mode)
-  "Return a list of buffers with major mode MODE."
-  (cl-remove-if-not
-   (lambda (buffer)
-     (with-current-buffer buffer
-       (eql major-mode mode)))
-   (buffer-list)))
-
-(defun lookup-binding (command)
-  "Return the keybinding for COMMAND."
-  (substitute-command-keys (format "\\[%s]" command)))
-
-(defun ansi-colorize-buffer ()
-  "Replace ANSI color markers with colored text."
-  (interactive)
-  (ansi-color-apply-on-region (point-min) (point-max)))
-
-
 ;;; KEYBINDINGS
 ;;;
 ;;; M-s is for search
@@ -188,9 +163,6 @@
 
 ;;; fullscreen
 (bind-key "C-. y" #'toggle-frame-fullscreen)
-
-;;; compiling
-(bind-key "C-. b" #'compile)
 
 ;;; killing a buffer actually should bury it.
 (bind-key "C-x k" #'bury-buffer)
@@ -485,12 +457,14 @@
 ;;; slime
 
 (use-package lisp-mode
+  :disabled t
   :mode "\\.lisp\\'"
   :mode "\\.cl\\'"
   :mode "\\.asd\\'"
   :hook ((lisp-mode . slime-mode)))
 
 (use-package dot-slime
+  :disabled t
   :load-path "site-lisp"
   :bind (("C-. l" . my-start-slime)))
 
@@ -799,13 +773,6 @@
   :ensure t
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp)))
-
-;;; german holidays
-
-(use-package german-holidays
-  :ensure t
-  :demand t
-  :config (setq calendar-holidays holiday-german-holidays))
 
 ;;; evil-swap-keys
 
