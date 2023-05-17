@@ -492,6 +492,9 @@
   :ensure t
   :after sly)
 
+(use-package sly-stepper-autoloads
+  :load-path "site-lisp/sly-stepper")
+
 
 ;;; imenu
 

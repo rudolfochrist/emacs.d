@@ -1,0 +1,3 @@
+[submodule "site-lisp/sly-stepper"]
+	path = site-lisp/sly-stepper
+	url = https://github.com/joaotavora/sly-stepper.git
