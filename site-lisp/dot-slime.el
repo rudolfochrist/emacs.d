@@ -128,19 +128,8 @@
 
 ;;; slime-selector
 
-(defun slime-find-project-asd ()
-  "Find the project ASD file."
-  (let ((asds (directory-files (project-root (project-current t)) t ".asd")))
-    (cond
-     ((zerop (length asds))
-      (user-error "No ASD files found!"))
-     ((= (length asds) 1)
-      (find-file (car asds)))
-     (t
-      (find-file (completing-read "ASD file: " asds nil t))))))
-
 (def-slime-selector-method ?a "Visit system definition (asd) buffer."
-  (slime-find-project-asd))
+  (local/find-project-asd))
 
 
 ;;; Slime TRACE Dialog

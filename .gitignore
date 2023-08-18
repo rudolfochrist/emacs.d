@@ -32,3 +32,4 @@ transient/
 *.extmap
 /backups/
 /projects
+/eln-cache/

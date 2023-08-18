@@ -58,6 +58,29 @@
 (global-auto-revert-mode 1)
 (delete-selection-mode 1)
 
+;;; Fonts & Typography
+
+(set-frame-font "JetBrains Mono 12" nil t)
+
+(use-package ligature
+  :ensure t
+  :config
+  ;; Enable all JetBrains Mono ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("-|" "-~" "---" "-<<" "-<" "--" "->" "->>" "-->" "///" "/=" "/=="
+                                       "/>" "//" "/*" "*>" "***" "*/" "<-" "<<-" "<=>" "<=" "<|" "<||"
+                                       "<|||" "<|>" "<:" "<>" "<-<" "<<<" "<==" "<<=" "<=<" "<==>" "<-|"
+                                       "<<" "<~>" "<=|" "<~~" "<~" "<$>" "<$" "<+>" "<+" "</>" "</" "<*"
+                                       "<*>" "<->" "<!--" ":>" ":<" ":::" "::" ":?" ":?>" ":=" "::=" "=>>"
+                                       "==>" "=/=" "=!=" "=>" "===" "=:=" "==" "!==" "!!" "!=" ">]" ">:"
+                                       ">>-" ">>=" ">=>" ">>>" ">-" ">=" "&&&" "&&" "|||>" "||>" "|>" "|]"
+                                       "|}" "|=>" "|->" "|=" "||-" "|-" "||=" "||" ".." ".?" ".=" ".-" "..<"
+                                       "..." "+++" "+>" "++" "[||]" "[<" "[|" "{|" "??" "?." "?=" "?:" "##"
+                                       "###" "####" "#[" "#{" "#=" "#!" "#:" "#_(" "#_" "#?" "#(" ";;" "_|_"
+                                       "__" "~~" "~~>" "~>" "~-" "~@" "$>" "^=" "]#"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
+
 ;;; auto-save + backups
 
 (defvar backup-dir (expand-file-name "backups/" user-emacs-directory))
@@ -182,30 +205,9 @@
 (use-package s        :defer t :ensure t)
 (use-package dash     :defer t :ensure t)
 
-;;; swiper, ivy, counsel
-;;; https://github.com/abo-abo/swiper
-
-(use-package smex
-  :ensure t
-  :defer t)
-
-(use-package ivy
-  :ensure t
-  :demand t
-  :bind (("C-. C-r" . ivy-resume)
-         ("C-x C-b" . ivy-switch-buffer))
-  :config
-  (setq ivy-display-style 'fancy)
-  (ivy-mode 1))
-
-(use-package counsel
-  :ensure t
-  :demand t
-  :after ivy
-  :bind (("M-x" . counsel-M-x)
-         ("C-x C-f" . counsel-find-file)
-         ("C-. B" . counsel-bookmark)
-         ("M-s g" . counsel-rg)))
+;;; completion
+(require 'icomplete)
+(fido-vertical-mode 1)
 
 ;;; info
 
@@ -249,21 +251,6 @@
   :ensure t
   :commands (wgrep-change)
   :config (setq wgrep-auto-save-buffer t))
-
-;;; company-mode
-
-(use-package company
-  :ensure t
-  :init (setq company-minimum-prefix-length 1
-              company-idle-delay 0.0)
-  :commands (global-company-mode)
-  :bind (("C-. C-." . company-complete)
-         :map company-active-map
-         ("C-n" . company-select-next)
-         ("C-p" . company-select-previous)
-         ("C-h" . company-show-doc-buffer)
-         ("M-." . company-show-location))
-  :hook (after-init . global-company-mode))
 
 ;;; dired
 
@@ -342,14 +329,12 @@
   (setq js2-basic-offset 2
         js-indent-level 2))
 
-
 ;;; macrostep
 
 (use-package macrostep
   :ensure t
   :bind (:map emacs-lisp-mode-map
               ("C-c M-e" . macrostep-expand)))
-
 
 ;;; magit
 
@@ -376,7 +361,6 @@
   (add-to-list 'Info-directory-list
                (expand-file-name "magit/Documentation" site-lisp-directory))
   (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)))
-
 
 ;;; paredit
 
@@ -413,7 +397,6 @@
   :ensure t
   :config (which-key-mode))
 
-
 ;;; whitespace
 
 (use-package whitespace
@@ -421,7 +404,6 @@
   :config
   (setq whitespace-line-column 120
         whitespace-style '(face lines-tail tabs trailing)))
-
 
 ;;; yasnippet
 
@@ -433,7 +415,6 @@
   :config
   (yas-reload-all))
 
-
 ;;; emacs-lisp-mode
 
 (use-package emacs-lisp-mode
@@ -444,7 +425,6 @@
             (lambda ()
               (setq-local lisp-indent-function #'lisp-indent-function))))
 
-
 ;;; eldoc
 
 (use-package eldoc
@@ -454,7 +434,7 @@
   (eldoc-add-command 'paredit-backward-delete
                      'paredit-close-round))
 
-;;; slime
+;;; lisp
 
 (use-package lisp-mode
   :disabled t
@@ -463,24 +443,39 @@
   :mode "\\.asd\\'"
   :hook ((lisp-mode . slime-mode)))
 
-(use-package dot-slime
-  :disabled t
-  :load-path "site-lisp"
-  :bind (("C-. l" . my-start-slime)))
+(defun local/find-project-asd ()
+  "Find the project ASD file."
+  (interactive)
+  (let ((asds (directory-files (project-root (project-current t)) t ".asd")))
+    (cond
+     ((zerop (length asds))
+      (user-error "No ASD files found!"))
+     ((= (length asds) 1)
+      (find-file (car asds)))
+     (t
+      (find-file (completing-read "ASD file: " asds nil t))))))
 
 ;;; sly
 
+(defun advice-sly-mrepl-set-directory ()
+  (sly-eval
+   `(cl:when (cl:find-package :ocicl-runtime)
+             (cl:setf ocicl-runtime::*systems-dir* nil))))
+
 (use-package sly
   :ensure t
-  :bind (("C-. l" . sly))
+  :bind (("C-. l" . sly)
+         :map sly-selector-map
+         ("a" . local/find-project-asd))
   :init
-  (setq inferior-lisp-program "sbcl"))
+  (setq inferior-lisp-program "sbcl")
+  :config
+  (global-set-key (kbd "C-. C-/") sly-selector-map)
+  (advice-add 'sly-mrepl-set-directory :after #'advice-sly-mrepl-set-directory)
+  (with-eval-after-load sly-mrepl
+    (bind-key "C-l" 'sly-mrepl-clear-recent-output sly-mrepl-mode-map)))
 
 (use-package sly-asdf
-  :ensure t
-  :after sly)
-
-(use-package sly-quicklisp
   :ensure t
   :after sly)
 
@@ -494,7 +489,6 @@
 
 (use-package sly-stepper-autoloads
   :load-path "site-lisp/sly-stepper")
-
 
 ;;; imenu
 
@@ -566,15 +560,6 @@
   :after (imenu ivy)
   :bind (("C-. C-," . ivy-imenu-anywhere)))
 
-
-;;; gnus
-
-(use-package dot-gnus
-  :disabled t
-  :bind (("C-. m" . gnus)
-         ("C-. M" . gnus-other-frame)))
-
-
 ;;; cperl-mode
 
 ;; https://www.emacswiki.org/emacs/CPerlMode#toc10
@@ -600,7 +585,6 @@
             nil
             t))
 
-
 ;;; Docker
 
 (use-package dockerfile-mode
@@ -614,36 +598,10 @@
   :mode "docker-compose.yml"
   :commands (docker-compose-mode))
 
-
-;;; rich-minority
-
-(use-package rich-minority
-  :ensure t
-  :demand t
-  :init
-  (setq rm-whitelist " \\[.*\\]\\| st")
-  :config
-  (rich-minority-mode 1))
-
-
 ;;; sgml-mode
 
 (use-package sgml-mode
   :commands (sgml-mode sgml-pretty-print))
-
-
-;;; commit-msg-prefix
-
-(use-package git-msg-prefix
-  :ensure t
-  :after magit
-  :bind (:map
-         ;; magit
-         with-editor-mode-map
-         ("C-. C-;" . git-msg-prefix))
-  :config
-  (setq git-msg-prefix-input-method #'ivy-read))
-
 
 ;;; helpful
 
@@ -667,7 +625,8 @@
   :mode "\\.html.erb\\'"
   :hook (web-mode . web-mode-lsp-bindings)
   :config
-  (setq web-mode-auto-close-style 2))
+  (setq web-mode-auto-close-style 2
+        web-mode-))
 
 (use-package emmet-mode
   :ensure t
@@ -694,7 +653,6 @@
   :ensure t
   :mode "\\.json\\'")
 
-
 ;;; log file reading
 ;;; https://writequit.org/articles/working-with-logs-in-emacs.html
 
@@ -719,12 +677,6 @@
                  (format . "TIMESTAMP LEVEL [NAME] (THREAD)")
                  (levels . "WILDFLY"))))
 
-;;; abbrev
-
-(use-package abbrev
-  :hook ((text-mode . abbrev-mode)
-         (prog-mode . abbrev-mode)))
-
 ;;; project.el + super-t/command-t file finding
 
 (use-package project
@@ -748,10 +700,6 @@
 
 (cl-defmethod project-root ((project (head common-lisp)))
   (cdr project))
-
-(cl-defmethod project-ignores ((project (head common-lisp)) dir) :qualifier :around
-  (let ((default-ignores (cl-call-next-method nil dir)))
-    (push ".clm/" default-ignores)))
 
 (defun super-t ()
   (interactive)
@@ -824,13 +772,6 @@
   (evil-swap-keys-add-mapping "(" "{")
   (evil-swap-keys-add-mapping ")" "}"))
 
-;;; ivy-xref
-
-(use-package ivy-xref
-  :ensure t
-  :after xref
-  :init (setq xref-show-definitions-function #'ivy-xref-show-defs))
-
 ;;; markdown
 
 (use-package markdown-mode
@@ -867,6 +808,25 @@
   :load-path "site-lisp"
   :hook ((sql-mode . sql-upcase-mode)))
 
+;;; multiple-cursors
+
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C-S-l" . mc/mark-all-dwim)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
+
+;;; undo-tree
+
+(use-package undo-tree
+  :ensure t
+  :init
+  (setq undo-tree-history-directory-alist
+        `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
+  :config (global-undo-tree-mode))
+
 ;;; packages end here
 
 ;;;
@@ -894,6 +854,23 @@
            (error "no process at point!")))))
 
 (bind-key "C-k" #'fyi-kill-process-at-point process-menu-mode-map)
+
+;;;
+(defun move-point-to-newline (&optional arg)
+  "Add newline to end of current line and move point."
+  (interactive "P")
+  (move-end-of-line arg)
+  (newline-and-indent arg))
+
+(bind-key "C-<return>" #'move-point-to-newline)
+
+(defun move-point-to-newline-above (&optional arg)
+  "Add newline above current line and move point"
+  (interactive "P")
+  (previous-line arg)
+  (move-point-to-newline arg))
+
+(bind-key "C-S-<return>" #'move-point-to-newline-above)
 
 ;;; load machine-local configuration file
 
