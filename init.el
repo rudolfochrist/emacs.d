@@ -210,6 +210,21 @@
 (require 'icomplete)
 (fido-vertical-mode 1)
 
+;;; corfu
+
+(use-package corfu
+  :ensure t
+  :config
+  (setq corfu-auto t
+        corfu-quit-no-match t)
+  (global-corfu-mode))
+
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
 ;;; info
 
 (setq Info-directory-list
