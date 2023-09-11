@@ -182,6 +182,7 @@
 (bind-key "C-x C-k" #'kill-region)
 
 ;;; buffer switching
+(bind-key "C-x C-b" #'switch-to-buffer)
 (bind-key "C-c C-b" #'ibuffer)
 
 ;;; fullscreen
@@ -457,10 +458,13 @@
 
 ;;; sly
 
-(defun advice-sly-mrepl-set-directory ()
+(defun local/sly-change-directory ()
+  (interactive)
+  (sly-mrepl-set-directory)
+  ;; reset ocicl
   (sly-eval
-   `(cl:when (cl:find-package :ocicl-runtime)
-             (cl:setf ocicl-runtime::*systems-dir* nil))))
+   '(cl:and (cl:find-package :ocicl-runtime)
+            (cl:setf ocicl-runtime::*systems-dir* nil))))
 
 (use-package sly
   :ensure t
@@ -471,9 +475,10 @@
   (setq inferior-lisp-program "sbcl")
   :config
   (global-set-key (kbd "C-. C-/") sly-selector-map)
-  (advice-add 'sly-mrepl-set-directory :after #'advice-sly-mrepl-set-directory)
-  (with-eval-after-load sly-mrepl
-    (bind-key "C-l" 'sly-mrepl-clear-recent-output sly-mrepl-mode-map)))
+  (setcdr (assoc "cd" sly-mrepl-shortcut-alist) 'local/sly-change-directory))
+
+(with-eval-after-load 'sly-mrepl
+  (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map))
 
 (use-package sly-asdf
   :ensure t
@@ -512,6 +517,7 @@
         t))))
 
 (use-package imenu
+  :bind (("C-. C-," . imenu))
   :config
   ;; don't replace space
   (setq imenu-space-replacement nil)
@@ -553,12 +559,6 @@
                                        t))
                                     "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
                   2))))))
-
-
-(use-package imenu-anywhere
-  :ensure t
-  :after (imenu ivy)
-  :bind (("C-. C-," . ivy-imenu-anywhere)))
 
 ;;; cperl-mode
 
@@ -781,10 +781,8 @@
 
 (use-package skeletor
   :ensure t
-  :after ivy
   :config
   (setq skeletor-project-directory "~/code/"
-        skeletor-completing-read-function #'ivy-completing-read
         skeletor-init-with-git nil))
 
 (skeletor-define-template "lisp-init"
