@@ -227,15 +227,14 @@
 
 ;;; info
 
-(setq Info-directory-list
-      (append (list (expand-file-name "~/info"))
-              Info-default-directory-list))
-
 (use-package info
   :commands (info)
   :bind (("C-h a" . apropos)
          ("C-h A" . apropos))
-  :demand t)
+  :demand t
+  :config
+  (setq Info-additional-directory-list
+        (list (expand-file-name "~/info/"))))
 
 (use-package info-look
   :after info
@@ -473,24 +472,17 @@
 
 ;;; sly
 
-(defun local/sly-change-directory ()
-  (interactive)
-  (sly-mrepl-set-directory)
-  ;; reset ocicl
-  (sly-eval
-   '(cl:and (cl:find-package :ocicl-runtime)
-            (cl:setf ocicl-runtime::*systems-dir* nil))))
-
 (use-package sly
   :ensure t
   :bind (("C-. l" . sly)
          :map sly-selector-map
          ("a" . local/find-project-asd))
   :init
-  (setq inferior-lisp-program "sbcl")
+  (setq sly-lisp-implementations
+        '((sbcl ("sbcl"))
+          (sbcl-no-userinit ("sbcl" "--no-userinit"))))
   :config
-  (global-set-key (kbd "C-. C-/") sly-selector-map)
-  (setcdr (assoc "cd" sly-mrepl-shortcut-alist) 'local/sly-change-directory))
+  (global-set-key (kbd "C-. C-/") sly-selector-map))
 
 (with-eval-after-load 'sly-mrepl
   (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map))
