@@ -12,7 +12,7 @@
 #+OPTIONS: ':t author:t email:t toc:t
 
 #+TEXINFO_DIR_CATEGORY: ${4:Software Development}
-#+TEXINFO_DIR_TITLE: ${5:$1} (${6:$1})
+#+TEXINFO_DIR_TITLE: ${5:$1}: (${6:$1})
 #+TEXINFO_DIR_DESC: ${7:description}
 
 #+TEXINFO: @insertcopying

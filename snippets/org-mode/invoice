@@ -4,13 +4,13 @@
 # --
 #+STARTUP: showall
 #+OPTIONS: after-closing-order:(ps encl cc) after-letter-order:(after_letter) backaddress:t
-#+OPTIONS: foldmarks:t email:t subject:untitled phone:t url:t \n:t
+#+OPTIONS: foldmarks:t email:t subject:untitled phone:t url:t
 #+LATEX_CLASS: default-koma-letter
 #+LATEX_CLASS_OPTIONS: [a4paper]
 #+LATEX_HEADER: \usepackage{tabularx}
 #+LATEX_HEADER: \setlength\parindent{0pt}
 #+LCO: DIN de_DE me invoice
-#+SUBJECT: Rechnungsnr. ${1:Rechnungsnummer}
+#+SUBJECT: Rechnungsnr.: ${1:Rechnungsnummer}
 #+DATE:
 #+LATEX_HEADER: \newcommand{\invoicedate}{${5:invoice date}}
 #+LATEX_HEADER: \newcommand{\deliverydate}{${6:delivery date}}
