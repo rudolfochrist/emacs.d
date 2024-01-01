@@ -21,20 +21,15 @@
 
 
 (defsystem "__PROJECT-NAME__/test"
-  :author "__USER-NAME__ <__USER-MAIL-ADDRESS__>"
-  :maintainer "__USER-NAME__ <__USER-MAIL-ADDRESS__>"
-  :mailto "__USER-MAIL-ADDRESS__"
-  :license "MPL-2.0"
   :description "Tests for __PROJECT-NAME__"
   :depends-on ((:require "uiop")
-               "fiveam"
-               "fiveam-matchers"
+               "fiasco"
                "__PROJECT-NAME__")
   :pathname "t/"
-  :components ((:file "package"))
+  :components ((:file "tests"))
   :perform (test-op (op c)
-                    (when (and (not (uiop:symbol-call :fiveam :run! :__PROJECT-NAME__))
-                               (uiop:getenv "CI"))
-                      (uiop:quit 1))))
+                    (unless (uiop:symbol-call :fiasco :run-package-tests :package :__PROJECT-NAME__.test)
+                      #+(not (or :swank :slynk))
+                      (error "Failed tests."))))
 
 
