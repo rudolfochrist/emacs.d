@@ -2,9 +2,24 @@
 # name: exec
 # key: _exec
 # --
-(defsystem "${1:System}/executable"
+(defsystem "${1:system}/executable"
   :build-operation program-op
   :build-pathname "${2:executable}" ;; shell name
-  :entry-point "$1::main" ;; thunk
+  :entry-point "$1.executable:main" ;; thunk
   :depends-on ("$1")
-  :components ((:file "main")))
+  :components ((:file "main"))
+  :perform (image-op (op c)
+                     (uiop:dump-image (asdf:output-file op c)
+                                      :executable t
+                                      #+sb-core-compression
+                                      :compression
+                                      #+sb-core-compression
+                                      t))
+  :output-files (program-op (op c)
+                            ;; build executable in current directory
+                            ;; and not relative to its system
+                            ;; definition.
+                            (uiop:if-let ((build-pathname (asdf/system::component-build-pathname c)))
+                              (values (list (make-pathname :defaults (uiop:getcwd)
+                                                           :name build-pathname))
+                                      t))))

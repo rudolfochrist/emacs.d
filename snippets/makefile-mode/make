@@ -18,7 +18,7 @@ LISPSRCS=\$(wildcard *.lisp)
 SRCS=\$(ASDSRCS) \$(LISPSRCS)
 }
 EMACSFLAGS=--batch -Q${4:
-LISPFLAGS=--no-userinit --non-interactive --noinform
+LISPFLAGS=--noinform --no-userinit --non-interactive
 }
 
 
@@ -53,7 +53,7 @@ check:
 
 .PHONY:
 clean:${6:
-	-rm **/*.fasl
+	-rm -f *.fasl **/*.fasl
 }
 
 .PHONY:
@@ -67,16 +67,6 @@ dist: distclean
 	cp -R $(shell $(LS) --ignore$(PACKAGE)) $(PACKAGE)
 	tar czf $(PACKAGE).tar.gz $(PACKAGE)
 	-rm -rf $(PACKAGE)
-
-.PHONY:
-do-install-info: $1.info installdirs
-	$(INSTALL_DATA) $< $(DESTDIR)$(infodir)/$<
-	# run install-info if available
-	if $(SHELL) -c 'install-info --version' \
-	   >/dev/null 2>&1; then \
-	   install-info --dir-file="$(DESTDIR)$(infodir)/dir" \
-	                "$(DESTDIR)$(infodir)/$<"; \
-	else true; fi
 
 .PHONY:
 install: all installdirs do-install-info
@@ -107,6 +97,16 @@ doc/dict.texi: $(SRCS) version
 	--eval '(asdf:load-system "$1")' \
 	--eval '(asdf:load-system "sb-texinfo")' \
 	--eval '(sb-texinfo:document-package :$1 :output-file "$@" :standalone nil :write-backmatter nil :write-menu nil :exclude-node t)'
+
+.PHONY:
+do-install-info: $1.info installdirs
+	$(INSTALL_DATA) $< $(DESTDIR)$(infodir)/$<
+	# run install-info if available
+	if $(SHELL) -c 'install-info --version' \
+	   >/dev/null 2>&1; then \
+	   install-info --dir-file="$(DESTDIR)$(infodir)/dir" \
+	                "$(DESTDIR)$(infodir)/$<"; \
+	else true; fi
 
 README.txt: doc/README.org version
 	-rm $@

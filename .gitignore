@@ -33,3 +33,6 @@ transient/
 /backups/
 /projects
 /eln-cache/
+/.cache/
+/.lsp-session-v1
+/tree-sitter/
