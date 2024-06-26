@@ -6,36 +6,24 @@
 
 ;;; Code:
 
-(require 'slime)
-(require 'slime-cl-indent)
-
-;;; https://github.com/eugeneia/maxpc
-(put '=destructure 'common-lisp-indent-function
-     (get 'destructuring-bind 'common-lisp-indent-function))
-
-(put 'handle-command-line 'common-lisp-indent-function
-     (get 'defun 'common-lisp-indent-function))
-
-(put 'import 'common-lisp-indent-function
-     (get 'defun 'common-lisp-indent-function))
-
-(put 'if-let 'common-lisp-indent-function
-     (get 'let 'common-lisp-indent-function))
-
-;;; https://docs.stevelosh.com/adopt
-(put 'adopt:make-option 'common-lisp-indent-function
-     (get 'when 'common-lisp-indent-function))
+(require 'sly)
 
 ;;; https://github.com/eudoxia0/cl-yaml
-(put 'with-emitter-to-string 'common-lisp-indent-function
-     (get 'when 'common-lisp-indent-function))
+(put 'with-emitter-to-string 'sly-common-lisp-indent-function
+     (get 'when 'sly-common-lisp-indent-function))
 
-(put 'with-emitter-to-stream 'common-lisp-indent-function
-     (get 'when 'common-lisp-indent-function))
+(put 'with-emitter-to-stream 'sly-common-lisp-indent-function
+     (get 'when 'sly-common-lisp-indent-function))
 
-;;; postmoderb
-(put ':create-table 'common-lisp-indent-function
-     (get 'defstruct 'common-lisp-indent-function))
+;;; asdf
+(put 'defsystem 'sly-common-lisp-indent-function
+     (get 'defun 'sly-common-lisp-indent-function))
+
+;;; jzon
+(put 'with-writer* 'sly-common-lisp-indent-function
+     (get 'destructuring-bind 'sly-common-lisp-indent-function))
+(put 'with-writer 'sly-common-lisp-indent-function
+     (get 'destructuring-bind 'sly-common-lisp-indent-function))
 
 (provide 'indentation-rules)
 
