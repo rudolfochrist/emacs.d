@@ -1,0 +1,8 @@
+# key: _compression
+# name: compression
+# --
+#+sb-core-compression
+(defmethod asdf:perform :around ((op asdf:image-op) (c asdf:system))
+  (asdf/driver:dump-image (asdf:output-file op c)
+                          :executable t
+                          :compression t))

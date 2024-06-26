@@ -60,7 +60,7 @@
 
 ;;; Fonts & Typography
 
-(set-frame-font "JetBrains Mono 12" nil t)
+(set-frame-font "SF Mono 12" nil t)
 
 (use-package ligature
   :ensure t
@@ -116,7 +116,7 @@
   :if (not (eq system-type 'windows-nt))
   :config
   (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs '("LANG" "LC_ALL" "TERM" "CC")))
+  (exec-path-from-shell-copy-envs '("LANG" "LC_ALL" "TERM" "CC" "PERL5LIB")))
 
 ;;; disable GUI stuff
 (dolist (mode '(tool-bar-mode scroll-bar-mode))
@@ -254,6 +254,22 @@
 (use-package flycheck
   :ensure t
   :config (global-flycheck-mode))
+
+;;; Language Server (lsp)
+
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq lsp-keymap-prefix "C-c l"
+        ada-ts-mode-indent-offset 3)
+  :hook ((ada-ts-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+(use-package lsp-ui
+  :ensure t
+  :after lsp-mode
+  :commands lsp-ui-mode)
 
 ;;; org-mode
 
@@ -480,9 +496,14 @@
   :init
   (setq sly-lisp-implementations
         '((sbcl ("sbcl"))
-          (sbcl-no-userinit ("sbcl" "--no-userinit"))))
+          (sbcl-no-userinit ("sbcl" "--no-userinit"))
+          (ccl ("ccl64"))))
   :config
   (global-set-key (kbd "C-. C-/") sly-selector-map))
+
+(use-package indentation-rules
+  :load-path "site-lisp"
+  :after sly)
 
 (with-eval-after-load 'sly-mrepl
   (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map))
@@ -583,9 +604,16 @@
                 ("perl5" . cperl-mode)
                 ("miniperl" . cperl-mode))
   :config
-  (setq cperl-hairy t
-        cperl-clobber-lisp-bindings nil
-        cperl-info-on-command-no-prompt nil)
+  ;; almost cperl-hairy. Keep C-h f
+  (setq cperl-font-lock t
+        cperl-electric-lbrace-space t
+        cperl-electric-parens t
+        cperl-electric-linefeed t
+        cperl-electric-keywords t
+        cperl-lazy-help-time t)
+  ;; better block indentation
+  (setq cperl-indent-parens-as-block t
+        cperl-close-paren-offset (- cperl-indent-level))
   (add-hook 'cperl-mode-hook
             (lambda ()
               (setq eldoc-documentation-function #'my-cperl-eldoc-documentation-function))
@@ -832,9 +860,12 @@
         `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
   :config (global-undo-tree-mode))
 
-;;; packages end here
+;;; ada programming
 
-;;;
+(use-package ada-ts-mode
+  :ensure t)
+
+;;; packages end here
 
 ;;; check for parens after save
 
