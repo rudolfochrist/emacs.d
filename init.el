@@ -62,25 +62,6 @@
 
 (set-frame-font "SF Mono 12" nil t)
 
-(use-package ligature
-  :ensure t
-  :config
-  ;; Enable all JetBrains Mono ligatures in programming modes
-  (ligature-set-ligatures 'prog-mode '("-|" "-~" "---" "-<<" "-<" "--" "->" "->>" "-->" "///" "/=" "/=="
-                                       "/>" "//" "/*" "*>" "***" "*/" "<-" "<<-" "<=>" "<=" "<|" "<||"
-                                       "<|||" "<|>" "<:" "<>" "<-<" "<<<" "<==" "<<=" "<=<" "<==>" "<-|"
-                                       "<<" "<~>" "<=|" "<~~" "<~" "<$>" "<$" "<+>" "<+" "</>" "</" "<*"
-                                       "<*>" "<->" "<!--" ":>" ":<" ":::" "::" ":?" ":?>" ":=" "::=" "=>>"
-                                       "==>" "=/=" "=!=" "=>" "===" "=:=" "==" "!==" "!!" "!=" ">]" ">:"
-                                       ">>-" ">>=" ">=>" ">>>" ">-" ">=" "&&&" "&&" "|||>" "||>" "|>" "|]"
-                                       "|}" "|=>" "|->" "|=" "||-" "|-" "||=" "||" ".." ".?" ".=" ".-" "..<"
-                                       "..." "+++" "+>" "++" "[||]" "[<" "[|" "{|" "??" "?." "?=" "?:" "##"
-                                       "###" "####" "#[" "#{" "#=" "#!" "#:" "#_(" "#_" "#?" "#(" ";;" "_|_"
-                                       "__" "~~" "~~>" "~>" "~-" "~@" "$>" "^=" "]#"))
-  ;; Enables ligature checks globally in all buffers. You can also do it
-  ;; per mode with `ligature-mode'.
-  (global-ligature-mode t))
-
 ;;; auto-save + backups
 
 (defvar backup-dir (expand-file-name "backups/" user-emacs-directory))
@@ -170,10 +151,6 @@
 ;;; C-. prefix map is for personal bindings
 
 ;;; C-.
-;;; unbind in flyspell-mode
-(with-eval-after-load 'flyspell
-  (unbind-key "C-." flyspell-mode-map))
-
 (defvar ctl-period-map nil)
 (define-prefix-command 'ctl-period-map)
 (bind-key "C-." #'ctl-period-map)
@@ -240,20 +217,6 @@
   :after info
   :bind (("C-h S" . info-lookup-symbol)))
 
-
-;;; flyspell
-
-(use-package flyspell
-  :unless (eq window-system 'w32)
-  :commands (flyspell-prog-mode flyspell-mode)
-  :hook ((text-mode . flyspell-mode)
-         (prog-mode . flyspell-prog-mode)))
-
-;;; flycheck
-
-(use-package flycheck
-  :ensure t
-  :config (global-flycheck-mode))
 
 ;;; Language Server (lsp)
 
@@ -890,23 +853,6 @@
            (error "no process at point!")))))
 
 (bind-key "C-k" #'fyi-kill-process-at-point process-menu-mode-map)
-
-;;;
-(defun move-point-to-newline (&optional arg)
-  "Add newline to end of current line and move point."
-  (interactive "P")
-  (move-end-of-line arg)
-  (newline-and-indent arg))
-
-(bind-key "C-<return>" #'move-point-to-newline)
-
-(defun move-point-to-newline-above (&optional arg)
-  "Add newline above current line and move point"
-  (interactive "P")
-  (previous-line arg)
-  (move-point-to-newline arg))
-
-(bind-key "C-S-<return>" #'move-point-to-newline-above)
 
 ;;; load machine-local configuration file
 
