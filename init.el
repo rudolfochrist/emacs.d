@@ -829,6 +829,23 @@
 (use-package ada-ts-mode
   :ensure t)
 
+;;; jinx
+
+(use-package jinx
+  :ensure t
+  :hook (emacs-startup . global-jinx-mode)
+  :bind (("M-$" . jinx-correct)
+         ("C-M-$" . jinx-languages)))
+
+;;; marginalia
+
+(use-package marginalia
+  :ensure t
+  :bind (:map minibuffer-local-map
+              ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+
 ;;; packages end here
 
 ;;; check for parens after save
