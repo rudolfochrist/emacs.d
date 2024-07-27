@@ -23,13 +23,14 @@
 (defsystem "__PROJECT-NAME__/test"
   :description "Tests for __PROJECT-NAME__"
   :depends-on ((:require "uiop")
-               "fiasco"
+               "fiveam"
+               "fiveam-matchers"
                "__PROJECT-NAME__")
   :pathname "t/"
   :components ((:file "tests"))
   :perform (test-op (op c)
-                    (unless (uiop:symbol-call :fiasco :run-package-tests :package :__PROJECT-NAME__.test)
+                    (unless (uiop:symbol-call :fiveam :run! :__PROJECT-NAME__/test)
                       #+(not (or :swank :slynk))
-                      (error "Failed tests."))))
+                      (uiop:quit 1))))
 
 

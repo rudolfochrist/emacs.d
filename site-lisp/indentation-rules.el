@@ -25,6 +25,10 @@
 (put 'with-writer 'sly-common-lisp-indent-function
      (get 'destructuring-bind 'sly-common-lisp-indent-function))
 
+;;; fiveam
+(put 'test 'sly-common-lisp-indent-function
+     (get 'prog1 'sly-common-lisp-indent-function))
+
 (provide 'indentation-rules)
 
 ;;; indentation-rules.el ends here
