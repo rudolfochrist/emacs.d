@@ -5,10 +5,13 @@
 # -*- mode: org; -*-
 #+MACRO: version (eval (with-temp-buffer (insert-file-contents-literally "../version" nil) (buffer-substring-no-properties (point-min) (point-max))))
 #+STARTUP: content
+#+TEXINFO_HEADER: @c -------------------------------------------
+#+TEXINFO_HEADER: @c MACHINE GENERATED FILE! DON'T EDIT BY HAND.
+#+TEXINFO_HEADER: @c -------------------------------------------
 
-#+TITLE: ${1:project} Manuel {{{version}}}
+#+TITLE: ${1:project} Manual {{{version}}}
 #+AUTHOR: ${2:Sebastian Christ}
-#+EMAIL: ${3:rudolfo.christ@pm.me}
+#+EMAIL: ${3:rudolfo.christ@proton.me}
 #+OPTIONS: ':t author:t email:t toc:t
 
 #+TEXINFO_DIR_CATEGORY: ${4:Software Development}
