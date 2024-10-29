@@ -177,6 +177,12 @@
   (revert-buffer t t))
 (bind-key "C-c C-r" #'revert-buffer-no-confirm)
 
+;;; fill region
+(bind-key "s-<tab>" #'fill-region)
+
+;;; delete whitespace
+(bind-key "s-<backspace>" #'delete-trailing-whitespace)
+
 ;;; libs
 
 (use-package f        :defer t :ensure t)
