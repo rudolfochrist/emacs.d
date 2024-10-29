@@ -362,6 +362,11 @@
                (expand-file-name "magit/Documentation" site-lisp-directory))
   (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)))
 
+;;; git-timemachine
+
+(use-package git-timemachine
+  :ensure t)
+
 ;;; paredit
 
 (defvar paredit-non-space-patterns '("#\+" "#-" "#." ",@"))
