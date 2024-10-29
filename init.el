@@ -826,10 +826,6 @@
          ("C-<" . mc/mark-previous-like-this)
          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
-(use-package multiple-cursors-custom
-  :load-path "site-lisp"
-  :after multiple-cursors)
-
 ;;; undo-tree
 
 (use-package undo-tree
