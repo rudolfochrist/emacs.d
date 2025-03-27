@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: inline-chord
+# key: _ic
+# --
+$\writechord{$0}$

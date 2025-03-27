@@ -15,6 +15,7 @@
 (require 'ox-texinfo)
 (require 'ox-latex)
 (require 'ox-koma-letter nil t)
+(require 'ox-man)
 
 (setq  org-export-allow-bind-keywords t  ; allows the use og #+BIND in org files
        org-export-date-timestamp-format "%Y-%m-%d"
@@ -114,14 +115,7 @@ hypersetup to include colorlinks=true."
 
 ;;; latex settings
 (setq org-latex-prefer-user-labels t
-      org-latex-hyperref-template (toggle-org-latex-hyperref-colorlinks t)
-      org-latex-compiler "xelatex"
-      org-latex-pdf-process '("%latex -interaction nonstopmode %f"
-                              "%bib %b"
-                              "makeindex %b"
-                              "PATH=\"/usr/bin:$PATH\" makeglossaries %b"  ; use system perl for makeglossaries
-                              "%latex -interaction nonstopmode %f"
-                              "%latex -interaction nonstopmode %f"))
+      org-latex-hyperref-template (toggle-org-latex-hyperref-colorlinks t))
 
 ;;; org export filters
 (defvar org-export-latex-add-link-footnotes nil

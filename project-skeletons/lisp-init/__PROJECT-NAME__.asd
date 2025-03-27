@@ -16,7 +16,7 @@
   :description "__DESCRIPTION__"
   :long-description
   #.(uiop:read-file-string
-     (uiop:subpathname *load-pathname* "README.txt"))
+     (uiop:subpathname *load-pathname* "README.org"))
   :in-order-to ((test-op (test-op "__PROJECT-NAME__/test"))))
 
 
@@ -29,7 +29,7 @@
   :pathname "t/"
   :components ((:file "tests"))
   :perform (test-op (op c)
-                    (unless (uiop:symbol-call :fiveam :run! :__PROJECT-NAME__/test)
+                    (unless (uiop:symbol-call :fiveam :run! :__PROJECT-NAME__)
                       #+(not (or :swank :slynk))
                       (uiop:quit 1))))
 

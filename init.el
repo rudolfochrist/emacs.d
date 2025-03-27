@@ -52,7 +52,11 @@
       mac-command-modifier 'control
       mac-control-modifier 'super
       user-full-name "Sebastian Christ"
-      user-mail-address "rudolfo.christ@pm.me")
+      user-mail-address "rudolfo.christ@proton.me")
+
+;;; use GNU ls
+(when (executable-find "gls")
+  (setq insert-directory-program "gls"))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode 1)
@@ -182,6 +186,9 @@
 
 ;;; delete whitespace
 (bind-key "s-<backspace>" #'delete-trailing-whitespace)
+
+;;; compile
+(bind-key "C-. C-c" #'compile)
 
 ;;; libs
 
@@ -318,7 +325,7 @@
 (use-package iedit
   :ensure t
   :bind (("C-. C-'" . iedit-mode)
-         ("C-. C-\"" . iedit-mode-defun)))
+         ("C-. C-\\" . iedit-mode-defun)))
 
 ;;; js2-mode
 
@@ -635,8 +642,7 @@
   :mode "\\.html\\'"
   :hook (web-mode . web-mode-lsp-bindings)
   :config
-  (setq web-mode-auto-close-style 2
-        web-mode-))
+  (setq web-mode-auto-close-style 2))
 
 (use-package emmet-mode
   :ensure t
@@ -857,6 +863,12 @@
   :init
   (marginalia-mode))
 
+;;; direnv/envrc
+
+(use-package envrc
+  :ensure t
+  :hook (after-init . envrc-global-mode))
+
 ;;; packages end here
 
 ;;; check for parens after save
@@ -905,7 +917,3 @@
 (provide 'init)
 
 ;;; init.el ends here
-
-;; Local Variables:
-;; flycheck-disabled-checkers: (emacs-lisp emacs-lisp-checkdoc)
-;; End:

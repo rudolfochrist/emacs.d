@@ -1,0 +1,29 @@
+# -*- mode: org; -*-
+
+* NAME
+
+__PROJECT-NAME__ --- __DESCRIPTION__
+
+* SYNOPSIS
+
+* DESCRIPTION
+
+** FUNCTIONS
+
+** VARIABLES
+
+* AUTHOR
+
+__USER-NAME__ ([[mailto:__USER-MAIL-ADDRESS__]])
+
+* COPYRIGHT
+
+Copyright (c) __YEAR__ __USER-NAME__ (__USER-MAIL-ADDRESS__)
+
+* LICENSE
+
+Released under the MPL-2.0 license.
+See [[file:LICENSE.txt][LICENSE]].
+
+* SEE ALSO
+

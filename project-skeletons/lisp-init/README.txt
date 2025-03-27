@@ -1,2 +1,0 @@
-
-# __PROJECT-NAME__

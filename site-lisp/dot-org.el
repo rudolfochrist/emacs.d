@@ -31,8 +31,7 @@
 ;;; minor modes in org buffers
 (add-to-list 'org-mode-hook
              (lambda ()
-               (visual-line-mode 1)
-               (flycheck-mode -1)))
+               (visual-line-mode 1)))
 
 ;;; limit the width
 (defun fyi-org-width ()
@@ -56,6 +55,11 @@
   (add-to-list 'ispell-skip-region-alist '("=" "="))
   (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC")))
 (add-hook 'org-mode-hook #'fyi-org-ispell)
+
+;;; Links and navigation
+
+(bind-key "C-c l" #'org-store-link org-mode-map)
+(bind-key "M-," #'org-mark-ring-goto org-mode-map) ; navigate back after following a link
 
 ;;; org-babel
 (org-babel-do-load-languages

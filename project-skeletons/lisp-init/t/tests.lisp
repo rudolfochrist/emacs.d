@@ -2,10 +2,12 @@
 ;;; License, v. 2.0. If a copy of the MPL was not distributed with this
 ;;; file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-(fiasco:define-test-package #:__PROJECT-NAME__.test
-  (:use :cl))
+(defpackage #:__PROJECT-NAME__/test
+  (:use :cl :__PROJECT-NAME__ :fiveam :fiveam-matchers))
 
-(in-package #:__PROJECT-NAME__.test)
+(in-package #:__PROJECT-NAME__/test)
+
+(def-suite* :__PROJECT-NAME__)
 
 
 
