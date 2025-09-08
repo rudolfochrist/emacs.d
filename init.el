@@ -143,6 +143,7 @@
 ;;; SERVER
 
 (require 'server)
+(setq server-socket-dir "~/.emacs.d/server/")
 (when (and (not (getenv "EMACS_NO_SERVER"))
            (not (server-running-p)))
   (server-start))
