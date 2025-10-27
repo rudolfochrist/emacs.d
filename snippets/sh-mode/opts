@@ -7,18 +7,16 @@
 version=${1:0.1.0}
 name=${2:name}
 
-assert_value ()
+die()
 {
-    if [ -z "\$2" ] || [ "\${2:0:1}" = "-" ]; then
-        echo "Error: Argument for $1 is missing" >&2
-        exit 1
-    fi
+    printf '%s\n' "$1" >&2
+    exit 1
 }
 
 usage ()
 {
     cat <<EOF
-Usage: $(basename \$0) [options]
+Usage: \${0##*/} [options]
 
 Options:
   -v, --version                          Show version.
@@ -27,29 +25,50 @@ EOF
 }
 
 # Parsing args
-params=""
+opt=0
+file=
 
-while (( "$#" )); do
+while :; do
     case "\$1" in
         -v|--version)
-            echo "$(basename \$0) v$version"
+            echo "\${0##*/} v$version"
             exit 0
             ;;
-        -h|--help)
+        -h|-\?|--help)
             usage
-            exit 0
+            exit
             ;;
-        -*|--*)
-            echo "Error: Unsupported flag \$1" >&2
-            exit 1
+        -o|--opt)
+            opt=1
+            ;;
+        -f|--file)
+            if [[ -n "$2" ]]; then
+                file="$2"
+                shift
+            else
+                die "ERROR: '--file' requires a non-empty option argument"
+            fi
+            ;;
+        --file=?*)
+            file="\${1#*=}"
+            ;;
+        --file=)
+            die "ERROR: '--file' requires a non-empty option argument"
+            ;;
+        --)
+            # End of all options
+            shift
+            break
+            ;;
+        -?*)
+            echo "Warn: Unknown option: $1" >&2
             ;;
         *)
-            params+="\$1 "
-            shift
-            ;;
+            # No more options. Break loop.
+            break
     esac
+
+    shift
 done
-# set positional arguments in their proper place
-eval set -- "$params"
 
 $0
