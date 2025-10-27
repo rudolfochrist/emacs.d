@@ -32,7 +32,10 @@ vielen Dank für Ihre Buchung. Hiermit stelle ich folgende Leistungen in Rechnung
 |      |                                                                                   |          | *Gesamtbetrag* |             |
 
 Umsatzsteuer wird nach § 19 Abs. 1 UStG nicht erhoben (Kleinunternehmerregelung).
-Zahlungsbedingung: zahlbar sofort ohne Abzug.
+Zahlungsbedingung: zahlbar 14 Tage nach Erhalt der Rechnung auf folgendes Konto\\\
+
+Sebastian Christ \\\
+#+INCLUDE: ~/lco-files/iban.org
 
 
 * Mit freundlichen Grüßen,                                          :closing:
