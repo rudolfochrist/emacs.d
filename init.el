@@ -231,22 +231,6 @@
   :bind (("C-h S" . info-lookup-symbol)))
 
 
-;;; Language Server (lsp)
-
-(use-package lsp-mode
-  :ensure t
-  :init
-  (setq lsp-keymap-prefix "C-c l"
-        ada-ts-mode-indent-offset 3)
-  :hook ((ada-ts-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-
-(use-package lsp-ui
-  :ensure t
-  :after lsp-mode
-  :commands lsp-ui-mode)
-
 ;;; org-mode
 
 (use-package dot-org
@@ -842,11 +826,6 @@
         `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
   :config (global-undo-tree-mode))
 
-;;; ada programming
-
-(use-package ada-ts-mode
-  :ensure t)
-
 ;;; jinx
 
 (use-package jinx
@@ -855,20 +834,31 @@
   :bind (("M-$" . jinx-correct)
          ("C-M-$" . jinx-languages)))
 
-;;; marginalia
+;;; crux
 
-(use-package marginalia
+(use-package crux
   :ensure t
-  :bind (:map minibuffer-local-map
-              ("M-A" . marginalia-cycle))
-  :init
-  (marginalia-mode))
+  :bind (("C-c o" . crux-open-with)
+         ("M-S-<return>" . crux-smart-open-line-above)
+         ("S-<return>" . crux-smart-open-line)
+         ("C-c n" . crux-cleanup-buffer-or-region)
+         ("C-c d" . crux-duplicate-current-line-or-region)
+         ("C-c M-d" . crux-duplicate-and-comment-current-line-or-region)
+         ("C-x k" . bury-buffer)
+         ("C-x K" . kill-buffer)
+         ("M-K" . crux-kill-other-buffers)
+         ("C-M-z" . crux-indent-defun)
+         ("C-x I" . crux-find-user-init-file)
+         ("M-o" . crux-switch-to-previous-buffer)
+         ("C-g" . crux-keyboard-quit-dwim)
+         ("s-j" . crux-top-join-line)
+         ("C-c S" . crux-visit-shell-buffer)))
 
-;;; direnv/envrc
+;;; expand-region
 
-(use-package envrc
+(use-package expand-region
   :ensure t
-  :hook (after-init . envrc-global-mode))
+  :bind (("C-=" . er/expand-region)))
 
 ;;; packages end here
 
