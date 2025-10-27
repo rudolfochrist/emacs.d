@@ -918,6 +918,9 @@
 
 (bind-key "C-k" #'fyi-kill-process-at-point process-menu-mode-map)
 
+;;; colorize compilation buffer output
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+
 ;;; load machine-local configuration file
 
 (let* ((sys-name (system-name))
