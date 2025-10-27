@@ -31,15 +31,14 @@
 
 (setq slime-contribs
       '(slime-fancy
-        slime-trace-dialog
         slime-banner
         slime-asdf
-        slime-company
         slime-tramp
         slime-xref-browser
         slime-highlight-edits
         slime-sprof
-        slime-indentation))
+        ;; third partt
+        slime-company))
 
 (bind-key "C-. L" #'slime-connect)
 (bind-key "C-. C-/" #'slime-selector)

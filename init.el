@@ -375,7 +375,7 @@
          (minibuffer-setup . enable-paredit-mode)
          (lisp-mode . enable-paredit-mode)
          (lisp-interaction-mode . enable-paredit-mode)
-         (sly-mrepl-mode . enable-paredit-mode)
+         (slime-repl-mode . enable-paredit-mode)
          (scheme-mode . enable-paredit-mode)
          (ielm-mode . enable-paredit-mode))
   :config
@@ -434,7 +434,6 @@
 ;;; lisp
 
 (use-package lisp-mode
-  :disabled t
   :mode "\\.lisp\\'"
   :mode "\\.cl\\'"
   :mode "\\.asd\\'"
@@ -452,9 +451,32 @@
      (t
       (find-file (completing-read "ASD file: " asds nil t))))))
 
+;;; slime
+
+(use-package slime
+  :ensure t
+  :bind (("C-. l" . slime)
+         ("C-. C-/" . slime-selector))
+  :init
+  (setq inferior-lisp-program "sbcl"
+        slime-contribs '(slime-fancy
+                         slime-mrepl
+                         slime-banner
+                         slime-asdf
+                         slime-tramp
+                         slime-xref-browser
+                         slime-sprof)))
+
+(with-eval-after-load 'slime-repl
+  (bind-key "C-l" #'slime-repl-clear-buffer slime-repl-mode-map)
+
+  (def-slime-selector-method ?a "Visit system definition (asd) buffer."
+                             (local/find-project-asd)))
+
 ;;; sly
 
 (use-package sly
+  :disabled t
   :ensure t
   :bind (("C-. l" . sly)
          :map sly-selector-map
@@ -463,31 +485,46 @@
   (setq sly-lisp-implementations
         '((sbcl ("sbcl"))
           (sbcl-no-userinit ("sbcl" "--no-userinit"))
-          (ccl ("ccl64"))))
+          (ecl ("ecl"))))
   :config
   (global-set-key (kbd "C-. C-/") sly-selector-map))
 
-(use-package indentation-rules
-  :load-path "site-lisp"
-  :after sly)
-
 (with-eval-after-load 'sly-mrepl
-  (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map))
+  (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map)
+
+  (defun reinitialize-asdf-source-registry ()
+    (sly-mrepl--eval-for-repl '(rc:reinitialize-source-registry)))
+
+  (advice-add 'sly-mrepl-set-directory :after #'reinitialize-asdf-source-registry)
+
+  (defun uiopcwd ()
+    (interactive)
+    (sly-eval-async '(cl:namestring (uiop:getcwd))
+                    (lambda (pwd)
+                      (message "%s" pwd))))
+
+  (add-to-list 'sly-mrepl-shortcut-alist '("pwd" . uiopcwd)))
 
 (use-package sly-asdf
+  :disabled t
   :ensure t
   :after sly)
 
 (use-package sly-named-readtables
+  :disabled t
   :ensure t
   :after sly)
 
 (use-package sly-macrostep
+  :disabled t
   :ensure t
   :after sly)
 
-(use-package sly-stepper-autoloads
-  :load-path "site-lisp/sly-stepper")
+;;; lisp indentation rules
+
+(use-package indentation-rules
+  :load-path "site-lisp"
+  :after slime)
 
 ;;; imenu
 
@@ -615,17 +652,12 @@
 
 ;;; web-mode
 
-(defun web-mode-lsp-bindings ()
-  (bind-key "M-." #'sly-edit-definition web-mode-map)
-  (bind-key "M-," #'sly-pop-find-definition-stack web-mode-map))
-
 (use-package web-mode
   :ensure t
   :mode "\\.lsp\\'"
   :mode "\\.ep\\'"
   :mode "\\.html.erb\\'"
   :mode "\\.html\\'"
-  :hook (web-mode . web-mode-lsp-bindings)
   :config
   (setq web-mode-auto-close-style 2))
 
@@ -714,7 +746,7 @@
   :ensure t
   :demand t
   :config
-  (dolist (mode '(sly-mrepl-mode cperl))
+  (dolist (mode '(slime-repl-mode cperl))
     (add-to-list 'aggressive-indent-excluded-modes mode))
   (global-aggressive-indent-mode 1))
 
@@ -757,7 +789,7 @@
   :ensure t
   :commands (global-evil-swap-keys-mode)
   :hook ((lisp-mode . evil-swap-parens)
-         (sly-mrepl-mode . evil-swap-parens)
+         (slime-repl-mode . evil-swap-parens)
          (emacs-lisp-mode . evil-swap-parens)
          (ielm-mode . evil-swap-parens)
          (eval-expression-minibuffer-setup . evil-swap-parens)

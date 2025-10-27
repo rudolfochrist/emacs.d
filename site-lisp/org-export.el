@@ -138,10 +138,13 @@ Argument INFO - I have no idea what this does."
 (add-to-list 'org-export-filter-link-functions #'org-export-latex-link-footnote)
 
 ;;; org-babel
+(setq org-babel-lisp-eval-fn 'slime-eval)
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp .t)
-   (shell . t)))
+   (shell . t)
+   (lisp . t)))
 
 (provide 'org-export)
 
