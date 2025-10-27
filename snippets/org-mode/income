@@ -1,0 +1,24 @@
+# key: _income
+# name: income
+# --
+#+STARTUP: showall
+#+OPTIONS: foldmarks:t email:t subject:untitled phone:t url:t
+#+LATEX_CLASS: default-koma-letter
+#+LATEX_CLASS_OPTIONS: [a4paper]
+#+LATEX_HEADER: \usepackage{tabularx}
+#+LATEX_HEADER: \setlength\parindent{0pt}
+#+LATEX_COMPILER: lualatex
+#+LCO: DIN de_DE me income
+#+SUBJECT: Einnahmebeleg: ${1:id}
+#+DATE:
+#+LATEX_HEADER: \newcommand{\incomedate}{${2:date}}
+
+#+attr_latex: :environment tabularx :width \textwidth :align cXc
+| Pos. | Bezeichung     | Betrag |
+|------+----------------+--------|
+|    1 | $0               |        |
+|------+----------------+--------|
+|      |                |        |
+|      | *Gesamtbetrag* |        |
+
+
