@@ -159,21 +159,8 @@
 (defvar ctl-period-map nil)
 (define-prefix-command 'ctl-period-map)
 (bind-key "C-." #'ctl-period-map)
-
-;;; killing the whole region
-(bind-key "C-x C-k" #'kill-region)
-
-;;; buffer switching
-(bind-key "C-x C-b" #'switch-to-buffer)
-(bind-key "C-c C-b" #'ibuffer)
-
 ;;; fullscreen
 (bind-key "C-. y" #'toggle-frame-fullscreen)
-
-;;; killing a buffer actually should bury it.
-(bind-key "C-x k" #'bury-buffer)
-;;; except you mean it
-(bind-key "C-x K" #'kill-buffer)
 
 ;;; reverting
 (defun revert-buffer-no-confirm ()
@@ -182,14 +169,26 @@
   (revert-buffer t t))
 (bind-key "C-c C-r" #'revert-buffer-no-confirm)
 
-;;; fill region
-(bind-key "s-<tab>" #'fill-region)
+;;; expanding
 
-;;; delete whitespace
-(bind-key "s-<backspace>" #'delete-trailing-whitespace)
+(bind-key "M-/" #'hippie-expand)
 
-;;; compile
-(bind-key "C-. C-c" #'compile)
+;;; zapping
+
+(bind-key "M-z" #'zap-up-to-char)
+
+;;; buffers
+(bind-key "C-x b" #'list-buffers)
+(bind-key "C-x C-b" #'switch-to-buffer)
+
+;;; compiling
+(bind-key "C-c C-," #'compile)
+
+;;; expand current windows
+(bind-key "s-1" #'delete-other-windows)
+
+;;; open url
+(bind-key "s-o" #'browse-url)
 
 ;;; libs
 
@@ -373,7 +372,8 @@
 ;;; git-timemachine
 
 (use-package git-timemachine
-  :ensure t)
+  :ensure t
+  :bind (("C-. gt" . git-timemachine)))
 
 ;;; paredit
 
