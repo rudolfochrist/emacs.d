@@ -186,6 +186,7 @@
 
 ;;; expand current windows
 (bind-key "s-1" #'delete-other-windows)
+(bind-key "s-0" #'delete-window)
 
 ;;; open url
 (bind-key "s-o" #'browse-url)
