@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: image
-# key: _image
-# --
-(defsystem "${1:System}/image"
-  :build-operation image-op
-  :build-pathname "${2:image}" ;; shell name
-  :depends-on ("$1")
-  :components ((:file "image")))

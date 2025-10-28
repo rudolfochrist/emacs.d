@@ -1,0 +1,9 @@
+# Generated files
+*~
+*.elc
+*-pkg.el
+*.tar
+TAGS
+elpa
+doc/skeletor.texi
+dist

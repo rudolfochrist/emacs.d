@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Lint staged .lisp and .asd files before commit
+# Get list of staged .lisp and .asd files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(lisp|asd)$')
+
+if [ -n "$STAGED_FILES" ]; then
+    echo "Running ocicl lint on staged files..."
+    ocicl lint $STAGED_FILES
+    LINT_EXIT=$?
+
+    if [ $LINT_EXIT -ne 0 ]; then
+        echo "Linting failed. Please fix the issues before committing."
+        echo "To bypass this hook, use: git commit --no-verify"
+        exit 1
+    fi
+fi
