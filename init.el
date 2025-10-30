@@ -52,7 +52,8 @@
       mac-command-modifier 'control
       mac-control-modifier 'super
       user-full-name "Sebastian Christ"
-      user-mail-address "rudolfo.christ@proton.me")
+      user-mail-address "rudolfo.christ@proton.me"
+      delete-by-moving-to-trash t)
 
 ;;; use GNU ls
 (when (executable-find "gls")
