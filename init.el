@@ -376,7 +376,7 @@
          (minibuffer-setup . enable-paredit-mode)
          (lisp-mode . enable-paredit-mode)
          (lisp-interaction-mode . enable-paredit-mode)
-         (slime-repl-mode . enable-paredit-mode)
+         (sly-mrepl-mode . enable-paredit-mode)
          (scheme-mode . enable-paredit-mode)
          (ielm-mode . enable-paredit-mode))
   :config
@@ -438,7 +438,7 @@
   :mode "\\.lisp\\'"
   :mode "\\.cl\\'"
   :mode "\\.asd\\'"
-  :hook ((lisp-mode . slime-mode)))
+  :hook ((lisp-mode . sly-mode)))
 
 (defun local/find-project-asd ()
   "Find the project ASD file."
@@ -455,6 +455,7 @@
 ;;; slime
 
 (use-package slime
+  :disabled t
   :ensure t
   :bind (("C-. l" . slime)
          ("C-. C-/" . slime-selector))
@@ -477,26 +478,18 @@
 ;;; sly
 
 (use-package sly
-  :disabled t
   :ensure t
   :bind (("C-. l" . sly)
          :map sly-selector-map
          ("a" . local/find-project-asd))
   :init
-  (setq sly-lisp-implementations
-        '((sbcl ("sbcl"))
-          (sbcl-no-userinit ("sbcl" "--no-userinit"))
-          (ecl ("ecl"))))
+  (setq inferior-lisp-program "sbcl"
+        sly-keep-buffers-on-connection-close nil)
   :config
   (global-set-key (kbd "C-. C-/") sly-selector-map))
 
 (with-eval-after-load 'sly-mrepl
   (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map)
-
-  (defun reinitialize-asdf-source-registry ()
-    (sly-mrepl--eval-for-repl '(rc:reinitialize-source-registry)))
-
-  (advice-add 'sly-mrepl-set-directory :after #'reinitialize-asdf-source-registry)
 
   (defun uiopcwd ()
     (interactive)
@@ -507,17 +500,14 @@
   (add-to-list 'sly-mrepl-shortcut-alist '("pwd" . uiopcwd)))
 
 (use-package sly-asdf
-  :disabled t
   :ensure t
   :after sly)
 
 (use-package sly-named-readtables
-  :disabled t
   :ensure t
   :after sly)
 
 (use-package sly-macrostep
-  :disabled t
   :ensure t
   :after sly)
 
@@ -525,7 +515,7 @@
 
 (use-package indentation-rules
   :load-path "site-lisp"
-  :after slime)
+  :after sly)
 
 ;;; imenu
 
@@ -747,7 +737,7 @@
   :ensure t
   :demand t
   :config
-  (dolist (mode '(slime-repl-mode cperl))
+  (dolist (mode '(sly-mrepl-mode cperl))
     (add-to-list 'aggressive-indent-excluded-modes mode))
   (global-aggressive-indent-mode 1))
 
@@ -790,7 +780,7 @@
   :ensure t
   :commands (global-evil-swap-keys-mode)
   :hook ((lisp-mode . evil-swap-parens)
-         (slime-repl-mode . evil-swap-parens)
+         (sly-mrepl-mode . evil-swap-parens)
          (emacs-lisp-mode . evil-swap-parens)
          (ielm-mode . evil-swap-parens)
          (eval-expression-minibuffer-setup . evil-swap-parens)

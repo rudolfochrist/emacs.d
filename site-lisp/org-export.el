@@ -138,7 +138,7 @@ Argument INFO - I have no idea what this does."
 (add-to-list 'org-export-filter-link-functions #'org-export-latex-link-footnote)
 
 ;;; org-babel
-(setq org-babel-lisp-eval-fn 'slime-eval)
+(setq org-babel-lisp-eval-fn 'sly-eval)
 
 (org-babel-do-load-languages
  'org-babel-load-languages

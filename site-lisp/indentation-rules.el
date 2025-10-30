@@ -6,28 +6,28 @@
 
 ;;; Code:
 
-(require 'slime)
+(require 'sly)
 
 ;;; https://github.com/eudoxia0/cl-yaml
-(put 'with-emitter-to-string 'slime-common-lisp-indent-function
-     (get 'when 'slime-common-lisp-indent-function))
+(put 'with-emitter-to-string 'sly-common-lisp-indent-function
+     (get 'when 'sly-common-lisp-indent-function))
 
-(put 'with-emitter-to-stream 'slime-common-lisp-indent-function
-     (get 'when 'slime-common-lisp-indent-function))
+(put 'with-emitter-to-stream 'sly-common-lisp-indent-function
+     (get 'when 'sly-common-lisp-indent-function))
 
 ;;; asdf
-(put 'defsystem 'slime-common-lisp-indent-function
-     (get 'defun 'slime-common-lisp-indent-function))
+(put 'defsystem 'sly-common-lisp-indent-function
+     (get 'defun 'sly-common-lisp-indent-function))
 
 ;;; jzon
-(put 'with-writer* 'slime-common-lisp-indent-function
-     (get 'destructuring-bind 'slime-common-lisp-indent-function))
-(put 'with-writer 'slime-common-lisp-indent-function
-     (get 'destructuring-bind 'slime-common-lisp-indent-function))
+(put 'with-writer* 'sly-common-lisp-indent-function
+     (get 'destructuring-bind 'sly-common-lisp-indent-function))
+(put 'with-writer 'sly-common-lisp-indent-function
+     (get 'destructuring-bind 'sly-common-lisp-indent-function))
 
 ;;; fiveam
-(put 'test 'slime-common-lisp-indent-function
-     (get 'prog1 'slime-common-lisp-indent-function))
+(put 'test 'sly-common-lisp-indent-function
+     (get 'prog1 'sly-common-lisp-indent-function))
 
 (provide 'indentation-rules)
 
