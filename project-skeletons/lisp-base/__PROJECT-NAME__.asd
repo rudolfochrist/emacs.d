@@ -28,3 +28,7 @@
                       #+(not (or :swank :slynk))
                       (uiop:quit 1))))
 
+(defsystem "__PROJECT-NAME__/doc"
+  :if-feature :sbcl
+  :depends-on ("sb-texinfo"
+               "__PROJECT-NAME__"))

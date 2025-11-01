@@ -38,6 +38,17 @@ install_hooks () {
     git config core.hooksPath .githooks
 }
 
+documentation () {
+    if test -e doc/__PROJECT-NAME__.texi
+    then
+        # shellcheck disable=SC2086
+        CL_SOURCE_REGISTRY="$PWD//" "$LISP" $CLFLAGS --load doc/build.lisp
+    else
+        echo "Cannot build documentation. Pleas add doc/__PROJECT-NAME__.texi"
+        exit 1
+    fi
+}
+
 default () {
     if test -e build.lisp
     then
