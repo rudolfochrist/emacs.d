@@ -6,7 +6,7 @@ STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(lis
 
 if [ -n "$STAGED_FILES" ]; then
     echo "Running ocicl lint on staged files..."
-    ocicl lint $STAGED_FILES
+    ocicl --color never lint $STAGED_FILES
     LINT_EXIT=$?
 
     if [ $LINT_EXIT -ne 0 ]; then
