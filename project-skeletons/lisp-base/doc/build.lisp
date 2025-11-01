@@ -11,7 +11,7 @@
   (error "Cannot build documentation: doc/__PROJECT-NAME__.texi is missing."))
 
 (asdf:load-system "__PROJECT-NAME__/doc")
-(sb-texinfo:document-packages (list :sb-async) "__PROJECT-NAME__"
+(sb-texinfo:document-packages (list :__PROJECT-NAME__) "__PROJECT-NAME__"
                               :output-file "doc/dict.texi"
                               :standalone nil
                               :write-backmatter nil
