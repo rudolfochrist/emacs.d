@@ -910,6 +910,11 @@
   :ensure t
   :bind (("C-=" . er/expand-region)))
 
+;;; ada-mode
+
+(use-package ada-mode
+  :load-path "site-lisp/old-ada-mode")
+
 ;;; packages end here
 
 ;;; check for parens after save
