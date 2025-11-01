@@ -13,7 +13,7 @@
   :version (:read-file-line "version")
   :depends-on ((:require "uiop"))
   :serial t
-  :components ((:file "package"))
+  :components ()
   :in-order-to ((test-op (test-op "__PROJECT-NAME__/test"))))
 
 

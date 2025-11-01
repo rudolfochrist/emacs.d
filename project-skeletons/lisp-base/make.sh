@@ -55,8 +55,8 @@ default () {
         # shellcheck disable=SC2086
         "$LISP" $CLFLAGS --load build.lisp
     else
-        echo "'build.lisp missing!'"
-        exit 1
+        echo "No build.lisp -- This doens't look like an executable. Running tests..."
+        check
     fi
 }
 

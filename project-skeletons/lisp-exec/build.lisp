@@ -8,10 +8,12 @@
 (require 'uiop)
 #+sbcl (require 'sb-aclrepl)
 
+(in-package #:cl-user)
+
 (asdf:initialize-source-registry
  `(:source-registry
-   (:tree ,(uiop:getcwd))
-   :ignore-inherited-configuration))
+   :ignore-inherited-configuration
+   (:tree ,(uiop:getcwd))))
 
 (declaim (optimize (speed 3) (safety 1) (debug 1) (compilation-speed 3)))
 (asdf:make "__PROJECT-NAME__/main")
