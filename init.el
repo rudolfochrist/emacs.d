@@ -848,6 +848,8 @@
 ;;; sql-mode
 
 (use-package sql
+  :bind (:map sql-interactive-mode-map
+              ("C-l" . comint-clear-buffer))
   :init
   (setq sql-product 'postgres))
 
