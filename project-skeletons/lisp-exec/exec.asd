@@ -8,4 +8,5 @@
 
 #+sb-core-compression
 (defmethod asdf:perform ((op asdf:image-op) (c (eql (asdf:find-system "__PROJECT-NAME__/main"))))
+  (sb-ext:gc :full t)
   (uiop:dump-image (asdf:output-file op c) :executable t :compression t))

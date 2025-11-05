@@ -15,8 +15,7 @@
    :ignore-inherited-configuration
    (:tree ,(uiop:getcwd))))
 
-(declaim (optimize (speed 3) (safety 1) (debug 1) (compilation-speed 3)))
-(asdf:make "__PROJECT-NAME__/main")
-(gc :full t)
+(with-compilation-unit (:policy '(optimize (safety 1) (debug 1) (compilation-speed 3) (space 3) (speed 3)) :override t)
+  (asdf:make "__PROJECT-NAME__/main"))
 
 (uiop:quit)
