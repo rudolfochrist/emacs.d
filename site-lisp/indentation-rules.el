@@ -29,6 +29,10 @@
 (put 'test 'sly-common-lisp-indent-function
      (get 'prog1 'sly-common-lisp-indent-function))
 
+;;; spinneret
+(put 'with-html 'sly-common-lisp-indent-function
+     (get 'progn 'sly-common-lisp-indent-function))
+
 (provide 'indentation-rules)
 
 ;;; indentation-rules.el ends here
