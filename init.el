@@ -65,7 +65,7 @@
 
 ;;; Fonts & Typography
 
-(set-frame-font "SF Mono 12" nil t)
+(set-frame-font "Hack Nerd Font 12" nil t)
 
 ;;; auto-save + backups
 
@@ -191,6 +191,13 @@
 
 ;;; open url
 (bind-key "s-o" #'browse-url)
+
+;;; move to next line
+(bind-key "C-<return>" (lambda ()
+                         (interactive)
+                         (end-of-line)
+                         (newline nil t)))
+
 
 ;;; libs
 
