@@ -16,6 +16,6 @@
    (:tree ,(uiop:getcwd))))
 
 (with-compilation-unit (:policy '(optimize (safety 1) (debug 1) (compilation-speed 3) (space 3) (speed 3)) :override t)
-  (asdf:make "__PROJECT-NAME__/main"))
+  (asdf:make "__PROJECT-NAME__/main" :force t))
 
 (uiop:quit)
