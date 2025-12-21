@@ -1,0 +1,6 @@
+# key: reader
+# name: reader
+# --
+${1:slot-name} :initarg :$1
+               :reader $1
+               :documentation ${2:docstring}

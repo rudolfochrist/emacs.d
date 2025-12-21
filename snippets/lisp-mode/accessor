@@ -1,0 +1,6 @@
+# key: accessor
+# name: accessor
+# --
+${1:slot-name} :initarg :$1
+               :accessor $1
+               :documentation ${2:docstring}

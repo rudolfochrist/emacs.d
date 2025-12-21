@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: eval-when
+# key: eval-when
+# --
+eval-when (${1::compile-toplevel }${2::load-toplevel }${3::execute})
+  $0

@@ -1,6 +1,4 @@
-# key: _in
+# key: in-package
 # name: in-package
 # --
-(in-package #:${1:`(downcase (yas-choose-value (sly-eval '(slynk:list-all-package-names t))))`})
-
-$0
+in-package #:${1:`(downcase (yas-choose-value (sly-eval '(slynk:list-all-package-names t))))`}

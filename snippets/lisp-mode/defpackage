@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: defpackage
+# key: defpackage
+# --
+defpackage #:${1:name}${2:
+ (:documentation "${3:$1 package}.")}${4:
+ (:nicknames #:${5:nickname})}
+ (:use :cl${6: other-uses})
