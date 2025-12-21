@@ -110,8 +110,11 @@
     (funcall mode -1)))
 
 ;;; frame setup
-(add-to-list 'default-frame-alist '(width . 140))
-(add-to-list 'default-frame-alist '(height . 55))
+(setq default-frame-alist
+      (append default-frame-alist '((width . 140)
+                                    (height . 50)
+                                    (top . 0)
+                                    (left . 50))))
 
 ;;; tabs, spaces, indentation, parens
 (require 'paren)
@@ -353,14 +356,7 @@
          ("C-. gl" . magit-list-repositories))
   :init
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
-        magit-repository-directories '(("~/.emacs.d/" . 0)
-                                       ("~/code/" . 1)
-                                       ("~/common-lisp/" . 1)))
-  :config
-  ;; install info
-  (add-to-list 'Info-directory-list
-               (expand-file-name "magit/Documentation" site-lisp-directory))
-  (add-to-list 'magit-repolist-columns '("Dirty" 6 magit-repolist-column-dirty)))
+        magit-repository-directories '(("~/code/" . 1))))
 
 ;;; git-timemachine
 
@@ -502,8 +498,8 @@
   (defun uiopcwd ()
     (interactive)
     (sly-eval-async '(cl:namestring (uiop:getcwd))
-                    (lambda (pwd)
-                      (message "%s" pwd))))
+      (lambda (pwd)
+        (message "%s" pwd))))
 
   (add-to-list 'sly-mrepl-shortcut-alist '("pwd" . uiopcwd)))
 
@@ -523,6 +519,7 @@
 
 (use-package indentation-rules
   :load-path "site-lisp"
+  :demand t
   :after sly)
 
 ;;; imenu
@@ -711,15 +708,6 @@
 
 ;;; project.el + super-t/command-t file finding
 
-(use-package project
-  :ensure t
-  :commands (project-root
-             project-files
-             project-ignores
-             project-external-roots)
-  :config
-  (add-to-list 'project-find-functions 'cl-project-search t))
-
 (defun cl-project-search (start)
   (let ((asd-file (locate-dominating-file
                    start
@@ -733,11 +721,15 @@
 (cl-defmethod project-root ((project (head common-lisp)))
   (cdr project))
 
-(defun super-t ()
-  (interactive)
-  (find-file (completing-read "File: " (project-files (project-current t)) nil t)))
-
-(bind-key "s-t" 'super-t)
+(use-package project
+  :ensure t
+  :commands (project-root
+             project-files
+             project-ignores
+             project-external-roots)
+  :bind (("s-t" . project-find-file))
+  :config
+  (add-to-list 'project-find-functions 'cl-project-search t))
 
 ;;; aggressive-indent
 
