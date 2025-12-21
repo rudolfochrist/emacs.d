@@ -940,6 +940,19 @@
 
 ;;; packages end here
 
+;;; Theme
+
+(use-package sketch-themes
+  :demand t
+  :ensure t
+  :config
+  (load-theme 'sketch-white t)
+  (custom-set-faces
+   '(font-lock-string-face ((t (:background "#dddddd" :foreground "#212121"))))
+   '(font-lock-comment-face ((t (:foreground "#888888" :background "unspecified"))))
+   '(font-lock-warning-face ((t (:underline nil :foreground "#e43b44"))))
+   '(show-paren-match ((t (:bold nil :background "#a47bff"))))))
+
 ;;; check for parens after save
 
 (defun check-parens-hook ()
