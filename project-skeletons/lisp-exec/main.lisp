@@ -29,8 +29,7 @@
   (declare (ignore signo info-sap context-sap))
   (reload))
 
-(defun main (&optional args)
-  (declare (ignorable args))
+(defun main ()
   (sb-sys:enable-interrupt sb-unix:sigint #'handle-interrupt)
   (sb-sys:enable-interrupt sb-unix:sigterm #'handle-interrupt)
   (sb-sys:enable-interrupt sb-unix:sighup #'handle-sighup)

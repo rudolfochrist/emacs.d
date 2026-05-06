@@ -5,7 +5,7 @@
 ;;; file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 (defpackage #:__PROJECT-NAME__/test
-  (:use :cl :__PROJECT-NAME__ :fiveam))
+  (:use :cl :fiveam))
 
 (in-package #:__PROJECT-NAME__/test)
 
