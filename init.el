@@ -376,8 +376,6 @@
   :ensure t
   :commands (enable-paredit-mode)
   :hook ((emacs-lisp-mode . enable-paredit-mode)
-         (eval-expression-minibuffer-setup . enable-paredit-mode)
-         (minibuffer-setup . enable-paredit-mode)
          (lisp-mode . enable-paredit-mode)
          (lisp-interaction-mode . enable-paredit-mode)
          (sly-mrepl-mode . enable-paredit-mode)
@@ -743,7 +741,7 @@
 
 ;;; electric-pair
 
-(defvar fyi-inhibit-electric-pair-modes '(org-mode))
+(defvar fyi-inhibit-electric-pair-modes '(org-mode minibuffer-mode))
 
 (defun inhibit-electri-pair-mode-p (&rest _ignore)
   (not (member major-mode fyi-inhibit-electric-pair-modes)))
