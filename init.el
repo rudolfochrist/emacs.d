@@ -942,19 +942,11 @@
 (use-package ada-mode
   :load-path "site-lisp/old-ada-mode")
 
-;;; auto-insert-mode
-;;; automatic file headers
+;;; envrc
 
-(use-package auto-insert-mode
-  :hook (find-file-hook . auto-insert)
-  :init
-  (setq auto-insert t
-        auto-insert-query nil
-        auto-insert-directory "~/.emacs.d/insert/")
-  :config (auto-insert-mode))
-
-(with-eval-after-load 'auto-insert-mode
-  (add-to-list 'auto-insert-alist '(lisp-mode . "insert.lisp")))
+(use-package envrc
+  :ensure t
+  :hook (after-init . envrc-global-mode))
 
 ;;; packages end here
 
@@ -970,6 +962,14 @@
    '(font-lock-comment-face ((t (:foreground "#888888" :background "unspecified"))))
    '(font-lock-warning-face ((t (:underline nil :foreground "#e43b44"))))
    '(show-paren-match ((t (:bold nil :background "#a47bff"))))))
+
+;;; automatic file headers
+
+(auto-insert-mode t)
+(setq auto-insert t
+      auto-insert-query nil
+      auto-insert-directory "~/.emacs.d/insert/")
+(add-to-list 'auto-insert-alist '(lisp-mode . "insert.lisp"))
 
 ;;; check for parens after save
 
