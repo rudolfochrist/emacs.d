@@ -24,8 +24,8 @@
   :pathname "t/"
   :components ((:file "__PROJECT-NAME__"))
   :perform (test-op (op c)
-                    (unless (uiop:symbol-call :fiveam :run! :__PROJECT-NAME__)
-                      #+(not (or :swank :slynk))
+                    (when (and (not (uiop:symbol-call :fiveam :run! :__PROJECT-NAME__))
+                               (uiop:getenvp "CI"))
                       (uiop:quit 1))))
 
 (defsystem "__PROJECT-NAME__/doc"
