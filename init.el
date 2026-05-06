@@ -393,8 +393,15 @@
 
 ;;; which-key
 
+;;; https://github.com/justbur/emacs-which-key/issues/243#issuecomment-605460439
+(defvar local/which-key-disabled-modes '(markdown-mode))
+(defun local/which-key-diable-modes ()
+  (when (memq major-mode local/which-key-disabled-modes)
+    1000))
+
 (use-package which-key
   :ensure t
+  :hook (which-key-delay-functions . local/which-key-disabled-modes)
   :config (which-key-mode))
 
 ;;; whitespace
