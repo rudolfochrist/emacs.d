@@ -485,7 +485,8 @@
          ("a" . local/find-project-asd))
   :init
   (setq inferior-lisp-program "sbcl"
-        sly-keep-buffers-on-connection-close nil)
+        sly-keep-buffers-on-connection-close nil
+        sly-common-lisp-style-default "sbcl")
   :config
   (global-set-key (kbd "C-. C-/") sly-selector-map))
 
@@ -538,13 +539,6 @@
 
 (use-package sly-macrostep
   :ensure t
-  :after sly)
-
-;;; lisp indentation rules
-
-(use-package indentation-rules
-  :load-path "site-lisp"
-  :demand t
   :after sly)
 
 ;;; imenu
