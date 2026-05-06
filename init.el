@@ -466,7 +466,6 @@
         slime-contribs '(slime-fancy
                          slime-mrepl
                          slime-banner
-                         slime-asdf
                          slime-tramp
                          slime-xref-browser
                          slime-sprof)))
@@ -491,7 +490,33 @@
   (global-set-key (kbd "C-. C-/") sly-selector-map))
 
 (with-eval-after-load 'sly-mrepl
-  (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map)
+  (defun completing-read-asdf-systems ()
+    (completing-read "System: " (sly-eval '(cl:progn
+                                            (asdf/source-registry:compute-source-registry
+                                             (cl:list :source-registry
+                                                      (cl:list :directory (uiop:getcwd))
+                                                      :inherit-configuration))
+                                            (cl:sort (cl:loop for k being the hash-keys of asdf/source-registry:*source-registry*
+                                                              collect k)
+                                                     'cl:string=)))))
+
+  (defun asdf-load-system (system &optional force)
+    (interactive (list (completing-read-asdf-systems)))
+    (message "Loading: %s..." system)
+    (sly-eval-async (list 'asdf:load-system system :force force)
+      (lambda (_result)
+        (message "Loading: %s finished!" system))))
+
+  (defun asdf-force-load-system (system)
+    (interactive (list (completing-read-asdf-systems)))
+    (asdf-load-system system t))
+
+  (defun asdf-test-system (system)
+    (interactive (list (completing-read-asdf-systems)))
+    (message "Testing %s" system)
+    (sly-eval-async (list 'asdf:test-system system)
+      (lambda (_result)
+        (message "Finished testing %s" system))))
 
   (defun uiopcwd ()
     (interactive)
@@ -499,11 +524,13 @@
       (lambda (pwd)
         (message "%s" pwd))))
 
-  (add-to-list 'sly-mrepl-shortcut-alist '("pwd" . uiopcwd)))
 
-(use-package sly-asdf
-  :ensure t
-  :after sly)
+  (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map)
+  (add-to-list 'sly-mrepl-shortcut-alist '("pwd" . uiopcwd))
+  (add-to-list 'sly-mrepl-shortcut-alist '("load-system" . asdf-load-system))
+  (add-to-list 'sly-mrepl-shortcut-alist '("force-load-system" . asdf-force-load-system))
+  (add-to-list 'sly-mrepl-shortcut-alist '("test-system" . asdf-test-system)))
+
 
 (use-package sly-named-readtables
   :ensure t
