@@ -5,5 +5,5 @@
   :depends-on ("__PROJECT-NAME__")
   :components ((:file "main")))
 
-(defmethod asdf:perform ((op asdf:image-op) (c (eql (asdf:find-system "__PROJECT-NAME__/main"))))
+(defmethod asdf:perform :before ((op asdf:image-op) (c (eql (asdf:find-system "__PROJECT-NAME__/main"))))
   (sb-ext:gc :full t))

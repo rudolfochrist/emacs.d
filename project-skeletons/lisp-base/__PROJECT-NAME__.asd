@@ -28,7 +28,11 @@
                                (uiop:getenvp "CI"))
                       (uiop:quit 1))))
 
-(defsystem "__PROJECT-NAME__/doc"
-  :if-feature :sbcl
-  :depends-on ("sb-texinfo"
-               "__PROJECT-NAME__"))
+(defsystem "__PROJECT-NAME__/documentation"
+  :depends-on ("quicktexi"
+               "__PROJECT-NAME__")
+  :components ((:file "documentation"))
+  :perform (build-op :after (op c)
+                     (uiop:symbol-call :__PROJECT-NAME__/documentation :write-system-documentation
+                                       "__PROJECT-NAME__"
+                                       '(:__PROJECT-NAME__))))

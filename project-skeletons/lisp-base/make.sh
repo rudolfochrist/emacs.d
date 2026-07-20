@@ -39,14 +39,10 @@ install_hooks () {
 }
 
 documentation () {
-    if test -e doc/__PROJECT-NAME__.texi
-    then
-        # shellcheck disable=SC2086
-        CL_SOURCE_REGISTRY="$PWD//" "$LISP" $CLFLAGS --load doc/build.lisp
-    else
-        echo "Cannot build documentation. Pleas add doc/__PROJECT-NAME__.texi"
-        exit 1
-    fi
+    sbcl --noinform --non-interactive \
+         --eval '(asdf:make "__PROJECT-NAME__/documentation")'
+    makeinfo __PROJECT-NAME__.texi
+    makeinfo --plaintext -o README __PROJECT-NAME__.texi
 }
 
 default () {
