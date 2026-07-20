@@ -780,12 +780,9 @@
 
 ;;; rg
 
-(use-package rg
-  :ensure t
-  :bind (("M-s d" . rg-dwim)
-         ("M-s r" . rg)
-         ("M-s p" . rg-project)
-         ("M-s t" . rg-literal)))
+(use-package yarg
+  :load-path "site-lisp/yarg"
+  :bind (("M-s r" . yarg)))
 
 ;;; checkdoc
 
