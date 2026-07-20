@@ -6,32 +6,11 @@
 
 ;;; Code:
 
-(require 'sly)
-
-;;; https://github.com/eudoxia0/cl-yaml
-(put 'with-emitter-to-string 'sly-common-lisp-indent-function
-     (get 'when 'sly-common-lisp-indent-function))
-
-(put 'with-emitter-to-stream 'sly-common-lisp-indent-function
-     (get 'when 'sly-common-lisp-indent-function))
-
-;;; asdf
-(put 'defsystem 'sly-common-lisp-indent-function
-     (get 'defun 'sly-common-lisp-indent-function))
-
-;;; jzon
-(put 'with-writer* 'sly-common-lisp-indent-function
-     (get 'destructuring-bind 'sly-common-lisp-indent-function))
-(put 'with-writer 'sly-common-lisp-indent-function
-     (get 'destructuring-bind 'sly-common-lisp-indent-function))
-
 ;;; fiveam
-(put 'test 'sly-common-lisp-indent-function
-     (get 'prog1 'sly-common-lisp-indent-function))
+;; (put 'test 'lisp-indent-function
+;;      (get 'prog1 'lisp-indent-function))
+(sly-update-system-indentation 'test 'prog1 (list :fiveam))
 
-;;; spinneret
-(put 'with-html 'sly-common-lisp-indent-function
-     (get 'progn 'sly-common-lisp-indent-function))
 
 (provide 'indentation-rules)
 
