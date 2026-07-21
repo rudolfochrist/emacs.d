@@ -504,9 +504,12 @@
                                              (cl:list :source-registry
                                                       (cl:list :directory (uiop:getcwd))
                                                       :inherit-configuration))
-                                            (cl:sort (cl:loop for k being the hash-keys of asdf/source-registry:*source-registry*
-                                                              collect k)
-                                                     'cl:string=)))))
+                                            (cl:sort (cl:remove-duplicates (cl:append (cl:loop for k being the hash-keys of asdf/source-registry:*source-registry*
+                                                                                               collect k)
+                                                                                      (cl:loop for k being the hash-keys of asdf/system-registry:*registered-systems*
+                                                                                               collect k))
+                                                                           :test 'cl:string=)
+                                                     'cl:string<)))))
 
   (defun asdf-load-system (system &optional force)
     (interactive (list (completing-read-asdf-systems)))
