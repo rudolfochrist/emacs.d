@@ -14,7 +14,28 @@
   :depends-on ((:require "uiop"))
   :serial t
   :components ((:static-file "version"))
-  :in-order-to ((test-op (test-op "__PROJECT-NAME__/test"))))
+  :in-order-to ((test-op (test-op "__PROJECT-NAME__/test")))
+  :long-description "
+@node Synopsis
+@chapter Synopsis
+
+@lisp
+@end lisp
+
+@node Description
+@chapter Description
+
+@node Copyright
+@chapter Copyright
+
+Copyright @copyright{} __YEAR__ __USER-NAME__ (@email{__USER-MAIL-ADDRESS__})
+
+@node License
+@chapter License
+
+Released under the MPL-2.0 license.
+See @file{LICENSE}.
+")
 
 
 (defsystem "__PROJECT-NAME__/test"
@@ -33,6 +54,6 @@
                "__PROJECT-NAME__")
   :components ((:file "documentation"))
   :perform (build-op :after (op c)
-                     (uiop:symbol-call :__PROJECT-NAME__/documentation :write-system-documentation
+                     (uiop:symbol-call :quicktexi :write-system-documentation
                                        "__PROJECT-NAME__"
                                        '(:__PROJECT-NAME__))))

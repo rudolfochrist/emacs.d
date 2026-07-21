@@ -9,16 +9,15 @@ clean () {
 
 check () {
     # shellcheck disable=SC2086
-    CL_SOURCE_REGISTRY="$PWD//" "$LISP" $CLFLAGS \
-                      --eval "(require 'asdf)" \
-                      --eval '(asdf:test-system "__PROJECT-NAME__")'
+    sbcl --noinform --non-interactive \
+         --eval '(asdf:test-system "__PROJECT-NAME__")'
 }
 
 coverage () {
     if test -e coverage/coverage.lisp
     then
         # shellcheck disable=SC2086
-        CL_SOURCE_REGISTRY="$PWD//" "$LISP" $CLFLAGS --load coverage/coverage.lisp
+        sbcl --noinform --non-interactive --load coverage/coverage.lisp
     else
         mkdir coverage
         cat <<EOF > coverage/coverage.lisp
