@@ -552,6 +552,15 @@
   :ensure t
   :after sly)
 
+;;; CL info files selector
+
+(defun cl-read-info (info-file)
+  (interactive (list  (completing-read "File: " (directory-files-recursively "." "\\.info"))))
+  (info (expand-file-name info-file))
+  (revert-buffer t t))
+
+(bind-key "s-i" #'cl-read-info)
+
 ;;; imenu
 
 (defun lisp-imenu-defmethod-matcher ()
