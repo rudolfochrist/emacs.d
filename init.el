@@ -236,7 +236,8 @@
   :demand t
   :config
   (setq Info-additional-directory-list
-        (list (expand-file-name "~/info/"))))
+        (list (expand-file-name "~/info/")
+              "/opt/local/share/info/")))
 
 (use-package info-look
   :after info
