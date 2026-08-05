@@ -52,7 +52,6 @@ See @file{LICENSE}.
 (defsystem "__PROJECT-NAME__/documentation"
   :depends-on ("quicktexi"
                "__PROJECT-NAME__")
-  :components ((:file "documentation"))
   :perform (build-op :after (op c)
                      (uiop:symbol-call :quicktexi :write-system-documentation
                                        "__PROJECT-NAME__"
