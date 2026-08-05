@@ -13,7 +13,8 @@
   :version (:read-file-line "version")
   :depends-on ((:require "uiop"))
   :serial t
-  :components ((:static-file "version"))
+  :components ((:static-file "version")
+               (:file "__PROJECT-NAME__"))
   :in-order-to ((test-op (test-op "__PROJECT-NAME__/test")))
   :long-description "
 @node Synopsis
@@ -28,7 +29,7 @@
 @node Copyright
 @chapter Copyright
 
-Copyright @copyright{} __YEAR__ __USER-NAME__ (@email{__USER-MAIL-ADDRESS__})
+Copyright @copyright{} __YEAR__ __USER-NAME__ (@email{__TEXI-USER-MAIL-ADDRESS__})
 
 @node License
 @chapter License

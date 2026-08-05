@@ -845,6 +845,11 @@
   (setq skeletor-project-directory "~/code/"
         skeletor-completing-read-function 'completing-read))
 
+(with-eval-after-load 'skeletor
+  (push
+   (cons "__TEXI-USER-MAIL-ADDRESS__" (lambda () (string-replace "@" "@@" user-mail-address)))
+   skeletor-global-substitutions))
+
 (skeletor-define-template "lisp-base"
   :title "Common Lisp Base System"
   :substitutions '(("__DESCRIPTION__" . (lambda () (read-string "Description: "))))
