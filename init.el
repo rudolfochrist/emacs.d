@@ -53,7 +53,8 @@
       mac-control-modifier 'super
       user-full-name "Sebastian Christ"
       user-mail-address "rudolfo.christ@proton.me"
-      delete-by-moving-to-trash t)
+      delete-by-moving-to-trash t
+      tab-always-indent 'complete)
 
 ;;; use GNU ls
 (when (executable-find "gls")
@@ -218,7 +219,7 @@
   :ensure t
   :config
   (setq corfu-auto t
-        corfu-quit-no-match t)
+        corfu-quit-no-match 'separator)
   (global-corfu-mode))
 
 (use-package cape
@@ -379,7 +380,7 @@
   :hook ((emacs-lisp-mode . enable-paredit-mode)
          (lisp-mode . enable-paredit-mode)
          (lisp-interaction-mode . enable-paredit-mode)
-         (sly-mrepl-mode . enable-paredit-mode)
+         (slime-repl-mode . enable-paredit-mode)
          (scheme-mode . enable-paredit-mode)
          (ielm-mode . enable-paredit-mode))
   :config
@@ -448,7 +449,7 @@
   :mode "\\.lisp\\'"
   :mode "\\.cl\\'"
   :mode "\\.asd\\'"
-  :hook ((lisp-mode . sly-mode)))
+  :hook ((lisp-mode . slime-mode)))
 
 (defun local/find-project-asd ()
   "Find the project ASD file."
@@ -465,92 +466,184 @@
 ;;; slime
 
 (use-package slime
-  :disabled t
   :ensure t
   :bind (("C-. l" . slime)
          ("C-. C-/" . slime-selector))
   :init
   (setq inferior-lisp-program "sbcl"
+        slime-net-coding-system 'utf-8-unix
+        common-lisp-hyperspec-root
+        (concat "file://" (expand-file-name "~/.emacs.d/clhs/HyperSpec/"))
+        common-lisp-hyperspec-symbol-table
+        (expand-file-name "~/.emacs.d/clhs/HyperSpec/Data/Map_Sym.txt")
         slime-contribs '(slime-fancy
-                         slime-mrepl
                          slime-banner
                          slime-tramp
                          slime-xref-browser
                          slime-sprof)))
 
+(with-eval-after-load 'slime
+
+  (defun local/custom-slime-repl-faces ()
+    (face-remap-add-relative 'font-lock-string-face :background nil))
+
+  (add-hook 'slime-repl-mode-hook #'local/custom-slime-repl-faces)
+
+  ;; hyperspec lookup
+  (defun local/hyperspec-lookup ()
+    (interactive)
+    (let ((browse-url-browser-function #'eww-browse-url))
+      (call-interactively #'hyperspec-lookup)))
+
+  (defun local/hyperspec-lookup-format ()
+    (interactive)
+    (let ((browse-url-browser-function #'eww-browse-url))
+      (call-interactively #'hyperspec-lookup-format)))
+
+  (defun local/hyperspec-lookup-reader-macro ()
+    (interactive)
+    (let ((browse-url-browser-function #'eww-browse-url))
+      (call-interactively #'hyperspec-lookup-reader-macro)))
+
+  (bind-key "C-c C-d h" #'local/hyperspec-lookup slime-mode-map)
+  (bind-key "C-c C-d ~" #'local/hyperspec-lookup-format slime-mode-map)
+  (bind-key "C-c C-d #" #'local/hyperspec-lookup-reader-macro slime-mode-map))
+
 (with-eval-after-load 'slime-repl
   (bind-key "C-l" #'slime-repl-clear-buffer slime-repl-mode-map)
+
+  ;; necessary to corfu-insert candidate with return
+  ;; see: https://github.com/minad/corfu/discussions/472
+  (unbind-key "<return>" slime-repl-mode-map)
+  (unbind-key "<return>" slime-repl-read-mode-map)
+
+  ;; hyperspec lookup
+  (bind-key "C-c C-d h" #'local/hyperspec-lookup slime-repl-mode-map)
+  (bind-key "C-c C-d ~" #'local/hyperspec-lookup-format slime-repl-mode-map)
+  (bind-key "C-c C-d #" #'local/hyperspec-lookup-reader-macro slime-repl-mode-map)
+
+  (defun local/completing-read-asdf-systems ()
+    (completing-read "System: " (slime-eval '(cl:progn
+                                              (asdf/source-registry:compute-source-registry
+                                               (cl:list :source-registry
+                                                        (cl:list :directory (uiop:getcwd))
+                                                        :inherit-configuration))
+                                              (cl:sort
+                                               (cl:remove-duplicates
+                                                (cl:append (cl:loop for k being the hash-keys of
+                                                                    asdf/source-registry:*source-registry*
+                                                                    collect k)
+                                                           (cl:loop for k being the hash-keys of
+                                                                    asdf/system-registry:*registered-systems*
+                                                                    collect k))
+                                                :test 'cl:string=)
+                                               'cl:string<)))))
+
+
+  (defun local/asdf-load-system (system &optional force)
+    (interactive (list (local/completing-read-asdf-systems)))
+    (message "Loading: %s..." system)
+    (slime-eval-async (list 'asdf:load-system system :force force)
+      (lambda (_result)
+        (message "Loading: %s finished!" system))))
+
+  (defslime-repl-shortcut nil
+                          ("load-system" "lds")
+                          (:handler #'local/asdf-load-system :one-liner "Load an ASDF system"))
+
+  (defun local/asdf-force-load-system (system)
+    (interactive (list (local/completing-read-asdf-systems)))
+    (local/asdf-load-system system t))
+
+  (defslime-repl-shortcut nil
+                          ("force-load-system" "flds")
+                          (:handler #'local/asdf-force-load-system :one-liner "Force load ASDF system"))
+
+
+  (defun local/asdf-test-system (system)
+    (interactive (list (local/completing-read-asdf-systems)))
+    (message "Testing %s" system)
+    (slime-eval-async (list 'asdf:test-system system)
+      (lambda (_result)
+        (message "Finished testing %s" system))))
+
+  (defslime-repl-shortcut nil
+                          ("test-system" "ts")
+                          (:handler #'local/asdf-test-system :one-liner "Run test for ASDF system"))
 
   (def-slime-selector-method ?a "Visit system definition (asd) buffer."
                              (local/find-project-asd)))
 
 ;;; sly
 
-(use-package sly
-  :ensure t
-  :bind (("C-. l" . sly)
-         :map sly-selector-map
-         ("a" . local/find-project-asd))
-  :init
-  (setq inferior-lisp-program "sbcl"
-        sly-keep-buffers-on-connection-close nil
-        sly-common-lisp-style-default "sbcl")
-  :config
-  (global-set-key (kbd "C-. C-/") sly-selector-map))
+;; (use-package sly
+;;   :disabled t
+;;   :ensure t
+;;   :bind (("C-. l" . sly)
+;;          :map sly-selector-map
+;;          ("a" . local/find-project-asd))
+;;   :init
+;;   (setq inferior-lisp-program "sbcl"
+;;         sly-keep-buffers-on-connection-close nil
+;;         sly-common-lisp-style-default "sbcl")
+;;   :config
+;;   (global-set-key (kbd "C-. C-/") sly-selector-map))
 
-(with-eval-after-load 'sly-mrepl
-  (defun completing-read-asdf-systems ()
-    (completing-read "System: " (sly-eval '(cl:progn
-                                            (asdf/source-registry:compute-source-registry
-                                             (cl:list :source-registry
-                                                      (cl:list :directory (uiop:getcwd))
-                                                      :inherit-configuration))
-                                            (cl:sort (cl:remove-duplicates (cl:append (cl:loop for k being the hash-keys of asdf/source-registry:*source-registry*
-                                                                                               collect k)
-                                                                                      (cl:loop for k being the hash-keys of asdf/system-registry:*registered-systems*
-                                                                                               collect k))
-                                                                           :test 'cl:string=)
-                                                     'cl:string<)))))
+;; (with-eval-after-load 'sly-mrepl
+;;   (defun completing-read-asdf-systems ()
+;;     (completing-read "System: " (sly-eval '(cl:progn
+;;                                             (asdf/source-registry:compute-source-registry
+;;                                              (cl:list :source-registry
+;;                                                       (cl:list :directory (uiop:getcwd))
+;;                                                       :inherit-configuration))
+;;                                             (cl:sort (cl:remove-duplicates (cl:append (cl:loop for k being the hash-keys of asdf/source-registry:*source-registry*
+;;                                                                                                collect k)
+;;                                                                                       (cl:loop for k being the hash-keys of asdf/system-registry:*registered-systems*
+;;                                                                                                collect k))
+;;                                                                            :test 'cl:string=)
+;;                                                      'cl:string<)))))
 
-  (defun asdf-load-system (system &optional force)
-    (interactive (list (completing-read-asdf-systems)))
-    (message "Loading: %s..." system)
-    (sly-eval-async (list 'asdf:load-system system :force force)
-      (lambda (_result)
-        (message "Loading: %s finished!" system))))
+;;   (defun asdf-load-system (system &optional force)
+;;     (interactive (list (completing-read-asdf-systems)))
+;;     (message "Loading: %s..." system)
+;;     (sly-eval-async (list 'asdf:load-system system :force force)
+;;                     (lambda (_result)
+;;                       (message "Loading: %s finished!" system))))
 
-  (defun asdf-force-load-system (system)
-    (interactive (list (completing-read-asdf-systems)))
-    (asdf-load-system system t))
+;;   (defun asdf-force-load-system (system)
+;;     (interactive (list (completing-read-asdf-systems)))
+;;     (asdf-load-system system t))
 
-  (defun asdf-test-system (system)
-    (interactive (list (completing-read-asdf-systems)))
-    (message "Testing %s" system)
-    (sly-eval-async (list 'asdf:test-system system)
-      (lambda (_result)
-        (message "Finished testing %s" system))))
+;;   (defun asdf-test-system (system)
+;;     (interactive (list (completing-read-asdf-systems)))
+;;     (message "Testing %s" system)
+;;     (sly-eval-async (list 'asdf:test-system system)
+;;                     (lambda (_result)
+;;                       (message "Finished testing %s" system))))
 
-  (defun uiopcwd ()
-    (interactive)
-    (sly-eval-async '(cl:namestring (uiop:getcwd))
-      (lambda (pwd)
-        (message "%s" pwd))))
-
-
-  (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map)
-  (add-to-list 'sly-mrepl-shortcut-alist '("pwd" . uiopcwd))
-  (add-to-list 'sly-mrepl-shortcut-alist '("load-system" . asdf-load-system))
-  (add-to-list 'sly-mrepl-shortcut-alist '("force-load-system" . asdf-force-load-system))
-  (add-to-list 'sly-mrepl-shortcut-alist '("test-system" . asdf-test-system)))
+;;   (defun uiopcwd ()
+;;     (interactive)
+;;     (sly-eval-async '(cl:namestring (uiop:getcwd))
+;;                     (lambda (pwd)
+;;                       (message "%s" pwd))))
 
 
-(use-package sly-named-readtables
-  :ensure t
-  :after sly)
+;;   (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map)
+;;   (add-to-list 'sly-mrepl-shortcut-alist '("pwd" . uiopcwd))
+;;   (add-to-list 'sly-mrepl-shortcut-alist '("load-system" . asdf-load-system))
+;;   (add-to-list 'sly-mrepl-shortcut-alist '("force-load-system" . asdf-force-load-system))
+;;   (add-to-list 'sly-mrepl-shortcut-alist '("test-system" . asdf-test-system)))
 
-(use-package sly-macrostep
-  :ensure t
-  :after sly)
+
+;; (use-package sly-named-readtables
+;;   :disabled t
+;;   :ensure t
+;;   :after sly)
+
+;; (use-package sly-macrostep
+;;   :disabled t
+;;   :ensure t
+;;   :after sly)
 
 ;;; CL info files selector
 
@@ -560,6 +653,12 @@
   (revert-buffer t t))
 
 (bind-key "s-i" #'cl-read-info)
+
+;;; indentation ruls
+
+(use-package indentation-rules
+  :load-path "site-lisp"
+  :after slime)
 
 ;;; imenu
 
@@ -776,7 +875,7 @@
   :ensure t
   :demand t
   :config
-  (dolist (mode '(sly-mrepl-mode cperl))
+  (dolist (mode '(slime-repl-mode cperl))
     (add-to-list 'aggressive-indent-excluded-modes mode))
   (global-aggressive-indent-mode 1))
 
@@ -816,7 +915,7 @@
   :ensure t
   :commands (global-evil-swap-keys-mode)
   :hook ((lisp-mode . evil-swap-parens)
-         (sly-mrepl-mode . evil-swap-parens)
+         (slime-repl-mode . evil-swap-parens)
          (emacs-lisp-mode . evil-swap-parens)
          (ielm-mode . evil-swap-parens)
          (eval-expression-minibuffer-setup . evil-swap-parens)

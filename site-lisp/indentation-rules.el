@@ -7,9 +7,8 @@
 ;;; Code:
 
 ;;; fiveam
-;; (put 'test 'lisp-indent-function
-;;      (get 'prog1 'lisp-indent-function))
-(sly-update-system-indentation 'test 'prog1 (list :fiveam))
+(put 'test 'lisp-indent-function
+     (get 'prog1 'lisp-indent-function))
 
 
 (provide 'indentation-rules)
