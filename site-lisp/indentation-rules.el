@@ -7,8 +7,12 @@
 ;;; Code:
 
 ;;; fiveam
-(put 'test 'lisp-indent-function
-     (get 'prog1 'lisp-indent-function))
+(put 'test 'common-lisp-indent-function
+     (get 'prog1 'common-lisp-indent-function))
+
+;;; adopt
+(put 'adopt:make-option 'common-lisp-indent-function
+     (get 'prog1 'common-lisp-indent-function))
 
 
 (provide 'indentation-rules)
