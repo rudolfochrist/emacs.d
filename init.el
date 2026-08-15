@@ -484,6 +484,8 @@
 
 (with-eval-after-load 'slime
 
+  (load-file "site-lisp/indentation-rules.el")
+
   (defun local/custom-slime-repl-faces ()
     (face-remap-add-relative 'font-lock-string-face :background nil))
 
@@ -574,77 +576,6 @@
   (def-slime-selector-method ?a "Visit system definition (asd) buffer."
                              (local/find-project-asd)))
 
-;;; sly
-
-;; (use-package sly
-;;   :disabled t
-;;   :ensure t
-;;   :bind (("C-. l" . sly)
-;;          :map sly-selector-map
-;;          ("a" . local/find-project-asd))
-;;   :init
-;;   (setq inferior-lisp-program "sbcl"
-;;         sly-keep-buffers-on-connection-close nil
-;;         sly-common-lisp-style-default "sbcl")
-;;   :config
-;;   (global-set-key (kbd "C-. C-/") sly-selector-map))
-
-;; (with-eval-after-load 'sly-mrepl
-;;   (defun completing-read-asdf-systems ()
-;;     (completing-read "System: " (sly-eval '(cl:progn
-;;                                             (asdf/source-registry:compute-source-registry
-;;                                              (cl:list :source-registry
-;;                                                       (cl:list :directory (uiop:getcwd))
-;;                                                       :inherit-configuration))
-;;                                             (cl:sort (cl:remove-duplicates (cl:append (cl:loop for k being the hash-keys of asdf/source-registry:*source-registry*
-;;                                                                                                collect k)
-;;                                                                                       (cl:loop for k being the hash-keys of asdf/system-registry:*registered-systems*
-;;                                                                                                collect k))
-;;                                                                            :test 'cl:string=)
-;;                                                      'cl:string<)))))
-
-;;   (defun asdf-load-system (system &optional force)
-;;     (interactive (list (completing-read-asdf-systems)))
-;;     (message "Loading: %s..." system)
-;;     (sly-eval-async (list 'asdf:load-system system :force force)
-;;                     (lambda (_result)
-;;                       (message "Loading: %s finished!" system))))
-
-;;   (defun asdf-force-load-system (system)
-;;     (interactive (list (completing-read-asdf-systems)))
-;;     (asdf-load-system system t))
-
-;;   (defun asdf-test-system (system)
-;;     (interactive (list (completing-read-asdf-systems)))
-;;     (message "Testing %s" system)
-;;     (sly-eval-async (list 'asdf:test-system system)
-;;                     (lambda (_result)
-;;                       (message "Finished testing %s" system))))
-
-;;   (defun uiopcwd ()
-;;     (interactive)
-;;     (sly-eval-async '(cl:namestring (uiop:getcwd))
-;;                     (lambda (pwd)
-;;                       (message "%s" pwd))))
-
-
-;;   (bind-key "C-l" 'sly-mrepl-clear-repl sly-mrepl-mode-map)
-;;   (add-to-list 'sly-mrepl-shortcut-alist '("pwd" . uiopcwd))
-;;   (add-to-list 'sly-mrepl-shortcut-alist '("load-system" . asdf-load-system))
-;;   (add-to-list 'sly-mrepl-shortcut-alist '("force-load-system" . asdf-force-load-system))
-;;   (add-to-list 'sly-mrepl-shortcut-alist '("test-system" . asdf-test-system)))
-
-
-;; (use-package sly-named-readtables
-;;   :disabled t
-;;   :ensure t
-;;   :after sly)
-
-;; (use-package sly-macrostep
-;;   :disabled t
-;;   :ensure t
-;;   :after sly)
-
 ;;; CL info files selector
 
 (defun cl-read-info (info-file)
@@ -653,12 +584,6 @@
   (revert-buffer t t))
 
 (bind-key "s-i" #'cl-read-info)
-
-;;; indentation ruls
-
-(use-package indentation-rules
-  :load-path "site-lisp"
-  :after slime)
 
 ;;; imenu
 
