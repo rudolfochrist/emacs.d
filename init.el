@@ -936,49 +936,6 @@
 (use-package markdown-mode
   :ensure t)
 
-;;; skeletor
-
-(use-package skeletor
-  :load-path "site-lisp/skeletor.el"
-  :config
-  (setq skeletor-project-directory "~/code/"
-        skeletor-completing-read-function 'completing-read))
-
-(with-eval-after-load 'skeletor
-  (push
-   (cons "__TEXI-USER-MAIL-ADDRESS__" (lambda () (string-replace "@" "@@" user-mail-address)))
-   skeletor-global-substitutions))
-
-(skeletor-define-template "lisp-base"
-  :title "Common Lisp Base System"
-  :substitutions '(("__DESCRIPTION__" . (lambda () (read-string "Description: "))))
-  :no-license? t
-  :after-creation (lambda (dir)
-                    (skeletor-shell-command "./make.sh install_hooks" dir)))
-
-(defun local/add-lisp-project-flavour (src)
-  (interactive
-   (list (completing-read "Template: " (f-directories skeletor-user-directory) nil t)))
-  (let* ((cwd (file-name-directory (if (equal major-mode 'dired-mode)
-                                       (dired-current-directory)
-                                     (buffer-file-name))))
-         (project-name (f-filename cwd))
-         (flavour (cadr (s-split "-" (f-filename src))))
-         (asd-file (s-concat flavour ".asd")))
-    (f-entries src
-               (lambda (f)
-                 (if (string= (f-filename f) asd-file)
-                     (f-append-text (s-replace-all (list (cons "__PROJECT-NAME__" project-name)) (f-read f))
-                                    'utf-8-unix
-                                    (f-join cwd (s-concat project-name ".asd")))
-                   (let ((dest (f-join cwd (f-filename f))))
-                     (f-write (s-replace-all (list (cons "__PROJECT-NAME__" project-name)) (f-read f))
-                              'utf-8-unix
-                              dest)
-                     (set-file-modes dest (file-modes f))))))
-    (when (equal major-mode 'dired-mode)
-      (revert-buffer))))
-
 ;;; ztree
 
 (use-package ztree
