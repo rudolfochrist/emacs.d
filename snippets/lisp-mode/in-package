@@ -1,4 +1,4 @@
 # key: in-package
 # name: in-package
 # --
-in-package #:${1:`(downcase (yas-choose-value (slime-eval '(slynk:list-all-package-names t))))`}
+in-package #:${1:`(downcase (yas-choose-value (slime-eval '(swank:list-all-package-names t))))`}
